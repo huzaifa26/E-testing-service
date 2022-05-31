@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.pool {
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pool .intro h1 {
+  font-size: 25px;
+  color: #5811cb;
+}
+.pool .intro {
+  width: 99.3%;
+  height: 15%;
+  padding: 15px;
+  word-wrap: break-word;
+  border: 1px solid black;
+}
+.pool .poolsBar {
+  width: 99.3%;
+  height: 7%;
+  padding: 4px 7px 1px 0px;
+  background-color: #dfe3ee;
+  margin-top: 5px;
+}
+.button2,
+.button0 {
+  cursor: pointer;
+  background-color: #5811cb;
+  align-self: center;
+  border: 1px solid #5811cb;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 18px;
+  /* font-weight: bold; */
+  padding: 0px 20px;
+  height: 90%;
+  text-decoration: none;
+  font-family: 'Roboto Flex', sans-serif;
+}
+.pool .poolsBar button:hover {
+  color: rgba(249, 249, 249, 0.874);
+}
+.pool .poolsBar .span2 {
+  margin-left: 35px;
+}
+.button2 {
+  margin-left: 5px;
+}
+
+@media only screen and (max-width: 585px) {
+  .pool .intro {
+    height: 18%;
+    padding: 10px 0px 10px 10px;
+  }
+}

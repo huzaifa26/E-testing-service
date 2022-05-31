@@ -1,0 +1,63 @@
+.editor1 {
+  width: 99.3%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 5px;
+  align-items: center;
+  margin-top: 30px;
+}
+.editor2 {
+  border: 0.1px solid rgba(0, 0, 0, 0.1);
+  height: 378px;
+  background-color: #dfe3ee5b;
+  width: 100%;
+}
+.myEditor {
+  margin-top: 200px;
+  width: 100%;
+  height: 50vh;
+}
+.options {
+  margin-top: 30px;
+}
+.button {
+  cursor: pointer;
+  background-color: #5811cb;
+  align-self: center;
+  border: 1px solid #5811cb;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 18px;
+  /* font-weight: bold; */
+  padding: 10px 25px;
+  text-decoration: none;
+  margin-top: 25px;
+  margin-bottom: 30px;
+  font-family: 'Roboto Flex', sans-serif;
+}
+.zzz {
+  z-index: -777;
+}
+@media only screen and (max-width: 629px) {
+  .editor2 {
+    height: 400px;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .editor2 {
+    height: 410px;
+  }
+}
+@media only screen and (max-width: 559px) {
+  .editor2 {
+    height: 420px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .editor2 {
+    height: 450px;
+  }
+}

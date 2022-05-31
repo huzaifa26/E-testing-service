@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.poolsCategory {
+  width: 99.3%;
+  height: 7%;
+  padding: 9px 0px 0px 2px;
+  margin-top: 5px;
+}
+.poolsCategory select {
+  cursor: pointer;
+  padding: 4px 0px;
+  border: 0px solid #000000;
+  border-radius: 0px;
+  background: #e6e6e6b0;
+  width: 156px;
+  margin-left: -4px;
+}
+.poolsCategory select::-ms-expand {
+  display: none;
+}
+.poolsCategory select:hover,
+.poolsCategory select:focus {
+  color: #000000;
+  background: #cccccc8e;
+}
+.poolsCategory select:hover ~ .poolsCategory_arrow,
+.poolsCategory select:focus ~ .poolsCategory_arrow {
+  border-color: #000000;
+}
+
+.poolsCategory label {
+  margin-right: 7px;
+}
+
+.poolsCategory2 {
+  /* background-color: red; */
+  width: 99.3%;
+  height: 7%;
+  padding: 9px 0px 0px 2px;
+  /* padding: 5px; */
+}
+.poolsCategory2 {
+  width: 99.3%;
+  height: 7%;
+  padding: 9px 0px 0px 2px;
+}
+.poolsCategory2 select {
+  cursor: pointer;
+  padding: 4px 0px;
+  border: 0px solid #000000;
+  border-radius: 0px;
+  background: #e6e6e6b0;
+  width: 156px;
+}
+.poolsCategory2 select::-ms-expand {
+  display: none;
+}
+.poolsCategory2 select:hover,
+.poolsCategory2 select:focus {
+  color: #000000;
+  background: #cccccc8e;
+}
+.poolsCategory2 select:hover ~ .poolsCategory2_arrow,
+.poolsCategory2 select:focus ~ .poolsCategory2_arrow {
+  border-color: #000000;
+}
+
+.poolsCategory2 label {
+  margin-right: 2px;
+}
+.editor {
+  width: 99.3%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+.editor2 {
+  border: 0.1px solid rgba(0, 0, 0, 0.1);
+  height: 378px;
+  background-color: #dfe3ee5b;
+  width: 100%;
+}
+hr {
+  margin-top: 40px;
+}
+
+@media only screen and (max-width: 629px) {
+  .editor2 {
+    height: 400px;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .editor2 {
+    height: 410px;
+  }
+}
+@media only screen and (max-width: 559px) {
+  .editor2 {
+    height: 420px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .editor2 {
+    height: 450px;
+  }
+}

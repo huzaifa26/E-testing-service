@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+
+import Login from './Components/Auth/Login';
+import Signup from './Components/Auth/Signup';
+import VerifyEmail from './Components/Auth/VerifyEmail';
+import Dashboard from './Components/Dashboard/Dashboard';
+import Navbar from './Components/Navbar/Navbar';
+import Courses from './Components/Courses/Courses';
+import Pools from './Components/Pools/Pools';
+import Notification from './Components/Notifications/Notifications';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/emailVerification/:id" element={<VerifyEmail />} />
+        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/pools" element={<Pools />} />
+        <Route path="/notification" element={<Notification />} />
+      </Routes>
     </div>
   );
 }

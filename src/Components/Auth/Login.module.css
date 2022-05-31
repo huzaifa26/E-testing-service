@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto Flex', sans-serif;
+}
+.LoginMain {
+  display: flex;
+}
+.LoginImage {
+  width: 30%;
+  height: 100vh;
+  background-color: #5811cb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.LoginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 70%;
+}
+.LoginForm {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0.4rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 56%;
+  width: 33%;
+  min-width: 320px;
+  min-height: 400px;
+  max-width: 300px;
+  max-height: 450px;
+}
+.LoginForm h1 {
+  color: #5811cb;
+  font-size: 2rem;
+  margin: 15px 0 0px 0;
+  font-weight: lighter;
+}
+
+.LoginForm input {
+  margin: 20px auto;
+  width: 80%;
+  border-width: 0 0 2px;
+  border-color: #9b9a9adc;
+  font-size: 1.2rem;
+  height: 12%;
+  width: 80%;
+  outline: 0;
+  border-width: 0 0 2px;
+}
+.LoginForm input:focus {
+  border-color: #151515;
+}
+.LoginFormForget {
+  width: 80%;
+  margin: 0px auto;
+  text-align: end;
+  color: rgba(0, 0, 0, 0.902);
+  cursor: pointer;
+}
+.LoginFormForget:hover {
+  text-decoration: underline;
+}
+.LoginForm button {
+  margin: 0 0 0.7rem 0;
+  background-color: #5811cb;
+  align-self: center;
+  border: 1px solid #5811cb;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 45px;
+  text-decoration: none;
+  font-family: 'Roboto Flex', sans-serif;
+}
+.LoginFormAlready {
+  color: #5811cbcc;
+  cursor: pointer;
+}
+.LoginFormAlready:hover {
+  color: #5811cb;
+  cursor: pointer;
+}
+.footer {
+  width: 80%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@media all and (max-width: 734px) {
+  .LoginMain {
+    flex-direction: column;
+  }
+  .LoginImage {
+    width: 100%;
+    height: 10vh;
+    min-height: 64.36px;
+  }
+  .LoginImage img {
+    width: 75px;
+    height: 64px;
+  }
+  .LoginContainer {
+    width: 100%;
+    height: 100%;
+  }
+  .LoginMain {
+    height: 100vh;
+  }
+}

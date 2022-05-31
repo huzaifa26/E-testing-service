@@ -1,0 +1,31 @@
+.true {
+  width: 99.3%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+.button {
+  cursor: pointer;
+  background-color: #5811cb;
+  align-self: center;
+  border: 1px solid #5811cb;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 18px;
+  /* font-weight: bold; */
+  padding: 10px 25px;
+  text-decoration: none;
+  margin-top: 25px;
+  margin-bottom: 30px;
+  font-family: 'Roboto Flex', sans-serif;
+}
+.buttoncenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: aqua; */
+  width: 99.3%;
+}
