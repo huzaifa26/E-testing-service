@@ -9,6 +9,7 @@ function ShowQuestion(props) {
   return (
     <>
       <tr>
+        <td>{props.i}</td>
         <td>{props.courseName}</td>
         <td>{props.questionType}</td>
         <td>

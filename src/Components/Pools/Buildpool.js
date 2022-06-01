@@ -1,6 +1,10 @@
 import styles from './Buildpool.module.css';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { convertToRaw, EditorState } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+// import { stateToHTML } from '-js-export-html';
+
 import React, { useRef, useState } from 'react';
 import Mcq from './Mcq';
 import True from './True';
@@ -43,6 +47,7 @@ function Buildpool() {
   const [courseId, setCourseId] = useState('');
   const helloRef = useRef('');
   const [courseName, setCourseName] = useState('');
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const dispatch = useDispatch();
 
@@ -82,17 +87,18 @@ function Buildpool() {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if (
-      helloRef.current.state.editorState.getCurrentContent().getPlainText() ===
-      ''
+      helloRef.current.state.editorState.getCurrentContent().getPlainText() ===''
     ) {
       toast.error('You cant leave QUESTION/OPTIONS empty', {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      mcqData.question = helloRef.current.state.editorState
-        .getCurrentContent()
-        .getPlainText();
+      mcqData.question = helloRef.current.state.editorState.getCurrentContent().getPlainText();
+
+      setEditorState(EditorState.createEmpty());
+
       mcqData.courseName = courseName;
+
       dispatch(poolsActions.allQuestions(mcqData));
       toast.success('Added', {
         position: toast.POSITION.TOP_CENTER,
@@ -102,13 +108,13 @@ function Buildpool() {
 
   const sendTrues = (truesData) => {
     truesData.courseId = courseId;
+
     if (truesData.courseId === '') {
       toast.error('Select Course Please', {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if (
-      helloRef.current.state.editorState.getCurrentContent().getPlainText() ===
-      ''
+      helloRef.current.state.editorState.getCurrentContent().getPlainText() ===''
     ) {
       toast.error('You cant leave question empty', {
         position: toast.POSITION.TOP_CENTER,
@@ -118,11 +124,14 @@ function Buildpool() {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      truesData.question = helloRef.current.state.editorState
-        .getCurrentContent()
-        .getPlainText();
+      truesData.question = helloRef.current.state.editorState.getCurrentContent().getPlainText();
+
+      console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+      
+      setEditorState(EditorState.createEmpty());
       truesData.courseName = courseName;
       dispatch(poolsActions.allQuestions(truesData));
+      
       toast.success('Added', {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -131,6 +140,7 @@ function Buildpool() {
 
   const sendPlain = (plainData) => {
     plainData.courseId = courseId;
+    
     if (plainData.courseId === '') {
       toast.error('Select Course Please', {
         position: toast.POSITION.TOP_CENTER,
@@ -147,10 +157,11 @@ function Buildpool() {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      plainData.question = helloRef.current.state.editorState
-        .getCurrentContent()
-        .getPlainText();
+      plainData.question = helloRef.current.state.editorState.getCurrentContent().getPlainText();
+
+      setEditorState(EditorState.createEmpty());
       plainData.courseName = courseName;
+      
       dispatch(poolsActions.allQuestions(plainData));
       toast.success('Added', {
         position: toast.POSITION.TOP_CENTER,
@@ -193,12 +204,17 @@ function Buildpool() {
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               ref={helloRef}
+              editorState={editorState}
+              onEditorStateChange={(newState) => {
+                setEditorState(newState);
+              }}
               wrapperStyle={{
                 width: '100%',
                 height: 300,
               }}
             />
           </div>
+          {/* <pre>{stateToHTML(editorState.getCurrentContent())}</pre> */}
         </div>
       </div>
       <hr></hr>

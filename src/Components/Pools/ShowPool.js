@@ -45,6 +45,7 @@ function ShowPool() {
         <Table striped bordered hover responsive>
           <thead>
             <tr>
+              <th>#</th>
               <th>Course Name</th>
               <th>Category</th>
               <th>Question</th>
@@ -55,20 +56,16 @@ function ShowPool() {
           <tbody>
             {courseId === '0'
               ? allQuestions.map((item, i) => {
+                  i++;
                   return (
-                    <ShowQuestion
-                      i={i}
-                      courseName={item.courseName}
-                      correctAnswer={item.correctAnswer}
-                      questionType={item.questionType}
-                      question={item.question}
-                      options={item.options}
+                    <ShowQuestion i={i} courseName={item.courseName} correctAnswer={item.correctAnswer} questionType={item.questionType} question={item.question} options={item.options}
                     />
                   );
                 })
               : allQuestions
                   .filter((data) => data.courseId === courseId)
                   .map((item, i) => {
+                    i++;
                     return (
                       <ShowQuestion
                         i={i}

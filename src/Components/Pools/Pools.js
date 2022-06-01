@@ -11,7 +11,7 @@ function Pools() {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar />q */}
       <div className={styles.pool}>
         <div className={styles.intro}>
           <h1>Pools</h1>

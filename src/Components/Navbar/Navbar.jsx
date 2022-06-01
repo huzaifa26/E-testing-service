@@ -4,7 +4,7 @@ import image from '../../Assets/logo2.png';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function Navbar2() {
+function Navbar2(props) {
   const [sidebar, setSidebar] = useState(false);
 
   function showSidebar() {
@@ -12,7 +12,7 @@ function Navbar2() {
   }
 
   return (
-    <div>
+    <div className='layout'>
       <div className="navbar">
         <i class="bi bi-list" onClick={showSidebar}></i>
         <div className="logocenter">
@@ -20,10 +20,10 @@ function Navbar2() {
         </div>
       </div>
 
+    <div className="mainDiv">
       <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
         <ul className="nav-menu-items" onClick={showSidebar}>
           <li className="navbar-toggle-first">
-            <i class="bi bi-x"></i>
           </li>
           <div className="hr"></div>
           <li className="nav-text">
@@ -59,7 +59,14 @@ function Navbar2() {
           <div className="hr1"></div>
         </ul>
       </nav>
+
+      <main>
+        {props.children}
+      </main>
     </div>
+
+
+  </div>
   );
 }
 
