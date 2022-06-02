@@ -12,18 +12,16 @@ import Notification from './Components/Notifications/Notifications';
 function App() {
   return (
     <div className="App">
-      <Navbar>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/emailVerification/:id" element={<VerifyEmail />} />
-          <Route path="/navbar" element={<Navbar />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/pools" element={<Pools />} />
-          <Route path="/notification" element={<Notification />} />
+          <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
+          <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
+          <Route path="/pools" element={<Navbar><Pools /></Navbar>} />
+          <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
+          
         </Routes>
-      </Navbar>
     </div>
   );
 }

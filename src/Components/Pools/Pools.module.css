@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&display=swap');
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Roboto Flex', sans-serif;
+  font-size: 18px;
+
 }
 .pool {
   height: 92vh;
@@ -11,6 +15,7 @@
 }
 .pool .intro h1 {
   font-size: 25px;
+  font-weight: 500;
   color: #5811cb;
 }
 .pool .intro {
@@ -18,13 +23,17 @@
   height: 15%;
   padding: 15px;
   word-wrap: break-word;
-  border: 1px solid black;
+  background-color: white;
+  border-radius: 12px;
+  margin-top: 10px;
 }
 .pool .poolsBar {
   width: 99.3%;
   height: 7%;
   padding: 4px 7px 1px 0px;
-  background-color: #dfe3ee;
+  /* background-color: #dfe3ee; */
+  /* background-color: white; */
+  font-family: 'Roboto Flex', sans-serif;
   margin-top: 5px;
 }
 .button2,
@@ -36,13 +45,13 @@
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
-  font-family: Arial;
   font-size: 18px;
+  border-radius: 7px;
   /* font-weight: bold; */
+
   padding: 0px 20px;
   height: 90%;
   text-decoration: none;
-  font-family: 'Roboto Flex', sans-serif;
 }
 .pool .poolsBar button:hover {
   color: rgba(249, 249, 249, 0.874);

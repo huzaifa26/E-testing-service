@@ -5,7 +5,6 @@ import Navbar from '../Navbar/Navbar';
 function Notification() {
   return (
     <div className={styles.notification}>
-      <Navbar />
       Notification
     </div>
   );

@@ -5,7 +5,6 @@ import styles from './Module.Courses.css';
 function Courses() {
   return (
     <div>
-      <Navbar />
       <div className="courseMain">
         Courses
         <div className={styles.joinedCourses}></div>

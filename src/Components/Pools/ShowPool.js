@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Showpool.module.css';
 import { useSelector } from 'react-redux';
 import ShowQuestion from './ShowQuestion';

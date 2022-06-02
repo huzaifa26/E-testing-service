@@ -22,9 +22,10 @@ function Navbar2(props) {
 
     <div className="mainDiv">
       <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-        <ul className="nav-menu-items" onClick={showSidebar}>
-          <li className="navbar-toggle-first">
+        <ul className="nav-menu-items" >
+          {/* <li className="navbar-toggle-first">
           </li>
+           */}
           <div className="hr"></div>
           <li className="nav-text">
             <Link to={'/dashboard'}>
