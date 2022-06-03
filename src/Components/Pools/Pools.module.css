@@ -8,10 +8,10 @@
 
 }
 .pool {
-  height: 92vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 91.7vh;
 }
 .pool .intro h1 {
   font-size: 25px;
@@ -31,8 +31,6 @@
   width: 99.3%;
   height: 7%;
   padding: 4px 7px 1px 0px;
-  /* background-color: #dfe3ee; */
-  /* background-color: white; */
   font-family: 'Roboto Flex', sans-serif;
   margin-top: 5px;
 }
@@ -46,10 +44,9 @@
   cursor: pointer;
   color: #ffffff;
   font-size: 18px;
-  border-radius: 7px;
+  border-radius: 4px;
   /* font-weight: bold; */
-
-  padding: 0px 20px;
+  padding: 10px 20px;
   height: 90%;
   text-decoration: none;
 }

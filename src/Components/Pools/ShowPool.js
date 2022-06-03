@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Showpool.module.css';
 import { useSelector } from 'react-redux';
 import ShowQuestion from './ShowQuestion';
-import Table from 'react-bootstrap/Table';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const publishCourses = [
   {
@@ -29,9 +34,9 @@ function ShowPool() {
 
   return (
     <div>
+      <div className={styles.poolsMain}>
       <div className={styles.poolsCategory}>
         <label for="dog-names">Select Course &nbsp;&nbsp;&nbsp;&nbsp;:</label>
-
         <select onChange={handleShow}>
           <option value={0} selected>
             All Courses
@@ -41,20 +46,22 @@ function ShowPool() {
           })}
         </select>
       </div>
-      <div className={styles.table}>
-        <Table striped bordered hover responsive>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Course Name</th>
-              <th>Category</th>
-              <th>Question</th>
-              <th>Options</th>
-              <th>Correct Answer</th>
-            </tr>
-          </thead>
-          <tbody>
-            {courseId === '0'
+          </div>
+      <div className={styles.table1}>
+      <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650,height:'100%' }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>#</TableCell>
+            <TableCell align="left"><b>Course Name  </b></TableCell>
+            <TableCell align="left"><b>  Category</b></TableCell>
+            <TableCell align="left"><b>  Question</b></TableCell>
+            <TableCell align="left"><b>  Options</b></TableCell>
+            <TableCell align="left"><b>  Correct Answer</b></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+        {courseId === '0'
               ? allQuestions.map((item, i) => {
                   i++;
                   return (
@@ -77,8 +84,9 @@ function ShowPool() {
                       />
                     );
                   })}
-          </tbody>
-        </Table>
+        </TableBody>
+      </Table>
+    </TableContainer>
       </div>
     </div>
   );

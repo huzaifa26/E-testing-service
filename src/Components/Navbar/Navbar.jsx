@@ -12,7 +12,7 @@ function Navbar2(props) {
   }
 
   return (
-    <div className='layout'>
+    <>
       <div className="navbar">
         <i class="bi bi-list" onClick={showSidebar}></i>
         <div className="logocenter">
@@ -60,14 +60,11 @@ function Navbar2(props) {
           <div className="hr1"></div>
         </ul>
       </nav>
-
-      <main>
+      <main className='main'>
         {props.children}
       </main>
     </div>
-
-
-  </div>
+  </>
   );
 }
 

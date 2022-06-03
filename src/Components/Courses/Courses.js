@@ -5,11 +5,7 @@ import styles from './Module.Courses.css';
 function Courses() {
   return (
     <div>
-      <div className="courseMain">
-        Courses
-        <div className={styles.joinedCourses}></div>
-        <div className={styles.publishedCourses}></div>
-      </div>
+      Hello
     </div>
   );
 }

@@ -10,8 +10,6 @@ function Pools() {
   const [createPool, setcreatePool] = useState(false);
 
   return (
-    <div>
-      {/* <Navbar />q */}
       <div className={styles.pool}>
         <div className={styles.intro}>
           <h1>Pools</h1>
@@ -43,7 +41,6 @@ function Pools() {
           {createPool && <Buildpool />}
         </div>
       </div>
-    </div>
   );
 }
 

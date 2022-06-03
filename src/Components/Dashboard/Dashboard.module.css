@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.mainDashboard
+{
+    height: 100%;
+    /* width: ; */
+}
+.button
+{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+.joinedHeader
+{
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    margin: 20px;
+}
+.joinedHeader button{
+    /* margin: 0 0 0.7rem 0; */
+  background-color: #5811cb;
+  align-self: center;
+  border-radius: 4px;
+  border: 1px solid #5811cb;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 20px;
+  text-decoration: none;
+  font-family: 'Roboto Flex', sans-serif;
+}
+.joinedHeader h1{
+    font-family: 'Quicksand', sans-serif;
+}
+.joinedCourses
+{
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+.joinedList
+{
+    background-color: rgb(150, 164, 206);
+    height: 200px;
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}

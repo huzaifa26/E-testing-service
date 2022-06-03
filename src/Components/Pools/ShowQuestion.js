@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './ShowQuestion.module.css';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 
 function ShowQuestion(props) {
   // const handle = () => {
@@ -8,21 +10,17 @@ function ShowQuestion(props) {
 
   return (
     <>
-      <tr>
-        <td>{props.i}</td>
-        <td>{props.courseName}</td>
-        <td>{props.questionType}</td>
-        <td>
-          <b>{props.question}</b>
-        </td>
-        <td>{'[ ' + props.options + ' ]'}</td>
-        <td className={styles.correct}>{props.correctAnswer}</td>
-        {/* <td>
-          <div className={styles.myButtton} onClick={handle}>
-            Delete
-          </div>
-        </td> */}
-      </tr>
+          <TableRow
+              key={props.i}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell align="right">{props.i}</TableCell>
+              <TableCell component="th" scope="row">{props.courseName}</TableCell>
+              <TableCell component='th'>{props.questionType}</TableCell>
+              <TableCell component='th'><b>{props.question}</b></TableCell>
+              <TableCell component='th'>{'[ ' + props.options + ' ]'}</TableCell>
+              <TableCell component='th' className={styles.correct}>{props.correctAnswer}</TableCell>
+            </TableRow>
     </>
   );
 }
