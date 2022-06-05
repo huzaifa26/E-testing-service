@@ -20,8 +20,8 @@ function Login() {
       })
       .then(function (response) {
         if (response.status === 200) {
+          console.log(response.data)
           // const accessToken =response.data.accessToken
-          // const roles = roles = response.data.roles
           // setAuth({email,password,roles,accessToken })
           navigate('/dashboard');
         }

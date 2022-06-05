@@ -3,7 +3,6 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-// import { stateToHTML } from '-js-export-html';
 
 import React, { useRef, useState } from 'react';
 import Mcq from './Mcq';
@@ -13,6 +12,13 @@ import { useDispatch } from 'react-redux';
 import { poolsActions } from './../../Redux/pools-slice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import createMathjaxPlugin from 'draft-js-mathjax-plugin'
+
+const mathjaxPlugin = createMathjaxPlugin(/* optional configuration object */)
+ 
+const plugins = [
+  mathjaxPlugin,
+]
 
 const publishCourses = [
   {
@@ -93,7 +99,7 @@ function Buildpool() {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      mcqData.question = helloRef.current.state.editorState.getCurrentContent().getPlainText();
+      mcqData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
       setEditorState(EditorState.createEmpty());
 
@@ -124,9 +130,7 @@ function Buildpool() {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      truesData.question = helloRef.current.state.editorState.getCurrentContent().getPlainText();
-
-      console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+      truesData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
       
       setEditorState(EditorState.createEmpty());
       truesData.courseName = courseName;
@@ -157,7 +161,7 @@ function Buildpool() {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      plainData.question = helloRef.current.state.editorState.getCurrentContent().getPlainText();
+      plainData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
       setEditorState(EditorState.createEmpty());
       plainData.courseName = courseName;
@@ -171,7 +175,7 @@ function Buildpool() {
 
   return (
     <div>
-      <div className={styles.poolsCategory}>
+      <div className={styles.labelCourse}>
         <label for="dog-names">
           Select Course &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
         </label>
@@ -184,7 +188,7 @@ function Buildpool() {
           })}
         </select>
       </div>
-      <div className={styles.poolsCategory2}>
+      <div className={styles.labelCategory}>
         <label for="dog-names">Select Category :&nbsp; </label>
         <select onChange={handleCategory}>
           <option value="" selected disabled hidden>
@@ -195,7 +199,6 @@ function Buildpool() {
           })}
         </select>
       </div>
-      <div className={styles.editor}>
         <div>
           <h4>Question Text</h4>
           <div className={styles.editor2}>
@@ -212,11 +215,10 @@ function Buildpool() {
                 width: '100%',
                 height: 300,
               }}
+              plugins={plugins}
             />
           </div>
-          {/* <pre>{stateToHTML(editorState.getCurrentContent())}</pre> */}
         </div>
-      </div>
       <hr></hr>
       {mcq && <Mcq sendMcq={sendMcq} />}
       {trues && <True sendTrues={sendTrues} />}

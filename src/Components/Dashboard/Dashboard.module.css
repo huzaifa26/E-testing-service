@@ -13,6 +13,10 @@
     height: 100%;
     /* width: ; */
 }
+.mainDashboard1
+{
+/* background-color: #ffffff; */
+}
 .button
 {
     width: 95%;
@@ -51,6 +55,7 @@
     background-color: white;
     padding: 20px;
     display: flex;
+    justify-content:flex-start;
     flex-wrap: wrap;
     margin: 20px;
 }
@@ -58,10 +63,11 @@
 .joinedList
 {
     background-color: rgb(150, 164, 206);
+    background-color: #97C4B8;
     height: 200px;
     width: 160px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px;
+    margin:0 0 20px 30px ;
 }

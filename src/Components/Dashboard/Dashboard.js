@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from '../Modal/Modal';
 import Navbar from '../Navbar/Navbar';
 import styles from './Dashboard.module.css';
 
@@ -34,14 +35,16 @@ const joinedCourses =
 ]
 
 function Dashboard() {
+  const [openModal,setOpenModal] =useState(false)
 
   function joinhandle()
   {
+    setOpenModal(true)
 
   }
 
   return (
-    <div className={styles.mainDashboard}>
+    <div className={openModal ?  styles.mainDashboard1:styles.mainDashboard}>
     <div>
       <div className={styles.joinedHeader} >
       <h1>Joined Courses</h1>
@@ -52,6 +55,7 @@ function Dashboard() {
   <div className={styles.joinedList}>
   {item.name}</div>)})}     
       </div>
+      {openModal && <Modal closeModal={setOpenModal}/>}
     </div>
 
 

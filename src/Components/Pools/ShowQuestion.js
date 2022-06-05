@@ -17,7 +17,7 @@ function ShowQuestion(props) {
               <TableCell align="right">{props.i}</TableCell>
               <TableCell component="th" scope="row">{props.courseName}</TableCell>
               <TableCell component='th'>{props.questionType}</TableCell>
-              <TableCell component='th'><b>{props.question}</b></TableCell>
+              <TableCell component='th'>{props.question}</TableCell>
               <TableCell component='th'>{'[ ' + props.options + ' ]'}</TableCell>
               <TableCell component='th' className={styles.correct}>{props.correctAnswer}</TableCell>
             </TableRow>

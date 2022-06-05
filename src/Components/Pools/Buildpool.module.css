@@ -4,85 +4,75 @@
   box-sizing: border-box;
 }
 
-.poolsCategory {
-  width: 94.7vw;
-  height: 7%;
-  padding: 9px 0px 0px 2px;
-  margin-top: 5px;
+.labelCourse {
+  width: 310px;
+  padding: 9px 0px 9px 5px;
+  margin-top: 7px;
+  border: 3px solid white;
+  border-radius: 6px;
+  margin-bottom: 3px;
 }
-.poolsCategory select {
+.labelCourse select {
   cursor: pointer;
   padding: 4px 0px;
   border: 0px solid #000000;
-  border-radius: 0px;
-  background: #e6e6e6b0;
+  border-radius: 4px;
+  background: white;
   width: 156px;
   margin-left: -4px;
 }
-.poolsCategory select::-ms-expand {
+.labelCourse select::-ms-expand {
   display: none;
 }
-.poolsCategory select:hover,
-.poolsCategory select:focus {
+.labelCourse select:hover,
+.labelCourse select:focus {
   color: #000000;
-  background: #cccccc8e;
+  background: white;
 }
-.poolsCategory select:hover ~ .poolsCategory_arrow,
-.poolsCategory select:focus ~ .poolsCategory_arrow {
+.labelCourse select:hover ~ .labelCourse_arrow,
+.labelCourse select:focus ~ .labelCourse_arrow {
   border-color: #000000;
 }
 
-.poolsCategory label {
+.labelCourse label {
   margin-right: 7px;
 }
 
-.poolsCategory2 {
-  /* background-color: red; */
-  width: 99.3%;
-  height: 7%;
-  padding: 9px 0px 0px 2px;
-  /* padding: 5px; */
+.labelCategory {
+  width: 310px;
+  padding: 9px 0px 9px 5px;
+  margin-top: 7px;
+  border: 3px solid white;
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
-.poolsCategory2 {
-  width: 99.3%;
-  height: 7%;
-  padding: 9px 0px 0px 2px;
-}
-.poolsCategory2 select {
+.labelCategory select {
   cursor: pointer;
   padding: 4px 0px;
   border: 0px solid #000000;
-  border-radius: 0px;
-  background: #e6e6e6b0;
+  border-radius: 4px;
+  background: white;
   width: 156px;
 }
-.poolsCategory2 select::-ms-expand {
+.labelCategory select::-ms-expand {
   display: none;
 }
-.poolsCategory2 select:hover,
-.poolsCategory2 select:focus {
+.labelCategory select:hover,
+.labelCategory select:focus {
   color: #000000;
-  background: #cccccc8e;
+  background: white;
 }
-.poolsCategory2 select:hover ~ .poolsCategory2_arrow,
-.poolsCategory2 select:focus ~ .poolsCategory2_arrow {
+.labelCategory select:hover ~ .labelCategory_arrow,
+.labelCategory select:focus ~ .labelCategory_arrow {
   border-color: #000000;
 }
 
-.poolsCategory2 label {
+.labelCategory label {
   margin-right: 2px;
 }
-.editor {
-  width: 99.3%;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  margin-left: 5px;
-}
 .editor2 {
-  border: 0.1px solid rgba(0, 0, 0, 0.1);
   height: 378px;
-  background-color: #dfe3ee5b;
+  background-color: white;
   width: 100%;
 }
 hr {

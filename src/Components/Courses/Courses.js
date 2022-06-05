@@ -1,6 +1,7 @@
 import React from 'react';
-import Navbar from '../Navbar/Navbar';
 import styles from './Module.Courses.css';
+import {Editor} from 'draft-js';
+import 'draft-js/dist/Draft.css';
 
 function Courses() {
   return (

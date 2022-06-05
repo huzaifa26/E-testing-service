@@ -21,10 +21,10 @@ function Plain(props) {
   };
 
   return (
-    <div className={styles.editor1}>
-      <div className={styles.options}>
+    <div className={styles.plainMain}>
+      <div className={styles.editorContainer}>
         <h3>Answer</h3>
-        <div className={styles.editor2}>
+        <div className={styles.editor}>
           <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"

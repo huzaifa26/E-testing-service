@@ -30,12 +30,12 @@ const Mcq = (props) => {
       option4.current.state.editorState.getCurrentContent().getPlainText() ===
         ''
     ) {
-      toast.error('You cant leave QUESTION/OPTIONS empty', {
+      toast.error('You cant leave QUESTION/editorMainDiv empty', {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
       let mcqData = {
-        options: [
+        editorMainDiv: [
           correctOption.current.state.editorState
             .getCurrentContent()
             .getPlainText(),
@@ -59,10 +59,10 @@ const Mcq = (props) => {
   };
 
   return (
-    <div className={styles.editor1}>
-      <div className={styles.options}>
+    <div className={styles.mcqMain}>
+      <div className={styles.editorMainDiv}>
         <h5>Correct Option</h5>
-        <div className={styles.editor2}>
+        <div className={styles.editorContainer}>
           <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
@@ -79,9 +79,9 @@ const Mcq = (props) => {
           />
         </div>
       </div>
-      <div className={styles.options}>
+      <div className={styles.editorMainDiv}>
         <h5>Option 2</h5>
-        <div className={styles.editor2}>
+        <div className={styles.editorContainer}>
           <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
@@ -98,9 +98,9 @@ const Mcq = (props) => {
           />
         </div>
       </div>
-      <div className={styles.options}>
+      <div className={styles.editorMainDiv}>
         <h5>Option 3</h5>
-        <div className={styles.editor2}>
+        <div className={styles.editorContainer}>
           <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
@@ -117,9 +117,9 @@ const Mcq = (props) => {
           />
         </div>
       </div>
-      <div className={styles.options}>
+      <div className={styles.editorMainDiv}>
         <h5>Option 4</h5>
-        <div className={styles.editor2}>
+        <div className={styles.editorContainer}>
           <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
