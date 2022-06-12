@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Modal from '../Modal/Modal';
-import Navbar from '../Navbar/Navbar';
 import styles from './Dashboard.module.css';
 
 const joinedCourses =
@@ -31,8 +30,14 @@ const joinedCourses =
   name: 'Database'},
   {id:2,
   name: 'Database'},
-  
+
 ]
+
+const colors=[
+  '#B9F8D3','#e9f47f6e','#8969b462','#a6e8ec9a'
+]
+
+let count = 0
 
 function Dashboard() {
   const [openModal,setOpenModal] =useState(false)
@@ -51,9 +56,10 @@ function Dashboard() {
       <button onClick={joinhandle}>Join Course</button>
       </div>
       <div className={styles.joinedCourses}>      
-{joinedCourses.map((item) => {return( 
-  <div className={styles.joinedList}>
-  {item.name}</div>)})}     
+          {joinedCourses.map((item,i) => {
+            count++;
+            if(count === 4){count = 0 }
+            return(<div style={{backgroundColor:colors[count]}} className={styles.joinedList}>{item.name}</div>)})}     
       </div>
       {openModal && <Modal closeModal={setOpenModal}/>}
     </div>
@@ -65,9 +71,10 @@ function Dashboard() {
       <button>Create Course</button>
       </div>
       <div className={styles.joinedCourses}>      
-{joinedCourses.map((item) => {return( 
-  <div className={styles.joinedList}>
-  {item.name}</div>)})}     
+          {joinedCourses.map((item,i) => {
+            count++;
+            if(count === 4){count = 0 }
+            return(<div style={{backgroundColor:colors[count]}} className={styles.joinedList}>{item.name}</div>)})}     
       </div>
   
     </div>

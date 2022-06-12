@@ -21,13 +21,22 @@ function VerifyEmail() {
           toast.success('Email verified', {
             position: toast.POSITION.TOP_RIGHT,
           });
+          //run this after 5.7 seconds.
           setTimeout(function () {
             navigate('/');
-          }, 5700); //run this after 3 seconds.
+          }, 5700);
         }
       })
       .catch(function (error) {
-        console.log(error);
+        if (error.response.status === 400) {
+          toast.error('Email already verified', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          //run this after 5.7 seconds.
+          setTimeout(function () {
+            navigate('/');
+          }, 5700);
+        }
       });
   };
 

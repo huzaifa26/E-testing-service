@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import emailjs from '@emailjs/browser';
 
 const MailService = async (data) => {
+  console.log(data.id)
   data.link = 'http://localhost:3000/emailVerification/' + data.id;
   emailjs
     .send('service_gvyqi7g', 'template_ojllmfn', data, 'PCrkZDdTgRVPTxMHf')
@@ -54,15 +55,20 @@ function Signup() {
           password: values.password,
         })
         .then(function (response) {
+          console.log("response")
           if (response.status === 200) {
-            console.log(response.data.email);
-            console.log(response.data.id);
+            console.log(response.data)
             MailService(response.data);
           }
         })
         .catch(function (error) {
-          if (error.response) {
+          console.log("response")
+          if (error.response.status === 400) {
             toast.error('Account with this email already exists', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          } else if (error.response.status === 500) {
+            toast.error('Error Registering User', {
               position: toast.POSITION.TOP_RIGHT,
             });
           }

@@ -13,10 +13,6 @@
     height: 100%;
     /* width: ; */
 }
-.mainDashboard1
-{
-/* background-color: #ffffff; */
-}
 .button
 {
     width: 95%;
@@ -62,8 +58,7 @@
 
 .joinedList
 {
-    background-color: rgb(150, 164, 206);
-    background-color: #97C4B8;
+    border-radius: 4px;
     height: 200px;
     width: 160px;
     display: flex;

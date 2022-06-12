@@ -1,7 +1,6 @@
 import styles from './Pools.module.css';
 
 import React, { useState } from 'react';
-import Navbar from '../Navbar/Navbar';
 import ShowPool from './ShowPool';
 import Buildpool from './Buildpool';
 
