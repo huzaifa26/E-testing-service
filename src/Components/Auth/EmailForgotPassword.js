@@ -8,7 +8,6 @@ import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import emailjs from '@emailjs/browser';
-import { useState } from 'react';
 
 const MailService = async (data) => {
   console.log(data.id)

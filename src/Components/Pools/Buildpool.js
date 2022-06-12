@@ -12,13 +12,8 @@ import { useDispatch } from 'react-redux';
 import { poolsActions } from './../../Redux/pools-slice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import createMathjaxPlugin from 'draft-js-mathjax-plugin'
 
-const mathjaxPlugin = createMathjaxPlugin(/* optional configuration object */)
- 
-const plugins = [
-  mathjaxPlugin,
-]
+
 
 const publishCourses = [
   {
@@ -215,7 +210,6 @@ function Buildpool() {
                 width: '100%',
                 height: 300,
               }}
-              plugins={plugins}
             />
           </div>
         </div>
