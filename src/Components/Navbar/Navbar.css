@@ -148,6 +148,7 @@ li i{
   max-width: 95%;
   height: 100%;
   background-color: 	#dfe3ee;
+  flex: 1;
 }
 
 @media only screen and (max-width: 764px) {

@@ -8,6 +8,8 @@ import Navbar from './Components/Navbar/Navbar';
 import Courses from './Components/Courses/Courses';
 import Pools from './Components/Pools/Pools';
 import Notification from './Components/Notifications/Notifications';
+import EmailForgotPassword from './Components/Auth/EmailForgotPassword';
+import ForgotPassword from './Components/Auth/ForgotPassword';
 
 function App() {
   return (
@@ -20,7 +22,8 @@ function App() {
           <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
           <Route path="/pools" element={<Navbar><Pools /></Navbar>} />
           <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
-          
+          <Route path="/forgotPassword" element={<EmailForgotPassword/>}/>
+          <Route path="/forgotPasswordChange/:id" element={<ForgotPassword/>}/>
         </Routes>
     </div>
   );

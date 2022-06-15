@@ -1,22 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap');
-
-* {
-  font-family: 'Poppins', sans-serif;
-  text-decoration: none;
-  list-style: none;
-  box-sizing: border-box;
-}
 
 .mainDashboard
 {
     height: 100%;
-    /* width: ; */
 }
-.mainDashboard1
-{
-/* background-color: #ffffff; */
-}
+
 .button
 {
     width: 95%;
@@ -32,6 +19,7 @@
     padding: 30px;
     margin: 20px;
 }
+
 .joinedHeader button{
     /* margin: 0 0 0.7rem 0; */
   background-color: #5811cb;
@@ -62,12 +50,30 @@
 
 .joinedList
 {
-    background-color: rgb(150, 164, 206);
-    background-color: #97C4B8;
-    height: 200px;
-    width: 160px;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    height: 250px;
+    width: 240px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin:0 0 20px 30px ;
 }
+
+.joinedList{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.joinedList img{
+    object-fit: cover;
+    width: 100%;
+    border-radius: 5px 5px 0px 0px;
+}
+
+@media only screen and (max-width: 557px) {
+    .joinedCourses{
+        justify-content: center;
+    }
+  }

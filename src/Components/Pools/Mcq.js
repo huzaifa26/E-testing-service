@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Mcq = (props) => {
-  const correctOption = useRef('');
+  const option1 = useRef('');
   const option2 = useRef('');
   const option3 = useRef('');
   const option4 = useRef('');
@@ -19,31 +19,22 @@ const Mcq = (props) => {
   const [editorState4, setEditorState4] = useState(EditorState.createEmpty());
 
   const handleMcq = () => {
-    if (
-      correctOption.current.state.editorState
-        .getCurrentContent()
-        .getPlainText() === '' ||
-      option2.current.state.editorState.getCurrentContent().getPlainText() ===
-        '' ||
-      option3.current.state.editorState.getCurrentContent().getPlainText() ===
-        '' ||
-      option4.current.state.editorState.getCurrentContent().getPlainText() ===
-        ''
-    ) {
+    if ( option1.current.state.editorState.getCurrentContent().getPlainText() === '' ||
+      option2.current.state.editorState.getCurrentContent().getPlainText() === '' ||
+      option3.current.state.editorState.getCurrentContent().getPlainText() === '' ||
+      option4.current.state.editorState.getCurrentContent().getPlainText() === '') {
       toast.error('You cant leave QUESTION/editorMainDiv empty', {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
       let mcqData = {
         editorMainDiv: [
-          correctOption.current.state.editorState
-            .getCurrentContent()
-            .getPlainText(),
+          option1.current.state.editorState.getCurrentContent().getPlainText(),
           option2.current.state.editorState.getCurrentContent().getPlainText(),
           option3.current.state.editorState.getCurrentContent().getPlainText(),
           option4.current.state.editorState.getCurrentContent().getPlainText(),
         ],
-        correctAnswer: correctOption.current.state.editorState
+        correctAnswer: option1.current.state.editorState
           .getCurrentContent()
           .getPlainText(),
         questionType: 'MCQ',
@@ -52,7 +43,6 @@ const Mcq = (props) => {
       setEditorState2(EditorState.createEmpty());
       setEditorState3(EditorState.createEmpty());
       setEditorState4(EditorState.createEmpty());
-      // console.log(editorState);
       console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
       props.sendMcq(mcqData);
     }
@@ -61,13 +51,14 @@ const Mcq = (props) => {
   return (
     <div className={styles.mcqMain}>
       <div className={styles.editorMainDiv}>
-        <h5>Correct Option</h5>
         <div className={styles.editorContainer}>
-          <Editor
+          <input placeholder='Enter Option Here' type={"text"}></input>
+          <label for="co">Correct Option: <input name='co' type={"radio"}></input> </label>
+          {/* <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
-            ref={correctOption}
+            ref={option1}
             editorState={editorState}
             onEditorStateChange={(newState) => {
               setEditorState(newState);
@@ -76,13 +67,14 @@ const Mcq = (props) => {
               width: '100%',
               height: 300,
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className={styles.editorMainDiv}>
-        <h5>Option 2</h5>
         <div className={styles.editorContainer}>
-          <Editor
+          <input placeholder='Enter Option Here' type={"text"}></input>
+          <label for="co">Correct Option: <input name='co' type={"radio"}></input> </label>
+          {/* <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
@@ -95,13 +87,15 @@ const Mcq = (props) => {
               width: '100%',
               height: 300,
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className={styles.editorMainDiv}>
-        <h5>Option 3</h5>
         <div className={styles.editorContainer}>
-          <Editor
+          <input placeholder='Enter Option Here' type={"text"}></input>
+          <label for="co">Correct Option: <input name='co' type={"radio"}></input> </label>
+
+          {/* <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
@@ -114,13 +108,15 @@ const Mcq = (props) => {
               width: '100%',
               height: 300,
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className={styles.editorMainDiv}>
-        <h5>Option 4</h5>
         <div className={styles.editorContainer}>
-          <Editor
+          <input placeholder='Enter Option Here' type={"text"}></input>
+          <label for="co">Correct Option: <input name='co' type={"radio"}></input> </label>
+
+          {/* <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
@@ -133,7 +129,7 @@ const Mcq = (props) => {
               width: '100%',
               height: 300,
             }}
-          />
+          /> */}
         </div>
       </div>
       <div>

@@ -3,8 +3,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import Mcq from './Mcq';
 import True from './True';
 import Plain from './Plain';
@@ -12,24 +11,9 @@ import { useDispatch } from 'react-redux';
 import { poolsActions } from './../../Redux/pools-slice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import createMathjaxPlugin from 'draft-js-mathjax-plugin'
-
-const mathjaxPlugin = createMathjaxPlugin(/* optional configuration object */)
- 
-const plugins = [
-  mathjaxPlugin,
-]
-
-const publishCourses = [
-  {
-    id: 1,
-    name: 'Database',
-  },
-  {
-    id: 3,
-    name: 'Assembly language',
-  },
-];
+import createMathjaxPlugin from 'draft-js-mathjax-plugin';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const category = [
   {
@@ -47,6 +31,8 @@ const category = [
 ];
 
 function Buildpool() {
+  const user=useSelector(state=> state.user);
+
   const [mcq, setmcq] = useState(false);
   const [trues, settrues] = useState(false);
   const [plain, setplain] = useState(false);
@@ -54,6 +40,19 @@ function Buildpool() {
   const helloRef = useRef('');
   const [courseName, setCourseName] = useState('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [publishCourses,setPublishedCourses]=useState([]);
+  const [showRichText,setShowRichText]=useState(false);
+  
+
+  useEffect(()=>{
+    let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
+    axios.get(link).then((res)=>{
+      console.log(res.data.data);
+      setPublishedCourses(res.data.data);
+    }).catch((err)=>{
+      console.log(err);
+    })
+  },[])
 
   const dispatch = useDispatch();
 
@@ -173,10 +172,19 @@ function Buildpool() {
     }
   };
 
+  const changeInputHandler = (e) => {
+    console.log(e.target.value);
+    if (e.target.value === "Input"){
+      setShowRichText(false);
+    } else if (e.target.value === "Rich box"){
+      setShowRichText(true);
+    }
+  }
+
   return (
     <div>
       <div className={styles.labelCourse}>
-        <label for="dog-names">
+        <label>
           Select Course &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
         </label>
         <select onChange={handlePublishCourses}>
@@ -184,12 +192,12 @@ function Buildpool() {
             Choose here
           </option>
           {publishCourses.map((value) => {
-            return <option value={value.id}>{value.name}</option>;
+            return <option value={value.id}>{value.courseName}</option>;
           })}
         </select>
       </div>
       <div className={styles.labelCategory}>
-        <label for="dog-names">Select Category :&nbsp; </label>
+        <label>Select Category :&nbsp; </label>
         <select onChange={handleCategory}>
           <option value="" selected disabled hidden>
             Choose here
@@ -199,10 +207,19 @@ function Buildpool() {
           })}
         </select>
       </div>
-        <div>
+        {(mcq || trues || plain) && <div>
           <h4>Question Text</h4>
-          <div className={styles.editor2}>
-            <Editor
+          <div style={showRichText ? {paddingBottom:"70px"}:{paddingBottom:"20px"}} className={styles.editor2}>
+            <div className={styles.radioDiv}>
+              <input onChange={changeInputHandler} type="radio" id="input" name="questionInput" value="Input"/>
+              <label for="input">Input</label>
+              <input onChange={changeInputHandler} type="radio" id="input" name="questionInput" value="Rich box"/>
+              <label for="input">Rich Text</label>
+            </div>
+            {showRichText === false && 
+              <textarea rows={8} style={{width:"600px",resize:"none"}} type='text' placeholder='Enter your Question'></textarea>
+            } 
+            {showRichText === true && <Editor
               toolbarClassName="toolbarClassName"
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
@@ -215,15 +232,14 @@ function Buildpool() {
                 width: '100%',
                 height: 300,
               }}
-              plugins={plugins}
-            />
+            />}
+            {mcq && <Mcq sendMcq={sendMcq} />}
+            {trues && <True sendTrues={sendTrues} />}
+            {plain && <Plain sendPlain={sendPlain} />}
+            <ToastContainer />
           </div>
-        </div>
+        </div>}
       <hr></hr>
-      {mcq && <Mcq sendMcq={sendMcq} />}
-      {trues && <True sendTrues={sendTrues} />}
-      {plain && <Plain sendPlain={sendPlain} />}
-      <ToastContainer />
     </div>
   );
 }

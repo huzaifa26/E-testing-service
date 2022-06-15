@@ -5,8 +5,11 @@ import image from './../../Assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { userActions } from './../../Redux/user-slice'; 
 
 function Login() {
+  const dispatch=useDispatch();
   const loginData = useRef();
   let navigate = useNavigate();
 
@@ -20,9 +23,8 @@ function Login() {
       })
       .then(function (response) {
         if (response.status === 200) {
-          console.log(response.data)
-          // const accessToken =response.data.accessToken
-          // setAuth({email,password,roles,accessToken })
+          // console.log(response.data)
+          dispatch(userActions.userInfo(response.data));
           navigate('/dashboard');
         }
       })
@@ -59,7 +61,7 @@ function Login() {
           <h1 className={styles.LoginName}>LOGIN</h1>
           <input type="email" name="email" placeholder="Email"></input>
           <input type="password" name="password" placeholder="Password"></input>
-          <p className={styles.LoginFormForget}>forget password?</p>
+          <p className={styles.LoginFormForget} onClick={() => {navigate('/forgotPassword');}}>forget password?</p>
           <div className={styles.footer}>
             <button>Login</button>
             <p

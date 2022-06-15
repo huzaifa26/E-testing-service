@@ -1,0 +1,32 @@
+.CreateCourse{
+    width: 100%;
+    height: 100%;
+}
+
+.CreateCourse .joinedHeader{
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    margin: 20px;
+}
+
+.CreateCourse .form{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.CreateCourse input, select{
+    width: 100%;
+    border-width: 0 0 2px;
+    border-color: #9b9a9adc;
+    font-size: 18px;
+    outline: 0;
+    border-width: 0 0 2px;
+  }
+
+  .CreateCourse input,textarea,button{
+      outline: none;
+  }
