@@ -17,28 +17,20 @@ function True(props) {
     <>
       <div className={styles.true}>
         <label>
-          True &nbsp;&nbsp;
-          <input
-            type="radio"
-            name="isTrue"
-            value="true"
+          True 
+          <input type="radio" name="isTrue" value="true"
             onClick={(e) => {
               setvalue(e.target.value);
             }}
           />
-          &nbsp;&nbsp;&nbsp;&nbsp;
         </label>
         <label>
-          False &nbsp;&nbsp;
-          <input
-            type="radio"
-            name="isTrue"
-            value="false"
+          False 
+          <input type="radio" name="isTrue" value="false"
             onClick={(e) => {
               setvalue(e.target.value);
             }}
           />
-          &nbsp;&nbsp;&nbsp;&nbsp;
         </label>
       </div>
       <div className={styles.buttoncenter}>

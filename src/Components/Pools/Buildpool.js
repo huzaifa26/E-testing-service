@@ -26,7 +26,7 @@ const category = [
   },
   {
     id: 3,
-    name: 'Plain Text',
+    name: 'Subjective',
   },
 ];
 
@@ -37,7 +37,8 @@ function Buildpool() {
   const [trues, settrues] = useState(false);
   const [plain, setplain] = useState(false);
   const [courseId, setCourseId] = useState('');
-  const helloRef = useRef('');
+  const rtQuestionRef = useRef('');
+  const inputQuestionRef = useRef('');
   const [courseName, setCourseName] = useState('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [publishCourses,setPublishedCourses]=useState([]);
@@ -80,38 +81,57 @@ function Buildpool() {
     setCourseId(e.target.value);
     publishCourses.forEach((element) => {
       if (parseInt(e.target.value) === element.id) {
-        setCourseName(element.name);
+        setCourseName(element.courseName);
       }
     });
   }
 
-  const sendMcq = (mcqData) => {
+  const getMcqs = (mcqData) => {
     mcqData.courseId = courseId;
+
     if (mcqData.courseId === '') {
       toast.error('Select Course Please', {
         position: toast.POSITION.TOP_CENTER,
       });
-    } else if (
-      helloRef.current.state.editorState.getCurrentContent().getPlainText() ===''
-    ) {
+    } else if (inputQuestionRef.current.value.trim().length === 0) {
       toast.error('You cant leave QUESTION/OPTIONS empty', {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      mcqData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-
-      setEditorState(EditorState.createEmpty());
-
+      mcqData.question = inputQuestionRef.current.value;
       mcqData.courseName = courseName;
+      console.log(mcqData);
 
       dispatch(poolsActions.allQuestions(mcqData));
       toast.success('Added', {
         position: toast.POSITION.TOP_CENTER,
       });
     }
+
+    // if (mcqData.courseId === '') {
+    //   toast.error('Select Course Please', {
+    //     position: toast.POSITION.TOP_CENTER,
+    //   });
+    // } else if (rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText() ===''
+    // || inputQuestionRef.current.value.trim().length === 0) {
+    //   toast.error('You cant leave QUESTION/OPTIONS empty', {
+    //     position: toast.POSITION.TOP_CENTER,
+    //   });
+    // } else {
+    //   mcqData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+
+    //   setEditorState(EditorState.createEmpty());
+
+    //   mcqData.courseName = courseName;
+
+    //   dispatch(poolsActions.allQuestions(mcqData));
+    //   toast.success('Added', {
+    //     position: toast.POSITION.TOP_CENTER,
+    //   });
+    // }
   };
 
-  const sendTrues = (truesData) => {
+  const getTrues = (truesData) => {
     truesData.courseId = courseId;
 
     if (truesData.courseId === '') {
@@ -119,7 +139,7 @@ function Buildpool() {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if (
-      helloRef.current.state.editorState.getCurrentContent().getPlainText() ===''
+      rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText() ===''
     ) {
       toast.error('You cant leave question empty', {
         position: toast.POSITION.TOP_CENTER,
@@ -141,7 +161,7 @@ function Buildpool() {
     }
   };
 
-  const sendPlain = (plainData) => {
+  const getPlain = (plainData) => {
     plainData.courseId = courseId;
     
     if (plainData.courseId === '') {
@@ -149,8 +169,7 @@ function Buildpool() {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if (
-      helloRef.current.state.editorState.getCurrentContent().getPlainText() ===
-      ''
+      rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText() ===''
     ) {
       toast.error('You cant leave question empty', {
         position: toast.POSITION.TOP_CENTER,
@@ -185,7 +204,7 @@ function Buildpool() {
     <div>
       <div className={styles.labelCourse}>
         <label>
-          Select Course &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;
+          Select Course
         </label>
         <select onChange={handlePublishCourses}>
           <option value="" selected disabled hidden>
@@ -197,7 +216,7 @@ function Buildpool() {
         </select>
       </div>
       <div className={styles.labelCategory}>
-        <label>Select Category :&nbsp; </label>
+        <label>Question Type :&nbsp; </label>
         <select onChange={handleCategory}>
           <option value="" selected disabled hidden>
             Choose here
@@ -208,34 +227,40 @@ function Buildpool() {
         </select>
       </div>
         {(mcq || trues || plain) && <div>
-          <h4>Question Text</h4>
-          <div style={showRichText ? {paddingBottom:"70px"}:{paddingBottom:"20px"}} className={styles.editor2}>
+          <div className={styles.editor2}>
+            <h4>Question Text</h4>
             <div className={styles.radioDiv}>
-              <input onChange={changeInputHandler} type="radio" id="input" name="questionInput" value="Input"/>
+              <input onChange={changeInputHandler} defaultChecked type="radio" id="input" name="questionInput" value="Input"/>
               <label for="input">Input</label>
               <input onChange={changeInputHandler} type="radio" id="input" name="questionInput" value="Rich box"/>
               <label for="input">Rich Text</label>
             </div>
             {showRichText === false && 
-              <textarea rows={8} style={{width:"600px",resize:"none"}} type='text' placeholder='Enter your Question'></textarea>
+            <textarea rows={11} style={{width: "47.5%",resize:"none",minWidth:'315px',borderColor:'rgba(0, 0, 0, 0.456)'}} type='text' placeholder='Enter your Question'></textarea>
             } 
             {showRichText === true && <Editor
               toolbarClassName="toolbarClassName"
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
-              ref={helloRef}
+              ref={rtQuestionRef}
               editorState={editorState}
               onEditorStateChange={(newState) => {
                 setEditorState(newState);
               }}
               wrapperStyle={{
-                width: '100%',
-                height: 300,
+                width: '70%',
+                marginBottom:'10px',
+                border:'1px solid #DAEAF1',
+                minHeight:"300px",
+                minWidth:"315px",
+                maxHeight: '300px',
+                overflowX:"hidden",
+                // overflowY:"auto"
               }}
             />}
-            {mcq && <Mcq sendMcq={sendMcq} />}
-            {trues && <True sendTrues={sendTrues} />}
-            {plain && <Plain sendPlain={sendPlain} />}
+            {mcq && <Mcq getMcqs={getMcqs} />}
+            {trues && <True getTrues={getTrues} />}
+            {plain && <Plain getPlain={getPlain} />}
             <ToastContainer />
           </div>
         </div>}

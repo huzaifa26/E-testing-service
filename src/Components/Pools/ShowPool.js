@@ -76,11 +76,7 @@ function ShowPool() {
                     return (
                       <ShowQuestion
                         i={i}
-                        courseName={item.courseName}
-                        correctAnswer={item.correctAnswer}
-                        questionType={item.questionType}
-                        question={item.question}
-                        options={item.options}
+                        item={item}
                       />
                     );
                   })}

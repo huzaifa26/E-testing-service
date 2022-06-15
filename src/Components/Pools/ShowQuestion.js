@@ -8,6 +8,8 @@ function ShowQuestion(props) {
   //   console.log(props.i);
   // };
 
+  console.log(props)
+
   return (
     <>
           <TableRow
@@ -19,7 +21,7 @@ function ShowQuestion(props) {
               <TableCell component='th'>{props.questionType}</TableCell>
               <TableCell component='th'>{props.question}</TableCell>
               <TableCell component='th'>{'[ ' + props.options + ' ]'}</TableCell>
-              <TableCell component='th' className={styles.correct}>{props.correctAnswer}</TableCell>
+              <TableCell component='th' className={styles.correct}>{props.correctOption}</TableCell>
             </TableRow>
     </>
   );

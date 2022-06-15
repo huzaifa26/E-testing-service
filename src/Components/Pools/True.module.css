@@ -29,3 +29,7 @@
   /* background-color: aqua; */
   width: 99.3%;
 }
+
+.true label input{
+  width: 20px;
+}
