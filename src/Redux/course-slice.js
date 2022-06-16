@@ -13,5 +13,18 @@ const courseSlice = createSlice({
   },
 });
 
+export const courseId_Name=createSlice({
+  name:"courseIdName",
+  initialState: {
+    courseIdName:[]
+  },
+  reducers:{
+    courseIdName(state,actions){
+      state.courseIdName=actions.payload
+    }
+  }
+})
+
+export const courseId_NameActions = courseId_Name.actions;
 export const courseActions = courseSlice.actions;
 export default courseSlice;

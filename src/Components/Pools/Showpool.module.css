@@ -49,3 +49,56 @@
 .poolsCategory svg:hover {
   color: red;
 }
+.displayQuestions
+{
+  background-color: white;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.courseName
+{
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.questionHeader
+{
+  display: flex;
+  padding: 10px;
+}
+
+.questionHeader h1
+{
+  flex: 1;
+}
+
+.question 
+{
+  margin: 0 70px 0 -10px;
+  flex: 30;
+}
+
+.ul li
+{
+  list-style-type: upper-latin;
+  margin: 5px 0;
+}
+
+.abc{
+  /* color: rgb(64, 209, 64); */
+}
+
+
+.questionType span
+{
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.questionType
+{
+  flex: 1;
+  text-align: end;
+}

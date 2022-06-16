@@ -92,7 +92,7 @@ const Mcq = (props) => {
     <div className={styles.mcqMain}>
         <div className={styles.editorContainer}>
           <input onChange={(e)=>{setop1(e.target.value)}} ref={inputOption1} placeholder='Enter Option Here' type={"text"}></input>
-          <label for="co">Correct Option: <input value={inputOption1.current.value} onChange={((e)=>{console.log(op1);setCorrectOption(op1)})} name='co' type={"radio"}></input> </label>
+          <label htmlFor="co">Correct Option: <input value={inputOption1.current.value} onChange={((e)=>{console.log(op1);setCorrectOption(op1)})} name='co' type={"radio"}></input> </label>
           {/* <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
@@ -110,7 +110,7 @@ const Mcq = (props) => {
         </div>
         <div className={styles.editorContainer}>
           <input onChange={(e)=>{setop2(e.target.value)}} ref={inputOption2} placeholder='Enter Option Here' type={"text"}></input>
-          <label for="co">Correct Option: <input value={inputOption2.current.value} onChange={((e)=>{console.log(op2);setCorrectOption(op2)})}  name='co' type={"radio"}></input> </label>
+          <label htmlFor="co">Correct Option: <input value={inputOption2.current.value} onChange={((e)=>{console.log(op2);setCorrectOption(op2)})}  name='co' type={"radio"}></input> </label>
           {/* <Editor
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
@@ -128,7 +128,7 @@ const Mcq = (props) => {
         </div>
         <div className={styles.editorContainer}>
           <input onChange={(e)=>{setop3(e.target.value)}} ref={inputOption3} placeholder='Enter Option Here' type={"text"}></input>
-          <label for="co">Correct Option: <input value={inputOption3.current.value} onChange={((e)=>{console.log(op3);setCorrectOption(op3)})}  name='co' type={"radio"}></input> </label>
+          <label htmlFor="co">Correct Option: <input value={inputOption3.current.value} onChange={((e)=>{console.log(op3);setCorrectOption(op3)})}  name='co' type={"radio"}></input> </label>
 
           {/* <Editor
             toolbarClassName="toolbarClassName"
@@ -147,7 +147,7 @@ const Mcq = (props) => {
         </div>
         <div className={styles.editorContainer}>
           <input onChange={(e)=>{setop4(e.target.value)}} ref={inputOption4} placeholder='Enter Option Here' type={"text"}></input>
-          <label for="co">Correct Option: <input value={inputOption4.current.value} onChange={((e)=>{console.log(op4);setCorrectOption(op4)})}  name='co' type={"radio"}></input> </label>
+          <label htmlFor="co">Correct Option: <input value={inputOption4.current.value} onChange={((e)=>{console.log(op4);setCorrectOption(op4)})}  name='co' type={"radio"}></input> </label>
 
           {/* <Editor
             toolbarClassName="toolbarClassName"

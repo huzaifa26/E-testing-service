@@ -79,11 +79,11 @@ const  CreateCourse=(props) => {
 
     return ( 
     <div className={styles.CreateCourse}>
-        <div className={styles.joinedHeader}>
+        <div className={styles.joinedHeader1}>
             <h1>Create Course</h1>
         </div>
 
-        <div className={styles.joinedHeader}>
+        <div className={styles.joinedHeader2}>
             <form ref={formRef} onSubmit={CreateClassSubmithandler} className={styles.form}>
                 <input onChange={imageHandler} type="file" alt="Choose File" accept=".png,.jpg,.jpeg" width="48" height="48"></input>
                 <input name="courseName" type={"text"} placeholder="Course Name"></input>
@@ -101,7 +101,9 @@ const  CreateCourse=(props) => {
                     <option>On-Campus</option>
                     <option>Online</option>
                 </select>
+                <div className={styles.button}>
                 <button type="submit">Create Class</button>
+                </div>
             </form>
         </div>
     </div> );

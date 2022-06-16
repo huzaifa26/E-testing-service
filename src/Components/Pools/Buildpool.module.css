@@ -5,12 +5,16 @@
 }
 
 .labelCourse {
-  width: 310px;
-  padding: 9px 0px 9px 5px;
+  width: 300px;
+  padding: 5px 0px 5px 5px;
   margin-top: 7px;
-  border: 3px solid white;
+  border: 1px solid white;
   border-radius: 6px;
   margin-bottom: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 .labelCourse select {
   cursor: pointer;
@@ -20,6 +24,8 @@
   background: white;
   width: 156px;
   margin-left: -4px;
+  flex: 1;
+  font-size: 16px;
 }
 .labelCourse select::-ms-expand {
   display: none;
@@ -36,40 +42,9 @@
 
 .labelCourse label {
   margin-right: 7px;
+  font-size: 16px;
 }
 
-.labelCategory {
-  width: 310px;
-  padding: 9px 0px 9px 5px;
-  margin-top: 7px;
-  border: 3px solid white;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-.labelCategory select {
-  cursor: pointer;
-  padding: 4px 0px;
-  border: 0px solid #000000;
-  border-radius: 4px;
-  background: white;
-  width: 156px;
-}
-.labelCategory select::-ms-expand {
-  display: none;
-}
-.labelCategory select:hover,
-.labelCategory select:focus {
-  color: #000000;
-  background: white;
-}
-.labelCategory select:hover ~ .labelCategory_arrow,
-.labelCategory select:focus ~ .labelCategory_arrow {
-  border-color: #000000;
-}
-
-.labelCategory label {
-  margin-right: 2px;
-}
 .editor2 {
   background-color: white;
   width: 100%;

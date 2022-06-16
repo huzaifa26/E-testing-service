@@ -51,6 +51,7 @@
 }
 .editorContainer input[type=text] {
   border: 0;
+  flex:1;
 }
 
 .button {

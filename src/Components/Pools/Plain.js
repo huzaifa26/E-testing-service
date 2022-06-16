@@ -6,19 +6,27 @@ import { convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
 function Plain(props) {
-  const helloRef = useRef('');
+  const subjectiveAnswerRef = useRef('');
+  const inputSubjectiveAnswerRef=useRef('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [showRichText,setShowRichText]=useState(false);
 
   const handlePlain = () => {
-    let plainData = {
-      options: ['Question/Answer', 'Fill in the blanks'],
-      questionType: 'TEXT',
-      correctAnswer: helloRef.current.state.editorState.getCurrentContent().getPlainText(),
+
+    let subjectiveQuestion = {
+      questionType: 'Subjective',
+      correctOption: inputSubjectiveAnswerRef.current.value,
     };
-    console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
-    setEditorState(EditorState.createEmpty());
-    props.sendPlain(plainData);
+    props.getPlain(subjectiveQuestion);
+
+    // let plainData = {
+    //   options: ['Question/Answer', 'Fill in the blanks'],
+    //   questionType: 'TEXT',
+    //   correctAnswer: helloRef.current.state.editorState.getCurrentContent().getPlainText(),
+    // };
+    // console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    // setEditorState(EditorState.createEmpty());
+    // props.sendPlain(plainData);
   };
 
 
@@ -33,30 +41,37 @@ function Plain(props) {
 
   return (
     <div className={styles.plainMain}>
-      <div className={styles.editorContainer}>
-        <h3>Answer</h3>
-        <div className={styles.editor}>
         <div className={styles.radioDiv}>
               <input onChange={changeInputHandler}  defaultChecked type="radio" id="input" name="subjectiveInput" value="Input"/>
-              <label for="input">Input</label>
+              <label htmlFor="input">Input</label>
               <input onChange={changeInputHandler} type="radio" id="input" name="subjectiveInput" value="Rich box"/>
-              <label for="input">Rich Text</label>
-            </div>
-            {showRichText === false && 
-              <textarea rows={8} style={{width:"600px",resize:"none"}} type='text' placeholder='Enter your Question'></textarea>
+              <label htmlFor="input">Rich Text</label>
+        </div>
+        <h1>Answer</h1>
+        <div className={styles.editor}>
+
+        {showRichText === false && 
+            <textarea ref={inputSubjectiveAnswerRef} rows={11} style={{width: "100%",resize:"none",minWidth:'315px',borderColor:'rgba(0, 0, 0, 0.456)'}} type='text' placeholder='Enter Answer'></textarea>
             } 
+        </div>
             {showRichText === true && <Editor
               toolbarClassName="toolbarClassName"
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
-              ref={helloRef}
+              ref={subjectiveAnswerRef}
               editorState={editorState}
               onEditorStateChange={(newState) => {
                 setEditorState(newState);
               }}
               wrapperStyle={{
-                width: '100%',
-                height: 300,
+                width: '70%',
+                marginBottom:'10px',
+                border:'1px solid #DAEAF1',
+                minHeight:"300px",
+                minWidth:"315px",
+                maxHeight: '300px',
+                overflowX:"hidden",
+                // overflowY:"auto"
               }}
             />}
           {/* <Editor
@@ -73,8 +88,6 @@ function Plain(props) {
               height: 300,
             }}
           /> */}
-        </div>
-      </div>
       <div>
         <button className={styles.button} onClick={handlePlain}>
           Add

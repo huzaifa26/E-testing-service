@@ -3,26 +3,62 @@
     height: 100%;
 }
 
-.CreateCourse .joinedHeader{
+.CreateCourse .joinedHeader1{
     display: flex;
     background-color: white;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px;
+    font-family: 'Quicksand', sans-serif;
+    padding: 40px;
+    font-weight: 500;
     margin: 20px;
+}
+.CreateCourse .joinedHeader2{
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    margin: 20px;
+}
+.CreateCourse .joinedHeader2 .button button{
+    background-color: #5811cb;
+    align-self: center;
+    border: 1px solid #5811cb;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 3px;
+    padding: 8px 25px;
+    text-decoration: none;
+    font-family: 'Roboto Flex', sans-serif;
+}
+.CreateCourse .joinedHeader2 .button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .CreateCourse .form{
     display: flex;
+    width: 55%;
+    padding: 50px 30px;
     flex-direction: column;
-    gap: 40px;
+    gap: 50px;
+    min-width: 270px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 7px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .CreateCourse input, select{
     width: 100%;
     border-width: 0 0 2px;
     border-color: #9b9a9adc;
-    font-size: 18px;
+    font-size: 20px;
     outline: 0;
     border-width: 0 0 2px;
   }

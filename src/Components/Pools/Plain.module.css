@@ -4,15 +4,15 @@
   flex-direction: column;
   align-items: center;
   margin-top: 30px;
-}
-.editor {
-  height: 378px;
-  background-color: white;
   width: 100%;
 }
-
-.editorContainer {
-  margin-top: 30px;
+.editor
+{
+  width: 47.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
@@ -33,27 +33,12 @@
   font-family: 'Roboto Flex', sans-serif;
 }
 
-.plainMain .radioDiv input{
-  width: 20px;
-}
+  .radioDiv
+  {
+  margin: 20px 0
+  }
 
-@media only screen and (max-width: 629px) {
-  .editor {
-    height: 400px;
-  }
-}
-@media only screen and (max-width: 576px) {
-  .editor {
-    height: 410px;
-  }
-}
-@media only screen and (max-width: 559px) {
-  .editor {
-    height: 420px;
-  }
-}
-@media only screen and (max-width: 450px) {
-  .editor {
-    height: 450px;
-  }
+.radioDiv input
+{
+margin: 0px 2px 0 10px
 }

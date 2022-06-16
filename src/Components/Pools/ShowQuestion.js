@@ -16,12 +16,12 @@ function ShowQuestion(props) {
               key={props.i}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="right">{props.i}</TableCell>
-              <TableCell component="th" scope="row">{props.courseName}</TableCell>
-              <TableCell component='th'>{props.questionType}</TableCell>
-              <TableCell component='th'>{props.question}</TableCell>
-              <TableCell component='th'>{'[ ' + props.options + ' ]'}</TableCell>
-              <TableCell component='th' className={styles.correct}>{props.correctOption}</TableCell>
+              <TableCell align="left">{props.i}</TableCell>
+              <TableCell component="th" scope="row">{props.item.courseName}</TableCell>
+              <TableCell component='th'>{props.item.questionType}</TableCell>
+              <TableCell component='th'>{props.item.question}</TableCell>
+              <TableCell component='th'>{'[ ' + props.item.options + ' ]'}</TableCell>
+              <TableCell component='th' className={styles.correct}>{props.item.correctOption}</TableCell>
             </TableRow>
     </>
   );

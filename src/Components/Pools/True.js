@@ -7,10 +7,10 @@ function True(props) {
   const handleTrues = () => {
     let truesData = {
       options: ['True', 'False'],
-      correctAnswer: value,
+      correctOption: value,
       questionType: 'TRUE/FALSE',
     };
-    props.sendTrues(truesData);
+    props.getTrues(truesData);
   };
 
   return (
