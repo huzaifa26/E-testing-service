@@ -4,12 +4,16 @@
   padding: 9px 0px 0px 2px;
 }
 .poolsCategory {
-  width: 310px;
-  padding: 9px 0px 0px 5px;
+  width: 300px;
+  padding: 5px 0px 5px 5px;
   margin-top: 7px;
-  border: 3px solid white;
+  border: 1px solid white;
   border-radius: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 .poolsCategory select {
   cursor: pointer;
@@ -20,10 +24,11 @@
   background: white;
   border-radius: 4px;
   width: 156px;
-  margin-bottom: 10px;
+  font-size: 16px;
 }
 .poolsCategory label {
   margin-right: 7px;
+  font-size: 16px;
 }
 .poolsCategory select::-ms-expand {
   display: none;
@@ -85,11 +90,6 @@
   list-style-type: upper-latin;
   margin: 5px 0;
 }
-
-.abc{
-  /* color: rgb(64, 209, 64); */
-}
-
 
 .questionType span
 {

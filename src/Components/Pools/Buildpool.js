@@ -123,7 +123,6 @@ function Buildpool() {
   const getTrues = (truesData) => {
     truesData.courseId = courseId;
 
-
     if (truesData.courseId === '') {
       toast.error('Select Course Please', {
         position: toast.POSITION.TOP_CENTER,

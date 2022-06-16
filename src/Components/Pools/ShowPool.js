@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 function ShowPool() {
   const [courseId, setCourseId] = useState('0');
+  const [isCourseSelected,setIsCourseSelected]=useState(false);
 
   const publishCourses=useSelector(state=>{return state.courseId_Name.courseIdName});
 
@@ -15,13 +16,14 @@ function ShowPool() {
 
   const handleShow = (e) => {
     setCourseId(e.target.value);
+    setIsCourseSelected(true)
   };
 
   return (
     <div>
       <div className={styles.poolsMain}>
       <div className={styles.poolsCategory}>
-        <label htmlFor="dog-names">Select Course &nbsp;&nbsp;&nbsp;&nbsp;:</label>
+        <label >Select Course:</label>
         <select onChange={handleShow}>
           <option value={0} selected>
             All Courses
@@ -31,6 +33,19 @@ function ShowPool() {
           })}
         </select>
       </div>
+      {isCourseSelected && <div className={styles.poolsCategory}>
+        <label>
+          Select Category:
+        </label>
+        <select onChange={handleShow}>
+          <option value="" selected disabled hidden>
+            Choose Category
+          </option>
+          {publishCourses.map((value) => {
+            return <option value={value.id}>{value.courseName}</option>;
+          })}
+        </select>
+      </div>}
       </div>
 
     {courseId === '0' ? allQuestions.map((item, i) => {
