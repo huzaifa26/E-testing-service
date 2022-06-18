@@ -24,10 +24,17 @@ function VerifyEmail() {
           setTimeout(function () {
             navigate('/');
           }, 5700); //run this after 3 seconds.
-        }
+        } 
       })
       .catch(function (error) {
-        console.log(error);
+        if (error.response.status === 400) {
+          toast.error('Email Already verified', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setTimeout(function () {
+            navigate('/');
+          }, 5700); //run this after 3 seconds.
+        } 
       });
   };
 

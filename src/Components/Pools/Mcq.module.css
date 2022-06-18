@@ -47,7 +47,7 @@
 
 .editorContainer label {
   color: rgba(0, 0, 0, 0.655);
-
+  font-size: 16px;
 }
 .editorContainer input[type=text] {
   border: 0;
@@ -56,9 +56,9 @@
 
 .button {
   cursor: pointer;
-  background-color: #5811cb;
+  background-color: var(--primary);
   align-self: center;
-  border: 1px solid #5811cb;
+  border: 1px solid var(--primary);
   display: inline-block;
   cursor: pointer;
   color: #ffffff;

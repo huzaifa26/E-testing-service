@@ -2,6 +2,8 @@ import styles from "./CreateCategoryModal.module.css";
 import {useSelector} from "react-redux";
 import {useRef} from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function CreateCategoryModal(props) {
     const formRef=useRef();
@@ -20,6 +22,9 @@ function CreateCategoryModal(props) {
 
         axios.post("http://localhost:5000/api/poolCategory",data).then((res)=>{
             console.log(res);
+            toast.success('Category Created', {
+                position: toast.POSITION.TOP_RIGHT,
+              });
         }).catch((err)=>{
             console.log(err)
         })
@@ -29,20 +34,24 @@ function CreateCategoryModal(props) {
         <>
             <div onClick={()=>{props.closeModalHandler()}} className={styles.CreateCategoryModalBackground}>
             </div>
-
             <div onClick={()=>{}} className={styles.CreateCategoryModal}>
-                <h2>Create Category</h2>
-                <form ref={formRef} onSubmit={formSubmitHandler}>
+                <form style={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}}  ref={formRef} onSubmit={formSubmitHandler}>
+                    <h2 style={{height:"15%",marginBottom:'15px',textAlign:"center",fontSize:'25px',color:'var(--primary)',fontWeight:"500" }}>Create Category</h2>
                     <select name="courseId">
                         <option disabled selected>Choose Course</option>
                         {courseId_name.map((value) => {
                             return <option value={value.id}>{value.courseName}</option>;
                         })}
                     </select>
-                    <input type={"text"} name="categoryName" placeholder="Category Name"></input>
-                    <button type="submit">Submit</button>
+                    <input type={"text"} name="categoryName" placeholder=" Category Name"></input>
+                    <div className={styles.btnDiv}>
+                        <button onClick={()=>{props.closeModalHandler()}}>Close</button>
+                        <button type="submit">Submit</button>
+                    </div>
                 </form>
+
             </div>
+      <ToastContainer />
         </>
      );
 }

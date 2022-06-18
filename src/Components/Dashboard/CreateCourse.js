@@ -52,6 +52,7 @@ const  CreateCourse=(props) => {
                   })
                 props.showDashboardHandler();
             }
+            
         }).catch((err)=>{
             if(err.status === 500){
                 toast.error('Cannot register Course', {
@@ -64,6 +65,7 @@ const  CreateCourse=(props) => {
     // UPLOAD COURSE IMAGES TO FIREBASE
     const imageHandler= async (e)=>{
         setImage(e.target.files[0]);
+        console.log(e.target.files);
         
         if(image == null)
             return;

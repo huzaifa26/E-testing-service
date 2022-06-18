@@ -13,7 +13,7 @@
 }
 
 .EmailVerifyImage {
-  background-color: #5811cb;
+  background-color: var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,9 +50,9 @@
 }
 .Button {
   /* margin: 0 0 0.7rem 0; */
-  background-color: #5811cb;
+  background-color: var(--primary);
   align-self: center;
-  border: 1px solid #5811cb;
+  border: 1px solid var(--primary);
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -63,7 +63,7 @@
   /* font-family: 'Roboto Flex', sans-serif; */
 }
 .p {
-  /* color: #5811cb; */
+  /* color: var(--primary); */
   /* font-family: 'Roboto Flex', sans-serif; */
   padding: 20px;
   margin-bottom: 20px;

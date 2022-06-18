@@ -10,6 +10,8 @@ import Pools from './Components/Pools/Pools';
 import Notification from './Components/Notifications/Notifications';
 import EmailForgotPassword from './Components/Auth/EmailForgotPassword';
 import ForgotPassword from './Components/Auth/ForgotPassword';
+import Profile from './Components/Profile/Profile';
+import Auth from './Protected/Auth';
 
 function App() {
   return (
@@ -18,12 +20,17 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/emailVerification/:id" element={<VerifyEmail />} />
-          <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
-          <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
-          <Route path="/pools" element={<Navbar><Pools /></Navbar>} />
-          <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
           <Route path="/forgotPassword" element={<EmailForgotPassword/>}/>
           <Route path="/forgotPasswordChange/:id" element={<ForgotPassword/>}/>
+
+          <Route path='/' element={<Auth/>} >
+            <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
+            <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
+            <Route path="/pools" element={<Navbar><Pools /></Navbar>} />
+            <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
+            <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
+            
+          </Route>
         </Routes>
     </div>
   );

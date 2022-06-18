@@ -7,9 +7,9 @@
 }
 .button {
   cursor: pointer;
-  background-color: #5811cb;
+  background-color: var(--primary);
   align-self: center;
-  border: 1px solid #5811cb;
+  border: 1px solid var(--primary);
   display: inline-block;
   cursor: pointer;
   color: #ffffff;

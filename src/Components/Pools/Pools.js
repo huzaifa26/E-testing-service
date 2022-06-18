@@ -25,15 +25,31 @@ function Pools() {
     setShowModal(false);
   }
 
+  const getRequests=()=>{
+    if(user.userInfo.hasOwnProperty("user") === true){
+      let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
+      axios.get(link).then((res)=>{
+        console.log(res.data.data);
+        dispatch(courseId_NameActions.courseIdName(res.data.data));
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
+  }
+
   useEffect(()=>{
-    let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
-    axios.get(link).then((res)=>{
-      console.log(res.data.data);
-      dispatch(courseId_NameActions.courseIdName(res.data.data));
-    }).catch((err)=>{
-      console.log(err);
-    })
+    getRequests();
   },[])
+
+  // useEffect(()=>{
+  //   let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
+  //   axios.get(link).then((res)=>{
+  //     console.log(res.data.data);
+  //     dispatch(courseId_NameActions.courseIdName(res.data.data));
+  //   }).catch((err)=>{
+  //     console.log(err);
+  //   })
+  // },[])
 
   return (
     <>
@@ -48,6 +64,8 @@ function Pools() {
           </p>
         </div>
         <div className={styles.poolsBar}>
+          <div className={styles.allButton}>
+
           <button className={styles.button0}
             onClick={() => {
               setshowPool(true);
@@ -66,6 +84,8 @@ function Pools() {
             onClick={openModalHandler}>
             Create Category
           </button>
+          </div>
+
           {showPool && <ShowPool />}
           {createPool && <Buildpool />}
         </div>

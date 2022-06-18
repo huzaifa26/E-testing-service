@@ -56,13 +56,15 @@ function Dashboard() {
         <div>
           <div className={styles.joinedHeader} >
           <h1>Published Courses</h1>
-          <button onClick={createCourseHandler}>Create Course</button>
+          <button onClick={createCourseHandler}>Create Class</button>
           </div>
-          <div className={styles.joinedCourses}>      
+          <div  className={styles.joinedCourses}>      
             {courses.courses.map((item) => {
               return( 
-              <div className={styles.joinedList}>
-                <img src={item.imageUrl}></img>
+              <div onClick={(e)=>{console.log(item);}} className={styles.joinedList}>
+                {item.imageUrl !== "" &&
+                  <img src={item.imageUrl}></img>
+                }
                 <h2>{item.courseName}</h2>
               </div>
               )})}     
@@ -75,7 +77,8 @@ function Dashboard() {
         </div>
         <div className={styles.joinedCourses}>      
           {joinedCourses.map((item) => {return( 
-          <div className={styles.joinedList}>{item.name}</div>)})}     
+          <div className={styles.joinedList}>{item.name}</div>
+          )})}     
         </div>
         {openModal && <Modal closeModal={setOpenModal}/>}
       </div>

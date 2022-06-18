@@ -16,7 +16,7 @@
 .pool .intro h1 {
   font-size: 25px;
   font-weight: 500;
-  color: #5811cb;
+  color: var(--primary);
 }
 .pool .intro {
   width: 99.3%;
@@ -35,11 +35,13 @@
   margin-top: 5px;
 }
 .button2,
-.button0 {
+.button0,.button3 {
   cursor: pointer;
-  background-color: #5811cb;
+  background-color: var(--primary);
+  background-color: #5FD068;
+
   align-self: center;
-  border: 1px solid #5811cb;
+  border: 1px solid var(--primary);
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -56,13 +58,34 @@
 .pool .poolsBar .span2 {
   margin-left: 35px;
 }
-.button2 {
+.button2,.button3 {
   margin-left: 5px;
 }
 
 @media only screen and (max-width: 585px) {
   .pool .intro {
     height: 18%;
+
     padding: 10px 0px 10px 10px;
   }
+}
+
+@media only screen and (max-width: 764px) {
+  .pool{
+    min-width: calc(100vw - 100%);
+  }
+}
+@media only screen and (max-width: 604px) {
+.button3,.button0,.button2
+{
+  padding: 8px 5px;
+  font-size: 16px;
+}
+
+  .allButton
+  {
+    display: flex;
+    justify-content: center;
+  }
+
 }

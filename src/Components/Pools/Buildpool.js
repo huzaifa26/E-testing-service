@@ -12,6 +12,10 @@ import { poolsActions } from './../../Redux/pools-slice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
+import {Storage} from "../Utils/firebase";
+import { MathComponent } from 'mathjax-react';
 
 const category = [
   {
@@ -41,8 +45,15 @@ function Buildpool() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [showRichText,setShowRichText]=useState(false);
   const [isCourseSelected,setIsCourseSelected]=useState(false);
+  const [selectedPoolCategory,setSelectedPoolCategory]=useState();
+  const [questionInputType,setQuestionInputType]=useState("Input");
+
+  const [text, setText] = useState(String.raw``);
+
+
   
   const publishCourses=useSelector(state=>{return state.courseId_Name.courseIdName});
+  const user=useSelector(state=>{return state.user;})
 
   function questionTypeHandler(e) {
     const ids = e.target.value;
@@ -64,12 +75,21 @@ function Buildpool() {
     }
   }
 
+  const [poolCategory,setPoolCategory]=useState("");
+
   function handlePublishCourses(e) {
     setCourseId(e.target.value);
     publishCourses.forEach((element) => {
       if (parseInt(e.target.value) === element.id) {
         setCourseName(element.courseName);
         setIsCourseSelected(true);
+        let url="http://localhost:5000/api/poolCategory/"+e.target.value+ "/" + user.userInfo.user.id;
+        axios.get(url).then((res)=>{
+          console.log(res.data.data);
+          setPoolCategory(res.data.data);
+        }).catch((err)=>{
+          console.log(err)
+        })
       }
     });
   }
@@ -77,47 +97,68 @@ function Buildpool() {
   const getMcqs = (mcqData) => {
     mcqData.courseId = courseId;
 
-    console.log(inputQuestionRef.current.value);
-
-    if (mcqData.courseId === '') {
-      toast.error('Select Course Please', {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    } else if (inputQuestionRef.current.value.trim().length === 0) {
-      toast.error('You cant leave QUESTION/OPTIONS empty', {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    } else {
-      mcqData.question = inputQuestionRef.current.value;
-      mcqData.courseName = courseName;
-      console.log(mcqData);
-      dispatch(poolsActions.allQuestions(mcqData));
-      toast.success('Added', {
-        position: toast.POSITION.TOP_CENTER,
-      });
+    if(questionInputType === "Input"){
+      if (mcqData.courseId === '') {
+        toast.error('Select Course Please', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else if (inputQuestionRef.current.value.trim().length === 0) {
+        toast.error('You cant leave QUESTION/OPTIONS empty', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else {
+        mcqData.question = inputQuestionRef.current.value;
+        mcqData.courseName = courseName;
+        mcqData.poolCategory = selectedPoolCategory;
+        mcqData.userId = user.userInfo.user.id;
+        console.log(mcqData);
+  
+        let url="http://localhost:5000/api/poolQuestions/";
+  
+        axios.post(url,mcqData).then((res)=>{
+          console.log("res")
+        }).catch((err)=>{
+          console.log("err")
+        })
+        // dispatch(poolsActions.allQuestions(mcqData));
+        toast.success('Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
     }
-
-    // if (mcqData.courseId === '') {
-    //   toast.error('Select Course Please', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else if (rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText() ===''
-    // || inputQuestionRef.current.value.trim().length === 0) {
-    //   toast.error('You cant leave QUESTION/OPTIONS empty', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else {
-    //   mcqData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-
-    //   setEditorState(EditorState.createEmpty());
-
-    //   mcqData.courseName = courseName;
-
-    //   dispatch(poolsActions.allQuestions(mcqData));
-    //   toast.success('Added', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // }
+    
+    if (questionInputType === "Rich box"){
+      if (mcqData.courseId === '') {
+        toast.error('Select Course Please', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else if (rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText().trim().length === 0) {
+        toast.error('You cant leave QUESTION/OPTIONS empty', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      } else {
+        // mcqData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+        let question = convertToRaw(editorState.getCurrentContent());
+        setText(question.blocks[0].text);
+        mcqData.question = question.blocks[0].text;
+        mcqData.courseName = courseName;
+        mcqData.poolCategory = selectedPoolCategory;
+        mcqData.userId = user.userInfo.user.id;
+  
+        // setEditorState(EditorState.createEmpty());
+  
+        let url="http://localhost:5000/api/poolQuestions/";
+        axios.post(url,mcqData).then((res)=>{
+          console.log("res")
+        }).catch((err)=>{
+          console.log("err")
+        })
+        // dispatch(poolsActions.allQuestions(mcqData));
+        toast.success('Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    }
   };
 
   const getTrues = (truesData) => {
@@ -134,8 +175,17 @@ function Buildpool() {
     } else {
       truesData.question = inputQuestionRef.current.value;
       truesData.courseName = courseName;
-      console.log(truesData);
-      dispatch(poolsActions.allQuestions(truesData));
+      truesData.poolCategory = selectedPoolCategory;
+      truesData.userId = user.userInfo.user.id;
+
+      let url="http://localhost:5000/api/poolQuestions/";
+
+      axios.post(url,truesData).then((res)=>{
+        console.log("res")
+      }).catch((err)=>{
+        console.log("err")
+      })
+      // dispatch(poolsActions.allQuestions(truesData));
       toast.success('Added', {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -183,8 +233,17 @@ function Buildpool() {
     } else {
       plainData.question = inputQuestionRef.current.value;
       plainData.courseName = courseName;
-      console.log(plainData);
-      dispatch(poolsActions.allQuestions(plainData));
+      plainData.poolCategory = selectedPoolCategory;
+      plainData.userId = user.userInfo.user.id;
+
+      let url="http://localhost:5000/api/poolQuestions/";
+
+      axios.post(url,plainData).then((res)=>{
+        console.log("res")
+      }).catch((err)=>{
+        console.log("err")
+      })
+      // dispatch(poolsActions.allQuestions(plainData));
       toast.success('Added', {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -218,20 +277,50 @@ function Buildpool() {
     // }
   };
 
-  const changeInputHandler = (e) => {
-    console.log(e.target.value);
-    if (e.target.value === "Input"){
-      setShowRichText(false);
-    } else if (e.target.value === "Rich box"){
-      setShowRichText(true);
-    }
-  }
+
+  // const changeInputHandler = (e) => {
+  //   console.log(e.target.value);
+  //   setQuestionInputType(e.target.value);
+  //   if (e.target.value === "Input"){
+  //     setShowRichText(false);
+  //   } else if (e.target.value === "Rich box"){
+  //     setShowRichText(true);
+  //   }
+  // }
+
+  const [image,setImage]=useState();
+  const [imageURL , setImageURL] = useState('');
+
+    const uploadCallback = (file, callback) => {
+    return new Promise((resolve, reject) => {
+      const reader = new window.FileReader();
+      reader.onloadend = async () => {
+        // const form_data = new FormData();
+        // form_data.append("file", file);
+        console.log(file)
+        const storageRef = ref(Storage, `/questionPictures/${file.name}`);
+        const uploadTask = await uploadBytes(storageRef, file);
+        getDownloadURL(ref(Storage, `/questionPictures/${file.name}`)).then((url) => {
+            console.log(url);
+            setImageURL(url);
+        });
+        // setValue("thumbnail", res.data);
+        resolve({ data: { link: "res"} });
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const config={
+    image: { uploadCallback: uploadCallback },
+  };
 
   return (
     <div>
+        <div className={styles.labelMain}>
       <div className={styles.labelCourse}>
         <label>
-          Select Course:
+          Select Course&nbsp;&nbsp;&nbsp;:
         </label>
         <select onChange={handlePublishCourses}>
           <option value="" selected disabled hidden>
@@ -242,21 +331,21 @@ function Buildpool() {
           })}
         </select>
       </div>
-      {isCourseSelected && <div className={styles.labelCourse}>
+      {isCourseSelected && <div className={styles.labelCourse2}>
         <label>
           Select Category:
         </label>
-        <select onChange={handlePublishCourses}>
+        <select onChange={(e)=>{setSelectedPoolCategory(e.target.value)}}>
           <option value="" selected disabled hidden>
             Choose Category
           </option>
-          {publishCourses.map((value) => {
-            return <option value={value.id}>{value.courseName}</option>;
+          {poolCategory !== "" && poolCategory.map((value) => {
+            return <option value={value.id}>{value.categoryName}</option>;
           })}
         </select>
       </div>}
       <div className={styles.labelCourse}>
-        <label>Question Type:</label>
+        <label>Question Type&nbsp;&nbsp;&nbsp;:</label>
         <select onChange={questionTypeHandler}>
           <option value="" selected disabled hidden>
             Choose Type
@@ -266,19 +355,23 @@ function Buildpool() {
           })}
         </select>
       </div>
+      </div>
+      <hr></hr>
+
         {(mcq || trues || plain) && <div>
           <div className={styles.editor2}>
-            <div className={styles.radioDiv}>
+            {/* <div className={styles.radioDiv}>
               <input onChange={changeInputHandler} defaultChecked type="radio" id="input" name="questionInput" value="Input"/>
               <label htmlFor="input">Input</label>
               <input onChange={changeInputHandler} type="radio" id="input" name="questionInput" value="Rich box"/>
               <label htmlFor="input">Rich Text</label>
-            </div>
+            </div> */}
             <h1>Question</h1>
-            {showRichText === false && 
-            <textarea ref={inputQuestionRef} rows={11} style={{width: "47.5%",resize:"none",minWidth:'315px',borderColor:'rgba(0, 0, 0, 0.456)'}} type='text' placeholder='Enter your Question'></textarea>
-            } 
-            {showRichText === true && <Editor
+            <MathComponent tex={text} />
+            {/*  */}
+            <>
+            <Editor
+              toolbar={config}
               toolbarClassName="toolbarClassName"
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
@@ -297,14 +390,14 @@ function Buildpool() {
                 overflowX:"hidden",
                 // overflowY:"auto"
               }}
-            />}
+            />
+            </>
             {mcq && <Mcq getMcqs={getMcqs} />}
             {trues && <True getTrues={getTrues} />}
             {plain && <Plain getPlain={getPlain} />}
             <ToastContainer />
           </div>
         </div>}
-      <hr></hr>
     </div>
   );
 }
