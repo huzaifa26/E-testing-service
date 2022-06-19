@@ -7,7 +7,9 @@
   box-sizing: border-box;
   font-family: 'Roboto Flex', sans-serif;
 }
-.main{
+.main
+{
+    height: 80.7vh  ;
     display: flex;
 }
 .leftTop
@@ -35,8 +37,8 @@
     justify-content: center;
     /* padding: 40px; */
     border-radius: 10px;
-    height:86%;
-    min-height: 506px;
+    height:93%;
+    /* min-height: 506px; */
     font-family: 'Ubuntu', sans-serif;
 }
 .left h1{
@@ -82,9 +84,9 @@
 }
 .footer button{
     margin: 0 0 0.7rem 0;
-    background-color: var(--primary);
+    background-color: #5811cb;
     align-self: center;
-    border: 1px solid var(--primary);
+    border: 1px solid #5811cb;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
@@ -125,7 +127,7 @@
 }
 .circularportrait {
     /* width: 50%; */
-    /* background-color: var(--primary); */
+    /* background-color: #5811cb; */
     overflow: hidden;
     border-radius: 50%;
 } 

@@ -10,10 +10,12 @@ import Pools from './Components/Pools/Pools';
 import Notification from './Components/Notifications/Notifications';
 import EmailForgotPassword from './Components/Auth/EmailForgotPassword';
 import ForgotPassword from './Components/Auth/ForgotPassword';
-import Profile from './Components/Profile/Profile';
+import Profile from './Components/Profile/Profile (1)';
 import Auth from './Protected/Auth';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
+  let uid=uuidv4();
   return (
     <div className="App">
         <Routes>
@@ -22,15 +24,16 @@ function App() {
           <Route path="/emailVerification/:id" element={<VerifyEmail />} />
           <Route path="/forgotPassword" element={<EmailForgotPassword/>}/>
           <Route path="/forgotPasswordChange/:id" element={<ForgotPassword/>}/>
+          
 
           <Route path='/' element={<Auth/>} >
-            <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
+            <Route path="/dashboard" element={<Navbar><Dashboard key={uid}/></Navbar>} />
             <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
-            <Route path="/pools" element={<Navbar><Pools /></Navbar>} />
+            <Route path="/courses/pools" element={<Navbar><Pools /></Navbar>}/>
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
             <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
-            
           </Route>
+
         </Routes>
     </div>
   );

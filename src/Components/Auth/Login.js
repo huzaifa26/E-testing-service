@@ -35,7 +35,7 @@ function Login() {
           });
         }
         if (error.response.status === 403) {
-          toast.error('Wrong password', {
+          toast.error('Wrong Email or Password', {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
@@ -75,7 +75,7 @@ function Login() {
           </div>
         </form>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={1000}/>
     </div>
   );
 }

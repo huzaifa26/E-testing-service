@@ -7,7 +7,6 @@ const courseSlice = createSlice({
   },
   reducers: {
     courses(state, action) {
-      console.log(action.payload);
       state.courses=action.payload;
     },
   },
@@ -25,6 +24,32 @@ export const courseId_Name=createSlice({
   }
 })
 
+export const courseCategories=createSlice({
+  name:"courseCategories",
+  initialState: {
+    courseCategories:[]
+  },
+  reducers:{
+    courseCategories(state,actions){
+      state.courseCategories=actions.payload
+    }
+  }
+})
+
+export const getCourseIdOnClick=createSlice({
+  name:"getCourseIdOnClick",
+  initialState: {
+    getCourseIdOnClick:[]
+  },
+  reducers:{
+    getCourseIdOnClick(state,actions){
+      state.getCourseIdOnClick=actions.payload
+    }
+  }
+})
+
+export const courseCategoriesActions = courseCategories.actions;
+export const getCourseIdOnClickactions = getCourseIdOnClick.actions;
 export const courseId_NameActions = courseId_Name.actions;
 export const courseActions = courseSlice.actions;
 export default courseSlice;

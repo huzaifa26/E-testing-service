@@ -38,7 +38,6 @@
 .button0,.button3 {
   cursor: pointer;
   background-color: var(--primary);
-  background-color: #5FD068;
 
   align-self: center;
   border: 1px solid var(--primary);

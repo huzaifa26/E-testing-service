@@ -5,7 +5,7 @@ import Buildpool from './Buildpool';
 import CreateCategoryModal from './CreateCategoryModal';
 import { useDispatch,useSelector } from 'react-redux';
 import axios from 'axios';
-import { courseId_NameActions } from '../../Redux/course-slice';
+import { courseId_NameActions,courseCategoriesActions } from '../../Redux/course-slice';
 
 
 
@@ -15,7 +15,10 @@ function Pools() {
   const [createPool, setcreatePool] = useState(false);
   const [showModal,setShowModal]=useState(false);
 
+
   const user=useSelector(state=> state.user);
+  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
+
 
   const openModalHandler=()=>{
     setShowModal(true);
@@ -37,8 +40,21 @@ function Pools() {
     }
   }
 
+  const getCourseCategories=()=>{
+    if(user.userInfo.hasOwnProperty("user") === true){
+      let link='http://localhost:5000/api/getCourseCategories/' + courseIdredux;
+      axios.get(link).then((res)=>{
+        console.log(res.data.data);
+        dispatch(courseCategoriesActions.courseCategories(res.data.data));
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
+  }
+
   useEffect(()=>{
     getRequests();
+    getCourseCategories();
   },[])
 
   // useEffect(()=>{

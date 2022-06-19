@@ -3,7 +3,7 @@ import styles from './VerifyEmail.module.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import image from './../../Assets/logo2.png';
+import image from './../../Assets/logo.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

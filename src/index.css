@@ -28,7 +28,3 @@ body {
 input {
   outline: none;
 }
-
-button:hover{
-  background-color: #FEEC84;
-}
