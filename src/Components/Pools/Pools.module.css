@@ -64,14 +64,13 @@
 @media only screen and (max-width: 585px) {
   .pool .intro {
     height: 18%;
-
     padding: 10px 0px 10px 10px;
   }
 }
 
 @media only screen and (max-width: 764px) {
   .pool{
-    min-width: calc(100vw - 100%);
+    /* min-width: calc(100vw - 100%); */
   }
 }
 @media only screen and (max-width: 604px) {

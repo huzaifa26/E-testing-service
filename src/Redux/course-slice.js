@@ -36,6 +36,8 @@ export const courseCategories=createSlice({
   }
 })
 
+
+// Get Course id to show course Content, Pools, Course Sub Menu
 export const getCourseIdOnClick=createSlice({
   name:"getCourseIdOnClick",
   initialState: {

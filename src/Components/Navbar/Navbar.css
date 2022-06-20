@@ -221,13 +221,11 @@
   .mainDiv main{
     position: absolute;
     z-index: 1;
+    min-width: 100vw;
   }
 
   .navbar{
     z-index: 3;
-    /* position: fixed;
-    width: 100%;
-    min-width: calc(100vw - 100%); */
   }
 
   .mainDiv nav{
@@ -246,8 +244,5 @@
 .nav-menu.active .nav-menu-items .hr {
   margin-left: 29px;
 }
-.mainDiv main{
-  max-width: 100%;
-  background-color: 	#dfe3ee;
-}
+
 }

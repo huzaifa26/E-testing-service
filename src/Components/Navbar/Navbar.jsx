@@ -2,9 +2,12 @@ import './Navbar.css';
 import image from '../../Assets/logo.png';
 import React, { useState } from 'react';
 import { Link,useLocation,useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {getCourseIdOnClickactions} from "./../../Redux/course-slice";
+import { useDispatch } from 'react-redux';
 
 const Navbar2= (props) => {
-  const navigate=useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const locationName=location.pathname;
   let newLocationName=""
@@ -28,6 +31,12 @@ const Navbar2= (props) => {
     setSidebar(!sidebar);
   }
 
+  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
+  console.log(typeof(courseIdredux));
+
+  if ((typeof(courseIdredux) === "number") && newLocationName !== "/courses"){
+    dispatch(getCourseIdOnClickactions.getCourseIdOnClick({}))
+  }
 
   return (
     <>
@@ -43,7 +52,7 @@ const Navbar2= (props) => {
         <ul className="nav-menu-items" >
           <div className="hr"></div>
           <li className="nav-text">
-            <Link onClick={()=>{if (location.pathname === "/dashboard") {navigate(1)}console.log("hahaha") }} className={location.pathname === "/dashboard" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/dashboard" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/dashboard'}>
+            <Link className={location.pathname === "/dashboard" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/dashboard" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/dashboard'}>
               <i className="bi bi-menu-button-wide-fill"></i>
               {sidebar && <span>Dashboard</span>}
             </Link>
@@ -58,7 +67,7 @@ const Navbar2= (props) => {
             </Link>
           </li>
 
-          {(location.pathname === "/courses" || location.pathname === "/courses/pools" || location.pathname === "/courses/setting") && 
+          {typeof(courseIdredux) === "number" && (location.pathname === "/courses" || location.pathname === "/courses/pools" || location.pathname === "/courses/setting") && 
           <div style={sidebar === true ? {padding:"0 10px"}:{padding:"0 10px"}} className={"subMenu"}>
             <li className="nav-text">
               <Link className={location.pathname === "/pools" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/pools" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/courses/pools'}>

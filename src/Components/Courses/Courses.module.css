@@ -1,3 +1,41 @@
-.Main{
-    background-color: red;
+.joinedHeader{
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    margin: 20px;
+}
+
+.joinedCoursesOuter{
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    margin: 20px;
+}
+
+.joinedCourses{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    flex-wrap: wrap;
+    margin: 20px;
+    gap: 30px;
+    width: 50%;    
+}
+
+.flexDiv, .flexDiv2{
+    display: flex;
+    flex: 1;    
+    justify-content: space-between;
+}
+
+.flexDiv2 h1{
+    cursor: pointer;
+}
+
+.flexDiv2 h1:hover{
+    text-decoration: underline;
 }

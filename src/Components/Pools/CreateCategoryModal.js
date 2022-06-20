@@ -4,8 +4,10 @@ import {useRef} from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 function CreateCategoryModal(props) {
+    const navigate=useNavigate();
     const formRef=useRef();
     const courseId_name=useSelector(state=> state.courseId_Name.courseIdName);
     const user=useSelector(state=> state.user)
@@ -22,9 +24,7 @@ function CreateCategoryModal(props) {
 
         axios.post("http://localhost:5000/api/poolCategory",data).then((res)=>{
             console.log(res);
-            toast.success('Category Created', {
-                position: toast.POSITION.TOP_RIGHT,
-              });
+            props.closeModalHandler();
         }).catch((err)=>{
             console.log(err)
         })
@@ -51,7 +51,7 @@ function CreateCategoryModal(props) {
                 </form>
 
             </div>
-      <ToastContainer />
+      <ToastContainer autoClose={1000}/>
         </>
      );
 }

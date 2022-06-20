@@ -6,8 +6,7 @@ import CreateCategoryModal from './CreateCategoryModal';
 import { useDispatch,useSelector } from 'react-redux';
 import axios from 'axios';
 import { courseId_NameActions,courseCategoriesActions } from '../../Redux/course-slice';
-
-
+import { ToastContainer, toast } from 'react-toastify';
 
 function Pools() {
   const dispatch=useDispatch();
@@ -15,10 +14,10 @@ function Pools() {
   const [createPool, setcreatePool] = useState(false);
   const [showModal,setShowModal]=useState(false);
 
-
   const user=useSelector(state=> state.user);
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
 
+  console.log(typeof(courseIdredux));
 
   const openModalHandler=()=>{
     setShowModal(true);
@@ -26,6 +25,9 @@ function Pools() {
 
   const closeModalHandler=()=>{
     setShowModal(false);
+    toast.success('Category Created', {
+      position: toast.POSITION.TOP_RIGHT,
+    })
   }
 
   const getRequests=()=>{
@@ -55,7 +57,7 @@ function Pools() {
   useEffect(()=>{
     getRequests();
     getCourseCategories();
-  },[])
+  },[showModal])
 
   // useEffect(()=>{
   //   let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
@@ -106,6 +108,8 @@ function Pools() {
           {createPool && <Buildpool />}
         </div>
       </div>
+      <ToastContainer autoClose={1000}/>
+
       </>
   );
 }

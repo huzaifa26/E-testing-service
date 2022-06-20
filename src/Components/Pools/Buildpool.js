@@ -40,19 +40,16 @@ function Buildpool() {
   const [plain, setplain] = useState(false);
   const [courseId, setCourseId] = useState('');
   const rtQuestionRef = useRef('');
-  const inputQuestionRef = useRef('');
   const [courseName, setCourseName] = useState('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [showRichText,setShowRichText]=useState(false);
-  const [isCourseSelected,setIsCourseSelected]=useState(false);
   const [selectedPoolCategory,setSelectedPoolCategory]=useState();
-  const [questionInputType,setQuestionInputType]=useState("Input");
-
   const [text, setText] = useState(String.raw``);
 
-
-  
+  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const publishCourses=useSelector(state=>{return state.courseId_Name.courseIdName});
+  const courseCategoriesredux=useSelector(state => state.courseCategories.courseCategories);
+  console.log(courseCategoriesredux);
+
   const user=useSelector(state=>{return state.user;})
 
   function questionTypeHandler(e) {
@@ -82,7 +79,6 @@ function Buildpool() {
     publishCourses.forEach((element) => {
       if (parseInt(e.target.value) === element.id) {
         setCourseName(element.courseName);
-        setIsCourseSelected(true);
         let url="http://localhost:5000/api/poolCategory/"+e.target.value+ "/" + user.userInfo.user.id;
         axios.get(url).then((res)=>{
           console.log(res.data.data);
@@ -95,186 +91,112 @@ function Buildpool() {
   }
 
   const getMcqs = (mcqData) => {
-    mcqData.courseId = courseId;
-
-    if(questionInputType === "Input"){
-      if (mcqData.courseId === '') {
-        toast.error('Select Course Please', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      } else if (inputQuestionRef.current.value.trim().length === 0) {
-        toast.error('You cant leave QUESTION/OPTIONS empty', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      } else {
-        mcqData.question = inputQuestionRef.current.value;
-        mcqData.courseName = courseName;
-        mcqData.poolCategory = selectedPoolCategory;
-        mcqData.userId = user.userInfo.user.id;
-        console.log(mcqData);
-  
-        let url="http://localhost:5000/api/poolQuestions/";
-  
-        axios.post(url,mcqData).then((res)=>{
-          console.log("res")
-        }).catch((err)=>{
-          console.log("err")
-        })
-        // dispatch(poolsActions.allQuestions(mcqData));
-        toast.success('Added', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      }
-    }
+    mcqData.courseId = courseIdredux;
     
-    if (questionInputType === "Rich box"){
-      if (mcqData.courseId === '') {
-        toast.error('Select Course Please', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      } else if (rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText().trim().length === 0) {
-        toast.error('You cant leave QUESTION/OPTIONS empty', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      } else {
-        // mcqData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-        let question = convertToRaw(editorState.getCurrentContent());
-        setText(question.blocks[0].text);
-        mcqData.question = question.blocks[0].text;
-        mcqData.courseName = courseName;
-        mcqData.poolCategory = selectedPoolCategory;
-        mcqData.userId = user.userInfo.user.id;
-  
-        // setEditorState(EditorState.createEmpty());
-  
-        let url="http://localhost:5000/api/poolQuestions/";
-        axios.post(url,mcqData).then((res)=>{
-          console.log("res")
-        }).catch((err)=>{
-          console.log("err")
-        })
-        // dispatch(poolsActions.allQuestions(mcqData));
-        toast.success('Added', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      }
-    }
-  };
-
-  const getTrues = (truesData) => {
-    truesData.courseId = courseId;
-
-    if (truesData.courseId === '') {
+    if (mcqData.courseId === '') {
       toast.error('Select Course Please', {
         position: toast.POSITION.TOP_CENTER,
       });
-    } else if (inputQuestionRef.current.value.trim().length === 0) {
+    } else if (rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText().trim().length === 0) {
       toast.error('You cant leave QUESTION/OPTIONS empty', {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      truesData.question = inputQuestionRef.current.value;
+      let question = convertToRaw(editorState.getCurrentContent());
+      setText(question.blocks[0].text);
+      mcqData.question = question.blocks[0].text;
+      mcqData.courseName = courseName;
+      mcqData.poolCategory = selectedPoolCategory;
+      mcqData.userId = user.userInfo.user.id;
+
+      if (imageURL !== ""){
+        mcqData.questionImg=imageURL;
+      }
+
+      console.log(mcqData);
+      let url="http://localhost:5000/api/poolQuestions/";
+      axios.post(url,mcqData).then((res)=>{
+        console.log("res")
+      }).catch((err)=>{
+        console.log("err")
+      })
+      toast.success('Added', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  };
+
+  const getTrues = (truesData) => {
+    truesData.courseId = courseIdredux;
+    if (truesData.courseId.length === 0) {
+      toast.error('Select Course Please', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (
+      rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText() ===''
+    ) {
+      toast.error('You cant leave question empty', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (truesData.correctAnswer === '') {
+      toast.error('You have to select True/False', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else {
+      let question = convertToRaw(editorState.getCurrentContent());
+      setText(question.blocks[0].text);
+      truesData.question = question.blocks[0].text;
       truesData.courseName = courseName;
       truesData.poolCategory = selectedPoolCategory;
       truesData.userId = user.userInfo.user.id;
 
       let url="http://localhost:5000/api/poolQuestions/";
-
       axios.post(url,truesData).then((res)=>{
         console.log("res")
       }).catch((err)=>{
         console.log("err")
       })
-      // dispatch(poolsActions.allQuestions(truesData));
       toast.success('Added', {
         position: toast.POSITION.TOP_CENTER,
       });
     }
-
-    // if (truesData.courseId === '') {
-    //   toast.error('Select Course Please', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else if (
-    //   rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText() ===''
-    // ) {
-    //   toast.error('You cant leave question empty', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else if (truesData.correctAnswer === '') {
-    //   toast.error('You have to select True/False', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else {
-    //   truesData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-      
-    //   setEditorState(EditorState.createEmpty());
-    //   truesData.courseName = courseName;
-    //   dispatch(poolsActions.allQuestions(truesData));
-      
-    //   toast.success('Added', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // }
   };
 
   const getPlain = (plainData) => {
-    plainData.courseId = courseId;
-    
+    plainData.courseId = courseIdredux;
 
-    if (plainData .courseId === '') {
+    if (plainData.courseId === '') {
       toast.error('Select Course Please', {
         position: toast.POSITION.TOP_CENTER,
       });
-    } else if (inputQuestionRef.current.value.trim().length === 0) {
-      toast.error('You cant leave QUESTION/OPTIONS empty', {
+    } else if (
+      rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText() ===''
+    ) {
+      toast.error('You cant leave question empty', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (plainData.correctAnswer === '') {
+      toast.error('You have to write answer', {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      plainData.question = inputQuestionRef.current.value;
+      let question = convertToRaw(editorState.getCurrentContent());
+      setText(question.blocks[0].text);
+      plainData.question = question.blocks[0].text;
       plainData.courseName = courseName;
       plainData.poolCategory = selectedPoolCategory;
       plainData.userId = user.userInfo.user.id;
 
       let url="http://localhost:5000/api/poolQuestions/";
-
       axios.post(url,plainData).then((res)=>{
         console.log("res")
       }).catch((err)=>{
         console.log("err")
       })
-      // dispatch(poolsActions.allQuestions(plainData));
       toast.success('Added', {
         position: toast.POSITION.TOP_CENTER,
       });
     }
-
-
-    // if (plainData.courseId === '') {
-    //   toast.error('Select Course Please', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else if (
-    //   rtQuestionRef.current.state.editorState.getCurrentContent().getPlainText() ===''
-    // ) {
-    //   toast.error('You cant leave question empty', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else if (plainData.correctAnswer === '') {
-    //   toast.error('You have to write answer', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // } else {
-    //   plainData.question = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-
-    //   setEditorState(EditorState.createEmpty());
-    //   plainData.courseName = courseName;
-      
-    //   dispatch(poolsActions.allQuestions(plainData));
-    //   toast.success('Added', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
-    // }
   };
 
 
@@ -317,21 +239,8 @@ function Buildpool() {
 
   return (
     <div>
-        <div className={styles.labelMain}>
-      <div className={styles.labelCourse}>
-        <label>
-          Select Course&nbsp;&nbsp;&nbsp;:
-        </label>
-        <select onChange={handlePublishCourses}>
-          <option value="" selected disabled hidden>
-            Choose Course
-          </option>
-          {publishCourses.map((value) => {
-            return <option value={value.id}>{value.courseName}</option>;
-          })}
-        </select>
-      </div>
-      {isCourseSelected && <div className={styles.labelCourse2}>
+      <div className={styles.labelMain}>
+      <div className={styles.labelCourse2}>
         <label>
           Select Category:
         </label>
@@ -339,11 +248,11 @@ function Buildpool() {
           <option value="" selected disabled hidden>
             Choose Category
           </option>
-          {poolCategory !== "" && poolCategory.map((value) => {
+          {courseCategoriesredux.length !== 0 && courseCategoriesredux.map((value) => {
             return <option value={value.id}>{value.categoryName}</option>;
           })}
         </select>
-      </div>}
+      </div>
       <div className={styles.labelCourse}>
         <label>Question Type&nbsp;&nbsp;&nbsp;:</label>
         <select onChange={questionTypeHandler}>
@@ -356,8 +265,6 @@ function Buildpool() {
         </select>
       </div>
       </div>
-      <hr></hr>
-
         {(mcq || trues || plain) && <div>
           <div className={styles.editor2}>
             {/* <div className={styles.radioDiv}>

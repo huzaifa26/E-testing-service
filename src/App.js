@@ -13,6 +13,8 @@ import ForgotPassword from './Components/Auth/ForgotPassword';
 import Profile from './Components/Profile/Profile (1)';
 import Auth from './Protected/Auth';
 import { v4 as uuidv4 } from 'uuid';
+import {ToastContainer, toast } from 'react-toastify';
+
 
 function App() {
   let uid=uuidv4();
@@ -35,6 +37,7 @@ function App() {
           </Route>
 
         </Routes>
+        <ToastContainer autoClose={1000}/>
     </div>
   );
 }

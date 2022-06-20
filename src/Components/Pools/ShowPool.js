@@ -13,8 +13,12 @@ function ShowPool() {
   const publishCourses=useSelector(state=>{return state.courseId_Name.courseIdName});
   const [allQuestions,setAllQuestions]=useState([]);
 
-
   const getRequests=()=>{
+    
+  }
+
+  useEffect(()=>{
+    getRequests();
     if(user.userInfo.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id).then((res)=>{
         setAllQuestions(res.data);
@@ -22,10 +26,6 @@ function ShowPool() {
         console.log(err);
       })
     }
-  }
-
-  useEffect(()=>{
-    getRequests();
   },[])
 
   const showCategoriesHandler=(e)=>{
@@ -63,15 +63,20 @@ function ShowPool() {
 
           {allQuestions.filter((data) => {return +data.courseId === +courseIdredux;}).map((item, index) => {
             index++;
+            console.log(item);
             return (
               <div className={styles.displayQuestions}>
                 <p className={styles.courseName}><strong>Course Name:</strong>{item.courseName}</p>
                 <div className={styles.questionHeader}>
                   <h1>{index}.</h1>
                   <MathComponent tex={item.question} />
-                  
                   <h2 style={{fontSize:"20px",fontWeight:'500'}} className={styles.question}>{item.question}</h2>
                 </div>
+                {item.questionImage !== null &&
+                    <div style={{marginLeft:"50px"}}>
+                      <img src={item.questionImage} alt="Question Image"/>
+                    </div>
+                  }
                 <div class={styles.container}>
                   <div style={{padding: '2px 25px'}}>
                     <ul className={styles.ul}>

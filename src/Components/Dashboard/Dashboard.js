@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect,useCallback } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import Modal from '../Modal/Modal';
 import Navbar from '../Navbar/Navbar';
@@ -28,7 +28,10 @@ function Dashboard(props) {
   const [showCourse,setShowCourse]=useState(false);
   const [courseIdState,setCourseIdState]=useState(false);
 
-  const courses=useSelector(state=> state.courses)
+  const courses=useSelector(state=> state.courses);
+  const user=useSelector(state=> state.user);
+  console.log(user.userInfo.user.id);
+
   const joinhandle=()=>{
     setOpenModal(true);
   }
@@ -38,18 +41,22 @@ function Dashboard(props) {
     setShowCreateCourse(true)
   }
 
-  const showDashboardHandler=()=>{
+  const showDashboardHandler=useCallback(()=>{
     setShowDashboard(true);
     setShowCreateCourse(false);
-  }
+  },[])
 
   useEffect(()=>{
-    axios.get("http://localhost:5000/api/courses").then((res)=>{
+    axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{headers: {
+      'authorization': `Bearer ${user.userInfo.token}`,
+      'Accept' : 'application/json',
+      'Content-Type': 'application/json'
+  }}).then((res)=>{
       dispatch(courseActions.courses(res.data.data));
     }).catch((err)=>{
       console.log(err);
     })
-  },[]);
+  },[showDashboardHandler]);
 
 
   return (

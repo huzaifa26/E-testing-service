@@ -16,51 +16,55 @@ const  CreateCourse=(props) => {
     const [imageURL , setImageURL] = useState('');
     const formRef=useRef();
 
-    const CreateClassSubmithandler=(e)=>{
-        e.preventDefault();
+const CreateClassSubmithandler=(e)=>{
+    e.preventDefault();
 
-        function getTime() {
-            var date = new Date()
-            date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-            return date.toISOString();
-        }
-        let yourDate=getTime();
-        yourDate=yourDate.toString().split("T");
-        yourDate[1]=yourDate[1].toString().split(".")[0];
-        yourDate=yourDate.toString().replaceAll(","," ");
-
-        let data={
-            userId:user.userInfo.user.id,
-            imageUrl:imageURL,
-            courseName:formRef.current.courseName.value,
-            description:formRef.current.description.value,
-            startDate:formRef.current.startDate.value,
-            endDate:formRef.current.endDate.value,
-            format:formRef.current.format.value,
-            createTime:yourDate,
-        }
-        axios.post("http://localhost:5000/api/courses",data).then((res)=>{
-            console.log(res.status);
-            if(res.status === 200){
-                // toast.success('Course Created Succesfully', {
-                //     position: toast.POSITION.BOTTOM_RIGHT,
-                // });
-                axios.get("http://localhost:5000/api/courses").then((res)=>{
-                    dispatch(courseActions.courses(res.data.data));
-                  }).catch((err)=>{
-                    console.log(err);
-                  })
-                props.showDashboardHandler();
-            }
-            
-        }).catch((err)=>{
-            if(err.status === 500){
-                toast.error('Cannot register Course', {
-                    position: toast.POSITION.TOP_RIGHT,
-                });
-            } 
-        })
+    function getTime() {
+        var date = new Date()
+        date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+        return date.toISOString();
     }
+    let yourDate=getTime();
+    yourDate=yourDate.toString().split("T");
+    yourDate[1]=yourDate[1].toString().split(".")[0];
+    yourDate=yourDate.toString().replaceAll(","," ");
+
+    let data={
+        userId:user.userInfo.user.id,
+        imageUrl:imageURL,
+        courseName:formRef.current.courseName.value,
+        description:formRef.current.description.value,
+        createTime:yourDate,
+    }
+    axios.post("http://localhost:5000/api/courses",data,{headers: {
+        'authorization': `Bearer ${user.userInfo.token}`,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    }}).then((res)=>{
+        console.log(res.status);
+        if(res.status === 200){
+            toast.success('Course Created Succesfully', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            axios.get("http://localhost:5000/api/courses",{headers: {
+                'authorization': `Bearer ${user.userInfo.token}`,
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }}).then((res)=>{
+                dispatch(courseActions.courses(res.data.data));
+                }).catch((err)=>{
+                console.log(err);
+                })
+            props.showDashboardHandler();
+        }
+    }).catch((err)=>{
+        if(err.status === 500){
+            toast.error('Cannot register Course', {
+                position: toast.POSITION.TOP_RIGHT,
+            });
+        } 
+    })
+}
 
     // UPLOAD COURSE IMAGES TO FIREBASE
     const imageHandler= async (e)=>{
@@ -87,22 +91,14 @@ const  CreateCourse=(props) => {
 
         <div className={styles.joinedHeader2}>
             <form ref={formRef} onSubmit={CreateClassSubmithandler} className={styles.form}>
-                <input onChange={imageHandler} type="file" alt="Choose File" accept=".png,.jpg,.jpeg" width="48" height="48"></input>
+            <img src={imageURL===""?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOIgbiAwf6mBkjE6iVQuxHMAHMXlcYvkshKJ9Tx-bexaRCbpR7WJNs7t_qh3Z4I8qe8HQ&usqp=CAU":imageURL}></img>
+            <div className={styles.chooseImg}>
+                <label for="files" class="btn">Change Image</label>
+                <input accept=".png,.jpg,.jpeg" onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file"/>
+            </div>
                 <input name="courseName" type={"text"} placeholder="Course Name"></input>
                 <textarea name="description" rows='6' type={"text"} placeholder="Description"></textarea>
 
-                <div>
-                    <label>Start Time: <input name="startDate" type="date"></input></label>
-                </div>
-                <div>
-                    <label>End Time: <input name="endDate" type="date"></input></label>
-                </div>
-
-                <select name="format">
-                    <option defaultChecked>Choose Format</option>
-                    <option>On-Campus</option>
-                    <option>Online</option>
-                </select>
                 <div className={styles.button}>
                 <button type="submit">Create Class</button>
                 </div>
