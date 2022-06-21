@@ -3,10 +3,14 @@ import image from '../../Assets/logo.png';
 import React, { useState } from 'react';
 import { Link,useLocation,useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {getCourseIdOnClickactions} from "./../../Redux/course-slice";
+import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
+import { userActions } from './../../Redux/user-slice'; 
+import { courseActions,courseCategoriesActions,getCourseIdOnClickactions,courseId_NameActions } from './../../Redux/course-slice';
 
 const Navbar2= (props) => {
+  const navigate=useNavigate();
+  const [cookies, setCookie,removeCookies] = useCookies(['user']);
   const dispatch = useDispatch();
   const location = useLocation();
   const locationName=location.pathname;
@@ -38,6 +42,17 @@ const Navbar2= (props) => {
     dispatch(getCourseIdOnClickactions.getCourseIdOnClick({}))
   }
 
+  const logout=(e)=>{
+    e.preventDefault();
+    dispatch(userActions.userInfo({}));
+    // dispatch(courseCategoriesActions.courseCategories([]));
+    // dispatch(courseActions.courses([]))
+    // dispatch(courseId_NameActions.courseIdName([]));
+
+    removeCookies('token');
+    navigate("/")
+  }
+
   return (
     <>
       <div className="navbar">
@@ -62,7 +77,8 @@ const Navbar2= (props) => {
 
           <li className="nav-text">
             <Link className={newLocationName === "/courses" && sidebar === false ? "flexstartborder" : sidebar === true && newLocationName === "/courses" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/courses'}>
-              <i class="bi bi-exclamation-circle"></i>
+              {/* <i class="bi bi-exclamation-circle"></i> */}
+          <i class="bi bi-book"></i>
               {sidebar && <span>Courses</span>}
             </Link>
           </li>
@@ -71,20 +87,14 @@ const Navbar2= (props) => {
           <div style={sidebar === true ? {padding:"0 10px"}:{padding:"0 10px"}} className={"subMenu"}>
             <li className="nav-text">
               <Link className={location.pathname === "/pools" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/pools" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/courses/pools'}>
-                <i class="bi bi-book"></i>
+                <i class="bi bi-journal-text"></i>
                 {sidebar && <span>Pools</span>}
               </Link>
             </li>
             <li className="nav-text">
               <Link className={location.pathname === "/" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/'}>
-                <i class="bi bi-box-arrow-left"></i>
-                {sidebar && <span>Pools</span>}
-              </Link>
-            </li>
-            <li className="nav-text">
-              <Link className={location.pathname === "/" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/'}>
-                <i class="bi bi-box-arrow-left"></i>
-                {sidebar && <span>Pools</span>}
+                <i class="bi bi-gear"></i>
+                {sidebar && <span>Settings</span>}
               </Link>
             </li>
           </div>}        
@@ -101,7 +111,7 @@ const Navbar2= (props) => {
             </Link>
           </li>
           <li  className="nav-text">
-            <Link className={location.pathname === "/" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/'}>
+            <Link onClick={logout} className={location.pathname === "/" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/'}>
               <i class="bi bi-box-arrow-left"></i>
               {sidebar && <span>Logout</span>}
             </Link>

@@ -16,26 +16,20 @@ const Courses=(props) => {
   const location=useLocation();
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const courses=useSelector(state=> {return state.courses});
-  console.log(courses.courses)
-
-  useEffect(()=>{
-
-    return ()=>{
-      console.log("unmounting");
-    }
-  },[])
+  
 
   return (
     <div className={styles.Main}>
-      <div className={styles.joinedHeader}>
+    { typeof(courseIdredux) === "object" ?
+    <> 
+    <div className={styles.joinedHeader}>
         <h1>Courses</h1>
       </div>
       
       <div className={styles.joinedCoursesOuter}>
         <div className={styles.joinedCourses}>
           <div className={styles.flexDiv}>
-            <h1>Course Name</h1>
-            <h1>Joined Students</h1>
+            <h1 style={{fontSize:"24px",fontWeight:"900"}}>Course Name</h1>
           </div>
           {
             courses.courses.map((item,index)=>{
@@ -48,6 +42,9 @@ const Courses=(props) => {
           }
         </div>
       </div>
+      </>:
+      <h3>Course Information(Yet to implement)</h3>
+      }
     </div>
   );
 }

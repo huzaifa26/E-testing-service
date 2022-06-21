@@ -3,24 +3,38 @@ import styles from './Showpool.module.css';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { MathComponent } from 'mathjax-react';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 function ShowPool() {
   const user=useSelector(state=> state.user)
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const courseCategoriesredux=useSelector(state => state.courseCategories.courseCategories);
+  const [changeState,setChangeState]=useState(false);
 
   const publishCourses=useSelector(state=>{return state.courseId_Name.courseIdName});
   const [allQuestions,setAllQuestions]=useState([]);
 
-  const getRequests=()=>{
-    
+  const getRequest=()=>{
+    if(user.userInfo.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{headers: {
+        'authorization': `Bearer ${user.userInfo.token}`,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    }}).then((res)=>{
+        setAllQuestions(res.data);
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
   }
 
   useEffect(()=>{
-    getRequests();
     if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id).then((res)=>{
+      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{headers: {
+        'authorization': `Bearer ${user.userInfo.token}`,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    }}).then((res)=>{
         setAllQuestions(res.data);
       }).catch((err)=>{
         console.log(err);
@@ -30,6 +44,26 @@ function ShowPool() {
 
   const showCategoriesHandler=(e)=>{
     console.log(e.target.value);
+  }
+
+  const deleteQuestionHanler=(id)=>{
+    let data={id:id}
+    if(user.userInfo.hasOwnProperty("user") === true){
+      axios.post("http://localhost:5000/api/deletepoolQuestions",data,{headers: {
+        'authorization': `Bearer ${user.userInfo.token}`,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    }}).then((res)=>{
+      toast.success('Question Deleted', {
+          position: toast.POSITION.TOP_RIGHT,
+      })
+      getRequest();
+      }).catch((err)=>{
+        toast.error('Question Deletion Failed', {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      })
+    }
   }
 
   return (
@@ -66,11 +100,14 @@ function ShowPool() {
             console.log(item);
             return (
               <div className={styles.displayQuestions}>
-                <p className={styles.courseName}><strong>Course Name:</strong>{item.courseName}</p>
+                <p className={styles.courseName}><strong>Course Name: &nbsp;</strong>{item.courseName}</p>
                 <div className={styles.questionHeader}>
                   <h1>{index}.</h1>
-                  <MathComponent tex={item.question} />
-                  <h2 style={{fontSize:"20px",fontWeight:'500'}} className={styles.question}>{item.question}</h2>
+                  {item.isMathjax === 1 ? 
+                    <MathComponent style={{flex:"1"}} tex={item.question} />:
+                    <h2 style={{fontSize:"20px",fontWeight:'500'}} className={styles.question}>{item.question}</h2>
+                  }
+
                 </div>
                 {item.questionImage !== null &&
                     <div style={{marginLeft:"50px"}}>
@@ -80,7 +117,7 @@ function ShowPool() {
                 <div class={styles.container}>
                   <div style={{padding: '2px 25px'}}>
                     <ul className={styles.ul}>
-                      {item.questionType !== "Subjective" && item.options.map((i)=>{
+                      {item.questionType !== "Subjective" && item.questionType !== "TRUE/FALSE" && item.options.map((i)=>{
                         return(
                           <li className={item.correctOption === i.options.toLowerCase() && styles.abc}>{i.options}</li>
                         )
@@ -90,7 +127,10 @@ function ShowPool() {
                     <p>Answer: <strong>{item.correctOption}</strong></p>
                   </div>
                 </div>
-                <p className={styles.questionType}><span>{item.questionType}</span></p>
+                <div className={styles.footer1}>
+                  <button className={styles.button0} onClick={(e)=>{deleteQuestionHanler(item.id)}}>Delete</button>
+                  <p className={styles.questionType}><span>{item.questionType}</span></p>
+                </div>
               </div>
             );
           })

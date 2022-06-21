@@ -97,8 +97,10 @@
 }
 
 .circularportrait img {
-  border-radius: 50%;
-  max-width: clamp(50px, 15vw, 150px);
+  max-width: 100%;
+  
+  height: auto;
+
 }
 .chooseImg {
   display: flex;
@@ -120,4 +122,8 @@
   .left input {
     min-width: 130px;
   }
+}
+
+.circularportrait img{
+  object-fit: cover;
 }

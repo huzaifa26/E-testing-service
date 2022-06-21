@@ -14,6 +14,7 @@ import Profile from './Components/Profile/Profile (1)';
 import Auth from './Protected/Auth';
 import { v4 as uuidv4 } from 'uuid';
 import {ToastContainer, toast } from 'react-toastify';
+import Auth2 from './Protected/Auth2';
 
 
 function App() {
@@ -26,15 +27,17 @@ function App() {
           <Route path="/emailVerification/:id" element={<VerifyEmail />} />
           <Route path="/forgotPassword" element={<EmailForgotPassword/>}/>
           <Route path="/forgotPasswordChange/:id" element={<ForgotPassword/>}/>
-          
-
           <Route path='/' element={<Auth/>} >
-            <Route path="/dashboard" element={<Navbar><Dashboard key={uid}/></Navbar>} />
+            <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
             <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
             <Route path="/courses/pools" element={<Navbar><Pools /></Navbar>}/>
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
             <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
           </Route>
+
+          <Route path='/' element={<Auth/>} >
+          </Route>
+
 
         </Routes>
         <ToastContainer autoClose={1000}/>

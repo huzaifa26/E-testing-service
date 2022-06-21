@@ -94,10 +94,10 @@ const CreateClassSubmithandler=(e)=>{
             <img src={imageURL===""?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOIgbiAwf6mBkjE6iVQuxHMAHMXlcYvkshKJ9Tx-bexaRCbpR7WJNs7t_qh3Z4I8qe8HQ&usqp=CAU":imageURL}></img>
             <div className={styles.chooseImg}>
                 <label for="files" class="btn">Change Image</label>
-                <input accept=".png,.jpg,.jpeg" onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file"/>
+                <input required accept=".png,.jpg,.jpeg" onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file"/>
             </div>
-                <input name="courseName" type={"text"} placeholder="Course Name"></input>
-                <textarea name="description" rows='6' type={"text"} placeholder="Description"></textarea>
+                <input required name="courseName" type={"text"} placeholder="Course Name"></input>
+                <textarea required  name="description" rows='6' type={"text"} placeholder="Description"></textarea>
 
                 <div className={styles.button}>
                 <button type="submit">Create Class</button>

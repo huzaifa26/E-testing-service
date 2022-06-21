@@ -49,7 +49,6 @@ function VerifyEmail() {
           Verify Email
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 }

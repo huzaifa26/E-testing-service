@@ -7,8 +7,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { userActions } from './../../Redux/user-slice'; 
+import { useCookies } from 'react-cookie';
 
 function Login() {
+  const [cookies, setCookie] = useCookies(['user']);
+
   const dispatch=useDispatch();
   const loginData = useRef();
   let navigate = useNavigate();
@@ -16,15 +19,16 @@ function Login() {
   function loginSubmitHandler(e) {
     e.preventDefault();
 
-    axios
-      .post('http://localhost:5000/api/login', {
+    axios.post('http://localhost:5000/api/login', {
         email: loginData.current.email.value,
         password: loginData.current.password.value,
-      })
+      },{withCredentials : true})
       .then(function (response) {
         if (response.status === 200) {
           // console.log(response.data)
           console.log(response.data)
+          
+          // setCookie('token', response.data.token, { path: '/' });
           dispatch(userActions.userInfo(response.data));
           navigate('/dashboard');
         }
@@ -60,8 +64,8 @@ function Login() {
           onSubmit={loginSubmitHandler}
         >
           <h1 className={styles.LoginName}>LOGIN</h1>
-          <input type="email" name="email" placeholder="Email"></input>
-          <input type="password" name="password" placeholder="Password"></input>
+          <input required type="email" name="email" placeholder="Email"></input>
+          <input required type="password" name="password" placeholder="Password"></input>
           <p className={styles.LoginFormForget} onClick={() => {navigate('/forgotPassword');}}>forget password?</p>
           <div className={styles.footer}>
             <button>Login</button>
@@ -76,7 +80,6 @@ function Login() {
           </div>
         </form>
       </div>
-      <ToastContainer autoClose={1000}/>
     </div>
   );
 }

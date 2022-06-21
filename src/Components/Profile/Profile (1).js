@@ -14,7 +14,6 @@ function Profile() {
     const formRef=useRef();
     const useAuth = useSelector((state) => state.user.userInfo);
     const user=useSelector(state=>{return state.user;})
-    console.log(useAuth.userImg);
 
     const [image , setImage] = useState('');
     const [imageURL , setImageURL] = useState('');
@@ -87,14 +86,14 @@ function Profile() {
     }
 
 
+    console.log(useAuth.user);
+
   return (
     <div className={styles.main}>
         <div className={styles.leftTop}>
             
         <div className={styles.h1}>
-                <h1>
-                    P R O F I L E
-                </h1>
+                <h1>P R O F I L E</h1>
         </div>
 
     <form ref={formRef} onSubmit={editUserFormSubmitHanlder} className={styles.left}>
@@ -133,7 +132,6 @@ function Profile() {
             <input onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file" accept="image/png, image/gif, image/jpeg"/>
         </div>
     </div>
-        <ToastContainer autoClose={1000}/>
     </div>
 
   )

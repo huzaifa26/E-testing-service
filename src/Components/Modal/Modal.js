@@ -4,9 +4,12 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import {useSelector} from "react-redux";
 
 
 function Modal({closeModal}) {
+  const user=useSelector(state=> state.user);
+
 
     const formik = useFormik({
       initialValues: {
@@ -23,11 +26,14 @@ function Modal({closeModal}) {
         ),
       }),
       onSubmit: (values, { resetForm }) => {
-        axios
-          .post('http://localhost:5000/api/createCourse', {
+        axios.post('http://localhost:5000/api/createCourse', {
             coursename: values.coursename,
             joiningkey: values.joiningkey,
-          })
+          },{headers: {
+            'authorization': `Bearer ${user.userInfo.token}`,
+            'Accept' : 'application/json',
+            'Content-Type': 'application/json'
+          }})
           .then(function (response) {})
           .catch(function (error) {});
       },

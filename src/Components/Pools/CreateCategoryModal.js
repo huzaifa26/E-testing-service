@@ -11,22 +11,32 @@ function CreateCategoryModal(props) {
     const formRef=useRef();
     const courseId_name=useSelector(state=> state.courseId_Name.courseIdName);
     const user=useSelector(state=> state.user)
-
+    const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
 
     const formSubmitHandler=(e)=>{
         e.preventDefault();
         let data={
-            courseId:formRef.current.courseId.value,
+            courseId:courseIdredux,
             userId:user.userInfo.user.id,
             categoryName:formRef.current.categoryName.value,
         }
         console.log(data);
 
-        axios.post("http://localhost:5000/api/poolCategory",data).then((res)=>{
+        axios.post("http://localhost:5000/api/poolCategory",data,{headers: {
+            'authorization': `Bearer ${user.userInfo.token}`,
+            'Accept' : 'application/json',
+            'Content-Type': 'application/json'
+        }}).then((res)=>{
             console.log(res);
+            toast.success('Category Created', {
+                position: toast.POSITION.TOP_RIGHT,
+            })
             props.closeModalHandler();
         }).catch((err)=>{
             console.log(err)
+            toast.error('Category Created failed', {
+                position: toast.POSITION.TOP_RIGHT,
+            })
         })
     }
 
@@ -37,12 +47,12 @@ function CreateCategoryModal(props) {
             <div onClick={()=>{}} className={styles.CreateCategoryModal}>
                 <form style={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}}  ref={formRef} onSubmit={formSubmitHandler}>
                     <h2 style={{height:"15%",marginBottom:'15px',textAlign:"center",fontSize:'25px',color:'var(--primary)',fontWeight:"500" }}>Create Category</h2>
-                    <select name="courseId">
+                    {/* <select name="courseId">
                         <option disabled selected>Choose Course</option>
                         {courseId_name.map((value) => {
                             return <option value={value.id}>{value.courseName}</option>;
                         })}
-                    </select>
+                    </select> */}
                     <input type={"text"} name="categoryName" placeholder=" Category Name"></input>
                     <div className={styles.btnDiv}>
                         <button onClick={()=>{props.closeModalHandler()}}>Close</button>
@@ -51,9 +61,8 @@ function CreateCategoryModal(props) {
                 </form>
 
             </div>
-      <ToastContainer autoClose={1000}/>
         </>
      );
 }
 
-export default CreateCategoryModal;  
+export default CreateCategoryModal;

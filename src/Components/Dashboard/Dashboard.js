@@ -9,16 +9,15 @@ import styles from './Dashboard.module.css';
 import {courseActions,getCourseIdOnClickactions} from "./../../Redux/course-slice";
 import Courses from '../Courses/Courses';
 import { Link,useLocation,useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { userActions } from './../../Redux/user-slice'; 
 
-const joinedCourses =
-[
-  {
-    id:2,
-    name: 'Database'
-  }
-]
+const joinedCourses =[]
 
 function Dashboard(props) {
+  const [cookies, setCookie,removeCookies] = useCookies();
+
+  console.log(cookies);
   const location = useLocation();
   const navigate=useNavigate();
   const dispatch=useDispatch();
@@ -30,8 +29,7 @@ function Dashboard(props) {
 
   const courses=useSelector(state=> state.courses);
   const user=useSelector(state=> state.user);
-  console.log(user.userInfo.user.id);
-
+  console.log(user);
   const joinhandle=()=>{
     setOpenModal(true);
   }
@@ -46,17 +44,31 @@ function Dashboard(props) {
     setShowCreateCourse(false);
   },[])
 
+  const [getdata,setgetdata]=useState(false);
+
+
   useEffect(()=>{
-    axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{headers: {
-      'authorization': `Bearer ${user.userInfo.token}`,
-      'Accept' : 'application/json',
-      'Content-Type': 'application/json'
-  }}).then((res)=>{
-      dispatch(courseActions.courses(res.data.data));
-    }).catch((err)=>{
-      console.log(err);
-    })
-  },[showDashboardHandler]);
+    // if(user.userInfo.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/user",{ withCredentials: true }).then((res)=>{
+        console.log(res.data);
+        dispatch(userActions.userInfo(res.data));
+        setgetdata(!getdata);
+      }).catch((err)=>{
+        console.log(err);
+      })
+    // } 
+  },[])
+
+  useEffect(()=>{
+    if(user.userInfo.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{ withCredentials: true }
+      ).then((res)=>{
+        dispatch(courseActions.courses(res.data.data));
+      }).catch((err)=>{
+        console.log(err);
+      })
+    } 
+  },[showDashboardHandler,getdata]);
 
 
   return (

@@ -1,7 +1,7 @@
 import styles from './Buildpool.module.css';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { convertToRaw, EditorState } from 'draft-js';
+import { convertToRaw, EditorState,createFromText } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import React, { useRef, useState,useEffect } from 'react';
 import Mcq from './Mcq';
@@ -16,6 +16,7 @@ import axios from 'axios';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import {Storage} from "../Utils/firebase";
 import { MathComponent } from 'mathjax-react';
+import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory';
 
 const category = [
   {
@@ -32,7 +33,7 @@ const category = [
   },
 ];
 
-function Buildpool() {
+function Buildpool(props) {
   const dispatch=useDispatch();
 
   const [mcq, setmcq] = useState(false);
@@ -40,7 +41,6 @@ function Buildpool() {
   const [plain, setplain] = useState(false);
   const [courseId, setCourseId] = useState('');
   const rtQuestionRef = useRef('');
-  const [courseName, setCourseName] = useState('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [selectedPoolCategory,setSelectedPoolCategory]=useState();
   const [text, setText] = useState(String.raw``);
@@ -51,6 +51,9 @@ function Buildpool() {
   console.log(courseCategoriesredux);
 
   const user=useSelector(state=>{return state.user;})
+  let courseName=useSelector(state=>{console.log(state.courseId_Name.courseIdName);return state.courseId_Name.courseIdName});
+  courseName=courseName.filter((item,i)=> item.id === courseIdredux);
+  console.log(courseName);
 
   function questionTypeHandler(e) {
     const ids = e.target.value;
@@ -78,7 +81,6 @@ function Buildpool() {
     setCourseId(e.target.value);
     publishCourses.forEach((element) => {
       if (parseInt(e.target.value) === element.id) {
-        setCourseName(element.courseName);
         let url="http://localhost:5000/api/poolCategory/"+e.target.value+ "/" + user.userInfo.user.id;
         axios.get(url).then((res)=>{
           console.log(res.data.data);
@@ -105,7 +107,7 @@ function Buildpool() {
       let question = convertToRaw(editorState.getCurrentContent());
       setText(question.blocks[0].text);
       mcqData.question = question.blocks[0].text;
-      mcqData.courseName = courseName;
+      mcqData.courseName = courseName[0].courseName;
       mcqData.poolCategory = selectedPoolCategory;
       mcqData.userId = user.userInfo.user.id;
 
@@ -113,16 +115,27 @@ function Buildpool() {
         mcqData.questionImg=imageURL;
       }
 
+      mcqData.isMathJax=isMathJax;
+
       console.log(mcqData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,mcqData).then((res)=>{
+      axios.post(url,mcqData,{headers: {
+        'authorization': `Bearer ${user.userInfo.token}`,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    }}).then((res)=>{
+        toast.success('Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        props.changeView();
         console.log("res")
       }).catch((err)=>{
-        console.log("err")
+        console.log(err)
+        toast.error('Failed', {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
-      toast.success('Added', {
-        position: toast.POSITION.TOP_CENTER,
-      });
+
     }
   };
 
@@ -146,19 +159,34 @@ function Buildpool() {
       let question = convertToRaw(editorState.getCurrentContent());
       setText(question.blocks[0].text);
       truesData.question = question.blocks[0].text;
-      truesData.courseName = courseName;
+      truesData.courseName = courseName[0].courseName;
       truesData.poolCategory = selectedPoolCategory;
       truesData.userId = user.userInfo.user.id;
 
+      if (imageURL !== ""){
+        truesData.questionImg=imageURL;
+      }
+
+      truesData.isMathJax=isMathJax;
+
+      console.log(truesData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,truesData).then((res)=>{
+      axios.post(url,truesData,{headers: {
+        'authorization': `Bearer ${user.userInfo.token}`,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    }}).then((res)=>{
         console.log("res")
+        toast.success('Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        props.changeView();
       }).catch((err)=>{
         console.log("err")
+        toast.error('Failed', {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
-      toast.success('Added', {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
   };
 
@@ -183,19 +211,34 @@ function Buildpool() {
       let question = convertToRaw(editorState.getCurrentContent());
       setText(question.blocks[0].text);
       plainData.question = question.blocks[0].text;
-      plainData.courseName = courseName;
+      plainData.courseName = courseName[0].courseName;
       plainData.poolCategory = selectedPoolCategory;
       plainData.userId = user.userInfo.user.id;
+      
+      if (imageURL !== ""){
+        plainData.questionImg=imageURL;
+      }
 
+      plainData.isMathJax=isMathJax;
+
+      console.log(plainData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,plainData).then((res)=>{
+      axios.post(url,plainData,{headers: {
+        'authorization': `Bearer ${user.userInfo.token}`,
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+    }}).then((res)=>{
         console.log("res")
+        toast.success('Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        props.changeView();
       }).catch((err)=>{
         console.log("err")
+        toast.error('Failed', {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
-      toast.success('Added', {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
   };
 
@@ -227,7 +270,7 @@ function Buildpool() {
             setImageURL(url);
         });
         // setValue("thumbnail", res.data);
-        resolve({ data: { link: "res"} });
+        resolve({ data: { link: "Uploaded"} });
       };
       reader.readAsDataURL(file);
     });
@@ -236,6 +279,8 @@ function Buildpool() {
   const config={
     image: { uploadCallback: uploadCallback },
   };
+
+  const [isMathJax,setIsMathjax]=useState(false);
 
   return (
     <div>
@@ -273,10 +318,24 @@ function Buildpool() {
               <input onChange={changeInputHandler} type="radio" id="input" name="questionInput" value="Rich box"/>
               <label htmlFor="input">Rich Text</label>
             </div> */}
-            <h1>Question</h1>
-            <MathComponent tex={text} />
-            {/*  */}
+            <h1 className={styles.h11}>Question</h1>
+            {/* <h2 style={{fontSize:"20px",fontWeight:'500'}} className={styles.question}><MathComponent tex={text} /></h2> */}
+            
             <>
+            <div className={styles.true}>
+              <label>Use MathJax:  
+                <input type="checkbox" name="isTrue" value="true"
+                  onClick={(e) => {
+                    console.log(!isMathJax);
+                    setIsMathjax(!isMathJax);
+                  }}
+                />
+              </label>
+            </div>
+            {
+              isMathJax && 
+              <p style={{fontSize:"14px",margin:"4px 0"}}>Use ~ instead of space.</p>
+            }
             <Editor
               toolbar={config}
               toolbarClassName="toolbarClassName"
@@ -302,7 +361,6 @@ function Buildpool() {
             {mcq && <Mcq getMcqs={getMcqs} />}
             {trues && <True getTrues={getTrues} />}
             {plain && <Plain getPlain={getPlain} />}
-            <ToastContainer />
           </div>
         </div>}
     </div>

@@ -16,16 +16,14 @@ function True(props) {
   return (
     <>
       <div className={styles.true}>
-        <label>
-          True 
+        <label>True 
           <input type="radio" name="isTrue" value="true"
             onClick={(e) => {
               setvalue(e.target.value);
             }}
           />
         </label>
-        <label>
-          False 
+        <label>False 
           <input type="radio" name="isTrue" value="false"
             onClick={(e) => {
               setvalue(e.target.value);
