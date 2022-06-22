@@ -28,3 +28,11 @@ body {
 input {
   outline: none;
 }
+
+/* @media only screen and (max-width: 1080px) {
+  mjx-container[jax="SVG"] > svg {
+    overflow: visible;
+    min-height: 1px;
+    min-width: 1px;
+    width: 78vw;
+  } */

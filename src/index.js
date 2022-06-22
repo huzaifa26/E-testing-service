@@ -25,9 +25,7 @@ axios.interceptors.response.use((response)=>{
   if (error.response.status === 403 && !originalRequest._retry) {
     originalRequest._retry = true;
     axios.get("http://localhost:5000/api/refreshtoken",{withCredentials:true}).then((res)=>{
-      console.log(res);
       axios.defaults.withCredentials=true;
-      console.log("Token Refreshed");
     }).catch((err)=>{
       console.log(err);
     })

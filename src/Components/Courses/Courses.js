@@ -16,35 +16,35 @@ const Courses=(props) => {
   const navigate=useNavigate();
 
   const [refreshTokenState,setRefreshToken]=useState(false);
-  useEffect(()=>{
-    axios.get("http://localhost:5000/api/isAuthorized",{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-      if (res.status === 200){
-        console.log(res);
-      }
-    }).catch((err)=>{
-      console.log(err);
-      if(err.response.status === 401){
-        navigate("/")
-      }
-      if(err.response.status === 403){
+  // useEffect(()=>{
+  //   axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
+  //     if (res.status === 200){
+  //       console.log(res);
+  //     }
+  //   }).catch((err)=>{
+  //     console.log(err);
+  //     if(err.response.status === 401){
+  //       navigate("/")
+  //     }
+  //     if(err.response.status === 403){
        
-      }
-    })
-  },[])
+  //     }
+  //   })
+  // },[])
 
 
-  useEffect(()=>{
-    axios.get("http://localhost:5000/api/isAuthorized",{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-      if (res.status === "200"){
-        console.log(res);
-      }
-    }).catch((err)=>{
-      console.log(err);
-      if(err.response.status === 401){
-        navigate("/")
-      }
-    })
-  })
+  // useEffect(()=>{
+  //   axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
+  //     if (res.status === "200"){
+  //       console.log(res);
+  //     }
+  //   }).catch((err)=>{
+  //     console.log(err);
+  //     if(err.response.status === 401){
+  //       navigate("/")
+  //     }
+  //   })
+  // })
 
   const dispatch=useDispatch();
 

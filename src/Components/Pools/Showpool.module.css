@@ -81,12 +81,15 @@
   align-items: center;
   gap: 20px;
 }
+.imgg{
+  width: 30%;
+}
 .button0{
   cursor: pointer;
-  background-color: var(--primary);
+  background-color: rgb(128, 0, 0);
 
   align-self: center;
-  border: 1px solid var(--primary);
+  border: 1px solid red;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;

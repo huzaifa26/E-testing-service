@@ -19,35 +19,21 @@ function Pools() {
   const user=useSelector(state=> state.user);
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
 
-  console.log(typeof(courseIdredux));
-
   const openModalHandler=()=>{
+    setcreatePool(false);
     setShowModal(true);
   }
 
   const closeModalHandler=()=>{
+    setShowModal(false);
+    setcreatePool(true);
     setShowModal(false);
   }
 
   const getRequests=()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
       let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
-      axios.get(link,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        console.log(res.data.data);
-        dispatch(courseId_NameActions.courseIdName(res.data.data));
-      }).catch((err)=>{
-        console.log(err);
-      })
-    }
-  }
-
-  const getCourseCategories=()=>{
-    if(user.userInfo.hasOwnProperty("user") === true){
-      let link='http://localhost:5000/api/getCourseCategories/' + courseIdredux;
-      axios.get(link,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        console.log(res.data.data);
-        dispatch(courseCategoriesActions.courseCategories(res.data.data));
-      }).catch((err)=>{
+      axios.get(link,{withCredentials:true}).catch((err)=>{
         console.log(err);
       })
     }
@@ -55,23 +41,32 @@ function Pools() {
 
   useEffect(()=>{
     getRequests();
-    getCourseCategories();
+    if(user.userInfo.hasOwnProperty("user") === true){
+      let link='http://localhost:5000/api/getCourseCategories/' + courseIdredux;
+      axios.get(link,{withCredentials:true}).then((res)=>{
+        console.log(res);
+        dispatch(courseCategoriesActions.courseCategories(res.data.data));
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
   },[showModal])
 
-  // useEffect(()=>{
-  //   let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
-  //   axios.get(link).then((res)=>{
-  //     console.log(res.data.data);
-  //     dispatch(courseId_NameActions.courseIdName(res.data.data));
-  //   }).catch((err)=>{
-  //     console.log(err);
-  //   })
-  // },[])
+  useEffect(()=>{
+    let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
+    axios.get(link,{withCredentials:true}).then((res)=>{
+      console.log(res.data.data);
+      dispatch(courseId_NameActions.courseIdName(res.data.data));
+    }).catch((err)=>{
+      console.log(err);
+    })
+  },[])
 
   const changeView=()=>{
     setshowPool(true);
     setcreatePool(false); 
   }
+
 
   return (
     <>
@@ -88,21 +83,21 @@ function Pools() {
         <div className={styles.poolsBar}>
           <div className={styles.allButton}>
 
-          <button className={styles.button0}
+          <button  className={`${styles.button0} ${showPool && styles.buttonActive}`}
             onClick={() => {
               setshowPool(true);
               setcreatePool(false);
             }}>
             Show Pool
           </button>
-          <button className={styles.button2}
+          <button style={{marginLeft:"3px"}} className={`${styles.button0} ${createPool && styles.buttonActive}`}
             onClick={() => {
               setshowPool(false);
               setcreatePool(true);
             }}>
             Create Pool
           </button>
-          <button className={styles.button2}
+          <button className={`${styles.button2} ${showModal && styles.buttonActive}`}
             onClick={openModalHandler}>
             Create Category
           </button>

@@ -24,7 +24,7 @@ function CreateCategoryModal(props) {
         }
         console.log(data);
 
-        axios.post("http://localhost:5000/api/poolCategory",data,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+        axios.post("http://localhost:5000/api/poolCategory",data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
             console.log(res);
             toast.success('Category Created', {
                 position: toast.POSITION.TOP_RIGHT,

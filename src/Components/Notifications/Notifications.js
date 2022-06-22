@@ -9,18 +9,18 @@ const Notification=() => {
 
   const navigate=useNavigate();
 
-  useEffect(()=>{
-    axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
-      if (res.status === "200"){
-        console.log(res);
-      }
-    }).catch((err)=>{
-      console.log(err);
-      if(err.response.status === 401){
-        navigate("/")
-      }
-    })
-  },[])
+  // useEffect(()=>{
+  //   axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
+  //     if (res.status === "200"){
+  //       console.log(res);
+  //     }
+  //   }).catch((err)=>{
+  //     console.log(err);
+  //     if(err.response.status === 401){
+  //       navigate("/")
+  //     }
+  //   })
+  // },[])
 
   return (
     <div className={styles.notification}>

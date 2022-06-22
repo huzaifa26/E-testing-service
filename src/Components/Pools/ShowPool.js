@@ -18,7 +18,7 @@ function ShowPool() {
 
   const getRequest=()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{withCredentials:true}).then((res)=>{
         setAllQuestions(res.data);
       }).catch((err)=>{
         console.log(err);
@@ -28,7 +28,7 @@ function ShowPool() {
 
   useEffect(()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{withCredentials:true}).then((res)=>{
         setAllQuestions(res.data);
       }).catch((err)=>{
         console.log(err);
@@ -43,7 +43,7 @@ function ShowPool() {
   const deleteQuestionHanler=(id)=>{
     let data={id:id}
     if(user.userInfo.hasOwnProperty("user") === true){
-      axios.post("http://localhost:5000/api/deletepoolQuestions",data,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      axios.post("http://localhost:5000/api/deletepoolQuestions",data,{withCredentials:true}).then((res)=>{
       toast.success('Question Deleted', {
           position: toast.POSITION.TOP_RIGHT,
       })
@@ -70,7 +70,7 @@ function ShowPool() {
           })}
         </select>
       </div> */}
-      <div className={styles.poolsCategory}>
+      {/* <div className={styles.poolsCategory}>
         <label>
           Select Category:
         </label>
@@ -82,7 +82,7 @@ function ShowPool() {
             return <option value={value.id}>{value.categoryName}</option>;
           })}
         </select>
-      </div>
+      </div> */}
       </div>
 
           {allQuestions.filter((data) => {return +data.courseId === +courseIdredux;}).map((item, index) => {
@@ -101,7 +101,7 @@ function ShowPool() {
                 </div>
                 {item.questionImage !== null &&
                     <div style={{marginLeft:"50px"}}>
-                      <img src={item.questionImage} alt="Question Image"/>
+                      <img src={item.questionImage} className={styles.imgg} alt="Question Image"/>
                     </div>
                   }
                 <div class={styles.container}>

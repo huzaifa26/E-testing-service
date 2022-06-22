@@ -24,26 +24,41 @@ function Login() {
         password: loginData.current.password.value,
       },{withCredentials : true})
       .then(function (response) {
+        console.log();
+
         if (response.status === 200) {
           // console.log(response.data)
           console.log(response.data)
           // setCookie('token', response.data.token, { path: '/' });
           dispatch(userActions.userInfo(response.data));
+          toast.success('Login Succesfull', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
           navigate('/dashboard');
+        } else if (response?.response?.status === 400) {
+          toast.error('Wrong Email or Password', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        } else  if (response?.response?.status === 405) {
+          toast.error('Please verify email', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         }
       })
       .catch(function (error) {
-        if (error.response.status === 401) {
+        console.log(error);
+
+        if (error.status === 401) {
           toast.error('Please create account', {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
-        if (error.response.status === 403) {
+        if (error.status === 400) {
           toast.error('Wrong Email or Password', {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
-        if (error.response.status === 405) {
+        if (error.status === 405) {
           toast.error('Please verify email', {
             position: toast.POSITION.TOP_RIGHT,
           });

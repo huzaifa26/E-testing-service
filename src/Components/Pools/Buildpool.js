@@ -43,16 +43,18 @@ function Buildpool(props) {
   const [courseId, setCourseId] = useState('');
   const rtQuestionRef = useRef('');
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [selectedPoolCategory,setSelectedPoolCategory]=useState();
+  const [selectedPoolCategory,setSelectedPoolCategory]=useState("");
   const [text, setText] = useState(String.raw``);
 
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const publishCourses=useSelector(state=>{return state.courseId_Name.courseIdName});
   const courseCategoriesredux=useSelector(state => state.courseCategories.courseCategories);
-  console.log(courseCategoriesredux);
+  const abc=useSelector(state => {console.log(state);return state});
+
 
   const user=useSelector(state=>{return state.user;})
   let courseName=useSelector(state=>{console.log(state.courseId_Name.courseIdName);return state.courseId_Name.courseIdName});
+  // console.log(courseName);
   courseName=courseName.filter((item,i)=> item.id === courseIdredux);
   console.log(courseName);
 
@@ -83,7 +85,7 @@ function Buildpool(props) {
     publishCourses.forEach((element) => {
       if (parseInt(e.target.value) === element.id) {
         let url="http://localhost:5000/api/poolCategory/"+e.target.value+ "/" + user.userInfo.user.id;
-        axios.get(url,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+        axios.get(url,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
           console.log(res.data.data);
           setPoolCategory(res.data.data);
         }).catch((err)=>{
@@ -120,7 +122,7 @@ function Buildpool(props) {
 
       console.log(mcqData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,mcqData,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      axios.post(url,mcqData,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         toast.success('Added', {
           position: toast.POSITION.TOP_CENTER,
         });
@@ -168,7 +170,7 @@ function Buildpool(props) {
 
       console.log(truesData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,truesData,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      axios.post(url,truesData,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log("res")
         toast.success('Added', {
           position: toast.POSITION.TOP_CENTER,
@@ -216,7 +218,7 @@ function Buildpool(props) {
 
       console.log(plainData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,plainData,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      axios.post(url,plainData,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log("res")
         toast.success('Added', {
           position: toast.POSITION.TOP_CENTER,
@@ -287,7 +289,7 @@ function Buildpool(props) {
           })}
         </select>
       </div>
-      <div className={styles.labelCourse}>
+      {selectedPoolCategory !== "" && <div className={styles.labelCourse}>
         <label>Question Type&nbsp;&nbsp;&nbsp;:</label>
         <select onChange={questionTypeHandler}>
           <option value="" selected disabled hidden>
@@ -297,7 +299,7 @@ function Buildpool(props) {
             return <option value={value.id}>{value.name}</option>;
           })}
         </select>
-      </div>
+      </div>}
       </div>
         {(mcq || trues || plain) && <div>
           <div className={styles.editor2}>

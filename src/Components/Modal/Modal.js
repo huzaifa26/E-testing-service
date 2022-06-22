@@ -30,7 +30,7 @@ function Modal({closeModal}) {
         axios.post('http://localhost:5000/api/createCourse', {
             coursename: values.coursename,
             joiningkey: values.joiningkey,
-          },{headers: { Authorization: `Bearer ${cookie.token}`}})
+          },{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}})
           .then(function (response) {})
           .catch(function (error) {});
       },

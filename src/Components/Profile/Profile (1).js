@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import styles from './Profile.module.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {Storage} from "../Utils/firebase";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
 import { useRef } from 'react';
@@ -8,24 +8,25 @@ import axios from 'axios';
 import {ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-
+import { userActions } from '../../Redux/user-slice';
 
 const Profile=() => {
-    const [cookie]=useCookies()
+    const dispatch=useDispatch();
+    const [cookie]=useCookies();
     const navigate=useNavigate();
     
-    useEffect(()=>{
-        axios.get("http://localhost:5000/api/isAuthorized",{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-          if (res.status === "200"){
-            console.log(res);
-          }
-        }).catch((err)=>{
-          console.log(err);
-          if(err.response.status === 401){
-            navigate("/")
-          }
-        })
-      },[])
+    // useEffect(()=>{
+    //     axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
+    //       if (res.status === "200"){
+    //         console.log(res);
+    //       }
+    //     }).catch((err)=>{
+    //       console.log(err);
+    //       if(err.response.status === 401){
+    //         navigate("/")
+    //       }
+    //     })
+    //   },[])
 
     const formRef=useRef();
     const useAuth = useSelector((state) => state.user.userInfo);
@@ -66,19 +67,21 @@ const Profile=() => {
             console.log("same");
         }
 
-
-
-    axios.post("http://localhost:5000/api/user",updatedUser,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        console.log(res.status);
+    axios.post("http://localhost:5000/api/user",updatedUser,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+        console.log(res);
         if(res.status === 200){
-            
+            console.log(res);
             toast.success('User Updated Successfully', {
                 position: toast.POSITION.TOP_RIGHT,
             });
-
+            axios.get("http://localhost:5000/api/user",{withCredentials:true}).then((res)=>{
+                console.log(res.data.user.id);
+                dispatch(userActions.userInfo(res.data));
+            })
             navigate("/dashboard");
         }
     }).catch((err)=>{
+        console.log(err);
         if(err.status === 500){
             toast.error('Cannot register Course', {
                 position: toast.POSITION.TOP_RIGHT,

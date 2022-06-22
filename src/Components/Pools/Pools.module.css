@@ -51,9 +51,7 @@
   height: 90%;
   text-decoration: none;
 }
-.pool .poolsBar button:hover {
-  color: rgba(249, 249, 249, 0.874);
-}
+
 .pool .poolsBar .span2 {
   margin-left: 35px;
 }
@@ -86,4 +84,10 @@
     justify-content: center;
   }
 
+}
+
+.buttonActive{
+  background:white;
+  border:1px solid #282E33;
+  color:#282E33
 }

@@ -44,7 +44,7 @@ const CreateClassSubmithandler=(e)=>{
         console.log(res);
         if(res.status === 200){
             toast.success('Course Created Succesfully', {
-                position: toast.POSITION.BOTTOM_RIGHT,
+                position: toast.POSITION.TOP_RIGHT,
             });
             axios.get("http://localhost:5000/api/courses",{withCredentials:true}).then((res)=>{
                 dispatch(courseActions.courses(res.data.data));

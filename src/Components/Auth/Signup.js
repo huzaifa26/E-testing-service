@@ -17,9 +17,6 @@ const MailService = async (data) => {
     .then(
       (result) => {
         console.log(result.text);
-        toast.success('Check your Email to verify', {
-          position: toast.POSITION.TOP_RIGHT,
-        });
       },
       (error) => {
         console.log(error.text);
@@ -55,10 +52,13 @@ function Signup() {
           password: values.password,
         })
         .then(function (response) {
-          console.log()
-          if (response.response.status === 200) {
+          console.log(response);
+          if (response?.status === 200) {
             MailService(response.data);
-          } else if (response.response.status === 400) {
+            toast.success('Check your Email to verify', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          } else if (response?.response?.status === 400) {
             toast.error('Account with this email already exists', {
               position: toast.POSITION.TOP_RIGHT,
             });
