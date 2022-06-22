@@ -5,8 +5,10 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 function CreateCategoryModal(props) {
+    const [cookie]=useCookies();
     const navigate=useNavigate();
     const formRef=useRef();
     const courseId_name=useSelector(state=> state.courseId_Name.courseIdName);
@@ -22,18 +24,14 @@ function CreateCategoryModal(props) {
         }
         console.log(data);
 
-        axios.post("http://localhost:5000/api/poolCategory",data,{headers: {
-            'authorization': `Bearer ${user.userInfo.token}`,
-            'Accept' : 'application/json',
-            'Content-Type': 'application/json'
-        }}).then((res)=>{
+        axios.post("http://localhost:5000/api/poolCategory",data,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
             console.log(res);
             toast.success('Category Created', {
                 position: toast.POSITION.TOP_RIGHT,
             })
             props.closeModalHandler();
         }).catch((err)=>{
-            console.log(err)
+            console.log(err);
             toast.error('Category Created failed', {
                 position: toast.POSITION.TOP_RIGHT,
             })

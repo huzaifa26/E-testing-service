@@ -4,8 +4,10 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { MathComponent } from 'mathjax-react';
 import { ToastContainer, toast } from 'react-toastify';
+import { useCookies } from 'react-cookie';
 
 function ShowPool() {
+  const [cookie]=useCookies();
   const user=useSelector(state=> state.user)
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const courseCategoriesredux=useSelector(state => state.courseCategories.courseCategories);
@@ -16,11 +18,7 @@ function ShowPool() {
 
   const getRequest=()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         setAllQuestions(res.data);
       }).catch((err)=>{
         console.log(err);
@@ -30,11 +28,7 @@ function ShowPool() {
 
   useEffect(()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         setAllQuestions(res.data);
       }).catch((err)=>{
         console.log(err);
@@ -49,11 +43,7 @@ function ShowPool() {
   const deleteQuestionHanler=(id)=>{
     let data={id:id}
     if(user.userInfo.hasOwnProperty("user") === true){
-      axios.post("http://localhost:5000/api/deletepoolQuestions",data,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+      axios.post("http://localhost:5000/api/deletepoolQuestions",data,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
       toast.success('Question Deleted', {
           position: toast.POSITION.TOP_RIGHT,
       })

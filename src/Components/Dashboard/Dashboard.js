@@ -11,15 +11,26 @@ import Courses from '../Courses/Courses';
 import { Link,useLocation,useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { userActions } from './../../Redux/user-slice'; 
-
 const joinedCourses =[]
 
-function Dashboard(props) {
-  const [cookies, setCookie,removeCookies] = useCookies();
-
-  console.log(cookies);
-  const location = useLocation();
+const Dashboard=(props)=> {
   const navigate=useNavigate();
+  const [cookie,setCookie]=useCookies();
+
+  // useEffect(()=>{
+  // axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+  //   if (res.status === 200){
+  //     console.log(res);
+  //   }
+  // }).catch((err)=>{
+  //   console.log(err);
+  //   if(err.response.status === 401){
+  //     navigate("/")
+  //   }
+  // })
+  // },[])
+
+  const location = useLocation();
   const dispatch=useDispatch();
   const [openModal,setOpenModal] =useState(false)
   const [showDashboard,setShowDashboard]=useState(true);
@@ -29,7 +40,6 @@ function Dashboard(props) {
 
   const courses=useSelector(state=> state.courses);
   const user=useSelector(state=> state.user);
-  console.log(user);
   const joinhandle=()=>{
     setOpenModal(true);
   }
@@ -39,36 +49,51 @@ function Dashboard(props) {
     setShowCreateCourse(true)
   }
 
+  const getCourses=()=>{
+    if(user?.userInfo?.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+      ).then((res)=>{
+        console.log(res);
+        dispatch(courseActions.courses(res.data.data));
+      }).catch((err)=>{
+        console.log(err);
+      })
+    } 
+  }
+
   const showDashboardHandler=useCallback(()=>{
     setShowDashboard(true);
     setShowCreateCourse(false);
+    getCourses();
   },[])
 
   const [getdata,setgetdata]=useState(false);
 
 
   useEffect(()=>{
-    // if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/user",{ withCredentials: true }).then((res)=>{
+    if(user.userInfo.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/user",{withCredentials:true}, {headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log(res.data);
-        dispatch(userActions.userInfo(res.data));
+        // dispatch(userActions.userInfo(res.data));
         setgetdata(!getdata);
       }).catch((err)=>{
         console.log(err);
       })
-    // } 
+    }
   },[])
 
+
+
   useEffect(()=>{
-    if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{ withCredentials: true }
-      ).then((res)=>{
-        dispatch(courseActions.courses(res.data.data));
-      }).catch((err)=>{
-        console.log(err);
-      })
-    } 
-  },[showDashboardHandler,getdata]);
+      if(user?.userInfo?.hasOwnProperty("user") === true){
+        axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+        ).then((res)=>{
+          dispatch(courseActions.courses(res.data.data));
+        }).catch((err)=>{
+          console.log(err);
+        })
+      } 
+  },[]);
 
 
   return (
@@ -86,6 +111,7 @@ function Dashboard(props) {
           </div>
           <div  className={styles.joinedCourses}>      
             {courses.courses.map((item) => {
+              console.log(item);
               return( 
               <div onClick={(e)=>{dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));navigate("/courses")}} className={styles.joinedList}>
                 {item.imageUrl !== "" &&

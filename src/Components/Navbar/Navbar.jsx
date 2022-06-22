@@ -10,7 +10,7 @@ import { courseActions,courseCategoriesActions,getCourseIdOnClickactions,courseI
 
 const Navbar2= (props) => {
   const navigate=useNavigate();
-  const [cookies, setCookie,removeCookies] = useCookies(['user']);
+  const [cookies, setCookie,removeCookies] = useCookies();
   const dispatch = useDispatch();
   const location = useLocation();
   const locationName=location.pathname;

@@ -6,17 +6,51 @@ import {useLocation} from "react-router-dom";
 import { useSelector } from 'react-redux';
 import {getCourseIdOnClickactions} from "./../../Redux/course-slice";
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-
+import { useEffect,useState } from 'react';
+import axios from 'axios';
+import {useNavigate} from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 const Courses=(props) => {
+  const [cookie,setCookie]=useCookies();
+  const navigate=useNavigate();
+
+  const [refreshTokenState,setRefreshToken]=useState(false);
+  useEffect(()=>{
+    axios.get("http://localhost:5000/api/isAuthorized",{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      if (res.status === 200){
+        console.log(res);
+      }
+    }).catch((err)=>{
+      console.log(err);
+      if(err.response.status === 401){
+        navigate("/")
+      }
+      if(err.response.status === 403){
+       
+      }
+    })
+  },[])
+
+
+  useEffect(()=>{
+    axios.get("http://localhost:5000/api/isAuthorized",{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      if (res.status === "200"){
+        console.log(res);
+      }
+    }).catch((err)=>{
+      console.log(err);
+      if(err.response.status === 401){
+        navigate("/")
+      }
+    })
+  })
 
   const dispatch=useDispatch();
 
   const location=useLocation();
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const courses=useSelector(state=> {return state.courses});
-  
 
   return (
     <div className={styles.Main}>

@@ -6,9 +6,11 @@ import CreateCategoryModal from './CreateCategoryModal';
 import { useDispatch,useSelector } from 'react-redux';
 import axios from 'axios';
 import { courseId_NameActions,courseCategoriesActions } from '../../Redux/course-slice';
+import { useCookies } from 'react-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 
 function Pools() {
+  const [cookie]=useCookies();
   const dispatch=useDispatch();
   const [showPool, setshowPool] = useState(true);
   const [createPool, setcreatePool] = useState(false);
@@ -30,11 +32,7 @@ function Pools() {
   const getRequests=()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
       let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
-      axios.get(link,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+      axios.get(link,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log(res.data.data);
         dispatch(courseId_NameActions.courseIdName(res.data.data));
       }).catch((err)=>{
@@ -46,11 +44,7 @@ function Pools() {
   const getCourseCategories=()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
       let link='http://localhost:5000/api/getCourseCategories/' + courseIdredux;
-      axios.get(link,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+      axios.get(link,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log(res.data.data);
         dispatch(courseCategoriesActions.courseCategories(res.data.data));
       }).catch((err)=>{

@@ -27,7 +27,6 @@ function Login() {
         if (response.status === 200) {
           // console.log(response.data)
           console.log(response.data)
-          
           // setCookie('token', response.data.token, { path: '/' });
           dispatch(userActions.userInfo(response.data));
           navigate('/dashboard');

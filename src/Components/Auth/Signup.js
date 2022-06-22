@@ -55,13 +55,16 @@ function Signup() {
           password: values.password,
         })
         .then(function (response) {
-          console.log(response)
-          if (response.status === 200) {
+          console.log()
+          if (response.response.status === 200) {
             MailService(response.data);
+          } else if (response.response.status === 400) {
+            toast.error('Account with this email already exists', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
           }
         })
         .catch(function (error) {
-          console.log(error)
           if (error.response.status === 400) {
             toast.error('Account with this email already exists', {
               position: toast.POSITION.TOP_RIGHT,

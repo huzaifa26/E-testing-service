@@ -5,9 +5,10 @@ import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import {useSelector} from "react-redux";
-
+import {useCookies} from "react-cookie";
 
 function Modal({closeModal}) {
+  const [cookie,setCookie]=useCookies();
   const user=useSelector(state=> state.user);
 
 
@@ -29,11 +30,7 @@ function Modal({closeModal}) {
         axios.post('http://localhost:5000/api/createCourse', {
             coursename: values.coursename,
             joiningkey: values.joiningkey,
-          },{headers: {
-            'authorization': `Bearer ${user.userInfo.token}`,
-            'Accept' : 'application/json',
-            'Content-Type': 'application/json'
-          }})
+          },{headers: { Authorization: `Bearer ${cookie.token}`}})
           .then(function (response) {})
           .catch(function (error) {});
       },

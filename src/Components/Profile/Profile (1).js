@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import styles from './Profile.module.css'
 import { useSelector } from 'react-redux';
 import {Storage} from "../Utils/firebase";
@@ -6,11 +6,27 @@ import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
 import { useRef } from 'react';
 import axios from 'axios';
 import {ToastContainer, toast } from 'react-toastify';
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 
-function Profile() {    
+const Profile=() => {
+    const [cookie]=useCookies()
     const navigate=useNavigate();
+    
+    useEffect(()=>{
+        axios.get("http://localhost:5000/api/isAuthorized",{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+          if (res.status === "200"){
+            console.log(res);
+          }
+        }).catch((err)=>{
+          console.log(err);
+          if(err.response.status === 401){
+            navigate("/")
+          }
+        })
+      },[])
+
     const formRef=useRef();
     const useAuth = useSelector((state) => state.user.userInfo);
     const user=useSelector(state=>{return state.user;})
@@ -52,11 +68,7 @@ function Profile() {
 
 
 
-    axios.post("http://localhost:5000/api/user",updatedUser,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+    axios.post("http://localhost:5000/api/user",updatedUser,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log(res.status);
         if(res.status === 200){
             

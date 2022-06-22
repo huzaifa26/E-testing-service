@@ -8,8 +8,10 @@ import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import {courseActions} from "./../../Redux/course-slice";
+import { useCookies } from "react-cookie";
 
 const  CreateCourse=(props) => {
+    const [cookie,setCookie]=useCookies();
     const dispatch=useDispatch();
     const user=useSelector(state=>{return state.user;})
     const [image , setImage] = useState('');
@@ -29,6 +31,8 @@ const CreateClassSubmithandler=(e)=>{
     yourDate[1]=yourDate[1].toString().split(".")[0];
     yourDate=yourDate.toString().replaceAll(","," ");
 
+    console.log(user);
+
     let data={
         userId:user.userInfo.user.id,
         imageUrl:imageURL,
@@ -36,21 +40,13 @@ const CreateClassSubmithandler=(e)=>{
         description:formRef.current.description.value,
         createTime:yourDate,
     }
-    axios.post("http://localhost:5000/api/courses",data,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
-        console.log(res.status);
+    axios.post("http://localhost:5000/api/courses",data,{withCredentials:true}).then((res)=>{
+        console.log(res);
         if(res.status === 200){
             toast.success('Course Created Succesfully', {
                 position: toast.POSITION.BOTTOM_RIGHT,
             });
-            axios.get("http://localhost:5000/api/courses",{headers: {
-                'authorization': `Bearer ${user.userInfo.token}`,
-                'Accept' : 'application/json',
-                'Content-Type': 'application/json'
-            }}).then((res)=>{
+            axios.get("http://localhost:5000/api/courses",{withCredentials:true}).then((res)=>{
                 dispatch(courseActions.courses(res.data.data));
                 }).catch((err)=>{
                 console.log(err);

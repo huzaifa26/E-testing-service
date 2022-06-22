@@ -16,7 +16,7 @@ import axios from 'axios';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
 import {Storage} from "../Utils/firebase";
 import { MathComponent } from 'mathjax-react';
-import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory';
+import { useCookies } from 'react-cookie';
 
 const category = [
   {
@@ -34,6 +34,7 @@ const category = [
 ];
 
 function Buildpool(props) {
+  const [cookie]=useCookies();
   const dispatch=useDispatch();
 
   const [mcq, setmcq] = useState(false);
@@ -82,7 +83,7 @@ function Buildpool(props) {
     publishCourses.forEach((element) => {
       if (parseInt(e.target.value) === element.id) {
         let url="http://localhost:5000/api/poolCategory/"+e.target.value+ "/" + user.userInfo.user.id;
-        axios.get(url).then((res)=>{
+        axios.get(url,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
           console.log(res.data.data);
           setPoolCategory(res.data.data);
         }).catch((err)=>{
@@ -119,11 +120,7 @@ function Buildpool(props) {
 
       console.log(mcqData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,mcqData,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+      axios.post(url,mcqData,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         toast.success('Added', {
           position: toast.POSITION.TOP_CENTER,
         });
@@ -171,11 +168,7 @@ function Buildpool(props) {
 
       console.log(truesData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,truesData,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+      axios.post(url,truesData,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log("res")
         toast.success('Added', {
           position: toast.POSITION.TOP_CENTER,
@@ -223,11 +216,7 @@ function Buildpool(props) {
 
       console.log(plainData);
       let url="http://localhost:5000/api/poolQuestions/";
-      axios.post(url,plainData,{headers: {
-        'authorization': `Bearer ${user.userInfo.token}`,
-        'Accept' : 'application/json',
-        'Content-Type': 'application/json'
-    }}).then((res)=>{
+      axios.post(url,plainData,{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log("res")
         toast.success('Added', {
           position: toast.POSITION.TOP_CENTER,
