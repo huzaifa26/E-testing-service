@@ -23,7 +23,7 @@ function VerifyEmail() {
           });
           setTimeout(function () {
             navigate('/');
-          }, 5700); //run this after 3 seconds.
+          }, 3700); //run this after 3 seconds.
         } 
       })
       .catch(function (error) {

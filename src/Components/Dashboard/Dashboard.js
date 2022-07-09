@@ -6,12 +6,13 @@ import Modal from '../Modal/Modal';
 import Navbar from '../Navbar/Navbar';
 import CreateCourse from './CreateCourse';
 import styles from './Dashboard.module.css';
-import {courseActions,getCourseIdOnClickactions} from "./../../Redux/course-slice";
+import {courseActions,getCourseIdOnClickactions,courseJoinActions} from "./../../Redux/course-slice";
 import Courses from '../Courses/Courses';
 import { Link,useLocation,useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { userActions } from './../../Redux/user-slice'; 
-const joinedCourses =[]
+import { async } from '@firebase/util';
+
 
 const Dashboard=(props)=> {
   const navigate=useNavigate();
@@ -39,7 +40,9 @@ const Dashboard=(props)=> {
   const [courseIdState,setCourseIdState]=useState(false);
 
   const courses=useSelector(state=> state.courses);
+  const courseJoin=useSelector(state=> state.courseJoin);
   const user=useSelector(state=> state.user);
+
   const joinhandle=()=>{
     setOpenModal(true);
   }
@@ -61,10 +64,24 @@ const Dashboard=(props)=> {
     } 
   }
 
+  // const getJoinedCourses=()=>{
+  //   if(user?.userInfo?.hasOwnProperty("user") === true){
+  //     axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+  //     ).then((res)=>{
+  //       console.log(res);
+  //       dispatch(courseActions.joinedCourses(res.data.data));
+  //     }).catch((err)=>{
+  //       console.log(err);
+  //     })
+  //   } 
+  // }
+
+
   const showDashboardHandler=useCallback(()=>{
     setShowDashboard(true);
     setShowCreateCourse(false);
     getCourses();
+      // getJoinedCourses();
   },[])
 
   const [getdata,setgetdata]=useState(false);
@@ -73,7 +90,6 @@ const Dashboard=(props)=> {
   useEffect(()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/user",{withCredentials:true}, {headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        console.log(res.data);
         // dispatch(userActions.userInfo(res.data));
         setgetdata(!getdata);
       }).catch((err)=>{
@@ -81,7 +97,6 @@ const Dashboard=(props)=> {
       })
     }
   },[])
-
 
 
   useEffect(()=>{
@@ -95,6 +110,18 @@ const Dashboard=(props)=> {
       } 
   },[]);
 
+  useEffect(()=>{
+    if(user?.userInfo?.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+      ).then((res)=>{
+        console.log(res);
+        dispatch(courseJoinActions.joinedCourses(res.data.data));
+        
+      }).catch((err)=>{
+        console.log(err);
+      })
+    } 
+},[openModal]);
 
   return (
     <>
@@ -106,12 +133,11 @@ const Dashboard=(props)=> {
       <div>
         <div>
           <div className={styles.joinedHeader} >
-          <h1>Published Courses</h1>
+          <h1>Published Classes</h1>
           <button onClick={createCourseHandler}>Create Class</button>
           </div>
           <div  className={styles.joinedCourses}>      
             {courses.courses.map((item) => {
-              console.log(item);
               return( 
               <div onClick={(e)=>{dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));navigate("/courses")}} className={styles.joinedList}>
                 {item.imageUrl !== "" &&
@@ -124,14 +150,20 @@ const Dashboard=(props)=> {
         </div>
 
         <div className={styles.joinedHeader} >
-        <h1>Joined Courses</h1>
-        <button onClick={joinhandle}>Join Course</button>
+        <h1>Joined Classes</h1>
+        <button onClick={joinhandle}>Join Class</button>
         </div>
-        <div className={styles.joinedCourses}>      
-          {joinedCourses.map((item) => {return( 
-          <div className={styles.joinedList}>{item.name}</div>
-          )})}     
-        </div>
+        <div  className={styles.joinedCourses}>      
+            {courseJoin.joinedCourses.map((item) => {
+              return( 
+              <div className={styles.joinedList}>
+                {item.imageUrl !== "" &&
+                  <img src={item.imageUrl}></img>
+                }
+                <h2>{item.courseName}</h2>
+              </div>
+              )})}     
+          </div>
         {openModal && <Modal closeModal={setOpenModal}/>}
       </div>
     </div>}

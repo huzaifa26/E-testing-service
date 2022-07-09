@@ -36,7 +36,7 @@ const Navbar2= (props) => {
   }
 
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
-  console.log(typeof(courseIdredux));
+  // console.log(typeof(courseIdredux));
 
   if ((typeof(courseIdredux) === "number") && newLocationName !== "/courses"){
     dispatch(getCourseIdOnClickactions.getCourseIdOnClick({}))

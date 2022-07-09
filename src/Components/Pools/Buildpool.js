@@ -168,6 +168,7 @@ function Buildpool(props) {
 
       truesData.isMathJax=isMathJax;
 
+
       console.log(truesData);
       let url="http://localhost:5000/api/poolQuestions/";
       axios.post(url,truesData,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{

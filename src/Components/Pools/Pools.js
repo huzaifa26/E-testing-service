@@ -5,29 +5,32 @@ import Buildpool from './Buildpool';
 import CreateCategoryModal from './CreateCategoryModal';
 import { useDispatch,useSelector } from 'react-redux';
 import axios from 'axios';
+import { poolsActions } from '../../Redux/pools-slice';
 import { courseId_NameActions,courseCategoriesActions } from '../../Redux/course-slice';
 import { useCookies } from 'react-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 
 function Pools() {
-  const [cookie]=useCookies();
   const dispatch=useDispatch();
   const [showPool, setshowPool] = useState(true);
   const [createPool, setcreatePool] = useState(false);
   const [showModal,setShowModal]=useState(false);
 
   const user=useSelector(state=> state.user);
+  const change=useSelector(state=> state.pools.change);
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
 
   const openModalHandler=()=>{
     setcreatePool(false);
     setShowModal(true);
+    dispatch(poolsActions.change(!change))
   }
 
   const closeModalHandler=()=>{
     setShowModal(false);
     setcreatePool(true);
     setShowModal(false);
+    dispatch(poolsActions.change(!change))
   }
 
   const getRequests=()=>{
@@ -44,7 +47,6 @@ function Pools() {
     if(user.userInfo.hasOwnProperty("user") === true){
       let link='http://localhost:5000/api/getCourseCategories/' + courseIdredux;
       axios.get(link,{withCredentials:true}).then((res)=>{
-        console.log(res);
         dispatch(courseCategoriesActions.courseCategories(res.data.data));
       }).catch((err)=>{
         console.log(err);
@@ -55,7 +57,6 @@ function Pools() {
   useEffect(()=>{
     let link='http://localhost:5000/api/getCourseName/' + user.userInfo.user.id;
     axios.get(link,{withCredentials:true}).then((res)=>{
-      console.log(res.data.data);
       dispatch(courseId_NameActions.courseIdName(res.data.data));
     }).catch((err)=>{
       console.log(err);
@@ -85,6 +86,7 @@ function Pools() {
 
           <button  className={`${styles.button0} ${showPool && styles.buttonActive}`}
             onClick={() => {
+              dispatch(poolsActions.change(!change))
               setshowPool(true);
               setcreatePool(false);
             }}>
@@ -92,6 +94,7 @@ function Pools() {
           </button>
           <button style={{marginLeft:"3px"}} className={`${styles.button0} ${createPool && styles.buttonActive}`}
             onClick={() => {
+              dispatch(poolsActions.change(!change))
               setshowPool(false);
               setcreatePool(true);
             }}>

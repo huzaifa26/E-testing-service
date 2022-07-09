@@ -5,49 +5,49 @@ import axios from 'axios';
 import { MathComponent } from 'mathjax-react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
+import Editpool from './Editpool';
+
 
 function ShowPool() {
   const [cookie]=useCookies();
+  const change=useSelector(state=> state.pools.change);
   const user=useSelector(state=> state.user)
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
-  const courseCategoriesredux=useSelector(state => state.courseCategories.courseCategories);
   const [changeState,setChangeState]=useState(false);
-
-  const publishCourses=useSelector(state=>{return state.courseId_Name.courseIdName});
   const [allQuestions,setAllQuestions]=useState([]);
+  const [OpenEdit,setOpenEdit] =useState(false)
+  const [dataEdit,setDataEdit]= useState([])
 
-  const getRequest=()=>{
-    if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{withCredentials:true}).then((res)=>{
-        setAllQuestions(res.data);
-      }).catch((err)=>{
-        console.log(err);
-      })
-    }
+
+  const openEdit=(e)=>{
+    setDataEdit(e)
+    setOpenEdit(true);
   }
+
 
   useEffect(()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{withCredentials:true}).then((res)=>{
+        // console.log(res.data)
         setAllQuestions(res.data);
+        console.log(res.data)
       }).catch((err)=>{
         console.log(err);
       })
     }
-  },[])
-
-  const showCategoriesHandler=(e)=>{
-    console.log(e.target.value);
-  }
+    console.log('i ran')
+  },[changeState])
 
   const deleteQuestionHanler=(id)=>{
+    setChangeState(state =>!state);
+    console.log(id)
     let data={id:id}
     if(user.userInfo.hasOwnProperty("user") === true){
       axios.post("http://localhost:5000/api/deletepoolQuestions",data,{withCredentials:true}).then((res)=>{
       toast.success('Question Deleted', {
           position: toast.POSITION.TOP_RIGHT,
       })
-      getRequest();
+      setChangeState((state) => !state)
       }).catch((err)=>{
         toast.error('Question Deletion Failed', {
           position: toast.POSITION.TOP_RIGHT,
@@ -87,7 +87,6 @@ function ShowPool() {
 
           {allQuestions.filter((data) => {return +data.courseId === +courseIdredux;}).map((item, index) => {
             index++;
-            console.log(item);
             return (
               <div className={styles.displayQuestions}>
                 <p className={styles.courseName}><strong>Course Name: &nbsp;</strong>{item.courseName}</p>
@@ -118,9 +117,11 @@ function ShowPool() {
                   </div>
                 </div>
                 <div className={styles.footer1}>
+                  <button className={styles.edit} onClick={(e)=>openEdit(item)}>Edit</button>
                   <button className={styles.button0} onClick={(e)=>{deleteQuestionHanler(item.id)}}>Delete</button>
                   <p className={styles.questionType}><span>{item.questionType}</span></p>
                 </div>
+                {OpenEdit && <Editpool closeModal={setOpenEdit} dataEdit1={dataEdit}/>}
               </div>
             );
           })

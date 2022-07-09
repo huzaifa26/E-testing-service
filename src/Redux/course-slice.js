@@ -3,11 +3,24 @@ import { createSlice } from '@reduxjs/toolkit';
 const courseSlice = createSlice({
   name: 'course',
   initialState: {
-      courses:[]
+      courses:[],
   },
   reducers: {
     courses(state, action) {
       state.courses=action.payload;
+    },
+  },
+});
+
+export const courseJoinSlice = createSlice({
+  name: 'courseJoin',
+  initialState: {
+      joinedCourses:[]
+  },
+  reducers: {
+    joinedCourses(state, action) {
+      state.joinedCourses=action.payload;
+      console.log(JSON.stringify(state, undefined, 2));
     },
   },
 });
@@ -54,4 +67,5 @@ export const courseCategoriesActions = courseCategories.actions;
 export const getCourseIdOnClickactions = getCourseIdOnClick.actions;
 export const courseId_NameActions = courseId_Name.actions;
 export const courseActions = courseSlice.actions;
+export const courseJoinActions = courseJoinSlice.actions;
 export default courseSlice;

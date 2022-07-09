@@ -52,6 +52,7 @@ const Courses=(props) => {
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const courses=useSelector(state=> {return state.courses});
 
+
   return (
     <div className={styles.Main}>
     { typeof(courseIdredux) === "object" ?
@@ -77,7 +78,11 @@ const Courses=(props) => {
         </div>
       </div>
       </>:
+      <div className={styles.courseInfo}>
       <h3>Course Information(Yet to implement)</h3>
+      <p>Join Key : {courseIdredux}</p>
+      </div>
+
       }
     </div>
   );
