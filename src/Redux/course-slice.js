@@ -50,15 +50,39 @@ export const courseCategories=createSlice({
 })
 
 
-// Get Course id to show course Content, Pools, Course Sub Menu
+// Get Course id to show course Content, Pools, Course Sub Menu and status to show published or joined to change course main page view
 export const getCourseIdOnClick=createSlice({
   name:"getCourseIdOnClick",
   initialState: {
-    getCourseIdOnClick:[]
+    getCourseIdOnClick:[],
   },
   reducers:{
     getCourseIdOnClick(state,actions){
       state.getCourseIdOnClick=actions.payload
+    }
+  }
+})
+
+export const courseStatus=createSlice({
+  name:"courseStatus",
+  initialState: {
+    courseStatus:[],
+  },
+  reducers:{
+    courseStatus(state,actions)
+    {state.courseStatus = actions.payload}
+  }
+})
+
+export const courseContent=createSlice({
+  name:"courseContent",
+  initialState: {
+    courseContent:[],
+  },
+  reducers:{
+    courseContent(state,actions)
+    {state.courseContent = actions.payload
+      console.log(JSON.stringify(state, undefined, 2));
     }
   }
 })
@@ -68,4 +92,6 @@ export const getCourseIdOnClickactions = getCourseIdOnClick.actions;
 export const courseId_NameActions = courseId_Name.actions;
 export const courseActions = courseSlice.actions;
 export const courseJoinActions = courseJoinSlice.actions;
+export const courseStatusActions = courseStatus.actions; 
+export const courseContentActions = courseContent.actions;
 export default courseSlice;

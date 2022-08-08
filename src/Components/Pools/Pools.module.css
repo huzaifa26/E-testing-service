@@ -23,8 +23,8 @@
   height: 15%;
   padding: 15px;
   word-wrap: break-word;
-  background-color: white;
-  border-radius: 12px;
+  /* background-color: white;
+  border-radius: 12px; */
   margin-top: 10px;
 }
 .pool .poolsBar {
@@ -37,8 +37,7 @@
 .button2,
 .button0,.button3 {
   cursor: pointer;
-  background-color: var(--primary);
-
+  background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
   align-self: center;
   border: 1px solid var(--primary);
   display: inline-block;

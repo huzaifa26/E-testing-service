@@ -4,8 +4,14 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {  EditorState, convertFromHTML, ContentState,convertToRaw } from 'draft-js';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+
 
 function Editpool(props) {
+  const [cookie]=useCookies();
 
 
   //FOR EDITOR
@@ -73,7 +79,7 @@ function Editpool(props) {
   const handleTrues = () => {
     let truesData = {
       id:props.dataEdit1.id,
-      options: props.dataEdit.correctOption,
+      options: props.dataEdit1.correctOption,
       correctOption: value,
       questionType: 'Subjective',
       question : question.blocks[0].text,
@@ -87,7 +93,22 @@ function Editpool(props) {
     if (imageURL !== ""){
       truesData.questionImg=imageURL;
     }
+
     console.log(truesData)
+
+    let url="http://localhost:5000/api/editQuestionToPool/";
+      axios.post(url,truesData,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+        console.log("res")
+        toast.success('Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        props.changeView();
+      }).catch((err)=>{
+        console.log("err")
+        toast.error('Failed', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
   };
 
   //FOR SUBJECTIVE
@@ -193,7 +214,7 @@ function Editpool(props) {
           </div>
           <div className={styles.buttoncenter}>
             <button className={styles.button} onClick={handleTrues}>
-              Submit
+                UPDATE
             </button>
           </div>
         </>}
@@ -249,7 +270,7 @@ function Editpool(props) {
            /> */}
        <div>
          <button className={styles.button} onClick={handlePlain}>
-           Add
+           UPDATE
          </button>
        </div>
      </div>}

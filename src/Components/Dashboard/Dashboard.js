@@ -11,6 +11,7 @@ import Courses from '../Courses/Courses';
 import { Link,useLocation,useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { userActions } from './../../Redux/user-slice'; 
+import { courseStatusActions } from './../../Redux/course-slice';
 import { async } from '@firebase/util';
 
 
@@ -64,24 +65,24 @@ const Dashboard=(props)=> {
     } 
   }
 
-  // const getJoinedCourses=()=>{
-  //   if(user?.userInfo?.hasOwnProperty("user") === true){
-  //     axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
-  //     ).then((res)=>{
-  //       console.log(res);
-  //       dispatch(courseActions.joinedCourses(res.data.data));
-  //     }).catch((err)=>{
-  //       console.log(err);
-  //     })
-  //   } 
-  // }
+  const getJoinedCourses=()=>{
+    if(user?.userInfo?.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+      ).then((res)=>{
+        console.log(res);
+        dispatch(courseActions.joinedCourses(res.data.data));
+      }).catch((err)=>{
+        console.log(err);
+      })
+    } 
+  }
 
 
   const showDashboardHandler=useCallback(()=>{
     setShowDashboard(true);
     setShowCreateCourse(false);
     getCourses();
-      // getJoinedCourses();
+    getJoinedCourses();
   },[])
 
   const [getdata,setgetdata]=useState(false);
@@ -90,7 +91,7 @@ const Dashboard=(props)=> {
   useEffect(()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/user",{withCredentials:true}, {headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        // dispatch(userActions.userInfo(res.data));
+        dispatch(userActions.userInfo(res.data));
         setgetdata(!getdata);
       }).catch((err)=>{
         console.log(err);
@@ -139,7 +140,10 @@ const Dashboard=(props)=> {
           <div  className={styles.joinedCourses}>      
             {courses.courses.map((item) => {
               return( 
-              <div onClick={(e)=>{dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));navigate("/courses")}} className={styles.joinedList}>
+              <div onClick={(e)=>{
+              dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
+              dispatch(courseStatusActions.courseStatus('published'))
+              navigate("/courses")}} className={styles.joinedList}>
                 {item.imageUrl !== "" &&
                   <img src={item.imageUrl}></img>
                 }
@@ -156,7 +160,10 @@ const Dashboard=(props)=> {
         <div  className={styles.joinedCourses}>      
             {courseJoin.joinedCourses.map((item) => {
               return( 
-              <div className={styles.joinedList}>
+              <div className={styles.joinedList}  onClick={(e)=>{
+                dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
+                dispatch(courseStatusActions.courseStatus('joined'))
+                navigate("/courses")}}>
                 {item.imageUrl !== "" &&
                   <img src={item.imageUrl}></img>
                 }

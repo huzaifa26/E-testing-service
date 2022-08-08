@@ -1,4 +1,4 @@
-.joinedHeader{
+.publishedHeader{
     display: flex;
     background-color: white;
     justify-content: space-between;
@@ -7,13 +7,23 @@
     margin: 20px;
 }
 
-.joinedCoursesOuter{
+.publishedCoursesOuter{
     display: flex;
     background-color: white;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 30px;
     margin: 20px;
+}
+
+.publishedCourses{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    flex-wrap: wrap;
+    margin: 20px;
+    gap: 30px;
+    width: 100%;
 }
 
 .joinedCourses{
@@ -25,6 +35,7 @@
     gap: 30px;
     width: 100%;
 }
+
 
 .flexDiv, .flexDiv2{
     display: flex;
@@ -57,7 +68,7 @@
     /* align-items: center; */
     padding: 30px;
     margin: 20px;
-    height: 86vh;
+    height: 90vh;
 }
 .courseInfo p
 {
