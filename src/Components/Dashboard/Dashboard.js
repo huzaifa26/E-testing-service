@@ -12,6 +12,7 @@ import { Link,useLocation,useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { userActions } from './../../Redux/user-slice'; 
 import { courseStatusActions } from './../../Redux/course-slice';
+import { courseClickUserIdActions } from './../../Redux/course-slice';
 import { async } from '@firebase/util';
 
 
@@ -143,6 +144,8 @@ const Dashboard=(props)=> {
               <div onClick={(e)=>{
               dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
               dispatch(courseStatusActions.courseStatus('published'))
+              dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
+              // console.log(item.userId)
               navigate("/courses")}} className={styles.joinedList}>
                 {item.imageUrl !== "" &&
                   <img src={item.imageUrl}></img>
@@ -163,6 +166,8 @@ const Dashboard=(props)=> {
               <div className={styles.joinedList}  onClick={(e)=>{
                 dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
                 dispatch(courseStatusActions.courseStatus('joined'))
+                dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
+                // console.log(item.userId)
                 navigate("/courses")}}>
                 {item.imageUrl !== "" &&
                   <img src={item.imageUrl}></img>

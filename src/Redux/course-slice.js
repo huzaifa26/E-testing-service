@@ -87,6 +87,19 @@ export const courseContent=createSlice({
   }
 })
 
+export const courseClickUserId=createSlice({
+  name:"courseClickUserId",
+  initialState: {
+    courseClickUserId:[],
+  },
+  reducers:{
+    courseClickUserId(state,actions)
+    {state.courseClickUserId = actions.payload
+      console.log(JSON.stringify(state, undefined, 2));
+    }
+  }
+})
+
 export const courseCategoriesActions = courseCategories.actions;
 export const getCourseIdOnClickactions = getCourseIdOnClick.actions;
 export const courseId_NameActions = courseId_Name.actions;
@@ -94,4 +107,5 @@ export const courseActions = courseSlice.actions;
 export const courseJoinActions = courseJoinSlice.actions;
 export const courseStatusActions = courseStatus.actions; 
 export const courseContentActions = courseContent.actions;
+export const courseClickUserIdActions = courseClickUserId.actions;
 export default courseSlice;

@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {ToastContainer, toast } from 'react-toastify';
 import Auth2 from './Protected/Auth2';
 import Content from './Components/Content/Content';
+import Quiz from './Components/Quiz/Quiz';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
             <Route path="/courses/pools" element={<Navbar><Pools /></Navbar>}/>
             <Route path="/courses/content" element={<Navbar><Content /></Navbar>}/>
+            <Route path="/courses/quiz" element={<Navbar><Quiz/></Navbar>}/>
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
             <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
           </Route>
