@@ -13,7 +13,6 @@ import axios from 'axios';
 function UploadModal({closeModal}) {
 
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
-
   const [title, setTitle] = useState('');
   const [file , setfile] = useState('');
   const [fileURL , setfileURL] = useState('');

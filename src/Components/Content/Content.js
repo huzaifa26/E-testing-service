@@ -18,7 +18,6 @@ function Content() {
   const [openModal,setOpenModal] =useState(false)
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(7);
-  const [showButton,setShowButton] = useState()
 
   // const publishCourses=useSelector(state=> {return state.courses});
   // const courseJoin=useSelector(state=> state.courseJoin);
@@ -50,7 +49,7 @@ function Content() {
     }
     console.log(typeof(user.userInfo.user.id))
     console.log(typeof(courseClickUserId))
-},[openModal]);
+},[openModal,cookie.token, courseClickUserId, courseIdredux, dispatch, user.userInfo]);
 
 
 
@@ -65,7 +64,7 @@ function Content() {
       <TableContainer component={Paper}  >
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
 
-          <TableHead sx= {{backgroundColor:'#C9CCD5'}}>
+          <TableHead sx= {{backgroundColor:'#f5f5f5'}}>
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>TITLE</TableCell>
