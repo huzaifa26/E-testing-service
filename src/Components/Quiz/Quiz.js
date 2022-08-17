@@ -5,6 +5,7 @@ import { TabContext, TabPanel } from '@mui/lab';
 import { Tabs, Tab, Box } from '@mui/material';
 import CreateQuestion from './CreateQuestion';
 import { useSelector } from 'react-redux';
+import ImportPool from './ImportPool';
 
 function Quiz() {
 
@@ -13,6 +14,7 @@ const [value, setValue] = useState('1');
 const [title, setTitle] = useState('');
 const [time, setTime] = useState(1);
 const [add, setAdd] = useState(false);
+const [importPool,setImportPool] = useState(false)
 const [quizQuestions,setQuizQuestions]=useState([]);
 
 
@@ -45,7 +47,7 @@ console.log(quizQuestions)
 
 
 return (
-<div className={styles.main}>
+<div className={styles.main} >
   {!createQuiz && (
     <div className={styles.container}>
       <button className={styles.button} onClick={showAddQuiz}>
@@ -199,6 +201,7 @@ return (
               </div>   )})}  
             
             {add && <CreateQuestion close={setAdd} time={time}  getQuestion={getQuestion}/>}
+            {importPool && <ImportPool close={setImportPool}/>}
 
 
             <div className={styles.buttonContainer1}>
@@ -221,7 +224,7 @@ return (
                 </svg>
                 New Question
               </button>
-              <button className={styles.cancel}>
+              <button className={styles.cancel} onClick={() => setImportPool(true)}>
                 <i class="bi bi-search"></i>Find Questions
               </button>
             </div>
