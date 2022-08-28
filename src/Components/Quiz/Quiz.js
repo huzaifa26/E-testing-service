@@ -1,21 +1,40 @@
 import styles from './Quiz.module.css';
-import React, { useState } from 'react';
+import React, {useEffect,  useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { TabContext, TabPanel } from '@mui/lab';
-import { Tabs, Tab, Box } from '@mui/material';
+import { Tabs, Tab, Box, Stack, Paper, TablePagination, Button} from '@mui/material';
 import CreateQuestion from './CreateQuestion';
 import { useSelector } from 'react-redux';
 import ImportPool from './ImportPool';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useCookies } from 'react-cookie';
+import { styled } from '@mui/material/styles';
+import DisplayQuiz from './DisplayQuiz';
 
 function Quiz() {
 
-const [createQuiz, setCreateQuiz] = useState(false);
+const [cookie]=useCookies();
+const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
+const courseClickUserId = useSelector(state => state.courseClickUserId.courseClickUserId)
+const user=useSelector(state=> state.user);
+//value is for tabs
 const [value, setValue] = useState('1');
-const [title, setTitle] = useState('');
-const [time, setTime] = useState(1);
+const [createQuiz, setCreateQuiz] = useState(false);
 const [add, setAdd] = useState(false);
 const [importPool,setImportPool] = useState(false)
+
 const [quizQuestions,setQuizQuestions]=useState([]);
+const [title, setTitle] = useState('');
+const [time, setTime] = useState(30);
+const [questionShuffle,setQuestionShuffle] = useState(false)
+const [answerShuffle,setAnswerShuffle] = useState(false)
+const [seeAnswer,setSeeAnswer] = useState(false)
+const [copyQuestion,setCopyQuestion] = useState(false)
+const [detectMobile,setDetectMobile] = useState(false)
+const [startTime,setStartTime] = useState('')
+const [endTime,setEndTime] = useState('') 
+const [totalQuizzes,setTotalQuizzes] = useState([])
 
 
 function handleChange(event, newValue) {
@@ -28,29 +47,165 @@ function showAddQuiz() {
 }
 
 function showMainQuiz() {
+  console.log(time)
   setCreateQuiz(false);
   setQuizQuestions([])
   setTitle('')
+  setStartTime('')
+  setEndTime('')
+  setTime(1)
 }
 
+
+useEffect(()=>{
+  if(user?.userInfo?.hasOwnProperty("user") === true){
+    axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    ).then((res)=>{
+      console.log(res.data.data)
+      setTotalQuizzes(res.data.data)
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+},[add]);
+
 const removeQuestion = (index, event) => {
-    let data = [...quizQuestions];
-    data.splice(index, 1);
-    setQuizQuestions(data);
+  let data = [...quizQuestions];
+  data.splice(index, 1);
+  setQuizQuestions(data);
 };
 
 const getQuestion = (question) => {
-console.log(question)
-quizQuestions.push(question)
-console.log(quizQuestions)
+  console.log(question)
+  quizQuestions.push(question)
+  console.log(quizQuestions)
 }
 
+const getQuestionFromPool = (question) =>
+{
+  console.log(question)
+  console.log(typeof(question))
+  setQuizQuestions([...quizQuestions, ...question]);
+  console.log(quizQuestions)
+}
+
+const handleQuestionShuffle = (event) =>
+{
+  if (event.target.checked) {
+    setQuestionShuffle(true)
+  } else {
+    setQuestionShuffle(false)
+  }
+}
+
+const handleAnswerShuffle = (event) =>
+{
+  if (event.target.checked) {
+    setAnswerShuffle(true)
+  } else {
+    setAnswerShuffle(false)
+  }
+}
+const handleSeeAnswer = (event) =>
+{
+  if (event.target.checked) {
+    setSeeAnswer(true)
+  } else {
+    setSeeAnswer(false)
+  }
+}
+
+const handleCopyQuestion = (event) =>
+{
+  if (event.target.checked) {
+    setCopyQuestion(true)
+  } else {
+    setCopyQuestion(false)
+  }
+}
+
+const handleDetectMobile = (event) =>
+{
+  if (event.target.checked) {
+    setDetectMobile(true)
+  } else {
+    setDetectMobile(false)
+  }
+}
+
+const saveQuiz = () =>
+{
+  if(quizQuestions.length == 0 )
+  {
+    alert('you must add atleast one question')
+    setValue('2')
+    return
+  }
+  if(title === '' )
+  {
+    setValue('1')
+    alert('Please add title')
+    return
+  }
+  if(startTime === '' )
+  {
+    alert('Please assign Start time')
+    setValue('1')
+    return
+  }
+  if(endTime === '' )
+  {
+    alert('Please assign End time')
+    setValue('1')
+    return
+  }
+  console.log(quizQuestions)
+
+  let data =  {
+    title:title,
+    questionShuffle:questionShuffle,
+    answerShuffle:answerShuffle,
+    seeAnswer:seeAnswer,
+    copyQuestion:copyQuestion,
+    detectMobile:detectMobile,
+    startTime:startTime,
+    endTime:endTime,
+    questions:quizQuestions,
+    userId:user.userInfo.user.id,
+    courseId:courseIdredux,
+    }
+  
+  let url="http://localhost:5000/api/quiz/";
+      axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+        toast.success('Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        console.log(res)
+        console.log('gotres')
+      }).catch((err)=>{
+        console.log(err)
+        toast.error('Failed', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+}
+
+const [quizData,setQuizData] = useState([])
+const [quizQuestionsModal,setQuizQuestionsModal] = useState(false)
+
+const handleStartQuiz = (item) =>
+{
+  console.log(item)
+  setQuizData(item)
+  setQuizQuestionsModal(true)
+}
 
 return (
 <div className={styles.main} >
-  {!createQuiz && (
+  {(!createQuiz && user.userInfo.user.id == courseClickUserId) && (
+    <>
     <div className={styles.container}>
-      <button className={styles.button} onClick={showAddQuiz}>
+      <button className={styles.button1} onClick={showAddQuiz}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -67,6 +222,65 @@ return (
         Quiz
       </button>
     </div>
+
+    <div className={styles.quizListMain}>
+      <Paper sx={{padding:2}}>
+
+      <div className={styles.headerQuiz}>
+          <p>Title</p>
+          <p>Actions</p>
+      </div>
+      {totalQuizzes.map((value,index) => 
+      (
+        <div className={styles.quizDetails}>
+          <div>
+          {value.quizTitle}
+          </div>
+            <div className={styles.footer1}>
+                  <button className={styles.edit}>Edit</button>
+                  <button className={styles.button0}>Delete</button>
+            </div>
+        </div>
+      )
+      )}
+      <TablePagination
+      />
+      </Paper>
+    </div>
+    
+    </>
+  )}
+
+    {(!createQuiz && user.userInfo.user.id !== courseClickUserId) && (
+    <>
+    <div className={styles.quizListMain}>
+      <Paper sx={{padding:2}}>
+
+      <div className={styles.headerQuiz}>
+          <p>Title</p>
+          <p>Actions</p>
+      </div>
+      {totalQuizzes.map((value,index) => 
+      (
+        <div className={styles.quizDetails}>
+          <div>
+          {value.quizTitle}
+          </div>
+            <div className={styles.footer1}>
+                  <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(value)}>Start</Button>
+            </div>
+        </div>
+      )
+      )}
+      <TablePagination/>
+      </Paper>
+    </div>
+
+    {quizQuestionsModal && <DisplayQuiz data={quizData} handleStartQuiz={setQuizQuestionsModal}/>}
+
+
+    
+    </>
   )}
 
   {createQuiz && (
@@ -100,7 +314,7 @@ return (
             </p>
             <div class={styles.infolist}>
               <div className={styles.info}>
-                1. You will have only <em>{time} minute&nbsp;</em> per each
+                1. You will have only <em>{time} seconds&nbsp;</em> per each
                 question.
               </div>
               <div className={styles.info}>
@@ -120,6 +334,38 @@ return (
             <p className={styles.instructions}>
               <b>Options</b>
             </p>
+
+
+            <Stack component="form" noValidate spacing={2}>
+              <TextField
+                id="datetime-local"
+                label="Start Time"
+                type="datetime-local"
+                size='small'
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                // defaultValue="2017-05-24T10:30"
+                sx={{ width: 250}}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                />
+
+              <TextField
+              id="datetime-local"
+              label="End Time"
+              size='small'
+              type="datetime-local"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              sx={{ width: 250}}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            </Stack>
+
+
             <div className={styles.Options}>
               <input
                 type="number"
@@ -133,35 +379,35 @@ return (
                 min="1"
                 max="100"
               ></input>
-              <p>minutes per question</p>
+              <p>seconds per question</p>
             </div>
 
             <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" />
-              <label for="checkbox-1">Shuffle Questions</label>
-            </div>
-
-            <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" />
-              <label for="checkbox-1">Shuffle Answers</label>
-            </div>
-
-            <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" />
-              <label for="checkbox-1">
-                Let Students See Correct Answer
-              </label>
-            </div>
-
-            <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" />
+              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleCopyQuestion} />
               <label for="checkbox-1">
                 Do not allow Students to copy question text
               </label>
             </div>
 
             <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" />
+              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleQuestionShuffle} />
+              <label for="checkbox-1">Shuffle Questions</label>
+            </div>
+
+            <div className={styles.Options1}>
+              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleAnswerShuffle}/>
+              <label for="checkbox-1">Shuffle Answers</label>
+            </div>
+
+            <div className={styles.Options1}>
+              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleSeeAnswer} />
+              <label for="checkbox-1">
+                Let Students See Correct Answer
+              </label>
+            </div>
+
+            <div className={styles.Options1}>
+              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleDetectMobile}/>
               <label for="checkbox-1">Detect Mobile</label>
             </div>
           </TabPanel>
@@ -201,7 +447,7 @@ return (
               </div>   )})}  
             
             {add && <CreateQuestion close={setAdd} time={time}  getQuestion={getQuestion}/>}
-            {importPool && <ImportPool close={setImportPool}/>}
+            {importPool && <ImportPool close={setImportPool} getQuestion={getQuestionFromPool}/>}
 
 
             <div className={styles.buttonContainer1}>
@@ -238,7 +484,7 @@ return (
         <button onClick={showMainQuiz} className={styles.cancel}>
           Cancel
         </button>
-        <button onClick={showMainQuiz} className={styles.save}>
+        <button onClick={saveQuiz} className={styles.save}>
           Save
         </button>
       </div>

@@ -139,9 +139,12 @@ function CreateQuestion({close,time,getQuestion}) {
         courseId:courseIdredux,
         question:editorState.getCurrentContent().getPlainText(),
         userId:user.userInfo.user.id,
+        time:newtime,
+        points:pts,
         isMathJax:false}
         inputFields.forEach((value,index) =>{ question.options.push(value.name)});
-        if (imageURL !== ""){question.questionImg=imageURL;}
+        if (imageURL !== ""){question.questionImg=imageURL;alert('uploaded')}
+        else{question.questionImg=null;}
         getQuestion(question);
         close(false)
 
@@ -156,9 +159,12 @@ function CreateQuestion({close,time,getQuestion}) {
         courseId:courseIdredux,
         question:editorState.getCurrentContent().getPlainText(),
         userId:user.userInfo.user.id,
+        time:newtime,
+        points:pts,
         isMathJax:true}
         inputFields.forEach((value,index) =>{ question.options.push(value.name)});
         if (imageURL !== ""){question.questionImg=imageURL;}
+        else{question.questionImg=null;}
         getQuestion(question);
         close(false)
       }
@@ -180,8 +186,11 @@ const handleTrues = () => {
       courseId:courseIdredux,
       question:editorState.getCurrentContent().getPlainText(),
       userId:user.userInfo.user.id,
+      time:newtime,
+      points:pts,
       isMathJax:false}
       if (imageURL !== ""){question.questionImg=imageURL;}
+      else{question.questionImg=null;}
       getQuestion(question);
       close(false)
   }
@@ -201,8 +210,11 @@ const handleSubjective = () =>
     courseId:courseIdredux,
     question:editorState.getCurrentContent().getPlainText(),
     userId:user.userInfo.user.id,
+    time:newtime,
+    points:pts,
     isMathJax:false};
     if (imageURL !== ""){question.questionImg=imageURL;}
+    else{question.questionImg=null;}
     getQuestion(question);
     close(false)
   }
@@ -227,7 +239,7 @@ const handleSubjective = () =>
 
         <div className={styles.second}>
           <div className={styles.Options}>
-            <p>min:</p>
+            <p>sec:</p>
             <input
               type="number"
               id="quantity"

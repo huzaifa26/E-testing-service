@@ -40,9 +40,11 @@ function Content() {
   
   useEffect(()=>{
     if(user?.userInfo?.hasOwnProperty("user") === true){
+      console.log(courseIdredux)
       axios.get("http://localhost:5000/api/courseContent/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
       ).then((res)=>{
         dispatch(courseContentActions.courseContent(res.data.data));
+        console.log(res.data.data)
       }).catch((err)=>{
         console.log(err);
       })
@@ -60,11 +62,11 @@ function Content() {
   
 
 
-    <Paper sx={{padding:3}}>
+    <Paper sx={{padding:0}}>
       <TableContainer component={Paper}  >
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
 
-          <TableHead sx= {{backgroundColor:'#f5f5f5'}}>
+          <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>TITLE</TableCell>
@@ -82,7 +84,7 @@ function Content() {
                   <TableCell component="th" scope="row"><b>{item.title.toUpperCase()}</b></TableCell>
                   <TableCell component="th">{item.fileType}</TableCell>
                   <TableCell component="th">{item.createdTime}</TableCell>
-                  <TableCell component="th"><a href={item.fileUrl} download='untitled'>Download</a></TableCell>
+                  <TableCell component="th"><a href={item.fileUrl} download={item.fileUrl}>Download</a></TableCell>
               </TableRow>
             ))}
           </TableBody>
