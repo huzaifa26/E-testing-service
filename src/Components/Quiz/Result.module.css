@@ -1,0 +1,34 @@
+
+.modalContainer {
+    width: 100%;
+    height: 100%;
+    /* border-radius: 6px; */
+    background-color: #01a2ff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 25px;
+    font-family: 'Roboto Flex', sans-serif;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center ;
+    overflow: hidden !important;
+    
+}
+.Questioncontainer
+{
+    height: 70%;
+    width: 70%;
+    overflow: hidden !important;
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 20px );
+    -webkit-backdrop-filter: blur( 20px );
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    background-color: rgb(196 196 196);
+    border-radius: 5px;
+}
+

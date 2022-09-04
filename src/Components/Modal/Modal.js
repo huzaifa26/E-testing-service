@@ -21,10 +21,11 @@ yourDate[1]=yourDate[1].toString().split(".")[0];
 yourDate=yourDate.toString().replaceAll(","," ");
 
 function Modal({closeModal}) {
-  const [cookie,setCookie]=useCookies();
   const dispatch=useDispatch();
   const courseJoin=useSelector(state=> state.courseJoin);
   const user=useSelector(state=> state.user);
+  const [cookie]=useCookies();
+
 
   
 
@@ -47,9 +48,7 @@ function Modal({closeModal}) {
           joiningkey:values.joiningkey,
           joinTime:yourDate
       }
-        axios.post('http://localhost:5000/api/joinCourse', data,{
-            joiningkey: values.joiningkey,
-          })
+        axios.post('http://localhost:5000/api/joinCourse', data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}})
           .then(function (response) {
             if (response.status === 200)
             {

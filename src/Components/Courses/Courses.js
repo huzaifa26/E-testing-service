@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useDebugValue } from 'react';
 import styles from './Courses.module.css';
 import {Editor} from 'draft-js';
 import 'draft-js/dist/Draft.css';
@@ -11,10 +11,23 @@ import { useEffect,useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import { useCookies } from 'react-cookie';
+import PeopleIcon from '@mui/icons-material/People';
+import KeyIcon from '@mui/icons-material/Key';
+import CountUp from 'react-countup';
 
 const Courses=(props) => {
   const [cookie,setCookie]=useCookies();
   const navigate=useNavigate();
+  const dispatch=useDispatch();
+
+  const location=useLocation();
+  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
+  const courses=useSelector(state=> {return state.courses});
+  const courseJoin=useSelector(state=> state.courseJoin);
+  const courseClickUserId = useSelector(state => state.courseClickUserId.courseClickUserId)
+  const user=useSelector(state=> state.user);
+  const [totalUser,setTotalUser] = useState(0)
+
 
   const [refreshTokenState,setRefreshToken]=useState(false);
   // useEffect(()=>{
@@ -47,14 +60,18 @@ const Courses=(props) => {
   //   })
   // })
 
-  const dispatch=useDispatch();
-
-  const location=useLocation();
-  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
-  const courseStatus = useSelector(state =>  state.courseStatus.courseStatus);
-  const courses=useSelector(state=> {return state.courses});
-  const courseJoin=useSelector(state=> state.courseJoin);
-
+  useEffect(() => {
+    if(user?.userInfo?.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/enrolledLength/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+      ).then((res)=>{
+        console.log(res.data.data)
+        setTotalUser(res.data.data)
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
+  }, [])
+  
 
 
   return (
@@ -107,20 +124,49 @@ const Courses=(props) => {
     </div>  
     </> }
 
-    { typeof(courseIdredux)  !== "object" && courseStatus === 'published' &&  
+    { (typeof(courseIdredux)  !== "object" && user.userInfo.user.id == courseClickUserId) &&  
        
       <div className={styles.courseInfo}>
-        <h3>Course Information(Yet to implement)</h3>
-        <p>Join Key : {courseIdredux}</p>
-        <p>{courseStatus}</p>
+
+        <div className={styles.join}>
+          <div className={styles.secondry}>
+            <div className={styles.people}>
+              <KeyIcon style={{fontSize:'40px'}}/>
+            </div>
+
+            <div>
+            <p>JOINING KEY </p>
+            </div>
+          </div>
+
+          <div className={styles.footer}>
+            <b style={{fontSize:'40px'}}>{courseIdredux}</b>
+          </div>
+        </div>
+
+        <div className={styles.totalStudents}>
+          <div className={styles.secondry}>
+            <div className={styles.people}>
+              <PeopleIcon style={{fontSize:'40px'}}/>
+            </div>
+
+            <div>
+            <p>E N R O L L E D</p>
+            </div>
+          </div>
+          <div className={styles.footer}>
+            <p style={{fontSize:'40px'}}><CountUp style={{fontSize:'40px'}} start={0} end={totalUser} /></p>
+          </div>
+        </div>
+        
       </div>
     } 
 
-    { typeof(courseIdredux)  !== "object" && courseStatus === 'joined' &&  
+    { (typeof(courseIdredux)  !== "object" && user.userInfo.user.id !== courseClickUserId) &&  
        
        <div className={styles.courseInfo}>
          <h3>Description</h3>
-         
+         <p>(To be added later)</p>
        </div>
      } 
      

@@ -2,7 +2,8 @@ import styles from './Quiz.module.css';
 import React, {useEffect,  useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { TabContext, TabPanel } from '@mui/lab';
-import { Tabs, Tab, Box, Stack, Paper, TablePagination, Button} from '@mui/material';
+import { Tabs, Tab, Box, Stack, Paper, TablePagination, Button,Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
+import TableContainer from '@mui/material/TableContainer'
 import CreateQuestion from './CreateQuestion';
 import { useSelector } from 'react-redux';
 import ImportPool from './ImportPool';
@@ -35,6 +36,10 @@ const [detectMobile,setDetectMobile] = useState(false)
 const [startTime,setStartTime] = useState('')
 const [endTime,setEndTime] = useState('') 
 const [totalQuizzes,setTotalQuizzes] = useState([])
+const [totalPoints,setTotalPoints] = useState(0)
+const [page, setPage] = useState(0);
+const [rowsPerPage, setRowsPerPage] = useState(7);
+const [assignments,setAssignments] = useState([])
 
 
 function handleChange(event, newValue) {
@@ -69,7 +74,22 @@ useEffect(()=>{
   }
 },[add]);
 
-const removeQuestion = (index, event) => {
+useEffect(() => {
+  console.log(totalPoints)
+
+ 
+}, [totalPoints])
+
+const removeQuestion = (index,points) => {
+  if (typeof(points) === 'string')
+  {
+    setTotalPoints((state) => state - parseInt(points))
+  }
+  else
+  {
+    setTotalPoints((state) => state - parseInt(points))
+  }
+  
   let data = [...quizQuestions];
   data.splice(index, 1);
   setQuizQuestions(data);
@@ -79,6 +99,14 @@ const getQuestion = (question) => {
   console.log(question)
   quizQuestions.push(question)
   console.log(quizQuestions)
+  if (typeof(question.points) === 'string')
+  {
+    setTotalPoints((state) => state + parseInt(question.points))
+  }
+  else
+  {
+    setTotalPoints((state) => state + parseInt(question.points))
+  }
 }
 
 const getQuestionFromPool = (question) =>
@@ -173,13 +201,11 @@ const saveQuiz = () =>
     questions:quizQuestions,
     userId:user.userInfo.user.id,
     courseId:courseIdredux,
+    totalPoints:totalPoints
     }
   
   let url="http://localhost:5000/api/quiz/";
       axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        toast.success('Added', {
-          position: toast.POSITION.TOP_CENTER,
-        });
         console.log(res)
         console.log('gotres')
       }).catch((err)=>{
@@ -200,86 +226,123 @@ const handleStartQuiz = (item) =>
   setQuizQuestionsModal(true)
 }
 
+const handleChangePage = (event, newPage) => {
+  setPage(newPage);
+};
+
+const handleChangeRowsPerPage = (event) => {
+  setRowsPerPage(+event.target.value);
+  setPage(0);
+};
+
+
 return (
 <div className={styles.main} >
   {(!createQuiz && user.userInfo.user.id == courseClickUserId) && (
     <>
     <div className={styles.container}>
       <button className={styles.button1} onClick={showAddQuiz}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-plus-lg"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-          />
-        </svg>{' '}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" /> </svg>{' '}
         Quiz
       </button>
     </div>
 
-    <div className={styles.quizListMain}>
-      <Paper sx={{padding:2}}>
+    <Paper sx={{padding:'3px',marginTop:'20px'}}>
+      <TableContainer component={Paper}  >
+        <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
+          <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
+            <TableRow>
+              <TableCell>#</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Start Time</TableCell>
+              <TableCell>End time</TableCell>
+              <TableCell align='center'>Actions</TableCell>
+            </TableRow>
+          </TableHead>
 
-      <div className={styles.headerQuiz}>
-          <p>Title</p>
-          <p>Actions</p>
-      </div>
-      {totalQuizzes.map((value,index) => 
-      (
-        <div className={styles.quizDetails}>
-          <div>
-          {value.quizTitle}
-          </div>
-            <div className={styles.footer1}>
+          <TableBody >
+          {totalQuizzes.length === 0 &&  <TableRow >
+            <TableCell colspan="7" style={{ "text-align": "center", }}>No Quiz Uploaded yet</TableCell>
+          </TableRow>}
+
+            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
+            (
+              <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <TableCell align="left">{item.id}</TableCell>
+                  <TableCell component="th" scope="row"><b>{item.quizTitle}</b></TableCell>
+                  <TableCell component="th">{item.startTime}</TableCell>
+                  <TableCell component="th">{item.endTime}</TableCell>
+                  <TableCell component="th" align='center'>
                   <button className={styles.edit}>Edit</button>
                   <button className={styles.button0}>Delete</button>
-            </div>
-        </div>
-      )
-      )}
+                  {/* <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button> */}
+                  </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <TablePagination
-      />
+          rowsPerPageOptions={[7]}
+          component="div"
+          count={totalQuizzes.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Paper>
-    </div>
-    
     </>
   )}
 
-    {(!createQuiz && user.userInfo.user.id !== courseClickUserId) && (
+  {(!createQuiz && user.userInfo.user.id !== courseClickUserId) && (
     <>
-    <div className={styles.quizListMain}>
-      <Paper sx={{padding:2}}>
+    <Paper sx={{padding:'3px',marginTop:'20px'}}>
+      <TableContainer component={Paper}  >
+        <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
 
-      <div className={styles.headerQuiz}>
-          <p>Title</p>
-          <p>Actions</p>
-      </div>
-      {totalQuizzes.map((value,index) => 
-      (
-        <div className={styles.quizDetails}>
-          <div>
-          {value.quizTitle}
-          </div>
-            <div className={styles.footer1}>
-                  <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(value)}>Start</Button>
-            </div>
-        </div>
-      )
-      )}
-      <TablePagination/>
-      </Paper>
-    </div>
+          <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
+            <TableRow>
+              <TableCell>#</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Start Time</TableCell>
+              <TableCell>End time</TableCell>
+              <TableCell align='center'>Actions</TableCell>
+            </TableRow>
+          </TableHead>
 
+          <TableBody >
+          {totalQuizzes.length === 0 &&  <TableRow >
+            <TableCell colspan="7" style={{ "text-align": "center", }}>No Quiz Uploaded yet</TableCell>
+          </TableRow>}
+
+            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
+            (
+              <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <TableCell align="left">{item.id}</TableCell>
+                  <TableCell component="th" scope="row"><b>{item.quizTitle}</b></TableCell>
+                  <TableCell component="th">{item.startTime}</TableCell>
+                  <TableCell component="th">{item.endTime}</TableCell>
+                  <TableCell component="th" align='center'>
+                  <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button>
+                  </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+
+        </Table>
+      </TableContainer>
+      <TablePagination
+          rowsPerPageOptions={[7]}
+          component="div"
+          count={totalQuizzes.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+    </Paper>
     {quizQuestionsModal && <DisplayQuiz data={quizData} handleStartQuiz={setQuizQuestionsModal}/>}
-
-
-    
     </>
   )}
 
@@ -296,186 +359,111 @@ return (
               <Tab label="Detials" value="1" />
               <Tab label="Questions" value="2" />
             </Tabs>
-          </Box>
+      </Box>
 
-          <TabPanel value="1" index={0}>
-            <TextField
-              id="outlined-basic"
-              label="Quiz Title"
-              variant="outlined"
-              sx={{ marginLeft: '-22px', marginTop: '10px' }}
-              size="small"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-            <p className={styles.instructions}>
-              <b>Quiz Instructions:</b>
-            </p>
-            <div class={styles.infolist}>
-              <div className={styles.info}>
-                1. You will have only <em>{time} seconds&nbsp;</em> per each
-                question.
-              </div>
-              <div className={styles.info}>
-                2. Once you select your answer, it can't be undone.
-              </div>
-              <div className={styles.info}>
-                3. You can't select any option once time goes off.
-              </div>
-              <div className={styles.info}>
-                4. You can't exit from the Quiz
-              </div>
-              <div className={styles.info}>
-                5. A complete quiz log will be created of your activities
-              </div>
+      <TabPanel value="1" index={0}>
+        <TextField id="outlined-basic" label="Quiz Title" variant="outlined" sx={{ marginLeft: '-22px', marginTop: '10px' }} size="small" value={title} onChange={(e) => setTitle(e.target.value)} required />
+        <p className={styles.instructions}>
+          <b>Quiz Instructions:</b>
+        </p>
+        <div class={styles.infolist}>
+          <div className={styles.info}>
+            1. You will have only <em>{time} seconds&nbsp;</em> per each
+            question.
+          </div>
+          <div className={styles.info}>
+            2. Once you select your answer, it can't be undone.
+          </div>
+          <div className={styles.info}>
+            3. You can't select any option once time goes off.
+          </div>
+          <div className={styles.info}>
+            4. You can't exit from the Quiz
+          </div>
+          <div className={styles.info}>
+            5. A complete quiz log will be created of your activities
+          </div>
+        </div>
+
+        <p className={styles.instructions}>
+          <b>Options</b>
+        </p>
+
+        <Stack component="form" noValidate spacing={2}>
+          <TextField id="datetime-local" label="Start Time" type="datetime-local" size='small' value={startTime} onChange={(e) => setStartTime(e.target.value)} sx={{ width: 250}} InputLabelProps={{ shrink: true, }} />
+          <TextField id="datetime-local" label="End Time" size='small' type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} sx={{ width: 250}} InputLabelProps={{ shrink: true, }} />
+        </Stack>
+
+        <div className={styles.Options}>
+          <input type="number" id="quantity" className={styles.input} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
+          <p>seconds per question</p>
+        </div>
+
+        <div className={styles.Options1}>
+          <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleCopyQuestion} />
+          <label for="checkbox-1">
+            Do not allow Students to copy question text
+          </label>
+        </div>
+
+        <div className={styles.Options1}>
+          <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleQuestionShuffle} />
+          <label for="checkbox-1">Shuffle Questions</label>
+        </div>
+
+        <div className={styles.Options1}>
+          <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleAnswerShuffle}/>
+          <label for="checkbox-1">Shuffle Answers</label>
+        </div>
+
+        <div className={styles.Options1}>
+          <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleSeeAnswer} />
+          <label for="checkbox-1">
+            Let Students See Correct Answer
+          </label>
+        </div>
+
+        <div className={styles.Options1}>
+          <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleDetectMobile}/>
+          <label for="checkbox-1">Detect Mobile</label>
+        </div>
+      </TabPanel>
+
+      <TabPanel value="2" index={1}>
+      {(quizQuestions.length !== 0 && !add) && <p style={{textAlign:'end'}}>Total Points : {totalPoints}</p>}
+      {(quizQuestions.length == 0 && !add)&& <p className={styles.empty}>No questions yet</p>}
+
+      {quizQuestions.map((item,index) => {
+        return(
+        <div className={styles.questions}>
+          <div className={styles.head}>
+            <div>Points : {item.points}  </div>
+            <div>Sec : {item.time}</div>
+          </div>
+          <div className={styles.body}>
+            <b>{item.question}</b>
+            <div>
+              <i class="bi bi-pencil" style={{color:'blue',width:"8px",height:"8px",fontSize:'16px',verticalAlign:'.26em',marginRight:'8px'}}></i>
+              <svg onClick={() => removeQuestion(index,item.points)} xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="red" class="bi bi-trash3" viewBox="0 0 16 16" > <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /> </svg>
             </div>
+          </div>
+        </div>
+        )})}  
+        
+        {add && <CreateQuestion close={setAdd} time={time}  getQuestion={getQuestion}/>}
+        {importPool && <ImportPool close={setImportPool} getQuestion={getQuestionFromPool}/>}
 
-            <p className={styles.instructions}>
-              <b>Options</b>
-            </p>
+        <div className={styles.buttonContainer1}>
+          <button className={styles.cancel} onClick={() => setAdd(true)}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16" > <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" /> </svg>
+            New Question
+          </button>
+          <button className={styles.cancel} onClick={() => setImportPool(true)}>
+            <i class="bi bi-search"></i>Find Questions
+          </button>
+        </div>
 
-
-            <Stack component="form" noValidate spacing={2}>
-              <TextField
-                id="datetime-local"
-                label="Start Time"
-                type="datetime-local"
-                size='small'
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                // defaultValue="2017-05-24T10:30"
-                sx={{ width: 250}}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                />
-
-              <TextField
-              id="datetime-local"
-              label="End Time"
-              size='small'
-              type="datetime-local"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              sx={{ width: 250}}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            </Stack>
-
-
-            <div className={styles.Options}>
-              <input
-                type="number"
-                id="quantity"
-                className={styles.input}
-                name="quantity"
-                defaultValue={time}
-                onChange={(e) => {
-                  setTime(e.target.value);
-                }}
-                min="1"
-                max="100"
-              ></input>
-              <p>seconds per question</p>
-            </div>
-
-            <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleCopyQuestion} />
-              <label for="checkbox-1">
-                Do not allow Students to copy question text
-              </label>
-            </div>
-
-            <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleQuestionShuffle} />
-              <label for="checkbox-1">Shuffle Questions</label>
-            </div>
-
-            <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleAnswerShuffle}/>
-              <label for="checkbox-1">Shuffle Answers</label>
-            </div>
-
-            <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleSeeAnswer} />
-              <label for="checkbox-1">
-                Let Students See Correct Answer
-              </label>
-            </div>
-
-            <div className={styles.Options1}>
-              <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleDetectMobile}/>
-              <label for="checkbox-1">Detect Mobile</label>
-            </div>
-          </TabPanel>
-
-          <TabPanel value="2" index={1}>
-          {(quizQuestions.length == 0 && !add)&& <p className={styles.empty}>No questions yet</p>}
-
-
-
-          {quizQuestions.map((item,index) => {
-            return(<div className={styles.questions}>
-              
-              <div className={styles.head}>
-              pts/time
-              </div>
-              <div className={styles.body}>
-                  <div>
-                  {item.question}
-                  </div>
-                  <div>
-                  <i class="bi bi-pencil" style={{color:'blue',width:"8px",height:"8px",fontSize:'16px',verticalAlign:'.26em',marginRight:'8px'}}></i>
-                  <svg
-                    onClick={() => removeQuestion(index)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    fill="red"
-                    class="bi bi-trash3"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                  </svg>
-
-                  </div>
-              </div>
-
-              </div>   )})}  
-            
-            {add && <CreateQuestion close={setAdd} time={time}  getQuestion={getQuestion}/>}
-            {importPool && <ImportPool close={setImportPool} getQuestion={getQuestionFromPool}/>}
-
-
-            <div className={styles.buttonContainer1}>
-              <button
-                className={styles.cancel}
-                onClick={() => setAdd(true)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                  />
-                </svg>
-                New Question
-              </button>
-              <button className={styles.cancel} onClick={() => setImportPool(true)}>
-                <i class="bi bi-search"></i>Find Questions
-              </button>
-            </div>
-
-          </TabPanel>
+      </TabPanel>
         </TabContext>
       </Box>
 

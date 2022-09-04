@@ -12,7 +12,7 @@ const axiosApiInstance = axios.create({
   baseURL: 'http://localhost:5000/api/',
   withCredentials:true
 });
-// s
+
 axios.interceptors.request.use(async(req)=>{
   return req;
 }, err=> {return Promise.resolve(err)}

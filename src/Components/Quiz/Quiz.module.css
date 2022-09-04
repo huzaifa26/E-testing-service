@@ -439,6 +439,8 @@ height: 1em
     margin: 20px 0;
 }
 .head{
+display: flex;
+justify-content: space-between;
 height: 42px;
 border-top:    1px solid #aaa;
 border-right:  1px solid #aaa; 
@@ -523,7 +525,7 @@ padding: 10px;
     text-decoration: none;
   }
   .button1{
-    margin: 0 0 10px 0;
+    /* margin: 0 0 10px 0; */
   background-color: var(--primary);
   align-self: center;
   border-radius: 4px;

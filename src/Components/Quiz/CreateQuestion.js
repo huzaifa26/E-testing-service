@@ -31,6 +31,8 @@ function CreateQuestion({close,time,getQuestion}) {
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const [inputFields, setInputFields] = useState([{ name: '' }, { name: '' }]);
 
+  
+
   function questionTypeHandler(e) {
     if (e.target.value === '1') {
       setMcq(true);
@@ -122,8 +124,6 @@ function CreateQuestion({close,time,getQuestion}) {
     else if(correct === ''){alert('please select correct answer')}
     else{
     let y = inputFields.every(item => item.name);
-
-
     if(!y)
     {
       alert('please fill out possible answers')
@@ -426,13 +426,13 @@ const handleSubjective = () =>
                   <input
                     type="radio"
                     name="isTrue"
-                    value="true"
+                    value="True"
                     onClick={(e) => {
                       setvaluetrue(e.target.value);
                       setInput1(true);
                       setInput2(false);
                     }}
-                    checked={valuetrue === 'true'}
+                    checked={valuetrue === 'True'}
                   />
                   True
                 </label>
@@ -445,13 +445,13 @@ const handleSubjective = () =>
                   <input
                     type="radio"
                     name="isTrue"
-                    value="false"
+                    value="False"
                     onClick={(e) => {
                       setvaluetrue(e.target.value);
                       setInput2(true);
                       setInput1(false);
                     }}
-                    checked={valuetrue === 'false'}
+                    checked={valuetrue === 'False'}
                   />
                   False
                 </label>

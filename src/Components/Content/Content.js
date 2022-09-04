@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import {courseContentActions} from './../../Redux/course-slice'
+import { saveAs } from "file-saver";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow,TablePagination,Paper } from '@mui/material';
 
 function Content() {
@@ -19,11 +20,7 @@ function Content() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(7);
 
-  // const publishCourses=useSelector(state=> {return state.courses});
-  // const courseJoin=useSelector(state=> state.courseJoin);
 
-
-  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -49,10 +46,15 @@ function Content() {
         console.log(err);
       })
     }
-    console.log(typeof(user.userInfo.user.id))
-    console.log(typeof(courseClickUserId))
-},[openModal,cookie.token, courseClickUserId, courseIdredux, dispatch, user.userInfo]);
 
+},[openModal]);
+
+const saveFile = (e) => {
+  saveAs(
+    e.fileUrl,
+    "example.pdf"
+  );
+};
 
 
   return (
@@ -60,23 +62,26 @@ function Content() {
     {/* if user id matches with user id with this course in backend table courses only then show it */}
     {user.userInfo.user.id == courseClickUserId &&   <div className={styles.buttonHolder}><button className={styles.button1} onClick={joinhandle}>Upload Content</button></div> }
   
-
-
-    <Paper sx={{padding:0}}>
+    <Paper sx={{padding:'3px',marginTop:'20px'}}>
       <TableContainer component={Paper}  >
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
 
           <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
             <TableRow>
               <TableCell>#</TableCell>
-              <TableCell>TITLE</TableCell>
-              <TableCell>FILETYPE</TableCell>
-              <TableCell>TIME</TableCell>
-              <TableCell>ACTIONS</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>File Type</TableCell>
+              <TableCell>Time</TableCell>
+              <TableCell  align='center'>Actions</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody >
+            
+          {courseContent.length === 0 &&  <TableRow >
+            <TableCell colspan="7" style={{ "text-align": "center", }}>No Content Uploaded yet</TableCell>
+          </TableRow>}
+
             {courseContent.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
             (
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -84,7 +89,7 @@ function Content() {
                   <TableCell component="th" scope="row"><b>{item.title.toUpperCase()}</b></TableCell>
                   <TableCell component="th">{item.fileType}</TableCell>
                   <TableCell component="th">{item.createdTime}</TableCell>
-                  <TableCell component="th"><a href={item.fileUrl} download={item.fileUrl}>Download</a></TableCell>
+                  <TableCell component="th" align='center'><button className={styles.download} onClick={() => saveFile(item)}>Download</button></TableCell>
               </TableRow>
             ))}
           </TableBody>

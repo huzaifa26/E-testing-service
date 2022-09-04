@@ -7,8 +7,7 @@ import {Storage} from './../Utils/firebase'
 import {ref,uploadBytes,getDownloadURL} from 'firebase/storage'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-
-
+import { toast } from 'react-toastify';
 
 function UploadModal({closeModal}) {
 
@@ -55,8 +54,6 @@ function UploadModal({closeModal}) {
   function handle(e)
   {
       e.preventDefault()
-      console.log(title,fileURL)
-      console.log(fileExtension +"    and herre is name     " + fileName) 
 
       axios.post('http://localhost:5000/api/courseContent', {
         courseId:courseIdredux,
@@ -66,7 +63,11 @@ function UploadModal({closeModal}) {
         createdTime:yourDate,
         title:title
       },{withCredentials : true})
-      .then(function (response) {console.log(response);})
+      .then(function (response) {
+        if (response.status === 200) {
+          toast.success('Content Added', {position: toast.POSITION.TOP_RIGHT,});
+          closeModal(false)
+        }})
       .catch(function (error) {console.log(error);});
   }
 

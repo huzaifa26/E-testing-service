@@ -1,3 +1,4 @@
+
 .publishedHeader{
     display: flex;
     background-color: white;
@@ -64,24 +65,55 @@
 {
     display: flex;
     background-color: white;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* align-items: center; */
     padding: 30px;
     margin: 20px;
-    height: 90vh;
+    height: 88vh;
+    gap: 20px;
 }
-.courseInfo p
+
+.join
 {
-    border-radius: 3px;
-    backdrop-filter: blur(5px);
-    background-color: rgba(0,184,64, 0.142);
-    box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
-    border: 0px rgba(255,255,255,0.4) solid;
-    border-bottom: 0px rgba(40,40,40,0.35) solid;
-    border-right: 0px rgba(40,40,40,0.35) solid;
-    height: 50px;
-    width: 200px;
+    background-color: #317DFF;
+    height: 30%;
+    width: 250px;
+    color: white;
+    padding: 20px;
+}
+.totalStudents
+{
+    height: 30%;
+    width: 250px;
+    background-color: #DD246E;
+    color: white;
+    padding: 20px;
+}
+.people
+{
+    padding: 5px 20px 5px 5px;
+}
+.secondry
+{
+    display: flex;
+    align-items: center;
+    height: 60%;
+    justify-content: center;
+}
+.footer
+{
+    height: 40%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
+.footer p
+{
+    font-size: 30px;
+}
+.box {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
