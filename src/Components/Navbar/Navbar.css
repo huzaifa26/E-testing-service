@@ -125,6 +125,19 @@
   display: none;
 }
 
+.nav-menu.active .nav-menu-items .nav-text-inner a span{
+  font-size: 14px !important;
+  margin-left: 4px !important;
+  flex: 1;
+}
+
+.nav-menu.active .nav-menu-items .nav-text-inner a{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left:30px !important;
+}
+
 .nav-menu.active .nav-menu-items .nav-text a span{
   display: inline-block;
   font-size: 16px;
@@ -168,7 +181,7 @@
 
 .flexstart{
   justify-content: flex-start !important;
-  padding-left: 40px;
+  padding-left: 30px;
 }
 
 .flexcenter{
@@ -184,14 +197,14 @@
 .flexcenterborder{
   justify-content: flex-start !important;
   border-left: 5px solid white;
-  padding-left: 35px;
+  padding-left: 25px;
 }
 
 .subMenu{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 93%;
+  width: 100%;
   background-color: white;
   background-color: 	#3B4248;
   border-radius: 0 0 4px 4px;

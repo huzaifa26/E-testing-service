@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import {Storage} from './../Utils/firebase'
-import {ref,uploadBytes,getDownloadURL} from 'firebase/storage'
+import {ref,uploadBytes,getDownloadURL,uploadBytesResumable} from "firebase/storage"
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -42,17 +42,56 @@ function UploadModal({closeModal}) {
       if(file == null)
           return;
 
-      const storageRef = ref(Storage, `/courseImages/${e.target.files[0].name}`);
-      const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
+      // const storageRef = ref(Storage, `/courseImages/${e.target.files[0].name}`);
+      // const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
       
-      getDownloadURL(ref(Storage, `/courseImages/${e.target.files[0].name}`)).then((url) => {
-          console.log(url);
-          setfileURL(url);
-      });
+      // getDownloadURL(ref(Storage, `/courseImages/${e.target.files[0].name}`)).then((url) => {
+      //     console.log(url);
+          // setfileURL(url);
+      // });
+
+      console.log(file);
+      toast(0,{autoClose:false, toastId: 1})
+
+      try{
+        console.log("uploading")
+        const storageRef = ref(Storage, `/courseImages/${e.target.files[0].name}`);
+        const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
+        console.log("uploaded");
+        uploadTask.on('state_changed', 
+        (snapshot) => {
+          const p = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          toast.update(1, {
+            render: 'Upload is ' + p.toFixed(2) + '% done. Please Donot close the window.',
+          });
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        }, 
+        (error) => {
+            console.log(error);
+        }, 
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setfileURL(url);
+            toast.update(1, {
+              render: 'File upload',
+              autoClose:2000
+            });
+          });
+        }
+      );
+    }catch(err){
+        console.log(err);
+    }
   }
 
-  function handle(e)
-  {
+  function handle(e){
       e.preventDefault()
 
       axios.post('http://localhost:5000/api/courseContent', {

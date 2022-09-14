@@ -82,7 +82,7 @@ export const courseContent=createSlice({
   reducers:{
     courseContent(state,actions)
     {state.courseContent = actions.payload
-      console.log(JSON.stringify(state, undefined, 2));
+      // console.log(JSON.stringify(state, undefined, 2));
     }
   }
 })

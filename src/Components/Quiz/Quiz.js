@@ -66,7 +66,6 @@ useEffect(()=>{
   if(user?.userInfo?.hasOwnProperty("user") === true){
     axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
-      console.log(res.data.data)
       setTotalQuizzes(res.data.data)
     }).catch((err)=>{
       console.log(err);
@@ -75,9 +74,6 @@ useEffect(()=>{
 },[add]);
 
 useEffect(() => {
-  console.log(totalPoints)
-
- 
 }, [totalPoints])
 
 const removeQuestion = (index,points) => {
@@ -96,9 +92,7 @@ const removeQuestion = (index,points) => {
 };
 
 const getQuestion = (question) => {
-  console.log(question)
   quizQuestions.push(question)
-  console.log(quizQuestions)
   if (typeof(question.points) === 'string')
   {
     setTotalPoints((state) => state + parseInt(question.points))
@@ -111,10 +105,7 @@ const getQuestion = (question) => {
 
 const getQuestionFromPool = (question) =>
 {
-  console.log(question)
-  console.log(typeof(question))
   setQuizQuestions([...quizQuestions, ...question]);
-  console.log(quizQuestions)
 }
 
 const handleQuestionShuffle = (event) =>
@@ -187,7 +178,6 @@ const saveQuiz = () =>
     setValue('1')
     return
   }
-  console.log(quizQuestions)
 
   let data =  {
     title:title,
@@ -206,8 +196,6 @@ const saveQuiz = () =>
   
   let url="http://localhost:5000/api/quiz/";
       axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        console.log(res)
-        console.log('gotres')
       }).catch((err)=>{
         console.log(err)
         toast.error('Failed', {
@@ -221,7 +209,6 @@ const [quizQuestionsModal,setQuizQuestionsModal] = useState(false)
 
 const handleStartQuiz = (item) =>
 {
-  console.log(item)
   setQuizData(item)
   setQuizQuestionsModal(true)
 }
@@ -236,9 +223,39 @@ const handleChangeRowsPerPage = (event) => {
 };
 
 
+const [counter,setCounter]=useState(0)
+
+  // setTimeout(() => {
+  //   setCounter(counter+1)
+  //   console.log("11111111111111111111")
+  // }, 0.9);
+  
+  // let date;
+  
+  // useEffect(()=>{
+  //   console.log("22222222222222222222")
+
+    // let today=new Date();
+    // let year=today.getFullYear();
+    // let month=today.getMonth()+1;
+    // let day=today.getDate();
+  
+    // let hours=today.getHours();
+    // let mint=today.getMinutes();
+  
+    // let dates=year+"-"+"0"+month+"-"+day;
+    // let time=hours+":"+mint;
+    // date=dates+time;
+    // let oldDate=tableContent[0].startDate+tableContent[0].startTime;
+    // console.log(1)
+    // if(oldDate === date){
+    //   console.log("haha");
+    // }
+  // },[counter])
+
 return (
 <div className={styles.main} >
-  {(!createQuiz && user.userInfo.user.id == courseClickUserId) && (
+  {(!createQuiz && user && user?.userInfo?.user?.id === courseClickUserId) && (
     <>
     <div className={styles.container}>
       <button className={styles.button1} onClick={showAddQuiz}>
@@ -265,12 +282,12 @@ return (
             <TableCell colspan="7" style={{ "text-align": "center", }}>No Quiz Uploaded yet</TableCell>
           </TableRow>}
 
-            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
-            (
+            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>{
+              return(
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell align="left">{item.id}</TableCell>
                   <TableCell component="th" scope="row"><b>{item.quizTitle}</b></TableCell>
-                  <TableCell component="th">{item.startTime}</TableCell>
+                  <TableCell component="th">{startTime}</TableCell>
                   <TableCell component="th">{item.endTime}</TableCell>
                   <TableCell component="th" align='center'>
                   <button className={styles.edit}>Edit</button>
@@ -278,7 +295,7 @@ return (
                   {/* <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button> */}
                   </TableCell>
               </TableRow>
-            ))}
+            )})}
           </TableBody>
         </Table>
       </TableContainer>
@@ -305,6 +322,7 @@ return (
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Title</TableCell>
+              <TableCell>Total Question</TableCell>
               <TableCell>Start Time</TableCell>
               <TableCell>End time</TableCell>
               <TableCell align='center'>Actions</TableCell>
@@ -316,18 +334,26 @@ return (
             <TableCell colspan="7" style={{ "text-align": "center", }}>No Quiz Uploaded yet</TableCell>
           </TableRow>}
 
-            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
-            (
-              <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{item.id}</TableCell>
-                  <TableCell component="th" scope="row"><b>{item.quizTitle}</b></TableCell>
-                  <TableCell component="th">{item.startTime}</TableCell>
-                  <TableCell component="th">{item.endTime}</TableCell>
-                  <TableCell component="th" align='center'>
-                  <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button>
-                  </TableCell>
-              </TableRow>
-            ))}
+            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>{
+              let startTime=item.startTime.split("T")
+              startTime[1]=startTime[1].split(".")[0]
+
+              let endTime=item.startTime.split("T")
+              endTime[1]=endTime[1].split(".")[0]
+
+              console.log(new Date())
+              return(
+                <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                    <TableCell align="left">{index+1}</TableCell>
+                    <TableCell style={{fontWeight:"700"}} component="th" scope="row">{item.quizTitle}</TableCell>
+                    <TableCell component="th" scope="row">{item.questions.length}</TableCell>
+                    <TableCell component="th">{startTime.join().replace(","," ")}</TableCell>
+                    <TableCell component="th">{endTime.join().replace(","," ")}</TableCell>
+                    <TableCell component="th" align='center'>
+                      <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button>
+                    </TableCell>
+                </TableRow>
+            )})}
           </TableBody>
 
         </Table>

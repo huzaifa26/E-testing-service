@@ -36,7 +36,7 @@ const Navbar2= (props) => {
   }
 
   function closeSidebar() {
-    setSidebar(state => state = false);
+    // setSidebar(state => state = false);
   }
 
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
@@ -87,15 +87,14 @@ const Navbar2= (props) => {
           {typeof(courseIdredux) === "number" && (location.pathname === "/courses" || location.pathname === "/courses/pools" || location.pathname === "/courses/setting" || location.pathname === "/courses/content" || location.pathname === "/courses/quiz" || location.pathname === "/courses/assignment") && 
           <div style={sidebar === true ? {padding:"0 10px"}:{padding:"0 10px"}} className={"subMenu"}>
             
-
-            <li className="nav-text">
+            <li className="nav-text nav-text-inner">
               <Link className={location.pathname === "/content" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/pools" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/courses/content'}>
                 <i class="bi bi-card-heading"></i>
                 {sidebar && <span>Content</span>}
               </Link>
             </li>
 
-            <li className="nav-text">
+            <li className="nav-text nav-text-inner">
               <Link className={location.pathname === "/pools" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/pools" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/courses/quiz'}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video3" viewBox="0 0 16 16">
               <path d="M14 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-6 5.7c0 .8.8.8.8.8h6.4s.8 0 .8-.8-.8-3.2-4-3.2-4 2.4-4 3.2Z"/>
@@ -106,21 +105,21 @@ const Navbar2= (props) => {
             </li>
 
 
-            <li className="nav-text">
+            <li className="nav-text nav-text-inner">
               <Link className={location.pathname === "/pools" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/pools" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/courses/pools'}>
                 <i class="bi bi-journal-text"></i>
                 {sidebar && <span>Pools</span>}
               </Link>
             </li>
 
-            <li className="nav-text">
+            <li className="nav-text nav-text-inner">
               <Link className={location.pathname === "/pools" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/pools" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/courses/assignment'}>
                 <i class="bi bi-pencil-square"></i>
                 {sidebar && <span>Assignments</span>}
               </Link>
             </li>
 
-            <li className="nav-text">
+            <li className="nav-text nav-text-inner">
               <Link className={location.pathname === "/" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/pools" ? "flexcenterborder": sidebar ===true ? "flexstart" : "flexcenter"} to={'/assignment'}>
                 <i class="bi bi-gear"></i>
                 {sidebar && <span>Settings</span>}

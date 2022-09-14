@@ -1,5 +1,5 @@
 import styles from './Login.module.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import axios from 'axios';
 import image from './../../Assets/logo.png';
 import { useNavigate } from 'react-router-dom';
@@ -8,9 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { userActions } from './../../Redux/user-slice'; 
 import { useCookies } from 'react-cookie';
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Login() {
   const [cookies, setCookie] = useCookies(['user']);
+  let [loading, setLoading] = useState(false);
 
   const dispatch=useDispatch();
   const loginData = useRef();
@@ -18,6 +20,7 @@ function Login() {
 
   function loginSubmitHandler(e) {
     e.preventDefault();
+    setLoading(true);
 
     axios.post('http://localhost:5000/api/login', {
         email: loginData.current.email.value,
@@ -44,6 +47,7 @@ function Login() {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
+        setLoading(false)
       })
       .catch(function (error) {
         console.log(error);
@@ -63,8 +67,10 @@ function Login() {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
+        setLoading(false)
       });
   }
+
 
   return (
     <div className={styles.LoginMain}>
@@ -72,23 +78,18 @@ function Login() {
         <img src={image} alt="logo"></img>
       </div>
       <div className={styles.LoginContainer}>
-        <form
-          className={styles.LoginForm}
-          ref={loginData}
-          onSubmit={loginSubmitHandler}
-        >
+        <form className={styles.LoginForm} ref={loginData} onSubmit={loginSubmitHandler}>
           <h1 className={styles.LoginName}>LOGIN</h1>
           <input required type="email" name="email" placeholder="Email"></input>
           <input required type="password" name="password" placeholder="Password"></input>
           <p className={styles.LoginFormForget} onClick={() => {navigate('/forgotPassword');}}>forget password?</p>
           <div className={styles.footer}>
-            <button>Login</button>
-            <p
-              className={styles.LoginFormAlready}
-              onClick={() => {
-                navigate('/signup');
-              }}
-            >
+            {loading === false?
+          <button type='submit'>Login</button>
+            :
+            <button type='button'><ClipLoader loading={true} color={"#777"} size={20} /></button>
+            }
+            <p className={styles.LoginFormAlready} onClick={() => {navigate('/signup');}}>
               Create Account
             </p>
           </div>

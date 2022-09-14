@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './DisplayQuiz.module.css'
 import { useSelector} from 'react-redux';
 import { Offline, Online } from "react-detect-offline";
@@ -8,8 +8,10 @@ import Result from './Result';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState } from 'draft-js';
+import { useNavigate } from 'react-router-dom';
 
 function DisplayQuiz(props) {
+  const navigate=useNavigate();
 
   const[editorState,setEditorState] = useState(EditorState.createEmpty());
   const[questions,setQuestions] = useState(props.data.questions)
@@ -17,11 +19,13 @@ function DisplayQuiz(props) {
   const[totalLength,setTotalLength] = useState(0)
   const[currentIndex,setCurrentIndex] = useState(1)
   const[selected,setSelected]=useState('')
-  const[time,setTime] = useState(29)
+  const[time,setTime] = useState(100);
   const[showResult,setShowResult] = useState(false)
   const user=useSelector(state=> state.user);
   const [cookie]=useCookies();
   var timer;
+  const [questionState,setQuestionsState]=useState([]);
+  const quizLengthRef=useRef()
  
   useEffect(() => {
     if(props.data.questionShuffle == 1)
@@ -37,25 +41,25 @@ function DisplayQuiz(props) {
 
     if(props.data.detectMobile == 1)
     {}
-    console.log(props.data.questions)
 
     if(user.userInfo.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/getAtempttedQuizQuestions/" + user.userInfo.user.id+"/"+props.data.id,{withCredentials:true}).then((res)=>
-      {
-        console.log(res.data.length)
-
-        setCurrentIndex((state) => state + res.data.length)
+      axios.get("http://localhost:5000/api/getAtempttedQuizQuestions/" + user.userInfo.user.id+"/"+props.data.id,{withCredentials:true}).then((res)=>{
+        setCurrentIndex((state) => state + res?.data?.length)
         setTotalLength(questions.length)
 
         let attempted = questions.filter(ar => !res.data.find(rm => (rm.quizQuestionId === ar.id) ))
-        console.log(attempted)
-        if(attempted.length == 0)
-        {
-          setShowResult(true)
+        if(attempted?.length === 0){
+          alert("1")
+          navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:props.data.id,afterQuiz:false}});
+          return
         }
-        setCurrentQuestion(attempted.shift())
+        let question=attempted.shift()
+        setCurrentQuestion(question)
         setQuestions([...attempted])
-  
+        quizLengthRef.current=attempted.length;
+        console.log(question);
+        setTime(question?.time);
+        setQuestionsState([...attempted]) 
       }).catch((err)=>{
       console.log(err);
       })
@@ -82,10 +86,8 @@ function DisplayQuiz(props) {
     }
   })
 
-  const handleCurrentQuestion =() =>
-  {
-    if(currentQuestion.questionType !== "Subjective")
-    {
+  const handleCurrentQuestion =() =>{
+    if(currentQuestion.questionType !== "Subjective"){
       console.log('no subjective')
       let data ={
         userId: user.userInfo.user.id,
@@ -108,9 +110,23 @@ function DisplayQuiz(props) {
       }).catch((err)=>{
         console.log(err)
       })
+
+      console.log()
+      if(quizLengthRef.current === 0){
+        axios.post('http://localhost:5000/api/addQuizResult',{userId:data.userId,quizId:data.quizId},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+          console.log(res)
+          axios.get("http://localhost:5000/api/showQuizResult/"+data.userId+"/"+data.quizId,{withCredentials:true}).then((res)=>{
+            console.log(res.data)
+            navigate("/courses/result",{state:{result:res.data,afterQuiz:true}})
+            }).catch((err)=>{
+            console.log(err);
+          })
+        }).catch((err)=>{
+          console.log(err)
+        })
+      }
     }
-    else
-    {
+    else{
       console.log(editorState)
       let data ={
         userId: user.userInfo.user.id,
@@ -120,7 +136,22 @@ function DisplayQuiz(props) {
         selectedOption:editorState.getCurrentContent().getPlainText(),
         obtainedMarks:0
       }
-
+      
+      console.log()
+      if(quizLengthRef.current === 0){
+        console.log({userId:data.userId,quizId:data.quizId})
+        axios.post('http://localhost:5000/api/addQuizResult',{userId:data.userId,quizId:data.quizId},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+          console.log(res)
+          axios.get("http://localhost:5000/api/showQuizResult/"+data.userId+"/"+data.quizId,{withCredentials:true}).then((res)=>{
+            console.log(res.data)
+            navigate("/courses/result",{state:{result:res.data,afterQuiz:true}})
+            }).catch((err)=>{
+            console.log(err);
+          })
+        }).catch((err)=>{
+          console.log(err)
+        })
+      }
       let url="http://localhost:5000/api/atempttedQuizQuestions/";
       axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log(res)
@@ -128,28 +159,31 @@ function DisplayQuiz(props) {
         console.log(err)
       })
     }
-
-
-
+    
+    
+    
     if(questions?.length > 0 )
     {
       let newArr = [...questions]
       setCurrentQuestion(newArr.shift())
       setTime(currentQuestion.time)
       setQuestions([...newArr])
+      quizLengthRef.current=newArr.length
       setCurrentIndex((totalLength-questions.length)+1)
     }
     else
     {
-      setShowResult(true)
+      navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:props.data.id,afterQuiz:true}})
     } 
   }
-
+  
   const handleSelectedDiv = (e) =>
   {
     setSelected(e.options)
   }
 
+
+  
   return (
     <>
     <div className={styles.modalBackground}></div>
@@ -162,7 +196,7 @@ function DisplayQuiz(props) {
         <div className={styles.Questioncontainer}>
 
           <div className={styles.quizHeader}>
-            <div className={styles.points}>Points&nbsp;<span>{currentQuestion.points}</span></div>
+            <div className={styles.points}>Points&nbsp;<span>{currentQuestion?.points}</span></div>
             <div className={styles.timeContainer}>
                 <p>Time Left<span className={styles.time}>{time}</span></p>
             </div>
@@ -170,7 +204,7 @@ function DisplayQuiz(props) {
 
           <div className={styles.quizBody}>
             <div className={props.data.copyQuestion? styles.noCopyAllowed : styles.copyAllowed}>
-              <b style={{fontSize:'23px'}}>{currentQuestion.question}</b>
+              <b style={{fontSize:'23px'}}>{currentQuestion?.question}</b>
             </div>
             {currentQuestion?.options?.map((element) => {return (
             <>
@@ -179,7 +213,7 @@ function DisplayQuiz(props) {
               </div>
             </>
             )})}
-            {currentQuestion.questionType === "Subjective" && 
+            {currentQuestion?.questionType === "Subjective" && 
             <div className={styles.editorContainer}>
               <Editor
                 // toolbar={config}
@@ -210,8 +244,6 @@ function DisplayQuiz(props) {
           </div>
         </div>
       </>}
-        
-      {showResult && <Result  userId={user.userInfo.user.id} quizId={props.data.id}/>}
     </div>
     </>
   )

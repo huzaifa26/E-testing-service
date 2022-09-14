@@ -1,4 +1,4 @@
-import React, { useState,useEffect  } from 'react'
+import React, { useState,useEffect, useRef  } from 'react'
 import { useSelector } from 'react-redux';
 import styles from './ImportPool.module.css'
 import axios from 'axios';
@@ -28,31 +28,32 @@ function ImportPool({close,getQuestion}) {
         setPoolCategory(res.data.data);
       }).catch((err)=>{
         console.log(err);
-        
       })
     }
     
     if(user.userInfo.hasOwnProperty("user") === true){
         axios.get("http://localhost:5000/api/poolQuestions2/" + user.userInfo.user.id+"/"+courseIdredux,{withCredentials:true}).then((res)=>{
-        console.log(res.data)
         setPoolQuestions(res.data);
         }).catch((err)=>{
         console.log(err);
         })
     }
-    
   },[close])
 
-  const handlePoolCategory = (event) =>
-  {
+  const [singleCategoryQuestions,setSingleCategoryQuestions]=useState([])
+
+  const handlePoolCategory = (event) =>{
     setMatchQuestions(event.id);
+    const singleQP=poolQuestion.filter((q)=>{
+      console.log(q.poolCategoryId === event.id)
+      return q.poolCategoryId === event.id
+    })
+    setSingleCategoryQuestions(singleQP)
   }
 
 
   const handleCheck = (item) => {
-    // console.log(letmecheck(item.id))
     var hehe = checked.some(items => items.id == item.id)
-    console.log(hehe)
     if(!hehe)
     {
       let newfield = { 
@@ -68,28 +69,27 @@ function ImportPool({close,getQuestion}) {
         questionType: item.questionType,
         userId: item.userId };
       setChecked([...checked,newfield])
+      console.log(newfield);
     }
-    else
-    {
-      console.log('i ran')
+    else{
       const newArr = checked.filter(object => {
         return object.id !== item.id;
-      });;
-      checked.splice(0, checked.length, ...newArr);
-      console.log(checked)
+      });
+      console.log(newArr)
+      setChecked([...newArr]);
     }
   };
 
-  const add = () =>
-  {
+  const add = () =>{
       checked.shift(); 
       getQuestion(checked)
       close(false)
   }
+
   return (
     <>
         <div className={styles.modalBackground}  onClick={() => close(false)}></div>
-        <div className={styles.modalContainer}>
+        <form className={styles.modalContainer}>
             <div className={styles.header}>
             <p>Find Questions</p>
             <i class="bi bi-x-circle" onClick={() => close(false)}></i>
@@ -99,43 +99,41 @@ function ImportPool({close,getQuestion}) {
             <div className={styles.body}>
                 <div className={styles.left}>
                 {poolCategory.map((value) => {
-                     return <div className={matchQuestions == value.id ? styles.selected : styles.categoryName} onClick={() =>handlePoolCategory(value) }>
+                    return (
+                    <div className={matchQuestions == value.id ? styles.selected : styles.categoryName} onClick={() =>handlePoolCategory(value) }>
                         <p  className={styles.first}>{value.categoryName}</p>
                         <p className={styles.second}>{value.courseName}</p>
-                        </div>;
+                    </div>
+                    )
                 })}
 
                 </div>
                 <hr></hr>
                 <div className={styles.right}>
                   <div className={styles.header2}>
-                    {poolQuestion.filter((data) => {return +data.poolCategoryId === matchQuestions}).map((item,index) => 
-                    (
-                      <div className={styles.question} key={index} >
+                    {singleCategoryQuestions?.map((item,index) => (
+                      <div key={item.id} className={styles.question}>
                         <div className={styles.questionHeader}>
-                       
                           <input value={item} type="checkbox" checked={checked.some(items => items.id == item.id) ? true:false}  onChange={() => handleCheck(item)} />
                           <p>{item.question}</p>              
                         </div>
+
                         <div className={styles.questionFooter}>
                           <p>{item.questionType}</p>
                         </div>
-
                       </div>
                     ))}
                     </div>
-
-                    
                 </div>
             </div>
             
             <div className={styles.footer}>
-                    {matchQuestions !== "" && <button onClick={add}>Add</button>} 
+              {matchQuestions !== "" && <button onClick={add}>Add</button>} 
             </div>
-            <div>
-  {`Items checked are: ${checkedItems}`}
-</div>
+          <div>
+          {/* {`Items checked are: ${checkedItems}`} */}
         </div>
+        </form>
     </>
   )
 }

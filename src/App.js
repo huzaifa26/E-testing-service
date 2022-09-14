@@ -18,6 +18,7 @@ import Auth2 from './Protected/Auth2';
 import Content from './Components/Content/Content';
 import Quiz from './Components/Quiz/Quiz';
 import Assignment from './Components/Assignment/Assignment';
+import Result from './Components/Quiz/Result';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="/courses/pools" element={<Navbar><Pools /></Navbar>}/>
             <Route path="/courses/content" element={<Navbar><Content /></Navbar>}/>
             <Route path="/courses/quiz" element={<Navbar><Quiz/></Navbar>}/>
+            <Route path="/courses/result" element={<Navbar><Result /></Navbar>}/>
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
             <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
             <Route path="/courses/assignment" element={<Navbar><Assignment/></Navbar>} />
@@ -46,7 +48,7 @@ function App() {
 
 
         </Routes>
-        <ToastContainer autoClose={1000}/>
+        <ToastContainer autoClose={2000}/>
     </div>
   );
 }
