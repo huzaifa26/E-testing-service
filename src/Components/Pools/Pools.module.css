@@ -16,30 +16,30 @@
 .pool .intro h1 {
   font-size: 25px;
   font-weight: 500;
-  color: #5811cb;
+  color: var(--primary);
 }
 .pool .intro {
   width: 99.3%;
   height: 15%;
   padding: 15px;
   word-wrap: break-word;
-  background-color: white;
-  border-radius: 12px;
+  /* background-color: white;
+  border-radius: 12px; */
   margin-top: 10px;
 }
 .pool .poolsBar {
   width: 99.3%;
   height: 7%;
-  padding: 4px 7px 1px 0px;
+  padding: 4px 0px 1px 0px;
   font-family: 'Roboto Flex', sans-serif;
   margin-top: 5px;
 }
 .button2,
-.button0 {
+.button0,.button3 {
   cursor: pointer;
-  background-color: #5811cb;
+  background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
   align-self: center;
-  border: 1px solid #5811cb;
+  border: 1px solid var(--primary);
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -50,13 +50,11 @@
   height: 90%;
   text-decoration: none;
 }
-.pool .poolsBar button:hover {
-  color: rgba(249, 249, 249, 0.874);
-}
+
 .pool .poolsBar .span2 {
   margin-left: 35px;
 }
-.button2 {
+.button2,.button3 {
   margin-left: 5px;
 }
 
@@ -65,4 +63,30 @@
     height: 18%;
     padding: 10px 0px 10px 10px;
   }
+}
+
+@media only screen and (max-width: 764px) {
+  .pool{
+    /* min-width: calc(100vw - 100%); */
+  }
+}
+@media only screen and (max-width: 604px) {
+.button3,.button0,.button2
+{
+  padding: 8px 5px;
+  font-size: 16px;
+}
+
+  .allButton
+  {
+    display: flex;
+    justify-content: center;
+  }
+
+}
+
+.buttonActive{
+  background:white;
+  border:1px solid #282E33;
+  color:#282E33
 }

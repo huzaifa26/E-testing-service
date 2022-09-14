@@ -1,0 +1,35 @@
+.Main
+{
+    display: flex;
+    background-color: white;
+    /* align-items: center; */
+    flex-direction: column;
+    padding: 30px;
+    margin: 15px;
+    min-height: 88vh;
+
+}
+
+.buttonHolder
+{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button1
+{
+  cursor: pointer;
+  background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+  align-self: center;
+  border: 1px solid var(--primary);
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 18px;
+  border-radius: 4px;
+  /* font-weight: bold; */
+  text-decoration: none;
+  padding: 8px 10px;
+  
+}

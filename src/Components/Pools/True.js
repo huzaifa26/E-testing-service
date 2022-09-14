@@ -7,38 +7,28 @@ function True(props) {
   const handleTrues = () => {
     let truesData = {
       options: ['True', 'False'],
-      correctAnswer: value,
+      correctOption: value,
       questionType: 'TRUE/FALSE',
     };
-    props.sendTrues(truesData);
+    props.getTrues(truesData);
   };
 
   return (
     <>
       <div className={styles.true}>
-        <label>
-          True &nbsp;&nbsp;
-          <input
-            type="radio"
-            name="isTrue"
-            value="true"
+        <label>True 
+          <input type="radio" name="isTrue" value="true"
             onClick={(e) => {
               setvalue(e.target.value);
             }}
           />
-          &nbsp;&nbsp;&nbsp;&nbsp;
         </label>
-        <label>
-          False &nbsp;&nbsp;
-          <input
-            type="radio"
-            name="isTrue"
-            value="false"
+        <label>False 
+          <input type="radio" name="isTrue" value="false"
             onClick={(e) => {
               setvalue(e.target.value);
             }}
           />
-          &nbsp;&nbsp;&nbsp;&nbsp;
         </label>
       </div>
       <div className={styles.buttoncenter}>

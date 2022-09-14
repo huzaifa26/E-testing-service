@@ -10,16 +10,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import emailjs from '@emailjs/browser';
 
 const MailService = async (data) => {
+<<<<<<< HEAD
   console.log(data.id)
+=======
+  console.log("IN MAILSERVICE FUNCTION");
+>>>>>>> master
   data.link = 'http://localhost:3000/emailVerification/' + data.id;
   emailjs
     .send('service_gvyqi7g', 'template_ojllmfn', data, 'PCrkZDdTgRVPTxMHf')
     .then(
       (result) => {
         console.log(result.text);
-        toast.success('Check your Email to verify', {
-          position: toast.POSITION.TOP_RIGHT,
-        });
       },
       (error) => {
         console.log(error.text);
@@ -55,14 +56,29 @@ function Signup() {
           password: values.password,
         })
         .then(function (response) {
+<<<<<<< HEAD
           console.log("response")
           if (response.status === 200) {
             console.log(response.data)
+=======
+          console.log(response);
+          if (response?.status === 200) {
+>>>>>>> master
             MailService(response.data);
+            toast.success('Check your Email to verify', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          } else if (response?.response?.status === 400) {
+            toast.error('Account with this email already exists', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
           }
         })
         .catch(function (error) {
+<<<<<<< HEAD
           console.log("response")
+=======
+>>>>>>> master
           if (error.response.status === 400) {
             toast.error('Account with this email already exists', {
               position: toast.POSITION.TOP_RIGHT,
@@ -157,7 +173,6 @@ function Signup() {
           </div>
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 }

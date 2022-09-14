@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap');
 
@@ -15,12 +16,15 @@
 }
 .button
 {
+=======
+.button{
+>>>>>>> master
     width: 95%;
     display: flex;
     flex-direction: column;
 }
-.joinedHeader
-{
+
+.joinedHeader{
     display: flex;
     background-color: white;
     justify-content: space-between;
@@ -28,12 +32,13 @@
     padding: 30px;
     margin: 20px;
 }
+
 .joinedHeader button{
     /* margin: 0 0 0.7rem 0; */
-  background-color: #5811cb;
+  background-color: var(--primary);
   align-self: center;
   border-radius: 4px;
-  border: 1px solid #5811cb;
+  border: 1px solid var(--primary);
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -43,26 +48,70 @@
   text-decoration: none;
   font-family: 'Roboto Flex', sans-serif;
 }
+
+.joinedHeader button:hover{
+    position: relative;
+    top: 2px;
+}
+
 .joinedHeader h1{
     font-family: 'Quicksand', sans-serif;
 }
-.joinedCourses
-{
+.joinedCourses{
     background-color: white;
     padding: 20px;
     display: flex;
     justify-content:flex-start;
     flex-wrap: wrap;
     margin: 20px;
+    gap: 30px;
 }
 
+<<<<<<< HEAD
 .joinedList
 {
     border-radius: 4px;
     height: 200px;
     width: 160px;
+=======
+.joinedCourses div{
+    cursor: pointer;
+}
+
+.joinedList{
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    height: 250px;
+    width: 240px;
+>>>>>>> master
     display: flex;
     align-items: center;
     justify-content: center;
-    margin:0 0 20px 30px ;
 }
+
+.joinedList{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.joinedList img{
+    /* object-fit: cover; */
+    width: 100%;
+    height: 70%;
+    border-radius: 5px 5px 0px 0px;
+    background-color: grey;
+}
+.joinedList h2{
+    height: 30%;
+    display:flex ;
+    align-items:center ;
+    justify-content:center ;
+
+}
+
+@media only screen and (max-width: 557px) {
+    .joinedCourses{
+        justify-content: center;
+    }
+  }

@@ -11,7 +11,7 @@
 .LoginImage {
   width: 30%;
   height: 100vh;
-  background-color: #5811cb;
+  background-color: var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +42,7 @@
   max-height: 450px;
 }
 .LoginForm h1 {
-  color: #5811cb;
+  color: var(--primary);
   font-size: 2rem;
   margin: 15px 0 0px 0;
   font-weight: lighter;
@@ -73,10 +73,10 @@
   text-decoration: underline;
 }
 .LoginForm button {
-  margin: 0 0 0.7rem 0;
-  background-color: #5811cb;
+  border-radius: 3px;
+  background-color: var(--primary);
   align-self: center;
-  border: 1px solid #5811cb;
+  border: 1px solid var(--primary);
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -87,11 +87,11 @@
   font-family: 'Roboto Flex', sans-serif;
 }
 .LoginFormAlready {
-  color: #5811cbcc;
+  color: var(--primary)cc;
   cursor: pointer;
 }
 .LoginFormAlready:hover {
-  color: #5811cb;
+  color: var(--primary);
   cursor: pointer;
 }
 .footer {

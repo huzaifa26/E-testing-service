@@ -1,94 +1,132 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import styles from './Showpool.module.css';
 import { useSelector } from 'react-redux';
-import ShowQuestion from './ShowQuestion';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import axios from 'axios';
+import { MathComponent } from 'mathjax-react';
+import { ToastContainer, toast } from 'react-toastify';
+import { useCookies } from 'react-cookie';
+import Editpool from './Editpool';
 
-const publishCourses = [
-  {
-    id: 1,
-    name: 'Database',
-  },
-  {
-    id: 3,
-    name: 'Assembly language',
-  },
-];
 
 function ShowPool() {
-  const [courseId, setCourseId] = useState('0');
+  const [cookie]=useCookies();
+  const change=useSelector(state=> state.pools.change);
+  const user=useSelector(state=> state.user)
+  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
+  const [changeState,setChangeState]=useState(false);
+  const [allQuestions,setAllQuestions]=useState([]);
+  const [OpenEdit,setOpenEdit] =useState(false)
+  const [dataEdit,setDataEdit]= useState([])
 
-  const allQuestions = useSelector((state) => {
-    return state.pools.allQuestions;
-  });
 
-  const handleShow = (e) => {
-    setCourseId(e.target.value);
-  };
+  const openEdit=(e)=>{
+    setDataEdit(e)
+    setOpenEdit(true);
+  }
+
+
+  useEffect(()=>{
+    if(user.userInfo.hasOwnProperty("user") === true){
+      axios.get("http://localhost:5000/api/poolQuestions/" + user.userInfo.user.id,{withCredentials:true}).then((res)=>{
+        // console.log(res.data)
+        setAllQuestions(res.data);
+        console.log(res.data)
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
+    console.log('i ran')
+  },[changeState])
+
+  const deleteQuestionHanler=(id)=>{
+    setChangeState(state =>!state);
+    console.log(id)
+    let data={id:id}
+    if(user.userInfo.hasOwnProperty("user") === true){
+      axios.post("http://localhost:5000/api/deletepoolQuestions",data,{withCredentials:true}).then((res)=>{
+      toast.success('Question Deleted', {
+          position: toast.POSITION.TOP_RIGHT,
+      })
+      setChangeState((state) => !state)
+      }).catch((err)=>{
+        toast.error('Question Deletion Failed', {
+          position: toast.POSITION.TOP_RIGHT,
+        })
+      })
+    }
+  }
 
   return (
     <div>
       <div className={styles.poolsMain}>
-      <div className={styles.poolsCategory}>
-        <label for="dog-names">Select Course &nbsp;&nbsp;&nbsp;&nbsp;:</label>
+      {/* <div className={styles.poolsCategory}>
+        <label >Select Course:</label>
         <select onChange={handleShow}>
           <option value={0} selected>
             All Courses
           </option>
           {publishCourses.map((value) => {
-            return <option value={value.id}>{value.name}</option>;
+            return <option value={value.id}>{value.courseName}</option>;
           })}
         </select>
+      </div> */}
+      {/* <div className={styles.poolsCategory}>
+        <label>
+          Select Category:
+        </label>
+        <select onChange={showCategoriesHandler}>
+          <option value="" selected disabled hidden>
+            Choose Category
+          </option>
+          {courseCategoriesredux.map((value) => {
+            return <option value={value.id}>{value.categoryName}</option>;
+          })}
+        </select>
+      </div> */}
       </div>
-      </div>
-      <div className={styles.table1}>
-      <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650,height:'100%' }} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>#</TableCell>
-            <TableCell align="left"><b>Course Name  </b></TableCell>
-            <TableCell align="left"><b>  Category</b></TableCell>
-            <TableCell align="left"><b>  Question</b></TableCell>
-            <TableCell align="left"><b>  Options</b></TableCell>
-            <TableCell align="left"><b>  Correct Answer</b></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {courseId === '0'
-              ? allQuestions.map((item, i) => {
-                  i++;
-                  return (
-                    <ShowQuestion i={i} courseName={item.courseName} correctAnswer={item.correctAnswer} questionType={item.questionType} question={item.question} options={item.options}
-                    />
-                  );
-                })
-              : allQuestions
-                  .filter((data) => data.courseId === courseId)
-                  .map((item, i) => {
-                    i++;
-                    return (
-                      <ShowQuestion
-                        i={i}
-                        courseName={item.courseName}
-                        correctAnswer={item.correctAnswer}
-                        questionType={item.questionType}
-                        question={item.question}
-                        options={item.options}
-                      />
-                    );
-                  })}
-        </TableBody>
-      </Table>
-    </TableContainer>
-      </div>
-    </div>
+
+          {allQuestions.filter((data) => {return +data.courseId === +courseIdredux;}).map((item, index) => {
+            index++;
+            return (
+              <div className={styles.displayQuestions}>
+                <p className={styles.courseName}><strong>Course Name: &nbsp;</strong>{item.courseName}</p>
+                <div className={styles.questionHeader}>
+                  <h1>{index}.</h1>
+                  {item.isMathjax === 1 ? 
+                    <MathComponent style={{flex:"1"}} tex={item.question} />:
+                    <h2 style={{fontSize:"20px",fontWeight:'500'}} className={styles.question}>{item.question}</h2>
+                  }
+
+                </div>
+                {item.questionImage !== null &&
+                    <div style={{marginLeft:"50px"}}>
+                      <img src={item.questionImage} className={styles.imgg} alt="Question Image"/>
+                    </div>
+                  }
+                <div class={styles.container}>
+                  <div style={{padding: '2px 25px'}}>
+                    <ul className={styles.ul}>
+                      {item.questionType !== "Subjective" && item.questionType !== "TRUE/FALSE" && item.options.map((i)=>{
+                        return(
+                          <li className={item.correctOption === i.options.toLowerCase() && styles.abc}>{i.options}</li>
+                        )
+                      })}
+                    </ul>
+                    <br/>
+                    <p>Answer: <strong>{item.correctOption}</strong></p>
+                  </div>
+                </div>
+                <div className={styles.footer1}>
+                  <button className={styles.edit} onClick={(e)=>openEdit(item)}>Edit</button>
+                  <button className={styles.button0} onClick={(e)=>{deleteQuestionHanler(item.id)}}>Delete</button>
+                  <p className={styles.questionType}><span>{item.questionType}</span></p>
+                </div>
+                {OpenEdit && <Editpool closeModal={setOpenEdit} dataEdit1={dataEdit}/>}
+              </div>
+            );
+          })
+          }
+        </div>
   );
 }
 

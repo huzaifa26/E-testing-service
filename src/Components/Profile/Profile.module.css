@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Flex", sans-serif;
+}
+.main {
+  display: flex;
+}
+.leftTop {
+  width: 70%;
+  margin: 10px;
+}
+.h1 {
+  background-color: white;
+  margin-bottom: 10px;
+  padding: 30px;
+  border-radius: 10px;
+}
+.h1 h1 {
+  font-family: "Ubuntu", sans-serif;
+}
+.left {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: "Ubuntu", sans-serif;
+}
+.left h1 {
+  padding: 30px;
+  font-family: "Source Code Pro", monospace;
+  font-size: 22px;
+}
+.leftContainer {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.footer {
+  height: 120px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer button {
+  background-color: var(--primary);
+  align-self: center;
+  border: 1px solid var(--primary);
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 45px;
+  text-decoration: none;
+  font-family: "Roboto Flex", sans-serif;
+}
+.left label {
+  font-family: "Ubuntu", sans-serif;
+  margin-bottom: 14px;
+}
+.left input {
+  font-family: "Ubuntu", sans-serif;
+  display: flex;
+  width: 100%;
+  margin-bottom: 28px;
+  border-width: 0 0 2px;
+  border-color: #9b9a9adc;
+  outline: 0;
+  min-width: 260px;
+  border-width: 0 0 2px;
+}
+
+.right {
+  border-radius: 16px;
+  width: 30%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 10px 10px 0;
+  padding: 20px;
+}
+
+.circularportrait img {
+  max-width: 100%;
+  
+  height: auto;
+
+}
+.chooseImg {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  flex-direction: column;
+}
+.chooseImg label:hover {
+  text-decoration: underline;
+}
+.chooseImg input {
+  width: 10px;
+}
+
+@media all and (max-width: 411px) {
+  .left input {
+    min-width: 130px;
+  }
+}
+
+.circularportrait img{
+  object-fit: cover;
+}

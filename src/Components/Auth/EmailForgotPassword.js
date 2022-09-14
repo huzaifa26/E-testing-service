@@ -98,7 +98,10 @@ function EmailForgotPassword() {
           </div>
         </form>
       </div>
+<<<<<<< HEAD
       <ToastContainer />
+=======
+>>>>>>> master
     </div>
   );
 }

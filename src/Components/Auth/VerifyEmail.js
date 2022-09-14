@@ -3,7 +3,7 @@ import styles from './VerifyEmail.module.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import image from './../../Assets/logo2.png';
+import image from './../../Assets/logo.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,6 +24,7 @@ function VerifyEmail() {
           //run this after 5.7 seconds.
           setTimeout(function () {
             navigate('/');
+<<<<<<< HEAD
           }, 5700);
         }
       })
@@ -37,6 +38,20 @@ function VerifyEmail() {
             navigate('/');
           }, 5700);
         }
+=======
+          }, 3700); //run this after 3 seconds.
+        } 
+      })
+      .catch(function (error) {
+        if (error.response.status === 400) {
+          toast.error('Email Already verified', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setTimeout(function () {
+            navigate('/');
+          }, 5700); //run this after 3 seconds.
+        } 
+>>>>>>> master
       });
   };
 
@@ -51,7 +66,6 @@ function VerifyEmail() {
           Verify Email
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 }

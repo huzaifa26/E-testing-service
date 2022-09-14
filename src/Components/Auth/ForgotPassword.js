@@ -94,7 +94,10 @@ function ForgotPassword() {
           </div>
         </form>
       </div>
+<<<<<<< HEAD
       <ToastContainer />
+=======
+>>>>>>> master
     </div>
   );
 }
