@@ -45,16 +45,10 @@ function CreateCategoryModal(props) {
             <div onClick={()=>{}} className={styles.CreateCategoryModal}>
                 <form style={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}}  ref={formRef} onSubmit={formSubmitHandler}>
                     <h2 style={{height:"15%",marginBottom:'15px',textAlign:"center",fontSize:'25px',color:'var(--primary)',fontWeight:"500" }}>Create Category</h2>
-                    {/* <select name="courseId">
-                        <option disabled selected>Choose Course</option>
-                        {courseId_name.map((value) => {
-                            return <option value={value.id}>{value.courseName}</option>;
-                        })}
-                    </select> */}
                     <input type={"text"} name="categoryName" placeholder=" Category Name"></input>
                     <div className={styles.btnDiv}>
                         <button onClick={()=>{props.closeModalHandler()}}>Close</button>
-                        <button type="submit">Submit</button>
+                        <button type="submit">Create</button>
                     </div>
                 </form>
 

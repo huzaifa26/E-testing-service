@@ -1,0 +1,48 @@
+.edit
+{  cursor: pointer;
+  background-color: #2A84EB;
+  align-self: center;
+  border: 1px solid #2A84EB;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 18px;
+  border-radius: 4px;
+  /* font-weight: bold; */
+  padding: 5px 23px;
+  /* height: 90%; */
+  margin: 5px;
+  text-decoration: none;}
+.preview
+{  cursor: pointer;
+  background-color: #645CAA;
+  align-self: center;
+  border: 1px solid #645CAA;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 18px;
+  border-radius: 4px;
+  /* font-weight: bold; */
+  padding: 5px 23px;
+  /* height: 90%; */
+  margin: 5px;
+  text-decoration: none;}
+
+  .button0{
+    cursor: pointer;
+    background-color:#E53472 ;
+  
+    align-self: center;
+    border: 1px solid #E53472;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 18px;
+    border-radius: 4px;
+    /* font-weight: bold; */
+    padding: 5px 15px;
+    /* height: 90%; */
+    margin: 5px;
+    text-decoration: none;
+  }

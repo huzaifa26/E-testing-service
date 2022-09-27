@@ -14,7 +14,7 @@
 
 .modalContainer {
   width: 450px;
-  height: 380px;
+  height: 330px;
   border-radius: 6px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -89,4 +89,16 @@
   border-radius: 4px;
   /* font-weight: bold; */
   text-decoration: none;
+}
+
+@media all and (max-width: 548px) {
+
+  .modalContainer {
+    width: 350px;}
+
+}
+@media all and (max-width: 408px) {
+
+  .modalContainer {
+    width: 310px;}
 }

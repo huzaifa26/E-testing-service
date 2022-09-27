@@ -52,7 +52,6 @@ useEffect(()=>{
     if(user?.userInfo?.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/getAssignments/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
       ).then((res)=>{
-        console.log(res)
         setAssignments(res.data.data)
       }).catch((err)=>{
         console.log(err);
@@ -76,7 +75,6 @@ const saveFile = (e) => {
 const handleDelete = (e) =>
 {
   setDelete((state) => !state)
-  console.log(e.id)
   if(user?.userInfo?.hasOwnProperty("user") === true){
     axios.get("http://localhost:5000/api/deleteAssignment/"+e.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
@@ -128,10 +126,10 @@ const handleResult = (item) =>
             <TableCell colspan="7" style={{ "text-align": "center", }}>No Assignment Uploaded yet</TableCell>
           </TableRow>}
 
-            {assignments?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
+            {assignments?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{item.id}</TableCell>
+                  <TableCell align="left">{index+1}</TableCell>
                   <TableCell component="th" scope="row"><b>{item.assignmentTitle}</b></TableCell>
                   <TableCell component="th">{item.fileType}</TableCell>
                   <TableCell component="th">{item.startTime}</TableCell>

@@ -1,5 +1,5 @@
 import styles from './Quiz.module.css';
-import React, {useEffect,  useState } from 'react';
+import React, {useCallback, useEffect,  useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { TabContext, TabPanel } from '@mui/lab';
 import { Tabs, Tab, Box, Stack, Paper, TablePagination, Button,Table, TableBody, TableCell, TableHead, TableRow} from '@mui/material';
@@ -12,6 +12,9 @@ import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import { styled } from '@mui/material/styles';
 import DisplayQuiz from './DisplayQuiz';
+import Preview from './Preview';
+import { useNavigate } from "react-router-dom";
+
 
 function Quiz() {
 
@@ -24,6 +27,8 @@ const [value, setValue] = useState('1');
 const [createQuiz, setCreateQuiz] = useState(false);
 const [add, setAdd] = useState(false);
 const [importPool,setImportPool] = useState(false)
+const [preview,setPreview] = useState(false)
+const [previewDetail,setPreviewDetail] = useState({})
 
 const [quizQuestions,setQuizQuestions]=useState([]);
 const [title, setTitle] = useState('');
@@ -39,7 +44,10 @@ const [totalQuizzes,setTotalQuizzes] = useState([])
 const [totalPoints,setTotalPoints] = useState(0)
 const [page, setPage] = useState(0);
 const [rowsPerPage, setRowsPerPage] = useState(7);
-const [assignments,setAssignments] = useState([])
+const [triggerDelete,setTriggerDelete] = useState(false)
+const [changeState,setChangeState]=useState(false);
+const navigate = useNavigate();
+
 
 
 function handleChange(event, newValue) {
@@ -47,7 +55,21 @@ function handleChange(event, newValue) {
   setAdd(false)
 }
 
+function handlePreview(item)
+{
+  setPreview(true)
+  setPreviewDetail(item)
+}
+function handleEdit(item)
+{
+  // setPreviewDetail(item)
+  
+  // console.log(previewDetail)
+  navigate("/courses/editQuiz", { state: {previewDetails:item}});
+}
+
 function showAddQuiz() {
+  
   setCreateQuiz(true);
 }
 
@@ -58,27 +80,83 @@ function showMainQuiz() {
   setTitle('')
   setStartTime('')
   setEndTime('')
-  setTime(1)
+  setTime(1)    
 }
 
-
-useEffect(()=>{
-  if(user?.userInfo?.hasOwnProperty("user") === true){
-    axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
-    ).then((res)=>{
-      console.log(res.data.data)
-      setTotalQuizzes(res.data.data)
-    }).catch((err)=>{
-      console.log(err);
-    })
+const saveQuiz = ()=>
+{
+  if(quizQuestions.length == 0 )
+  {
+    alert('you must add atleast one question')
+    setValue('2')
+    return
   }
-},[add]);
+  if(title === '' )
+  {
+    setValue('1')
+    alert('Please add title')
+    return
+  }
+  if(startTime === '' )
+  {
+    alert('Please assign Start time')
+    setValue('1')
+    return
+  }
+  if(endTime === '' )
+  {
+    alert('Please assign End time')
+    setValue('1')
+    return
+  }
+  setCreateQuiz(false);
 
-useEffect(() => {
-  console.log(totalPoints)
+  let data =  {
+    title:title,
+    questionShuffle:questionShuffle,
+    answerShuffle:answerShuffle,
+    seeAnswer:seeAnswer,
+    copyQuestion:copyQuestion,
+    detectMobile:detectMobile,
+    startTime:startTime,
+    endTime:endTime,
+    questions:quizQuestions,
+    userId:user.userInfo.user.id,
+    courseId:courseIdredux,
+    totalPoints:totalPoints
+    }
 
- 
-}, [totalPoints])
+    data.questions.forEach((item,index)=>{
+      
+      // console.log(item)
+      let newArr = []
+      if(item.questionType !== 'Subjective')
+      {
+          
+          item.options.forEach((op) =>
+          {
+            if(typeof(op) === "object")
+              newArr.push(op.options)
+            })
+            if(newArr.length > 0)
+            item.options= newArr
+      }
+  })
+  console.log(data.questions)
+  
+  let url="http://localhost:5000/api/quiz/";
+      axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+        console.log(res)
+        setChangeState(!changeState)
+        
+      }).catch((err)=>{
+        console.log(err)
+        toast.error('Failed', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      })
+}
+
 
 const removeQuestion = (index,points) => {
   if (typeof(points) === 'string')
@@ -96,9 +174,7 @@ const removeQuestion = (index,points) => {
 };
 
 const getQuestion = (question) => {
-  console.log(question)
   quizQuestions.push(question)
-  console.log(quizQuestions)
   if (typeof(question.points) === 'string')
   {
     setTotalPoints((state) => state + parseInt(question.points))
@@ -107,14 +183,25 @@ const getQuestion = (question) => {
   {
     setTotalPoints((state) => state + parseInt(question.points))
   }
+ 
 }
 
 const getQuestionFromPool = (question) =>
 {
   console.log(question)
-  console.log(typeof(question))
+
+  question.forEach(element => {
+    if (typeof(element.points) === 'string')
+    {
+      setTotalPoints((state) => state + parseInt(element.points))
+    }
+    else
+    {
+      setTotalPoints((state) => state + parseInt(element.points))
+    }
+  });
+  
   setQuizQuestions([...quizQuestions, ...question]);
-  console.log(quizQuestions)
 }
 
 const handleQuestionShuffle = (event) =>
@@ -161,60 +248,6 @@ const handleDetectMobile = (event) =>
   }
 }
 
-const saveQuiz = () =>
-{
-  if(quizQuestions.length == 0 )
-  {
-    alert('you must add atleast one question')
-    setValue('2')
-    return
-  }
-  if(title === '' )
-  {
-    setValue('1')
-    alert('Please add title')
-    return
-  }
-  if(startTime === '' )
-  {
-    alert('Please assign Start time')
-    setValue('1')
-    return
-  }
-  if(endTime === '' )
-  {
-    alert('Please assign End time')
-    setValue('1')
-    return
-  }
-  console.log(quizQuestions)
-
-  let data =  {
-    title:title,
-    questionShuffle:questionShuffle,
-    answerShuffle:answerShuffle,
-    seeAnswer:seeAnswer,
-    copyQuestion:copyQuestion,
-    detectMobile:detectMobile,
-    startTime:startTime,
-    endTime:endTime,
-    questions:quizQuestions,
-    userId:user.userInfo.user.id,
-    courseId:courseIdredux,
-    totalPoints:totalPoints
-    }
-  
-  let url="http://localhost:5000/api/quiz/";
-      axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        console.log(res)
-        console.log('gotres')
-      }).catch((err)=>{
-        console.log(err)
-        toast.error('Failed', {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      })
-}
 
 const [quizData,setQuizData] = useState([])
 const [quizQuestionsModal,setQuizQuestionsModal] = useState(false)
@@ -235,6 +268,37 @@ const handleChangeRowsPerPage = (event) => {
   setPage(0);
 };
 
+const handleDelete = (item) =>
+{
+  let data = {id:item.id}
+
+  let url= "http://localhost:5000/api/quizDelete/";
+  axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+    setTriggerDelete((state) => !state)
+    if (res.status === 200) {
+      toast.success('Deleted', {position: toast.POSITION.TOP_RIGHT,});
+    }
+  }).catch((err)=>{
+    console.log(err);
+  })
+}
+
+const hidePreviewComponent=useCallback(()=>{
+  setPreview(false)
+},[preview])
+
+useEffect(()=>{
+  // console.log("------------------------------------------------")
+  if(user?.userInfo?.hasOwnProperty("user") === true){
+    axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    ).then((res)=>{
+      console.log(res)
+      setTotalQuizzes(res.data.data)
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+},[createQuiz,triggerDelete,hidePreviewComponent]);
 
 return (
 <div className={styles.main} >
@@ -273,8 +337,9 @@ return (
                   <TableCell component="th">{item.startTime}</TableCell>
                   <TableCell component="th">{item.endTime}</TableCell>
                   <TableCell component="th" align='center'>
-                  <button className={styles.edit}>Edit</button>
-                  <button className={styles.button0}>Delete</button>
+                  <button className={styles.preview} onClick={() => handlePreview(item)}>Preview</button>
+                  <button className={styles.edit} onClick={() =>handleEdit(item)}>Edit</button>
+                  <button className={styles.button0} onClick={() => handleDelete(item)}>Delete</button>
                   {/* <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button> */}
                   </TableCell>
               </TableRow>
@@ -292,6 +357,7 @@ return (
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      {preview && <Preview data={previewDetail} handlePreviewStart={hidePreviewComponent}/>}
     </>
   )}
 
@@ -343,6 +409,7 @@ return (
         />
     </Paper>
     {quizQuestionsModal && <DisplayQuiz data={quizData} handleStartQuiz={setQuizQuestionsModal}/>}
+    
     </>
   )}
 
@@ -361,7 +428,7 @@ return (
             </Tabs>
       </Box>
 
-      <TabPanel value="1" index={0}>
+      <TabPanel sx={{padding:'10px 0px'}} className={styles.hello} value="1" index={0}>
         <TextField id="outlined-basic" label="Quiz Title" variant="outlined" sx={{ marginLeft: '-22px', marginTop: '10px' }} size="small" value={title} onChange={(e) => setTitle(e.target.value)} required />
         <p className={styles.instructions}>
           <b>Quiz Instructions:</b>
@@ -394,8 +461,8 @@ return (
           <TextField id="datetime-local" label="End Time" size='small' type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} sx={{ width: 250}} InputLabelProps={{ shrink: true, }} />
         </Stack>
 
-        <div className={styles.Options}>
-          <input type="number" id="quantity" className={styles.input} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
+        <div className={styles.Options3}>
+          <input type="number" id="quantity" className={styles.input1} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
           <p>seconds per question</p>
         </div>
 
@@ -429,7 +496,7 @@ return (
         </div>
       </TabPanel>
 
-      <TabPanel value="2" index={1}>
+      <TabPanel className={styles.hello} value="2" index={1}>
       {(quizQuestions.length !== 0 && !add) && <p style={{textAlign:'end'}}>Total Points : {totalPoints}</p>}
       {(quizQuestions.length == 0 && !add)&& <p className={styles.empty}>No questions yet</p>}
 

@@ -31,8 +31,6 @@ function EditAssignment({closeEdit,item}) {
         const name = e.target.files[0].name.slice(0, last_dot)
         setFileExtention(ext)
         setFileName(name)
-        console.log(fileName)
-        console.log('hello')
     
         if(file == null)
             return;
@@ -41,7 +39,6 @@ function EditAssignment({closeEdit,item}) {
         const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
         
         getDownloadURL(ref(Storage, `/courseImages/${e.target.files[0].name}`)).then((url) => {
-            console.log(url);
             setfileURL(url);
         });
     }
@@ -57,7 +54,6 @@ function handle(e)
 // else
 // {
 
-console.log(marks)
     axios.post('http://localhost:5000/api/editAssignment', {
       id:item.id,
       courseId:courseIdredux,
@@ -74,7 +70,7 @@ console.log(marks)
         toast.success('Assignment Updated', {position: toast.POSITION.TOP_RIGHT,});
         closeEdit(false)
       }
-      console.log(response);})
+      })
     .catch(function (error) {
         console.log(error)
         toast.error('Unable to upload', {position: toast.POSITION.TOP_RIGHT,});
@@ -99,7 +95,6 @@ console.log(marks)
                 id="component-helper"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                
                 required
               />
           </FormControl>

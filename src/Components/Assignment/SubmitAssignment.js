@@ -28,7 +28,6 @@ function SubmitAssignment({closeSubmit,item}) {
         const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
         
         getDownloadURL(ref(Storage, `/courseImages/${e.target.files[0].name}`)).then((url) => {
-            console.log(url);
             setfileURL(url);
         });
     }

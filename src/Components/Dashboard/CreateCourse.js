@@ -87,7 +87,7 @@ const CreateClassSubmithandler=(e)=>{
 
         <div className={styles.joinedHeader2}>
             <form ref={formRef} onSubmit={CreateClassSubmithandler} className={styles.form}>
-            <img src={imageURL===""?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOIgbiAwf6mBkjE6iVQuxHMAHMXlcYvkshKJ9Tx-bexaRCbpR7WJNs7t_qh3Z4I8qe8HQ&usqp=CAU":imageURL}></img>
+            <img src={imageURL===""?"https://cdn2.iconfinder.com/data/icons/ultimate-business-icons/64/1-42-512.png":imageURL}></img>
             <div className={styles.chooseImg}>
                 <label for="files" class="btn">Change Image</label>
                 <input required accept=".png,.jpg,.jpeg" onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file"/>

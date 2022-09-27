@@ -18,6 +18,11 @@ import Auth2 from './Protected/Auth2';
 import Content from './Components/Content/Content';
 import Quiz from './Components/Quiz/Quiz';
 import Assignment from './Components/Assignment/Assignment';
+import EditQuiz from './Components/Quiz/EditQuiz';
+import PoolMain from './Components/Pool/PoolMain';
+import PoolQuestions from './Components/Pool/PoolQuestions';
+import Setting from './Components/Settings/Setting';
+import ManageStudents from './Components/Settings/ManageStudents';
 
 
 function App() {
@@ -33,12 +38,16 @@ function App() {
           <Route path='/' element={<Auth/>} >
             <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
             <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
-            <Route path="/courses/pools" element={<Navbar><Pools /></Navbar>}/>
+            <Route path="/courses/pools" element={<Navbar><PoolMain/></Navbar>}/>
+            <Route path="/courses/poolQuestions" element={<Navbar><PoolQuestions/></Navbar>}/>
             <Route path="/courses/content" element={<Navbar><Content /></Navbar>}/>
-            <Route path="/courses/quiz" element={<Navbar><Quiz/></Navbar>}/>
+            <Route path="/courses/quiz" element={<Navbar><Quiz/></Navbar>}/> 
+            <Route path="/courses/setting" element={<Navbar><Setting/></Navbar>}/> 
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
             <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
             <Route path="/courses/assignment" element={<Navbar><Assignment/></Navbar>} />
+            <Route path="/courses/manangeStudents" element={<Navbar><ManageStudents/></Navbar>} />
+            <Route path="/courses/editQuiz" element={<Navbar><EditQuiz/></Navbar>} />
           </Route>
 
           <Route path='/' element={<Auth/>} >

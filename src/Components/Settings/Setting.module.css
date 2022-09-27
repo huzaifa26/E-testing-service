@@ -1,0 +1,180 @@
+.Main
+{
+    display: flex;
+    background-color: white;
+    /* align-items: center; */
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    margin: 15px;
+    min-height: 88vh;
+    /* height: 96%; */
+}
+.one
+{
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  min-width: 120px
+}
+.two
+{
+  width: 80%;
+}
+.three
+{
+  width: 20%;
+  /* background-color: #2d3b45; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap:5px;
+}
+
+.imgTitle
+{
+  display: flex;
+  align-items: center;
+  height: 188px;
+}
+.titles
+{
+  display: flex;
+  height: 42.88px;
+  margin:5px 0 30px 0;
+  align-items: center;
+}
+.ImageContainer img
+{
+ height: 140px; 
+ width: 247px;
+}
+.choose
+{
+  background: #f5f5f5;
+  color: #2d3b45;
+  border: 1px solid;
+  border-color: #c7cdd1;
+  border-radius: 2px;
+  transition: background-color .2s ease-in-out;
+  padding: 0px 100px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  text-decoration: none;
+  overflow: hidden;
+  text-shadow: none;
+  background-color: #F55D31;
+    border: 1px solid #F55D31;
+    color: white;
+}
+.choose label{
+  
+  font-size: 14px;
+}
+.imageDetails
+{
+  margin:5px 0 30px 0;
+}
+.header
+{
+  display: flex;
+  width: 100%;
+  height: 80%;
+}
+.footer
+{
+
+  height: 20%;
+}
+
+.buttonContainer
+{
+    padding: 7px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.save
+{    cursor: pointer;
+    background-color: #2A84EB;
+    align-self: center;
+    border: 1px solid #2A84EB;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    border-radius: 2px;
+    padding: 8px 20px;
+    font-size: 15px;
+    text-decoration: none;
+}
+.hr2
+{
+  background-color: black;
+  width: 220px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.list
+{
+  display: flex;
+  align-items: center;
+  width: 230px;
+}
+.list:hover
+{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.left
+{
+  display: flex;
+  width: 80%;
+}
+
+@media all and (max-width: 998px) {
+  .header
+  
+  {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .left
+  {
+    width: 100%;
+  }
+  .two{
+    width: 85%;
+  }
+  .three{
+    width: 100%;
+    align-items: flex-start;
+
+  }
+
+}
+
+@media all and (max-width: 726px) {
+
+  .ImageContainer img
+{
+ height: 100px; 
+ width: 177px;
+}
+.inputMui
+{
+  width: 177px;
+}
+.choose{
+  padding: 0px 64px;
+
+}
+}
+
+@media all and (max-width: 548px) {
+  .two{
+    width: 65%;
+  }
+
+}

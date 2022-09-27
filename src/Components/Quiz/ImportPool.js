@@ -28,7 +28,6 @@ function ImportPool({close,getQuestion}) {
         setPoolCategory(res.data.data);
       }).catch((err)=>{
         console.log(err);
-        
       })
     }
     
@@ -66,6 +65,8 @@ function ImportPool({close,getQuestion}) {
         question: item.question,
         questionImage: item.questionImage,
         questionType: item.questionType,
+        time:item.time,
+        points:item.points,
         userId: item.userId };
       setChecked([...checked,newfield])
     }

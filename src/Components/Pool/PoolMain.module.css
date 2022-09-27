@@ -1,0 +1,71 @@
+.pool {
+    display: flex;
+    background-color: white;
+    /* align-items: center; */
+    flex-direction: column;
+    padding: 30px;
+    margin: 15px;
+    height: 96%;
+}
+.pool .intro h1 {
+    font-size: 25px;
+    font-weight: 500;
+    color: var(--primary);
+}
+.pool .intro {
+    width: 99.3%;
+    height: 15%;
+    padding: 15px;
+    word-wrap: break-word;
+    /* background-color: white;
+    border-radius: 12px; */
+}
+
+.poolBody
+{
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 10px;
+}
+.buttonContainer
+{
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+.poolCategories
+{
+    width: 80%;
+}
+.categoryName
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10px;
+}
+.name
+{
+    color: #0374b5;
+    cursor: pointer;
+}
+.name:hover {
+    text-decoration: underline;
+}
+.addButton
+{
+    background: #f5f5f5;
+    color: #2d3b45;
+    border: 1px solid;
+    border-color: #c7cdd1;
+    border-radius: 2px;
+    transition: background-color .2s ease-in-out;
+    padding: 8px 14px;
+    margin-bottom: 0;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+    text-shadow: none;
+}

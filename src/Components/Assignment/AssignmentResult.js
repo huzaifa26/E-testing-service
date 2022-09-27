@@ -22,7 +22,6 @@ function AssignmentResult({closeResult,item}) {
       axios.get("http://localhost:5000/api/getAssignmentResult/" + item.id,{withCredentials:true}).then((res)=>
       {
       setStudents(res.data.data)
-      console.log(res.data.data)
       }).catch((err)=>{
       console.log(err);
       })
@@ -31,9 +30,7 @@ function AssignmentResult({closeResult,item}) {
 
     const handleObtainedMarks = (index,value) =>
     {
-      console.log(index,value)
       students[index].obtainedMarks = parseInt(value)
-      console.log(students)
     }
 
     const handleResult = () =>

@@ -29,7 +29,6 @@ axios.interceptors.response.use((response)=>{
     }).catch((err)=>{
       console.log(err);
     })
-    console.log(originalRequest);
     return axios(originalRequest);
   }
   return Promise.resolve(error);

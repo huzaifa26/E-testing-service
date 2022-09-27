@@ -82,10 +82,10 @@ const saveFile = (e) => {
             <TableCell colspan="7" style={{ "text-align": "center", }}>No Content Uploaded yet</TableCell>
           </TableRow>}
 
-            {courseContent.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
+            {courseContent.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{item.id}</TableCell>
+                  <TableCell align="left">{index+1}</TableCell>
                   <TableCell component="th" scope="row"><b>{item.title.toUpperCase()}</b></TableCell>
                   <TableCell component="th">{item.fileType}</TableCell>
                   <TableCell component="th">{item.createdTime}</TableCell>

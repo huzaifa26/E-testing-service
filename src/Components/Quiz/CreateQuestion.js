@@ -1,17 +1,11 @@
 import styles from './Quiz.module.css';
 import React, { useState } from 'react';
-// import TextField from '@mui/material/TextField';
-// import { TabContext, TabPanel } from '@mui/lab';
-// import { Tabs, Tab, Box } from '@mui/material';/
+import { useSelector } from 'react-redux';
 import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Storage } from '../Utils/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-// import { style } from '@mui/system';
-import { useDispatch, useSelector } from 'react-redux';
-import {quizQuestionsActions} from './../../Redux/quiz-slice'
-
 
 function CreateQuestion({close,time,getQuestion}) {
 
@@ -30,8 +24,6 @@ function CreateQuestion({close,time,getQuestion}) {
   const user=useSelector(state=>{return state.user;})
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const [inputFields, setInputFields] = useState([{ name: '' }, { name: '' }]);
-
-  
 
   function questionTypeHandler(e) {
     if (e.target.value === '1') {
