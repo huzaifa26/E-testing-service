@@ -111,6 +111,7 @@ function handle(e)
                 type="datetime-local"
                 size='small'
                 value={startTime}
+                required
                 onChange={(e) => setStartTime(e.target.value)}
                 sx={{ width: "100%"}}
                 InputLabelProps={{
@@ -124,6 +125,7 @@ function handle(e)
               size='small'
               type="datetime-local"
               value={endTime}
+              required
               onChange={(e) => setEndTime(e.target.value)}
               sx={{ width: "100%"}}
               InputLabelProps={{

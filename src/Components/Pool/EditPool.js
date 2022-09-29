@@ -1,18 +1,11 @@
 import styles from './EditPool.module.css'
 import React, { useState,useEffect } from 'react';
-// import TextField from '@mui/material/TextField';
-// import { TabContext, TabPanel } from '@mui/lab';
-// import { Tabs, Tab, Box } from '@mui/material';/
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState,convertFromHTML, ContentState } from 'draft-js';
 import { Storage } from '../Utils/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-// import { style } from '@mui/system';
-import { useDispatch, useSelector } from 'react-redux';
-import {quizQuestionsActions} from './../../Redux/quiz-slice'
-import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
 

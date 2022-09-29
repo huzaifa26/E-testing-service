@@ -6,7 +6,7 @@ import VerifyEmail from './Components/Auth/VerifyEmail';
 import Dashboard from './Components/Dashboard/Dashboard';
 import Navbar from './Components/Navbar/Navbar';
 import Courses from './Components/Courses/Courses';
-import Pools from './Components/Pools/Pools';
+// import Pools from './Components/Pools/Pools';
 import Notification from './Components/Notifications/Notifications';
 import EmailForgotPassword from './Components/Auth/EmailForgotPassword';
 import ForgotPassword from './Components/Auth/ForgotPassword';
@@ -23,6 +23,9 @@ import PoolMain from './Components/Pool/PoolMain';
 import PoolQuestions from './Components/Pool/PoolQuestions';
 import Setting from './Components/Settings/Setting';
 import ManageStudents from './Components/Settings/ManageStudents';
+import CreateCourse from './Components/Dashboard/CreateCourse';
+import Result from './Components/Quiz/Result';
+import Preview from './Components/Quiz/Preview';
 
 
 function App() {
@@ -37,16 +40,18 @@ function App() {
           <Route path="/forgotPasswordChange/:id" element={<ForgotPassword/>}/>
           <Route path='/' element={<Auth/>} >
             <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
+            <Route path="/dashboard/createCourse" element={<Navbar><CreateCourse/></Navbar>} />
             <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
             <Route path="/courses/pools" element={<Navbar><PoolMain/></Navbar>}/>
             <Route path="/courses/poolQuestions" element={<Navbar><PoolQuestions/></Navbar>}/>
             <Route path="/courses/content" element={<Navbar><Content /></Navbar>}/>
             <Route path="/courses/quiz" element={<Navbar><Quiz/></Navbar>}/> 
+            <Route path="/courses/preview" element={<Navbar><Preview/></Navbar>}/> 
             <Route path="/courses/setting" element={<Navbar><Setting/></Navbar>}/> 
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
             <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
             <Route path="/courses/assignment" element={<Navbar><Assignment/></Navbar>} />
-            <Route path="/courses/manangeStudents" element={<Navbar><ManageStudents/></Navbar>} />
+            <Route path="/courses/result" element={<Navbar><Result/></Navbar>} />
             <Route path="/courses/editQuiz" element={<Navbar><EditQuiz/></Navbar>} />
           </Route>
 

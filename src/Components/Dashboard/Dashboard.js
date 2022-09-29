@@ -11,7 +11,6 @@ import Courses from '../Courses/Courses';
 import { Link,useLocation,useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { userActions } from './../../Redux/user-slice'; 
-import { courseStatusActions } from './../../Redux/course-slice';
 import { courseClickUserIdActions } from './../../Redux/course-slice';
 import { async } from '@firebase/util';
 
@@ -20,6 +19,17 @@ const Dashboard=(props)=> {
   const navigate=useNavigate();
   const [cookie,setCookie]=useCookies();
 
+  
+  const location = useLocation();
+  const dispatch=useDispatch();
+  const [openModal,setOpenModal] =useState(false)
+  const [showDashboard,setShowDashboard]=useState(true);
+  // const [showCreateCourse,setShowCreateCourse]=useState(false);
+  const [showCourse,setShowCourse]=useState(false);
+  const [courseIdState,setCourseIdState]=useState(false);
+  
+  const user=useSelector(state=> state.user);
+  
   // useEffect(()=>{
   // axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
   //   if (res.status === 200){
@@ -32,56 +42,40 @@ const Dashboard=(props)=> {
   //   }
   // })
   // },[])
-
-  const location = useLocation();
-  const dispatch=useDispatch();
-  const [openModal,setOpenModal] =useState(false)
-  const [showDashboard,setShowDashboard]=useState(true);
-  const [showCreateCourse,setShowCreateCourse]=useState(false);
-  const [showCourse,setShowCourse]=useState(false);
-  const [courseIdState,setCourseIdState]=useState(false);
-
-  const courses=useSelector(state=> state.courses);
-  const courseJoin=useSelector(state=> state.courseJoin);
-  const user=useSelector(state=> state.user);
-
   const joinhandle=()=>{
     setOpenModal(true);
   }
 
   const createCourseHandler=()=>{
-    setShowDashboard(false);
-    setShowCreateCourse(true)
+    // setShowDashboard(false);
+    // setShowCreateCourse(true)
+    navigate('/dashboard/createCourse')
   }
 
+  const [courses,setCourses] = useState([])
+  const [courseJoin,setCourseJoin] = useState([])
   const getCourses=()=>{
-    if(user?.userInfo?.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
       ).then((res)=>{
         console.log(res);
-        dispatch(courseActions.courses(res.data.data));
+        setCourses(res.data.data)
       }).catch((err)=>{
         console.log(err);
       })
-    } 
   }
 
   const getJoinedCourses=()=>{
-    if(user?.userInfo?.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
       ).then((res)=>{
         console.log(res);
-        dispatch(courseActions.joinedCourses(res.data.data));
+        setCourseJoin(res.data.data)
       }).catch((err)=>{
         console.log(err);
       })
-    } 
   }
 
 
   const showDashboardHandler=useCallback(()=>{
-    setShowDashboard(true);
-    setShowCreateCourse(false);
     getCourses();
     getJoinedCourses();
   },[])
@@ -93,6 +87,8 @@ const Dashboard=(props)=> {
     if(user.userInfo.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/user",{withCredentials:true}, {headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         dispatch(userActions.userInfo(res.data));
+        // const serializedStore = JSON.stringify(res.data);
+        // window.localStorage.setItem('store', serializedStore);
         setgetdata(!getdata);
       }).catch((err)=>{
         console.log(err);
@@ -102,32 +98,26 @@ const Dashboard=(props)=> {
 
 
   useEffect(()=>{
-      if(user?.userInfo?.hasOwnProperty("user") === true){
         axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
         ).then((res)=>{
-          dispatch(courseActions.courses(res.data.data));
+          setCourses(res.data.data)
         }).catch((err)=>{
           console.log(err);
         })
-      } 
-  },[]);
-
-  useEffect(()=>{
-    if(user?.userInfo?.hasOwnProperty("user") === true){
-      axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
-      ).then((res)=>{
-        console.log(res);
-        dispatch(courseJoinActions.joinedCourses(res.data.data));
-        
+      },[]);
+      
+      useEffect(()=>{
+        axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+        ).then((res)=>{
+          setCourseJoin(res.data.data)
       }).catch((err)=>{
         console.log(err);
       })
-    } 
 },[openModal]);
 
   return (
     <>
-    {showCreateCourse && <CreateCourse showDashboardHandler={showDashboardHandler}/>}
+    {/* {showCreateCourse && <CreateCourse showDashboardHandler={showDashboardHandler}/>} */}
 
     {showCourse && <Courses id={courseIdState}/>}
 
@@ -139,11 +129,10 @@ const Dashboard=(props)=> {
           <button onClick={createCourseHandler}>Create Class</button>
           </div>
           <div  className={styles.joinedCourses}>      
-            {courses.courses.map((item) => {
+            {courses.map((item) => {
               return( 
               <div onClick={(e)=>{
               dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
-              dispatch(courseStatusActions.courseStatus('published'))
               dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
               // console.log(item.userId)
               navigate("/courses")}} className={styles.joinedList}>
@@ -161,13 +150,11 @@ const Dashboard=(props)=> {
         <button onClick={joinhandle}>Join Class</button>
         </div>
         <div  className={styles.joinedCourses}>      
-            {courseJoin.joinedCourses.map((item) => {
+            {courseJoin.map((item) => {
               return( 
               <div className={styles.joinedList}  onClick={(e)=>{
                 dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
-                dispatch(courseStatusActions.courseStatus('joined'))
                 dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
-                // console.log(item.userId)
                 navigate("/courses")}}>
                 {item.imageUrl !== "" &&
                   <img src={item.imageUrl}></img>

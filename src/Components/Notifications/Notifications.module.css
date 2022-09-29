@@ -1,0 +1,11 @@
+.Main
+{
+    display: flex;
+    background-color: white;
+    /* align-items: center; */
+    flex-direction: column;
+    padding: 30px;
+    margin: 15px;
+    min-height: 86vh;
+    height: 96%;
+}

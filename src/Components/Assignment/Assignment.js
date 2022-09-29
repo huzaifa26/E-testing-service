@@ -49,14 +49,14 @@ const joinhandle=()=>{
 }
 
 useEffect(()=>{
-    if(user?.userInfo?.hasOwnProperty("user") === true){
+      console.log(courseIdredux)
+      console.log('-------------------')
       axios.get("http://localhost:5000/api/getAssignments/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
       ).then((res)=>{
         setAssignments(res.data.data)
       }).catch((err)=>{
         console.log(err);
       })
-    }
 },[openUplodad,openEdit,deleteme]);
 
 const handleEdit = (item) =>
@@ -75,7 +75,6 @@ const saveFile = (e) => {
 const handleDelete = (e) =>
 {
   setDelete((state) => !state)
-  if(user?.userInfo?.hasOwnProperty("user") === true){
     axios.get("http://localhost:5000/api/deleteAssignment/"+e.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
       if (res.status === 200) {
@@ -84,7 +83,6 @@ const handleDelete = (e) =>
     }).catch((err)=>{
       console.log(err);
     })
-  }
 }
 
 const handleSubmitAssignment = (item) =>
@@ -101,7 +99,14 @@ const handleResult = (item) =>
 
   return (
     <div className={styles.Main}>
-        {user.userInfo.user.id == courseClickUserId &&   <div className={styles.buttonHolder}><button className={styles.button1} onClick={joinhandle}>Upload Assignment</button></div> }
+
+      <div className={styles.heads}>
+
+      <h1>Assignment</h1>      
+        {user.userInfo.user.id == courseClickUserId &&   <div className={styles.buttonHolder}><button className={styles.button1} onClick={joinhandle}>
+       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" /> </svg>{' '}
+          Upload Assignment</button></div> }
+          </div>
 
         <Paper sx={{padding:'3px',marginTop:'20px'}}>
       <TableContainer component={Paper}  >

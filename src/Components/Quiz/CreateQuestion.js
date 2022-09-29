@@ -316,9 +316,10 @@ const handleSubjective = () =>
               width: '95%',
               marginBottom: '10px',
               border: '1px solid #DAEAF1',
-              minHeight: '300px',
-              minWidth: '315px',
-              maxHeight: '300px',
+              // minHeight: '300px',
+              // minWidth: '315px',
+              maxHeight: '400px',
+              height:'300px',
               overflow: 'clip',
             }}
           />

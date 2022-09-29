@@ -1,9 +1,23 @@
 .main
 {
     background-color: white;
-    height: 96%;
     padding: 30px;
     margin: 15px;
+    min-height: 86vh;
+    height: 96%;
+}
+
+.heads
+{
+  display: flex;
+  align-items: center;
+  padding-left: 7px;
+  /* background-color: #2A84EB; */
+}
+.heads h1{
+  font-size: 25px;
+    font-weight: 500;
+    color: var(--primary);
 }
 
 .button{
@@ -25,6 +39,7 @@
 }
 
 .container{
+    width: 100%;
     display: flex;
     justify-content: flex-end;
 
@@ -97,7 +112,7 @@
     border-color: #c7cdd1;
     border-radius: 2px;
     transition: background-color .2s ease-in-out;
-    padding: 8px 14px;
+    padding: 6px 14px;
     margin-bottom: 0;
     font-size: 16px;
     text-align: center;
@@ -570,19 +585,26 @@ padding: 10px;
   }
   .button1{
     /* margin: 0 0 10px 0; */
-  background-color: var(--primary);
-  align-self: center;
-  border-radius: 4px;
-  border: 1px solid var(--primary);
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 500;
-  padding: 8px 20px;
-  text-decoration: none;
-  font-family: 'Roboto Flex', sans-serif;
+    background: #f5f5f5;
+    color: white;
+    border: 1px solid;
+    border-color: #c7cdd1;
+    border-radius: 2px;
+    transition: background-color .2s ease-in-out;
+    padding: 10px 14px;
+    font-size: 16px;
+    display: flex;
+  align-items: center;
+  gap: 5px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+    background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+    align-self: center;
+    border: 1px solid var(--primary);
 }
+
 
 @media all and (max-width: 571px) {
     .header{

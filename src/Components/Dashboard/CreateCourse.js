@@ -11,9 +11,8 @@ import {courseActions} from "./../../Redux/course-slice";
 import { useCookies } from "react-cookie";
 
 const  CreateCourse=(props) => {
-    const [cookie,setCookie]=useCookies();
-    const dispatch=useDispatch();
     const user=useSelector(state=>{return state.user;})
+    const [cookie,setCookie]=useCookies();
     const [image , setImage] = useState('');
     const [imageURL , setImageURL] = useState('');
     const formRef=useRef();
@@ -46,11 +45,6 @@ const CreateClassSubmithandler=(e)=>{
             toast.success('Course Created Succesfully', {
                 position: toast.POSITION.TOP_RIGHT,
             });
-            axios.get("http://localhost:5000/api/courses",{withCredentials:true}).then((res)=>{
-                dispatch(courseActions.courses(res.data.data));
-                }).catch((err)=>{
-                console.log(err);
-                })
             props.showDashboardHandler();
         }
     }).catch((err)=>{

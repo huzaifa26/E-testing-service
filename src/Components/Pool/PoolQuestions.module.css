@@ -1,8 +1,6 @@
 .Main
 {
-    display: flex;
     background-color: white;
-    /* align-items: center; */
     padding: 30px;
     margin: 15px;
     min-height: 88.5vh;
@@ -16,10 +14,10 @@
 {
     width: 20%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: flex-start;
-    margin: 17px 0 0px 0;
-    /* padding: 15px; */
+    margin: 17px 0 0px 10px;
+    padding: 2px 0 0 0 ; 
 }
 .addButton
 {
@@ -29,14 +27,27 @@
     border-color: #c7cdd1;
     border-radius: 2px;
     transition: background-color .2s ease-in-out;
-    padding: 8px 14px;
+    padding: 8px 10px;
     margin-bottom: 0;
     font-size: 16px;
+    /* display: flex; */
+    text-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* width: 153px; */
+    gap: 5px;
+    margin-left: 10px;
     text-align: center;
     cursor: pointer;
     text-decoration: none;
     overflow: hidden;
     text-shadow: none;
+}
+.addButton svg
+{
+    padding-top: 4px;
+    /* font-size: 20px; */
 }
 .displayQuestions
 {
@@ -88,10 +99,8 @@
   color: #ffffff;
   font-size: 18px;
   border-radius: 4px;
-  /* font-weight: bold; */
   padding: 5px 23px;
-  /* height: 90%; */
-  margin: 5px;
+  margin: 0px;
   text-decoration: none;}
 
 .questionHeader h1
@@ -150,9 +159,10 @@ padding: 10px;
 .body
 {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    height: 73px;
+    /* height: 73px; */
     padding: 10px;
     border: 1px solid #aaa;
 }
@@ -177,6 +187,10 @@ padding: 10px;
     font-size: 16px;
     
 }
+.Main2
+{
+  display: flex;
+}
 
 .headerQuiz
 {
@@ -185,4 +199,34 @@ padding: 10px;
     justify-content: space-between;
     padding: 10px;
     
+}
+
+@media all and (max-width: 923px) {
+  .addButton
+{
+    padding: 2px 14px;
+}
+
+}
+
+@media all and (max-width: 624px) {
+  .Main2
+  {
+    flex-direction: column-reverse;
+  }
+  .left{
+    width: 100%;
+  }
+  .two
+  {
+    margin: 0px;
+  }
+  .buttonContainer
+{
+  width: 100%;
+}
+.addButton
+{
+    padding: 8px 14px;
+}
 }

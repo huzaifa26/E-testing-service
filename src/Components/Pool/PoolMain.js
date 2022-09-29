@@ -3,17 +3,19 @@ import { useSelector } from 'react-redux';
 import styles from './PoolMain.module.css'
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CreateCategoryModal from '../Pools/CreateCategoryModal';
+import CreateCategoryModal from './CreateCategoryModal';
 import { useNavigate } from 'react-router-dom';
-
-
+import { toast } from 'react-toastify';
+import { useCookies } from 'react-cookie';
 
 function PoolMain() {
    const user=useSelector(state=> state.user)
+   const [cookie]=useCookies();
    const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
    const [poolCategory,setPoolCategory] = useState([])
    const [showModal,setShowModal]=useState(false);
    const navigate = useNavigate();
+   const [triggerDelete,setTriggerDelete] = useState(false)
 
    useEffect(()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
@@ -25,7 +27,7 @@ function PoolMain() {
         console.log(err);
       })
     }
-    },[showModal])
+    },[showModal,triggerDelete])
 
     const openModalHandler=()=>{
         setShowModal(true);
@@ -38,6 +40,27 @@ function PoolMain() {
     {
         navigate("/courses/poolQuestions", { state: {item:value}})
         console.log('ok')
+    }
+
+    const deleteCategory = (value) =>
+    {
+      let id=value.id
+      let url="http://localhost:5000/api/deletePoolCategory/";
+      axios.post(url,{id},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+          console.log(res)
+          if(res.status === 200)
+          {
+          toast.success('Category deleted', {
+          position: toast.POSITION.TOP_CENTER,
+          });
+          setTriggerDelete((state) => !state )
+        }
+      }).catch((err)=>{
+          console.log("err")
+          toast.error('Failed', {
+          position: toast.POSITION.TOP_CENTER,
+          });
+      })
     }
 
   return (
@@ -58,11 +81,12 @@ function PoolMain() {
             </div>
 
             <div className={styles.poolCategories}>
+              {poolCategory.length === 0 && <p  className={styles.No} style={{}}><>No Question Bank  ⓘ</></p>}
             {poolCategory.map((value) => {
                      return <> 
                         <div className={styles.categoryName}>
                             <p className={styles.name} onClick={() => handleClick(value)}>{value.categoryName}</p>
-                            <DeleteIcon style={{ color: '#E53472' }} />
+                            <DeleteIcon onClick={() => deleteCategory(value)} style={{ color: '#E53472' }} />
                         </div>
                         <hr></hr>
                         </>;

@@ -29,8 +29,7 @@ const Profile=() => {
     //   },[])
 
     const formRef=useRef();
-    const useAuth = useSelector((state) => state.user.userInfo);
-    const user=useSelector(state=>{return state.user;})
+    const user = useSelector((state) => state.user.userInfo);
 
     const [image , setImage] = useState('');
     const [imageURL , setImageURL] = useState('');
@@ -61,7 +60,7 @@ const Profile=() => {
         }
         console.log(updatedUser);
 
-        if((updatedUser.fullName !== useAuth.user.fullName) || (updatedUser.userAddress !== useAuth.user.userAddress) || (updatedUser.phoneNumber !== useAuth.user.phoneNumber) || (updatedUser.userImg !== useAuth.user.userImg)){
+        if((updatedUser.fullName !== user.user.fullName) || (updatedUser.userAddress !== user.user.userAddress) || (updatedUser.phoneNumber !== user.user.phoneNumber) || (updatedUser.userImg !== user.user.userImg)){
             console.log("update")
         } else {
             console.log("same");
@@ -77,6 +76,9 @@ const Profile=() => {
             axios.get("http://localhost:5000/api/user",{withCredentials:true}).then((res)=>{
                 console.log(res.data.user.id);
                 dispatch(userActions.userInfo(res.data));
+                // const serializedStore = JSON.stringify(res.data);
+                // window.localStorage.setItem('store', serializedStore);
+      
             })
             navigate("/dashboard");
         }
@@ -91,9 +93,9 @@ const Profile=() => {
     }
 
     let imgSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOIgbiAwf6mBkjE6iVQuxHMAHMXlcYvkshKJ9Tx-bexaRCbpR7WJNs7t_qh3Z4I8qe8HQ&usqp=CAU";
-    if (useAuth.userImg !== null){
-        imgSrc=useAuth.user.userImg;
-    } else if(imageURL === "" && useAuth.userImg === null){
+    if (user.userImg !== null){
+        imgSrc=user.user.userImg;
+    } else if(imageURL === "" && user.userImg === null){
         imgSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOIgbiAwf6mBkjE6iVQuxHMAHMXlcYvkshKJ9Tx-bexaRCbpR7WJNs7t_qh3Z4I8qe8HQ&usqp=CAU";
     } 
     if(imageURL !== ""){
@@ -101,7 +103,7 @@ const Profile=() => {
     }
 
 
-    console.log(useAuth.user);
+    console.log(user.user);
 
   return (
     <div className={styles.main}>
@@ -116,20 +118,20 @@ const Profile=() => {
         <div className={styles.leftContainer}>
             <div className={styles.infoContainer}>
                 <label>Name</label>
-                <input type="text" size="32" defaultValue={useAuth.user.fullName} name="name" />
+                <input type="text" size="32" defaultValue={user.user.fullName} name="name" />
             </div>
             <div className={styles.infoContainer}>
                 <label>Email</label>
-                <input disabled type="text" size="32" value={useAuth.user.email} name="email" />
+                <input disabled type="text" size="32" value={user.user.email} name="email" />
             </div>
             <div className={styles.infoContainer}>
                 <label>Mobile No</label>
-                <input defaultValue={useAuth.user.phoneNumber || ""} id="phone" name="phone" type="number"/>
+                <input defaultValue={user.user.phoneNumber || ""} id="phone" name="phone" type="number"/>
                 
             </div>
             <div className={styles.infoContainer}>
                 <label>Address</label>
-                <input defaultValue={useAuth.user.userAddress || ""} type="text" size="32" placeholder="" name="address" />
+                <input defaultValue={user.user.userAddress || ""} type="text" size="32" placeholder="" name="address" />
             </div>
         </div>
             <div className={styles.footer}>
@@ -139,7 +141,7 @@ const Profile=() => {
     </div>
 
     <div className={styles.right}>
-        <div class={styles.circularportrait}>
+        <div className={styles.circularportrait}>
              <img src={imgSrc} />
         </div>
         <div className={styles.chooseImg}>

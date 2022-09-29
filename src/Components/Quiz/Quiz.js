@@ -16,7 +16,7 @@ import Preview from './Preview';
 import { useNavigate } from "react-router-dom";
 
 
-function Quiz() {
+function Quiz(props) {
 
 const [cookie]=useCookies();
 const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
@@ -55,10 +55,15 @@ function handleChange(event, newValue) {
   setAdd(false)
 }
 
-function handlePreview(item)
-{
-  setPreview(true)
+function handlePreview(item){
+  // setPreview(true)
   setPreviewDetail(item)
+  console.log(item)
+  console.log("item-------------------------------")
+  // navigate("/courses/preview",{state:{data:item,handlePreviewStart:hidePreviewComponent,ok:false}})
+  navigate("/courses/preview",{state:{data:item}})
+  // navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:props.data.id,afterQuiz:true,cancel:true}})
+
 }
 function handleEdit(item)
 {
@@ -289,7 +294,6 @@ const hidePreviewComponent=useCallback(()=>{
 
 useEffect(()=>{
   // console.log("------------------------------------------------")
-  if(user?.userInfo?.hasOwnProperty("user") === true){
     axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
       console.log(res)
@@ -297,18 +301,21 @@ useEffect(()=>{
     }).catch((err)=>{
       console.log(err);
     })
-  }
 },[createQuiz,triggerDelete,hidePreviewComponent]);
 
 return (
 <div className={styles.main} >
   {(!createQuiz && user.userInfo.user.id == courseClickUserId) && (
     <>
+    <div className={styles.heads}>
+
+    <h1>Quiz</h1>
     <div className={styles.container}>
       <button className={styles.button1} onClick={showAddQuiz}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" /> </svg>{' '}
+       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" /> </svg>{' '}
         Quiz
       </button>
+    </div>
     </div>
 
     <Paper sx={{padding:'3px',marginTop:'20px'}}>
@@ -329,15 +336,15 @@ return (
             <TableCell colspan="7" style={{ "text-align": "center", }}>No Quiz Uploaded yet</TableCell>
           </TableRow>}
 
-            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
+            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{item.id}</TableCell>
+                  <TableCell align="left">{index+1}</TableCell>
                   <TableCell component="th" scope="row"><b>{item.quizTitle}</b></TableCell>
                   <TableCell component="th">{item.startTime}</TableCell>
                   <TableCell component="th">{item.endTime}</TableCell>
                   <TableCell component="th" align='center'>
-                  <button className={styles.preview} onClick={() => handlePreview(item)}>Preview</button>
+                  <button className={styles.preview} onClick={() =>handlePreview(item)}>Preview</button>
                   <button className={styles.edit} onClick={() =>handleEdit(item)}>Edit</button>
                   <button className={styles.button0} onClick={() => handleDelete(item)}>Delete</button>
                   {/* <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button> */}
@@ -363,6 +370,10 @@ return (
 
   {(!createQuiz && user.userInfo.user.id !== courseClickUserId) && (
     <>
+    <div className={styles.heads}>
+
+<h1>Quiz</h1>
+</div>
     <Paper sx={{padding:'3px',marginTop:'20px'}}>
       <TableContainer component={Paper}  >
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
@@ -382,10 +393,10 @@ return (
             <TableCell colspan="7" style={{ "text-align": "center", }}>No Quiz Uploaded yet</TableCell>
           </TableRow>}
 
-            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item) =>
+            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{item.id}</TableCell>
+                  <TableCell align="left">{index+1}</TableCell>
                   <TableCell component="th" scope="row"><b>{item.quizTitle}</b></TableCell>
                   <TableCell component="th">{item.startTime}</TableCell>
                   <TableCell component="th">{item.endTime}</TableCell>
@@ -428,12 +439,12 @@ return (
             </Tabs>
       </Box>
 
-      <TabPanel sx={{padding:'10px 0px'}} className={styles.hello} value="1" index={0}>
+      <TabPanel sx={{padding:'20px'}} className={styles.hello} value="1" index={0}>
         <TextField id="outlined-basic" label="Quiz Title" variant="outlined" sx={{ marginLeft: '-22px', marginTop: '10px' }} size="small" value={title} onChange={(e) => setTitle(e.target.value)} required />
         <p className={styles.instructions}>
           <b>Quiz Instructions:</b>
         </p>
-        <div class={styles.infolist}>
+        <div className={styles.infolist}>
           <div className={styles.info}>
             1. You will have only <em>{time} seconds&nbsp;</em> per each
             question.
@@ -496,7 +507,7 @@ return (
         </div>
       </TabPanel>
 
-      <TabPanel className={styles.hello} value="2" index={1}>
+      <TabPanel sx={{padding:'20px 10px'}}  className={styles.hello} value="2" index={1}>
       {(quizQuestions.length !== 0 && !add) && <p style={{textAlign:'end'}}>Total Points : {totalPoints}</p>}
       {(quizQuestions.length == 0 && !add)&& <p className={styles.empty}>No questions yet</p>}
 

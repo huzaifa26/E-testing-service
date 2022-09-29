@@ -3,6 +3,11 @@
     display: flex;
     flex-direction: column;
 }
+h1
+{font-size: 20px;}
+h2{
+    font-size: 18px;
+}
 
 .joinedHeader{
     display: flex;
@@ -82,7 +87,7 @@
 
 }
 
-@media only screen and (max-width: 557px) {
+@media only screen and (max-width: 591px) {
     .joinedCourses{
         justify-content: center;
     }

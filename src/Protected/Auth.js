@@ -11,10 +11,6 @@ function Auth() {
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const [cookies, setCookie,removeCookies] = useCookies();
-  const useAuth = useSelector((state) => state.user.userInfo);
-  const user=useSelector(state=> state.user);
-
-  const [cookiesState,setCookies]=useState();
 
   useEffect(() =>{
     console.log(cookies.token);

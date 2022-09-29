@@ -23,7 +23,7 @@ const Notification=() => {
   // },[])
 
   return (
-    <div className={styles.notification}>
+    <div className={styles.Main}>
       Notification
     </div>
   );

@@ -10,8 +10,6 @@ import CreateQuestion from '../Quiz/CreateQuestion';
 import { useCookies } from 'react-cookie';
 import EditPool from './EditPool';
 
-
-
 function PoolQuestions() {
   const location = useLocation();
   const [cookie]=useCookies();
@@ -123,6 +121,8 @@ function PoolQuestions() {
 
   return (
     <div className={styles.Main}>
+      <div className={styles.Main2}>
+
         <div className={styles.left}>
         {poolQuestion.filter((data) => {return +data.poolCategoryId === location.state.item.id}).map((item,index) => {
         return (editDetail?.id === item.id) ? 
@@ -153,6 +153,8 @@ function PoolQuestions() {
                 </button>
         </div>
     </div>
+    </div>
+
   )
 }
 

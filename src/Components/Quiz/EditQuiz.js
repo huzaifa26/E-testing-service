@@ -234,7 +234,7 @@ function EditQuiz() {
         <p className={styles.instructions}>
           <b>Quiz Instructions:</b>
         </p>
-        <div class={styles.infolist}>
+        <div className={styles.infolist}>
           <div className={styles.info}>
             1. You will have only <em>{time} seconds&nbsp;</em> per each
             question.

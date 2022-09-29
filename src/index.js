@@ -6,12 +6,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CookiesProvider } from "react-cookie";
 import { Provider } from 'react-redux';
 import redux from './Redux/index';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
-const axiosApiInstance = axios.create({
-  baseURL: 'http://localhost:5000/api/',
-  withCredentials:true
-});
+let persistor = persistStore(redux);
 
 axios.interceptors.request.use(async(req)=>{
   return req;
@@ -39,9 +38,11 @@ root.render(
   <CookiesProvider>
     <BrowserRouter>
       <Provider store={redux}>
+      <PersistGate persistor={persistor}>
         <Routes>
           <Route path="/*" element={<App />} />
         </Routes>
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   </CookiesProvider>,

@@ -6,10 +6,21 @@
     flex-direction: column;
     padding: 30px;
     margin: 15px;
+    min-height: 86vh;
     height: 96%;
-
 }
-
+.head
+{
+  display: flex;
+  align-items: center;
+  padding-left: 7px;
+  /* background-color: #2A84EB; */
+}
+.head h1{
+  font-size: 25px;
+    font-weight: 500;
+    color: var(--primary);
+}
 .buttonHolder
 {
     width: 100%;
@@ -19,18 +30,21 @@
 
 .button1
 {
+  background: #f5f5f5;
+  color: white;
+  border: 1px solid;
+  border-color: #c7cdd1;
+  border-radius: 2px;
+  transition: background-color .2s ease-in-out;
+  padding: 10px 14px;
+  font-size: 16px;
+  text-align: center;
   cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
   background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
   align-self: center;
   border: 1px solid var(--primary);
-  display: inline-block;
-  cursor: pointer;
-  color: #ffffff;
-  font-size: 18px;
-  border-radius: 4px;
-  /* font-weight: bold; */
-  text-decoration: none;
-  padding: 8px 10px;
 }
 
 .download

@@ -5,7 +5,6 @@ import 'draft-js/dist/Draft.css';
 import {useLocation} from "react-router-dom";
 import { useSelector } from 'react-redux';
 import {getCourseIdOnClickactions} from "./../../Redux/course-slice";
-import { courseStatusActions } from './../../Redux/course-slice';
 import { useDispatch } from 'react-redux';
 import { useEffect,useState } from 'react';
 import axios from 'axios';
@@ -22,11 +21,13 @@ const Courses=(props) => {
 
   const location=useLocation();
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
-  const courses=useSelector(state=> {return state.courses});
-  const courseJoin=useSelector(state=> state.courseJoin);
   const courseClickUserId = useSelector(state => state.courseClickUserId.courseClickUserId)
   const user=useSelector(state=> state.user);
   const [totalUser,setTotalUser] = useState(0)
+  
+  const [courses,setCourses] = useState([])
+  const [courseJoin,setCourseJoin] = useState([])
+  console.log(courseIdredux)
 
 
   const [refreshTokenState,setRefreshToken]=useState(false);
@@ -60,19 +61,32 @@ const Courses=(props) => {
   //   })
   // })
 
+  useEffect(()=>{
+    axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    ).then((res)=>{
+      setCourses(res.data.data)
+    }).catch((err)=>{
+      console.log(err);
+    })
+  },[]);
+  
+  useEffect(()=>{
+    axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    ).then((res)=>{
+      setCourseJoin(res.data.data)
+  }).catch((err)=>{
+    console.log(err);
+  })
+},[]);
+
   useEffect(() => {
-    if(user?.userInfo?.hasOwnProperty("user") === true){
       axios.get("http://localhost:5000/api/enrolledLength/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
       ).then((res)=>{
-        console.log(res.data.data)
         setTotalUser(res.data.data)
       }).catch((err)=>{
         console.log(err);
       })
-    }
   }, [])
-  
-
 
   return (
     <div className={styles.Main}>
@@ -81,21 +95,20 @@ const Courses=(props) => {
     { typeof(courseIdredux) === "object" &&  <>
 
     <div className={styles.publishedHeader}>
-        <h1>Courses</h1>
+        <h1>Classes</h1>
     </div>
       
     <div className={styles.publishedCoursesOuter}>
 
       <div className={styles.publishedCourses}>
         <div className={styles.flexDiv}>
-          <h1 style={{fontSize:"24px",fontWeight:"900"}}>Published Courses</h1>
+          <h1 style={{fontSize:"24px",fontWeight:"900"}}>Published Classes</h1>
         </div>
           {
-            courses.courses.map((item,index)=>{
+            courses.map((item,index)=>{
               return(
                 <div className={styles.flexDiv2} onClick={(e)=>{
                   dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id))
-                  dispatch(courseStatusActions.courseStatus('published'))
                   }}>
                 <h1>{item.courseName}</h1>
               </div>
@@ -106,14 +119,13 @@ const Courses=(props) => {
 
       <div className={styles.joinedCourses}>
           <div className={styles.flexDiv}>
-            <h1 style={{fontSize:"24px",fontWeight:"900"}}>Joined Courses</h1>
+            <h1 style={{fontSize:"24px",fontWeight:"900"}}>Joined Classes</h1>
           </div>
             {
-              courseJoin.joinedCourses.map((item,index)=>{
+              courseJoin.map((item,index)=>{
                 return(
                 <div className={styles.flexDiv2} onClick={(e)=>{
                   dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id))
-                  dispatch(courseStatusActions.courseStatus('joined'))
                   }}>
                   <h1>{item.courseName}</h1>
                 </div>

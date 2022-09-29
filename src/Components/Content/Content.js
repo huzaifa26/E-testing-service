@@ -1,5 +1,5 @@
 import styles from './Content.module.css'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import UploadModal from './UploadModal';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -10,12 +10,11 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow,TableP
 
 function Content() {
 
-  const [cookie,setCookie]=useCookies();
-  const dispatch=useDispatch();
-  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
-  const courseContent = useSelector(state => state.courseContent.courseContent)
-  const courseClickUserId = useSelector(state => state.courseClickUserId.courseClickUserId)
   const user=useSelector(state=> state.user);
+  const courseClickUserId = useSelector(state => state.courseClickUserId.courseClickUserId)
+  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
+  const [cookie,setCookie]=useCookies();
+  const [courseContent,setCourseContent] = useState([])
   const [openModal,setOpenModal] =useState(false)
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(7);
@@ -36,16 +35,14 @@ function Content() {
   }
   
   useEffect(()=>{
-    if(user?.userInfo?.hasOwnProperty("user") === true){
       console.log(courseIdredux)
       axios.get("http://localhost:5000/api/courseContent/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
       ).then((res)=>{
-        dispatch(courseContentActions.courseContent(res.data.data));
+        setCourseContent(res.data.data);
         console.log(res.data.data)
       }).catch((err)=>{
         console.log(err);
       })
-    }
 
 },[openModal]);
 
@@ -59,8 +56,12 @@ const saveFile = (e) => {
 
   return (
     <div className={styles.Main}>
+      <div className={styles.head}>
+
+      <h1>Content</h1>
     {/* if user id matches with user id with this course in backend table courses only then show it */}
-    {user.userInfo.user.id == courseClickUserId &&   <div className={styles.buttonHolder}><button className={styles.button1} onClick={joinhandle}>Upload Content</button></div> }
+    {user.userInfo.user.id === courseClickUserId &&   <div className={styles.buttonHolder}><button className={styles.button1} onClick={joinhandle}>Upload Content</button></div> }
+      </div>
   
     <Paper sx={{padding:'3px',marginTop:'20px'}}>
       <TableContainer component={Paper}  >

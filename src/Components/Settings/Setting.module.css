@@ -7,8 +7,8 @@
     justify-content: space-between;
     padding: 30px;
     margin: 15px;
-    min-height: 88vh;
-    /* height: 96%; */
+    min-height: 86vh;
+    height: 96%;
 }
 .one
 {
@@ -79,12 +79,16 @@
 .header
 {
   display: flex;
-  width: 100%;
+  /* width: 100%; */
   height: 80%;
 }
 .footer
 {
 
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-end; */
+  justify-content: flex-end;
   height: 20%;
 }
 
@@ -94,6 +98,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    /* margin-bottom: 10px; */
 }
 .save
 {    cursor: pointer;
@@ -107,6 +112,8 @@
     padding: 8px 20px;
     font-size: 15px;
     text-decoration: none;
+    margin-top: 5px;
+    margin-right: -7px;
 }
 .hr2
 {
@@ -134,7 +141,6 @@
 
 @media all and (max-width: 998px) {
   .header
-  
   {
     flex-direction: column;
     width: 100%;
@@ -150,14 +156,20 @@
   .three{
     width: 100%;
     align-items: flex-start;
-
+  }
+  .footer{
+    display: flex;
+    margin-top: 30px;
+    justify-content: flex-end;
+    height: auto;
+    width: 100%;
   }
 
 }
 
 @media all and (max-width: 726px) {
 
-  .ImageContainer img
+.ImageContainer img
 {
  height: 100px; 
  width: 177px;
@@ -177,4 +189,19 @@
     width: 65%;
   }
 
+}
+
+
+@media all and (max-width: 393px) {
+.one{
+  min-width: 99px;
+}
+.titles label
+{
+  width: 50px;
+}
+.titles
+{
+  width: 50px;
+}
 }

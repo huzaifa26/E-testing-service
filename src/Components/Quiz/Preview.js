@@ -3,20 +3,26 @@ import styles from './Preview.module.css'
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState } from 'draft-js';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-function Preview(props) {
+
+function Preview() {
+  const location=useLocation()
+  // console.log(location.state.item)
   const[editorState,setEditorState] = useState(EditorState.createEmpty());
-  const[questions,setQuestions] = useState(props.data.questions)
+  const[questions,setQuestions] = useState(location.state.data.questions)
   const[currentQuestion,setCurrentQuestion] = useState([])
   const[totalLength,setTotalLength] = useState(0)
   const[currentIndex,setCurrentIndex] = useState(1)
   const[time,setTime] = useState(29)
   var timer;
+  const navigate = useNavigate()
+
 
 
   useEffect(() => {
-        let newArr = props.data.questions
-        setTotalLength(props.data.questions.length)
+        let newArr = location.state.data.questions
+        setTotalLength(location.state.data.questions.length)
         let temporary =  newArr.shift()
         setQuestions([...newArr])
         setCurrentQuestion(temporary)
@@ -52,8 +58,8 @@ function Preview(props) {
     }
     else
     {
-      props.handlePreviewStart(false)
-      setQuestions(props.data.questions)
+      setQuestions(location.state.data.questions)
+      navigate('/courses/quiz')
     } 
   }
 
@@ -110,7 +116,7 @@ function Preview(props) {
             <p><b>{currentIndex}</b> of <b>{totalLength}</b> Questions</p>
             <div>
               
-            <button  onClick={()=> props.handlePreviewStart()} className={styles.close}>Close</button>
+            <button  onClick={()=>  navigate('/courses/quiz')} className={styles.close}>Close</button>
             <button  onClick={handleCurrentQuestion} className={styles.next}>Next Question</button>
             </div>
           </div>

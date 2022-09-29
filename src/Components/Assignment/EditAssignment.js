@@ -86,7 +86,7 @@ function handle(e)
     <form className={styles.modalContainer}>
     <div className={styles.borderInput}>
         <p>{fileName}</p>
-        <label for="files" class={styles.label}>Change File</label>
+        <label for="files" className={styles.label}>Change File</label>
           <input required  id="files"className={styles.input} type="file" onChange={fileHandler} accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip,.rar,.7zip"/>
           </div>
           <FormControl variant="standard"> 

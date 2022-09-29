@@ -5,7 +5,6 @@ import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import {useCookies} from "react-cookie";
-import {courseJoinActions} from "./../../Redux/course-slice";
 import { useSelector,useDispatch } from 'react-redux';
 
 
@@ -22,7 +21,6 @@ yourDate=yourDate.toString().replaceAll(","," ");
 
 function Modal({closeModal}) {
   const dispatch=useDispatch();
-  const courseJoin=useSelector(state=> state.courseJoin);
   const user=useSelector(state=> state.user);
   const [cookie]=useCookies();
 
@@ -32,14 +30,9 @@ function Modal({closeModal}) {
     const formik = useFormik({
       initialValues: {
         joiningkey: '',
-        confirmjoiningkey: '',
       },
       validationSchema: Yup.object({
         joiningkey: Yup.string().required('Joining Key is required'),
-        confirmjoiningkey: Yup.string().oneOf(
-          [Yup.ref('joiningkey'), null],
-          'Join key  must match'
-        ),
       }),
       onSubmit: (values, { resetForm }) => {
 
@@ -58,8 +51,6 @@ function Modal({closeModal}) {
               axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
               ).then((res)=>{
                 console.log(res);
-                dispatch(courseJoinActions.joinedCourses(res.data.data));
-                console.log(courseJoin.joinedCourses)
                 
               }).catch((err)=>{
                 console.log(err);
@@ -105,20 +96,6 @@ function Modal({closeModal}) {
             {formik.touched.joiningkey && formik.errors.joiningkey ? (
               <p>{formik.errors.joiningkey}</p>
               ) : null}
-          </div>
-
-          <div className={styles.field}>
-            <input
-              id="confirmjoiningkey"
-              type="text"
-              placeholder="Confirm Joining Key"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.confirmjoiningkey}
-            />
-            {formik.touched.confirmjoiningkey && formik.errors.confirmjoiningkey ? (
-              <p>{formik.errors.confirmjoiningkey}</p>
-            ) : null}
           </div>
 
           </div>

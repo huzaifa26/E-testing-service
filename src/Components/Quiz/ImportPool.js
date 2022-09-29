@@ -24,7 +24,7 @@ function ImportPool({close,getQuestion}) {
     if(user.userInfo.hasOwnProperty("user") === true){
       let link='http://localhost:5000/api/getCourseCategories/' + courseIdredux;
       axios.get(link,{withCredentials:true}).then((res)=>{
-        // console.log(res.data.data)
+        setMatchQuestions(res.data.data[0].id)
         setPoolCategory(res.data.data);
       }).catch((err)=>{
         console.log(err);
@@ -39,7 +39,7 @@ function ImportPool({close,getQuestion}) {
         console.log(err);
         })
     }
-    
+
   },[close])
 
   const handlePoolCategory = (event) =>
@@ -110,6 +110,7 @@ function ImportPool({close,getQuestion}) {
                 <hr></hr>
                 <div className={styles.right}>
                   <div className={styles.header2}>
+                    {matchQuestions === 0 && <p className={styles.question}> Please select a category</p>}
                     {poolQuestion.filter((data) => {return +data.poolCategoryId === matchQuestions}).map((item,index) => 
                     (
                       <div className={styles.question} key={index} >
@@ -131,11 +132,10 @@ function ImportPool({close,getQuestion}) {
             </div>
             
             <div className={styles.footer}>
-                    {matchQuestions !== "" && <button onClick={add}>Add</button>} 
+                    {checkedItems.length >1 && <button className={styles.adds} onClick={add}>Add</button>} 
             </div>
             <div>
-  {`Items checked are: ${checkedItems}`}
-</div>
+          </div>
         </div>
     </>
   )

@@ -100,57 +100,55 @@ function Setting() {
   return (
     <div className={styles.Main}>
 
-        <div className={styles.header}>
+    <div className={styles.header}>
 
-    
         <div className={styles.left}>
-        <div className={styles.one}>
-            <div className={styles.imgTitle}>
-                <label>Image:</label>
-            </div>
+            <div className={styles.one}>
+                <div className={styles.imgTitle}>
+                    <label>Image:</label>
+                </div>
 
-            <div className={styles.titles}>
-                <label>Name:</label>
-            </div>
+                <div className={styles.titles}>
+                    <label>Name:</label>
+                </div>
 
-            <div className={styles.titles}>
-                <label>Key:</label>
-            </div>
+                <div className={styles.titles}>
+                    <label>Key:</label>
+                </div>
 
-            <div className={styles.titles}>
-                <label>Description:</label>
-            </div>
-        </div>
-
-        <div className={styles.two}>
-            <div >
-                <div class={styles.ImageContainer}>
-                    <img src={imageURL === ''? courseInfo[0]?.imageUrl: `${imageURL}`} />
-                    <div className={styles.chooseImg}>
-                            <button className={styles.choose} onClick={imageHandler}><label for="files" class="btn">Change</label></button>
-                            <input onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file" accept="image/png, image/gif, image/jpeg"/>
-                    </div>
+                <div className={styles.titles}>
+                    <label>Description:</label>
                 </div>
             </div>
 
+            <div className={styles.two}>
+                <div >
+                    <div className={styles.ImageContainer}>
+                        <img src={imageURL === ''? courseInfo[0]?.imageUrl: `${imageURL}`} />
+                        <div className={styles.chooseImg}>
+                                <button className={styles.choose} onClick={imageHandler}><label for="files" class="btn">Change</label></button>
+                                <input onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file" accept="image/png, image/gif, image/jpeg"/>
+                        </div>
+                    </div>
+                </div>
 
-            <div className={styles.imageDetails}>
-                    <TextField id="outlined-basic" value={courseName} onChange={(e) => setCourseName(e.target.value)} variant="outlined" className={styles.inputMui} size="small" required />
+                <div className={styles.imageDetails}>
+                        <TextField id="outlined-basic" value={courseName} onChange={(e) => setCourseName(e.target.value)} variant="outlined" className={styles.inputMui} size="small" required />
+                </div>
+                <div className={styles.imageDetails}>
+                        <TextField disabled id="outlined-basic" value={courseInfo[0]?.courseKey} variant="outlined" size="small" className={styles.inputMui} required />
+                </div>
+                <div className={styles.imageDetails}>
+                    <TextareaAutosize
+                    aria-label="empty textarea"
+                    placeholder="Empty"
+                    minRows={8}
+                    value={courseDescription}
+                    onChange={(e) => setCourseDescription(e.target.value)}
+                    style={{ width: '80%', minWidth:'200px',marginBottom:'30px' }}
+                    />
+                </div>
             </div>
-            <div className={styles.imageDetails}>
-                    <TextField disabled id="outlined-basic" value={courseInfo[0]?.courseKey} variant="outlined" size="small" className={styles.inputMui} required />
-            </div>
-            <div className={styles.imageDetails}>
-                <TextareaAutosize
-                aria-label="empty textarea"
-                placeholder="Empty"
-                minRows={8}
-                value={courseDescription}
-                onChange={(e) => setCourseDescription(e.target.value)}
-                style={{ width: '80%', minWidth:'200px',marginBottom:'30px' }}
-                />
-            </div>
-        </div>
 
         </div>
 
@@ -179,12 +177,12 @@ function Setting() {
     </div>
 
     <div className={styles.footer}>
-    <hr className={styles.hr}></hr>
-      <div className={styles.buttonContainer}>
-        <button  className={styles.save} onClick={handleSave}>
-          Update Course Detials
-        </button>
-      </div>
+        <hr className={styles.hr}></hr>
+        <div className={styles.buttonContainer}>
+            <button  className={styles.save} onClick={handleSave}>
+            Update Course Detials
+            </button>
+        </div>
     </div>
 
     {confirmDelete && <ConfirmDelete close={setConfirmDelete}/>}

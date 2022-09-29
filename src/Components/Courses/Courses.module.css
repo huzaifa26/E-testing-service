@@ -7,6 +7,10 @@
     padding: 30px;
     margin: 20px;
 }
+.publishedHeader h1{
+    font-size: 25px;
+    font-weight: 500;
+    color: var(--primary);}
 
 .publishedCoursesOuter{
     display: flex;
@@ -15,6 +19,7 @@
     align-items: flex-start;
     padding: 30px;
     margin: 20px;
+    min-height: 74vh;
 }
 
 .publishedCourses{
@@ -23,7 +28,7 @@
     justify-content:flex-start;
     flex-wrap: wrap;
     margin: 20px;
-    gap: 30px;
+    gap: 15px;
     width: 100%;
 }
 
@@ -33,7 +38,7 @@
     justify-content:flex-start;
     flex-wrap: wrap;
     margin: 20px;
-    gap: 30px;
+    gap: 15px;
     width: 100%;
 }
 
@@ -43,17 +48,26 @@
     flex: 1;    
     justify-content: space-between;
 }
+.flexDiv h1
+{
+    font-size: 18px !important;
+
+}
 
 .flexDiv2{
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
+    font-size: 1px;
 }
 
 .flexDiv2 h1{
     display: flex;
     justify-content: center;
     align-items: center;
-    text-indent: 15px;
+    /* text-indent: 15px; */
+    font-size: 14px !important;
+    color: #0374b5;
+    cursor: pointer;
     height: 50px !important;
     cursor: pointer;
 }
@@ -67,24 +81,26 @@
     background-color: white;
     /* justify-content: space-between; */
     /* align-items: center; */
+    flex-wrap: wrap;
     padding: 30px;
     margin: 20px;
-    height: 96vh;
+    min-height: 87.5vh;
+    height: 96%;
     gap: 20px;
 }
 
 .join
 {
     background-color: #317DFF;
-    height: 30%;
-    width: 250px;
+    height: 150px;
+    width: 210px;
     color: white;
     padding: 20px;
 }
 .totalStudents
 {
-    height: 30%;
-    width: 250px;
+    height: 150px;
+    width: 210px;
     background-color: #DD246E;
     color: white;
     padding: 20px;
