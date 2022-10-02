@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect,useCallback } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import Modal from '../Modal/Modal';
+import Modal from './Modal';
 import Navbar from '../Navbar/Navbar';
 import CreateCourse from './CreateCourse';
 import styles from './Dashboard.module.css';
@@ -13,6 +13,8 @@ import { useCookies } from 'react-cookie';
 import { userActions } from './../../Redux/user-slice'; 
 import { courseClickUserIdActions } from './../../Redux/course-slice';
 import { async } from '@firebase/util';
+import { toast } from 'react-toastify';
+
 
 
 const Dashboard=(props)=> {
@@ -29,6 +31,29 @@ const Dashboard=(props)=> {
   const [courseIdState,setCourseIdState]=useState(false);
   
   const user=useSelector(state=> state.user);
+
+
+  const modelOpenHandler =  useCallback((value) => {
+    if(value === true)
+    {
+      setOpenModal(false)
+    }
+    else
+    {
+      axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+      ).then((res)=>{
+        setCourseJoin(res?.data?.data)
+        toast.success('Class joined successfully', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setOpenModal(false)
+    }).catch((err)=>{
+      console.log(err);
+    })
+    }
+    
+    
+  },[openModal])
   
   // useEffect(()=>{
   // axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
@@ -98,9 +123,10 @@ const Dashboard=(props)=> {
 
 
   useEffect(()=>{
+    console.log('i triggered')
         axios.get("http://localhost:5000/api/courses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
         ).then((res)=>{
-          setCourses(res.data.data)
+          setCourses(res?.data?.data)
         }).catch((err)=>{
           console.log(err);
         })
@@ -109,11 +135,12 @@ const Dashboard=(props)=> {
       useEffect(()=>{
         axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
         ).then((res)=>{
-          setCourseJoin(res.data.data)
+          setCourseJoin(res?.data?.data)
+          console.log(res?.data?.data)
       }).catch((err)=>{
         console.log(err);
       })
-},[openModal]);
+},[modelOpenHandler,openModal]);
 
   return (
     <>
@@ -128,7 +155,8 @@ const Dashboard=(props)=> {
           <h1>Published Classes</h1>
           <button onClick={createCourseHandler}>Create Class</button>
           </div>
-          <div  className={styles.joinedCourses}>      
+          <div  className={styles.joinedCourses}>  
+            {courses.length === 0 && <div className={styles.no}><p>No Class Joined Yet</p></div>}
             {courses.map((item) => {
               return( 
               <div onClick={(e)=>{
@@ -149,9 +177,12 @@ const Dashboard=(props)=> {
         <h1>Joined Classes</h1>
         <button onClick={joinhandle}>Join Class</button>
         </div>
-        <div  className={styles.joinedCourses}>      
+        <div className={styles.joinedCourses}>  
+            {courseJoin.length === 0 && <div className={styles.no}><p>No Class Joined Yet</p></div>}
             {courseJoin.map((item) => {
-              return( 
+              // {item.blocked !==0 &&}
+              return (item.blocked === 0) ? 
+
               <div className={styles.joinedList}  onClick={(e)=>{
                 dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
                 dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
@@ -160,10 +191,16 @@ const Dashboard=(props)=> {
                   <img src={item.imageUrl}></img>
                 }
                 <h2>{item.courseName}</h2>
+              </div>:
+              <div className={styles.joinedList2}  onClick={(e)=>{toast.error("You're blocked by the teacher", { position: toast.POSITION.TOP_RIGHT, });}}>
+                {item.imageUrl !== "" &&
+                  <img src={item.imageUrl}></img>
+                }
+                <h2>{item.courseName}</h2>
               </div>
-              )})}     
+              })}     
           </div>
-        {openModal && <Modal closeModal={setOpenModal}/>}
+        {openModal && <Modal closeModal={modelOpenHandler}/>}
       </div>
     </div>}
     </>

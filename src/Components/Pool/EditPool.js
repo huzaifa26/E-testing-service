@@ -192,8 +192,8 @@ function EditPool({close,editDetail,editData}) {
           points:pts,
           isMathJax:false}
           inputFields.forEach((value,index) =>{ question.options.push(value.name)});
-          if (imageURL === ''){question.questionImg=null;}
-          else{question.questionImg=imageURL;}
+          if (imageURL === ''){question.questionImage=null;}
+          else{question.questionImage=imageURL;}
           editData(question);
         //   close()
   
@@ -214,8 +214,8 @@ function EditPool({close,editDetail,editData}) {
           points:pts,
           isMathJax:true}
           inputFields.forEach((value,index) =>{ question.options.push(value.name)});
-          if (imageURL === ''){question.questionImg=null;}
-          else{question.questionImg=imageURL;}
+          if (imageURL === ''){question.questionImage=null;}
+          else{question.questionImage=imageURL;}
           editData(question);
         //   close()
         }
@@ -243,8 +243,8 @@ function EditPool({close,editDetail,editData}) {
         points:pts,
         isMathJax:false,
     }
-        if (imageURL === ''){question.questionImg=null;}
-        else{question.questionImg=imageURL;}
+        if (imageURL === ''){question.questionImage=null;}
+        else{question.questionImage=imageURL;}
         editData(question)
         // close()
     }
@@ -268,8 +268,8 @@ function EditPool({close,editDetail,editData}) {
       time:newtime,
       points:pts,
       isMathJax:false};
-      if (imageURL === ''){question.questionImg=null;}
-      else{question.questionImg=imageURL;}
+      if (imageURL === ''){question.questionImage=null;}
+      else{question.questionImage=imageURL;}
       editData(question);
     //   close()
     }

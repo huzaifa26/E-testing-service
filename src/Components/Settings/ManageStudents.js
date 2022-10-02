@@ -33,9 +33,11 @@ const handleChangeRowsPerPage = (event) => {
 
   const handleDelete = (item) =>
   {
-    console.log(item.id)
-    let id = item.id
-    axios.post("http://localhost:5000/api/deleteUserFromCourse",{id},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    let data = {
+      id:item.id,
+      courseId:courseIdredux,
+    }
+    axios.post("http://localhost:5000/api/deleteUserFromCourse",data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
       setDelete((state) => !state )
       toast.success('Student Removed', {position: toast.POSITION.TOP_RIGHT,});
@@ -46,8 +48,11 @@ const handleChangeRowsPerPage = (event) => {
 
   const handleBlock = (item) =>
   {
-    let id = item.id
-    axios.post("http://localhost:5000/api/blockUserFromCourse",{id},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    let data = {
+      id:item.id,
+      courseId:courseIdredux,
+    }
+    axios.post("http://localhost:5000/api/blockUserFromCourse",data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
       setBlock((state) => !state)
       toast.success('Student Blocked', {position: toast.POSITION.TOP_RIGHT,});
@@ -57,8 +62,11 @@ const handleChangeRowsPerPage = (event) => {
   }
   const handleUnblock = (item) =>
   {
-    let id = item.id
-    axios.post("http://localhost:5000/api/unblockUserFromCourse",{id},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    let data = {
+      id:item.id,
+      courseId:courseIdredux,
+    }
+    axios.post("http://localhost:5000/api/unblockUserFromCourse",data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
       setUnblock((state) => !state)
       toast.success('Student Unblocked', {position: toast.POSITION.TOP_RIGHT,});

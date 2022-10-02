@@ -15,14 +15,12 @@ const [cookie]=useCookies();
 const [quizQuestions,setQuizQuestions]=useState([]);
 const [previewDetail,setPreviewDetail] = useState({})
 const [quizQuestionsModal,setQuizQuestionsModal] = useState(false)
-const [preview,setPreview] = useState(false)
 const navigate = useNavigate();
 const [quizData,setQuizData] = useState([])
   
 const handlePreview = (item) =>
 {
-  setPreview(true)
-  setPreviewDetail(item)
+  navigate("/courses/preview",{state:{data:item}})
 }
 
 const handleEdit = (item) =>
@@ -33,7 +31,6 @@ const handleEdit = (item) =>
 const handleDelete = (item) =>
 {
   let data = {id:item.id}
-
   let url= "http://localhost:5000/api/quizDelete/";
   axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
     // setTriggerDelete((state) => !state)
@@ -47,50 +44,48 @@ const handleDelete = (item) =>
 
 const handleStartQuiz = (item) =>
 {
-  console.log(item)
-  setQuizData(item)
-  setQuizQuestionsModal(true)
-}
+  // console.log(item)
+  // setQuizData(item)
+  // setQuizQuestionsModal(true)
+  navigate("/courses/displayQuiz", { state: {data:item}});
 
-const hidePreviewComponent=()=>{
-    setPreview(false)
 }
 
 {if(props.student === false)
   return (
-    <div>
-    <TableRow key={props.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-        <TableCell align="left">{props.id}</TableCell>
-        <TableCell component="th" scope="row"><b>{props.quizTitle}</b></TableCell>
-        <TableCell component="th">{props.startTime}</TableCell>
-        <TableCell component="th">{props.endTime}</TableCell>
-        <TableCell component="th" align='center'>
+      <TableRow key={props.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+
+        <TableCell className={styles.ind}  align="left">{props.id}</TableCell>
+        <TableCell  className={styles.ind} component="th" scope="row"><b>{props.quizTitle}</b></TableCell>
+        <TableCell  className={styles.ind} component="th">{props.startTime}</TableCell>
+        <TableCell  className={styles.ind} component="th">{props.endTime}</TableCell>
+        <TableCell  className={styles.ind} component="th" align='center'>
         <button className={styles.preview} onClick={() => handlePreview(props.data)}>Preview</button>
         <button className={styles.edit} onClick={() =>handleEdit(props.data)}>Edit</button>
         <button className={styles.button0} onClick={() => handleDelete(props.data)}>Delete</button>
         {/* <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button> */}
         </TableCell>
-    </TableRow>
-    {preview && <Preview data={previewDetail} handlePreviewStart={hidePreviewComponent}/>}
-    </div>
+
+        </TableRow>
+
 )}
   
   {if(props.student === true)
     return (
-    <div>
+    <>
 
     <TableRow key={props.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-        <TableCell align="left">{props.id}</TableCell>
-        <TableCell component="th" scope="row"><b>{props.quizTitle}</b></TableCell>
-        <TableCell component="th">{props.startTime}</TableCell>
-        <TableCell component="th">{props.endTime}</TableCell>
-        <TableCell component="th" align='center'>
+        <TableCell className={styles.ind}  align="left">{props.id}</TableCell>
+        <TableCell  className={styles.ind} component="th" scope="row"><b>{props.quizTitle}</b></TableCell>
+        <TableCell  className={styles.ind} component="th">{props.startTime}</TableCell>
+        <TableCell  className={styles.ind} component="th">{props.endTime}</TableCell>
+        <TableCell  className={styles.ind} component="th" align='center'>
         <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(props.data)}>Start</Button>
         </TableCell>
     </TableRow>
 
-    {quizQuestionsModal && <DisplayQuiz data={quizData} handleStartQuiz={setQuizQuestionsModal}/>}
-    </div>
+    {/* {quizQuestionsModal && <DisplayQuiz data={quizData} handleStartQuiz={setQuizQuestionsModal}/>} */}
+    </>
  )}
  
 }

@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import {useCookies} from "react-cookie";
 import { useSelector,useDispatch } from 'react-redux';
+import TextField from '@mui/material/TextField';
+
 
 
 function getTime() {
@@ -24,9 +26,6 @@ function Modal({closeModal}) {
   const user=useSelector(state=> state.user);
   const [cookie]=useCookies();
 
-
-  
-
     const formik = useFormik({
       initialValues: {
         joiningkey: '',
@@ -35,7 +34,6 @@ function Modal({closeModal}) {
         joiningkey: Yup.string().required('Joining Key is required'),
       }),
       onSubmit: (values, { resetForm }) => {
-
         let data={
           userId:user.userInfo.user.id,
           joiningkey:values.joiningkey,
@@ -45,24 +43,15 @@ function Modal({closeModal}) {
           .then(function (response) {
             if (response.status === 200)
             {
-              toast.success('Joined', {
-                position: toast.POSITION.TOP_RIGHT,
-              });
-              axios.get("http://localhost:5000/api/joinedCourses/"+user.userInfo.user.id,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
-              ).then((res)=>{
-                console.log(res);
-                
-              }).catch((err)=>{
-                console.log(err);
-              })
+              closeModal(false)
             }
-            if (response.response.status === 400)
+            if (response?.response?.status === 400)
             {
               toast.error('Wrong Key', {
                 position: toast.POSITION.TOP_RIGHT,
               });
             }
-            if (response.response.status === 401)
+            if (response?.response?.status === 401)
             {
               toast.error('You have already joined this class', {
                 position: toast.POSITION.TOP_RIGHT,
@@ -85,10 +74,11 @@ function Modal({closeModal}) {
           <div className={styles.fieldMain}>
 
           <div className={styles.field}>
-            <input
+          <TextField   label="Class Key" variant="outlined" sx={{ width:'250px',marginBottom:'10px' }} size="medium"  required 
+
+            
               type="text"
               id="joiningkey"
-              placeholder="Joining Key"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.joiningkey}
@@ -100,7 +90,7 @@ function Modal({closeModal}) {
 
           </div>
             <div className={styles.footer}>
-                <button onClick={() => closeModal(false)}>Cancel</button>
+                <button onClick={() => closeModal(true)}>Cancel</button>
                 <button type='submit'>Join</button>
             </div>
         </form>

@@ -79,6 +79,16 @@
 {
     margin: 20px 40px 0px 40px;
     height: 77%; 
+  
+}
+.hello
+{
+    display:flex ;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px 40px 0px 40px;
+    height: 77%; 
+
 }
 .noCopyAllowed{
     -webkit-user-select: none; /* Safari */
@@ -151,4 +161,12 @@
     margin-top: 15px;
     display: flex;
     justify-content: center;
+}
+.editorContainer2
+{
+    margin-top: 15px;
+    display: flex;
+    width: 40%;
+    justify-content: center;
+    /* background-color: #0555e6; */
 }

@@ -9,13 +9,17 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import {courseActions} from "./../../Redux/course-slice";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import TextField from '@mui/material/TextField';
+
 
 const  CreateCourse=(props) => {
     const user=useSelector(state=>{return state.user;})
     const [cookie,setCookie]=useCookies();
     const [image , setImage] = useState('');
-    const [imageURL , setImageURL] = useState('');
+    const [imageURL , setImageURL] = useState('https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/cb/3c4030d65011e682d8b14e2f0915fa/shutterstock_226881610.jpg?auto=format%2Ccompress&dpr=1');
     const formRef=useRef();
+    const navigate = useNavigate()
 
 const CreateClassSubmithandler=(e)=>{
     e.preventDefault();
@@ -45,7 +49,7 @@ const CreateClassSubmithandler=(e)=>{
             toast.success('Course Created Succesfully', {
                 position: toast.POSITION.TOP_RIGHT,
             });
-            props.showDashboardHandler();
+            navigate('/dashboard')
         }
     }).catch((err)=>{
         if(err.status === 500){
@@ -76,18 +80,25 @@ const CreateClassSubmithandler=(e)=>{
     return ( 
     <div className={styles.CreateCourse}>
         <div className={styles.joinedHeader1}>
-            <h1>Create Course</h1>
+            <h1>Create Class</h1>
         </div>
 
         <div className={styles.joinedHeader2}>
             <form ref={formRef} onSubmit={CreateClassSubmithandler} className={styles.form}>
-            <img src={imageURL===""?"https://cdn2.iconfinder.com/data/icons/ultimate-business-icons/64/1-42-512.png":imageURL}></img>
-            <div className={styles.chooseImg}>
+            <div className={styles.imageContainer}>
+                <div className={styles.joinss}>
+                <img src={imageURL===""?"https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/cb/3c4030d65011e682d8b14e2f0915fa/shutterstock_226881610.jpg?auto=format%2Ccompress&dpr=1":imageURL}></img>
+                <div style={{marginLeft:'6.541vw',marginTop:'10px'}}>
                 <label for="files" class="btn">Change Image</label>
                 <input required accept=".png,.jpg,.jpeg" onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file"/>
+                </div>
+                </div>
+
             </div>
-                <input required name="courseName" type={"text"} placeholder="Course Name"></input>
-                <textarea required  name="description" rows='6' type={"text"} placeholder="Description"></textarea>
+                {/* <input required name="courseName"  placeholder="Class Name"></input> */}
+                <TextField name="courseName" type={"text"} id="outlined-basic" label="Class Name" variant="outlined" sx={{ width:'320px' }} size="medium"  required />
+
+                <textarea required style={{resize: 'none',minWidth:'320px',width:'40%',fontSize:'18px',borderRadius:"4px",padding:'10px'}}  name="description" rows='10' type={"text"} placeholder="Description"></textarea>
 
                 <div className={styles.button}>
                 <button type="submit">Create Class</button>

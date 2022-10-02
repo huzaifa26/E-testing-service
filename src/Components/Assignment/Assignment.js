@@ -108,19 +108,21 @@ const handleResult = (item) =>
           Upload Assignment</button></div> }
           </div>
 
-        <Paper sx={{padding:'3px',marginTop:'20px'}}>
-      <TableContainer component={Paper}  >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
+        <div className={styles.okok}>
+      <div className={styles.headss}><p>Student</p></div>
+      <TableContainer   >
+        <Table sx={{ minWidth: 650}} aria-label="simple table" color="#F7F6F2">
 
-          <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>File Type</TableCell>
-              <TableCell>Start Time</TableCell>
-              <TableCell>End time</TableCell>
-              {user.userInfo.user.id !== courseClickUserId &&  <TableCell>Status</TableCell> }
-              <TableCell align='right'>Actions</TableCell>
+      
+          <TableHead sx= {{color:'white'}}>
+            <TableRow >
+              <TableCell className={styles.headTitle} ></TableCell>
+              <TableCell className={styles.headTitle} >Title</TableCell>
+              <TableCell className={styles.headTitle} >File Type</TableCell>
+              <TableCell className={styles.headTitle} >Start Time</TableCell>
+              <TableCell className={styles.headTitle} >End time</TableCell>
+              {user.userInfo.user.id !== courseClickUserId &&  <TableCell className={styles.headTitle} >Status</TableCell> }
+              <TableCell align='left' className={styles.headTitle} >Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -134,13 +136,13 @@ const handleResult = (item) =>
             {assignments?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{index+1}</TableCell>
-                  <TableCell component="th" scope="row"><b>{item.assignmentTitle}</b></TableCell>
-                  <TableCell component="th">{item.fileType}</TableCell>
-                  <TableCell component="th">{item.startTime}</TableCell>
-                  <TableCell component="th">{item.endTime}</TableCell>
-                  {user.userInfo.user.id !== courseClickUserId &&  <TableCell  component="th">Status</TableCell> }
-                  <TableCell component="th" align='right'>
+                  <TableCell className={styles.ind} align="left">{index+1}</TableCell>
+                  <TableCell className={styles.ind}component="th" scope="row"><b>{item.assignmentTitle}</b></TableCell>
+                  <TableCell className={styles.ind}component="th">{item.fileType}</TableCell>
+                  <TableCell className={styles.ind} component="th">{item.startTime}</TableCell>
+                  <TableCell  className={styles.ind} component="th">{item.endTime}</TableCell>
+                  {user.userInfo.user.id !== courseClickUserId &&  <TableCell  component="th" className={styles.ind}>Status</TableCell> }
+                  <TableCell component="th" align='left'>
                     
                   {user.userInfo.user.id == courseClickUserId &&   <EditIcon style={{ color: '#2A84EB' }} onClick={() => handleEdit(item)}/> }
                   {user.userInfo.user.id == courseClickUserId &&   <DeleteIcon style={{ color: '#E53472' }} onClick={() =>{handleDelete(item)}}/> }
@@ -165,7 +167,7 @@ const handleResult = (item) =>
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-    </Paper>
+    </div>
 
     {openUplodad && < UploadAssignment closeUpload={setOpenUplodad}/>}
     {openEdit && <EditAssignment closeEdit={setOpenEdit} item={detail}/>}

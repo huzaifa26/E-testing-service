@@ -4,6 +4,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState } from 'draft-js';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { MathComponent } from 'mathjax-react';
 
 
 function Preview() {
@@ -14,7 +15,7 @@ function Preview() {
   const[currentQuestion,setCurrentQuestion] = useState([])
   const[totalLength,setTotalLength] = useState(0)
   const[currentIndex,setCurrentIndex] = useState(1)
-  const[time,setTime] = useState(29)
+  const[time,setTime] = useState(10000)
   var timer;
   const navigate = useNavigate()
 
@@ -26,7 +27,7 @@ function Preview() {
         let temporary =  newArr.shift()
         setQuestions([...newArr])
         setCurrentQuestion(temporary)
-        setTime(temporary.time)
+        // setTime(temporary.time)
 
   }, [])
 
@@ -52,7 +53,7 @@ function Preview() {
     {
       let newArr = [...questions]
       setCurrentQuestion(newArr.shift())
-      setTime(currentQuestion.time)
+      // setTime(currentQuestion.time)
       setQuestions([...newArr])
       setCurrentIndex((totalLength-questions.length)+1)
     }
@@ -76,10 +77,16 @@ function Preview() {
                 <p>Time Left<span className={styles.time}>{time}</span></p>
             </div>
           </div>  
-
-          <div className={styles.quizBody}>
+          <div className={currentQuestion?.questionType === "Subjective" ? styles.hello : styles.quizBody}>
             <div className={styles.noCopyAllowed}>
-              <b style={{fontSize:'23px'}}>{currentQuestion?.question}</b>
+            {currentQuestion?.questionType === 'Formula' ? <div style={{display:"flex",justifyContent:'flex-start'}}><MathComponent style={{fontSize:'50px'}}  tex={currentQuestion?.question} /></div>
+            : <b style={{fontSize:'23px'}}>{currentQuestion?.question}</b>}
+
+            {(currentQuestion?.questionImage !== null ) &&
+            <div>
+              <img src={currentQuestion?.questionImage} style={{width:'400px',marginBottom:'5px'}} alt="Question Image"/>
+            </div>}
+
             </div>
             {currentQuestion?.options?.map((element) => {return (
             <>
@@ -89,7 +96,7 @@ function Preview() {
             </>
             )})}
             {currentQuestion.questionType === "Subjective" && 
-            <div className={styles.editorContainer}>
+            <div className={currentQuestion.questionImage === null ?styles.editorContainer:styles.editorContainer2}>
               <Editor
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
@@ -101,9 +108,9 @@ function Preview() {
                 wrapperStyle={{
                   width: '100%',
                   border: '1px solid #88959a',
-                  minHeight: '350px',
+                  minHeight: currentQuestion.questionImage === null? '300px':'400px',
                   minWidth: '315px',
-                  maxHeight: '350px',
+                  maxHeight:  currentQuestion.questionImage === null? '300px':'400px',
                   overflow: 'clip',
                 }}
               />

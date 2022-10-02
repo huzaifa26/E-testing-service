@@ -56,24 +56,25 @@ const saveFile = (e) => {
 
   return (
     <div className={styles.Main}>
-      <div className={styles.head}>
+      <div className={styles.heads}>
 
       <h1>Content</h1>
     {/* if user id matches with user id with this course in backend table courses only then show it */}
     {user.userInfo.user.id === courseClickUserId &&   <div className={styles.buttonHolder}><button className={styles.button1} onClick={joinhandle}>Upload Content</button></div> }
       </div>
   
-    <Paper sx={{padding:'3px',marginTop:'20px'}}>
-      <TableContainer component={Paper}  >
+      <div className={styles.okok}>
+      <div className={styles.headss}><p>Student</p></div>
+      <TableContainer  >
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
 
-          <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
+          <TableHead sx= {{color:'white'}}>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>File Type</TableCell>
-              <TableCell>Time</TableCell>
-              <TableCell  align='center'>Actions</TableCell>
+              <TableCell className={styles.headTitle} ></TableCell>
+              <TableCell className={styles.headTitle} >Title</TableCell>
+              <TableCell className={styles.headTitle} >File Type</TableCell>
+              <TableCell className={styles.headTitle} >Time</TableCell>
+              <TableCell  className={styles.headTitle2} >Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -86,11 +87,11 @@ const saveFile = (e) => {
             {courseContent.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{index+1}</TableCell>
-                  <TableCell component="th" scope="row"><b>{item.title.toUpperCase()}</b></TableCell>
-                  <TableCell component="th">{item.fileType}</TableCell>
-                  <TableCell component="th">{item.createdTime}</TableCell>
-                  <TableCell component="th" align='center'><button className={styles.download} onClick={() => saveFile(item)}>Download</button></TableCell>
+                  <TableCell  className={styles.ind}  align="left">{index+1}</TableCell>
+                  <TableCell className={styles.ind}  component="th" scope="row"><b>{item.title.toUpperCase()}</b></TableCell>
+                  <TableCell className={styles.ind}  component="th">{item.fileType}</TableCell>
+                  <TableCell  className={styles.ind} component="th">{item.createdTime}</TableCell>
+                  <TableCell  className={styles.ind} component="th" align='left'><p className={styles.ind2} onClick={() => saveFile(item)}>Download</p></TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -106,7 +107,7 @@ const saveFile = (e) => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-    </Paper>
+    </div>
 
     {openModal && <UploadModal closeModal={setOpenModal}/>}
     </div>

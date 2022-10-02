@@ -18,7 +18,9 @@
     height: 100%;
     /* border-radius: 6px; */
     /* background-color: #01a2ff; */
-    background: linear-gradient(to right,#0555e6,#021b79);
+    /* background: linear-gradient(to right,#0555e6,#021b79); */
+    background-color: #01a2ff;
+
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding: 25px;
     font-family: 'Roboto Flex', sans-serif;
@@ -143,4 +145,5 @@
     margin-top: 15px;
     display: flex;
     justify-content: center;
+    
 }

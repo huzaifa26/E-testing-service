@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto Flex', sans-serif;
+}
+
+.modalBackground {
+    width: 100%;
+    min-width: calc(100vw - 100%);
+    height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0,0.3);
+  }
+  
+  .modalContainer {
+    width: 350px;
+    height: 300px;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 25px;
+    font-family: 'Roboto Flex', sans-serif;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 11;
+  }
+  .fieldMain
+  {
+    height: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    /* background-color: aqua; */
+    margin-bottom: 20px;
+  }
+  .field
+  {
+    margin-bottom: 2px;
+    height: 60px;
+    width: 85%;
+    display: flex;
+    margin-top: 17px;
+    flex-direction: column;
+  }
+  .modalBackground h1
+  {
+    font-size: 1.3rem;
+    line-height: 1.625;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: 0.0075em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 1;
+    width: 200px;
+    text-transform: capitalize;
+    vertical-align: unset;
+    text-decoration: none;
+    color: rgb(52, 71, 103);
+    font-weight: 700;
+  }
+  .h1
+  {
+    font-size: 1.3rem;
+    line-height: 1.625;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: 0.0075em;
+    text-transform: capitalize;
+    text-decoration: none;
+    text-align: center;
+    color: rgb(52, 71, 103);
+    font-weight: 700;
+  }
+  
+  .field input{
+    width: 100%;
+    border-width: 0 0 2px;
+    border-color: #9b9a9adc;
+    font-size: 18px;
+    outline: 0;
+    border-width: 0 0 2px;
+  }
+  .field p
+  {
+    color: red;
+    font-size: 16px;
+  }
+
+  
+  .modalContainer .footer {
+    /* flex: 20%; */
+    display: flex;
+    height: 40%;
+    gap: 30px;
+    /* background-color: aqua; */
+    /* margin-top: 10px; */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modalContainer .footer button {
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0px;
+    border: 0px;
+    margin: 0px;
+    cursor: pointer;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: 0.02857em;
+    min-width: 64px;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    line-height: 1.4;
+    text-align: center;
+    text-transform: uppercase;
+    user-select: none;
+    transition: all 150ms ease-in 0s;
+    min-height: 2.5rem;
+    padding: 0.625rem 1.5rem;
+    background-image: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+    background-position-y: initial;
+    background-repeat: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+    color: rgb(255, 255, 255);
+    gap: 10px;
+    box-shadow: rgb(52 71 103 / 15%) 0rem 0.1875rem 0.1875rem 0rem, rgb(52 71 103 / 20%) 0rem 0.1875rem 0.0625rem -0.125rem, rgb(52 71 103 / 15%) 0rem 0.0625rem 0.3125rem 0rem;
+    background-size: 150% !important;
+    background-position-x: 25% !important;
+  }
+  
+  .modalContainer .footer button[type='submit']{
+    padding: 8px 33px;
+  }

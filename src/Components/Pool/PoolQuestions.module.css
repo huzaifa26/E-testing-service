@@ -133,10 +133,7 @@
   text-align: end;
 }
 
-.footer1
-{
-  display: flex;
-}
+
 
 
 .questions
@@ -158,13 +155,18 @@ padding: 10px;
 }
 .body
 {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    /* height: 73px; */
-    padding: 10px;
-    border: 1px solid #aaa;
+  display: flex;
+  min-height: 73px;
+  padding: 10px;
+  border: 1px solid #aaa;
+  justify-content: space-between;
+  /* background-color: palegoldenrod; */
+  flex-wrap: wrap;
+}
+.footer1
+{
+  display: flex;
+  /* width: 10%; */
 }
 .empty
 {

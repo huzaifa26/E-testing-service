@@ -108,7 +108,7 @@
 
 }
 .save
-{    cursor: pointer;
+{   cursor: pointer;
     background-color: #2A84EB;
     align-self: center;
     border: 1px solid #2A84EB;
@@ -116,7 +116,7 @@
     cursor: pointer;
     color: #ffffff;
     border-radius: 2px;
-    padding: 8px 20px;
+    padding: 10px 20px;
     text-decoration: none;
 
 }
@@ -454,12 +454,11 @@ padding: 10px;
 .body
 {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 73px;
+    min-height: 73px;
     padding: 10px;
     border: 1px solid #aaa;
 }
+.e
 .empty
 {
     text-align: center;

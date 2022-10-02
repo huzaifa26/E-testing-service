@@ -4,33 +4,77 @@
 
 .CreateCourse .joinedHeader1{
     display: flex;
-    background-color: white;
-    font-family: 'Quicksand', sans-serif;
+    background-color: white;  
+    
+    color: var(--primary);
     padding: 40px;
-    font-weight: 500;
     margin: 20px;
+}
+.joinedHeader1 h1{
+    font-size: 1.3rem;
+    line-height: 1.625;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: 0.0075em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 1;
+    width: 200px;
+    text-transform: capitalize;
+    vertical-align: unset;
+    text-decoration: none;
+    color: rgb(52, 71, 103);
+    font-weight: 700;
 }
 .CreateCourse .joinedHeader2{
     display: flex;
     background-color: white;
-    align-items: center;
-    justify-content: center;
-    padding: 50px;
+    /* align-items: center; */
+    /* justify-content: center; */
+    padding: 20px;
     margin: 20px;
 }
 .CreateCourse .joinedHeader2 .button button{
-    background-color: var(--primary);
-    align-self: center;
-    border: 1px solid var(--primary);
-    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0px;
+    border: 0px;
+    margin: 0px;
     cursor: pointer;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 500;
-    border-radius: 3px;
-    padding: 8px 25px;
+    vertical-align: middle;
+    appearance: none;
     text-decoration: none;
-    font-family: 'Roboto Flex', sans-serif;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: 0.02857em;
+    min-width: 64px;
+    display: inline-flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    line-height: 1.4;
+    text-align: center;
+    text-transform: uppercase;
+    user-select: none;
+    transition: all 150ms ease-in 0s;
+    min-height: 2.5rem;
+    padding: 0.625rem 1.5rem;
+    background-image: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+    background-position-y: initial;
+    background-repeat: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+    color: rgb(255, 255, 255);
+    gap: 10px;
+    box-shadow: rgb(52 71 103 / 15%) 0rem 0.1875rem 0.1875rem 0rem, rgb(52 71 103 / 20%) 0rem 0.1875rem 0.0625rem -0.125rem, rgb(52 71 103 / 15%) 0rem 0.0625rem 0.3125rem 0rem;
+    background-size: 150% !important;
+    background-position-x: 25% !important;
 }
 .CreateCourse .joinedHeader2 .button{
     width: 100%;
@@ -40,17 +84,17 @@
 
 .CreateCourse .form{
     display: flex;
-    width: 55%;
+    width: 100%;
     padding: 50px 30px;
     flex-direction: column;
-    gap: 35px;
+    gap: 30px;
     min-width: 270px;
-    background: rgba(255, 255, 255, 0.2);
+    /* background: rgba(255, 255, 255, 0.2);
     border-radius: 7px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3); */
 }
 
 .CreateCourse input, select{
@@ -84,8 +128,22 @@
     width: 10px;
 }
 
-.form > img {
+.joinss > img {
     /* border-radius: 50%; */
-    max-width: clamp(180px, 20vw, 300px);
+    max-width: clamp(210px, 20vw, 330px);
     object-fit: cover;
+  }
+  .imageContainer
+  {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* align-items: center; */
+  }
+  .joinss
+  {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
   }

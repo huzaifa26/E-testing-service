@@ -32,7 +32,7 @@ function Login() {
             position: toast.POSITION.TOP_RIGHT,
           });
           navigate('/dashboard');
-        } else if (response?.response?.status === 400) {
+        } else if (response?.response?.status === 400 || response?.response?.status === 403 ) {
           toast.error('Wrong Email or Password', {
             position: toast.POSITION.TOP_RIGHT,
           });
@@ -50,7 +50,7 @@ function Login() {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
-        if (error.status === 400) {
+        if (error.status === 400 || error.status === 403) {
           toast.error('Wrong Email or Password', {
             position: toast.POSITION.TOP_RIGHT,
           });

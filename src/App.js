@@ -26,6 +26,7 @@ import ManageStudents from './Components/Settings/ManageStudents';
 import CreateCourse from './Components/Dashboard/CreateCourse';
 import Result from './Components/Quiz/Result';
 import Preview from './Components/Quiz/Preview';
+import DisplayQuiz from './Components/Quiz/DisplayQuiz';
 
 
 function App() {
@@ -46,7 +47,9 @@ function App() {
             <Route path="/courses/poolQuestions" element={<Navbar><PoolQuestions/></Navbar>}/>
             <Route path="/courses/content" element={<Navbar><Content /></Navbar>}/>
             <Route path="/courses/quiz" element={<Navbar><Quiz/></Navbar>}/> 
+            <Route path="/courses/displayQuiz" element={<Navbar><DisplayQuiz/></Navbar>}/> 
             <Route path="/courses/preview" element={<Navbar><Preview/></Navbar>}/> 
+            <Route path="/courses/manangeStudents" element={<Navbar><ManageStudents/></Navbar>}/> 
             <Route path="/courses/setting" element={<Navbar><Setting/></Navbar>}/> 
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
             <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
@@ -57,8 +60,6 @@ function App() {
 
           <Route path='/' element={<Auth/>} >
           </Route>
-
-
         </Routes>
         <ToastContainer autoClose={1000}/>
     </div>

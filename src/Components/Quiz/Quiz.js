@@ -14,6 +14,8 @@ import { styled } from '@mui/material/styles';
 import DisplayQuiz from './DisplayQuiz';
 import Preview from './Preview';
 import { useNavigate } from "react-router-dom";
+import { MathComponent } from 'mathjax-react';
+import QuizTable from './QuizTable';
 
 
 function Quiz(props) {
@@ -68,7 +70,6 @@ function handlePreview(item){
 function handleEdit(item)
 {
   // setPreviewDetail(item)
-  
   // console.log(previewDetail)
   navigate("/courses/editQuiz", { state: {previewDetails:item}});
 }
@@ -176,6 +177,11 @@ const removeQuestion = (index,points) => {
   let data = [...quizQuestions];
   data.splice(index, 1);
   setQuizQuestions(data);
+  
+  toast.success('Deleted', {
+    position: toast.POSITION.TOP_CENTER,
+    
+  });
 };
 
 const getQuestion = (question) => {
@@ -190,6 +196,11 @@ const getQuestion = (question) => {
   }
  
 }
+useEffect(() => {
+  
+console.log(quizQuestions)
+}, [quizQuestions])
+
 
 const getQuestionFromPool = (question) =>
 {
@@ -304,7 +315,7 @@ useEffect(()=>{
 },[createQuiz,triggerDelete,hidePreviewComponent]);
 
 return (
-<div className={styles.main} >
+<div className={createQuiz === true ? styles.main: styles.main2} >
   {(!createQuiz && user.userInfo.user.id == courseClickUserId) && (
     <>
     <div className={styles.heads}>
@@ -318,16 +329,17 @@ return (
     </div>
     </div>
 
-    <Paper sx={{padding:'3px',marginTop:'20px'}}>
-      <TableContainer component={Paper}  >
+    <div className={styles.okok}>
+      <div className={styles.headss}><p>Student</p></div>
+      <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
-          <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Start Time</TableCell>
-              <TableCell>End time</TableCell>
-              <TableCell align='center'>Actions</TableCell>
+          <TableHead sx= {{color:'white'}}>
+            <TableRow >
+              <TableCell className={styles.headTitle} ></TableCell>
+              <TableCell className={styles.headTitle}  >Title</TableCell>
+              <TableCell className={styles.headTitle} >Start Time</TableCell>
+              <TableCell className={styles.headTitle} >End time</TableCell>
+              <TableCell className={styles.headTitle2}  align='center' >Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -338,18 +350,9 @@ return (
 
             {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
-              <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{index+1}</TableCell>
-                  <TableCell component="th" scope="row"><b>{item.quizTitle}</b></TableCell>
-                  <TableCell component="th">{item.startTime}</TableCell>
-                  <TableCell component="th">{item.endTime}</TableCell>
-                  <TableCell component="th" align='center'>
-                  <button className={styles.preview} onClick={() =>handlePreview(item)}>Preview</button>
-                  <button className={styles.edit} onClick={() =>handleEdit(item)}>Edit</button>
-                  <button className={styles.button0} onClick={() => handleDelete(item)}>Delete</button>
-                  {/* <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button> */}
-                  </TableCell>
-              </TableRow>
+
+                <QuizTable data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={false} />
+
             ))}
           </TableBody>
         </Table>
@@ -363,8 +366,7 @@ return (
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Paper>
-      {preview && <Preview data={previewDetail} handlePreviewStart={hidePreviewComponent}/>}
+      </div>
     </>
   )}
 
@@ -374,17 +376,17 @@ return (
 
 <h1>Quiz</h1>
 </div>
-    <Paper sx={{padding:'3px',marginTop:'20px'}}>
-      <TableContainer component={Paper}  >
+<div className={styles.okok}>
+      <div className={styles.headss}><p>Student</p></div>
+      <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
-
-          <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Start Time</TableCell>
-              <TableCell>End time</TableCell>
-              <TableCell align='center'>Actions</TableCell>
+          <TableHead sx= {{color:'white'}}>
+            <TableRow >
+              <TableCell className={styles.headTitle} ></TableCell>
+              <TableCell className={styles.headTitle}  >Title</TableCell>
+              <TableCell className={styles.headTitle} >Start Time</TableCell>
+              <TableCell className={styles.headTitle} >End time</TableCell>
+              <TableCell className={styles.headTitle2}  align='center' >Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -395,15 +397,7 @@ return (
 
             {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
-              <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{index+1}</TableCell>
-                  <TableCell component="th" scope="row"><b>{item.quizTitle}</b></TableCell>
-                  <TableCell component="th">{item.startTime}</TableCell>
-                  <TableCell component="th">{item.endTime}</TableCell>
-                  <TableCell component="th" align='center'>
-                  <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button>
-                  </TableCell>
-              </TableRow>
+                <QuizTable data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={true} />
             ))}
           </TableBody>
 
@@ -418,8 +412,7 @@ return (
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-    </Paper>
-    {quizQuestionsModal && <DisplayQuiz data={quizData} handleStartQuiz={setQuizQuestionsModal}/>}
+    </div>
     
     </>
   )}
@@ -519,9 +512,19 @@ return (
             <div>Sec : {item.time}</div>
           </div>
           <div className={styles.body}>
-            <b>{item.question}</b>
-            <div>
-              <i class="bi bi-pencil" style={{color:'blue',width:"8px",height:"8px",fontSize:'16px',verticalAlign:'.26em',marginRight:'8px'}}></i>
+            <div style={{width:'90%',display:'flex',flexDirection:'column',justifyContent:'center'}}>
+
+          {(item.questionImage !== null ) &&
+          <div>
+            <img src={item.questionImage} style={{height:'150px',marginBottom:'5px'}} alt="Question Image"/>
+          </div>}
+
+          {item.questionType === 'Formula' ? <div style={{display:"flex",justifyContent:'flex-start'}}><MathComponent  tex={item.question} /></div>
+          : <b>{item.question}</b>}
+          </div>
+          
+            <div style={{width:'10%',display:'flex',alignItems:'center',justifyContent:'flex-end'}}>
+              {/* <i class="bi bi-pencil" style={{color:'blue',width:"8px",height:"8px",fontSize:'16px',verticalAlign:'.26em',marginRight:'8px'}}></i> */}
               <svg onClick={() => removeQuestion(index,item.points)} xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="red" class="bi bi-trash3" viewBox="0 0 16 16" > <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" /> </svg>
             </div>
           </div>

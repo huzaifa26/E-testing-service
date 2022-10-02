@@ -134,7 +134,17 @@ function PoolQuestions() {
               <div>Sec : {item.time}</div>
             </div>
             <div className={styles.body}>
-              <b>{item.question}</b>
+            <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+
+            {(item.questionImage !== null ) &&
+          <div>
+            <img src={item.questionImage} style={{height:'150px',marginBottom:'5px'}} alt="Question Image"/>
+          </div>}
+
+              {item.questionType === 'Formula' ? <div style={{display:"flex",justifyContent:'flex-start'}}><MathComponent  tex={item.question} /></div>
+          : <b>{item.question}</b>}
+          </div>
+
               <div className={styles.footer1}>
                 <button className={styles.edit} onClick={(e) => handleEdit(item)}>Edit</button>
                 <button className={styles.button0} onClick={(e)=>{deleteQuestionHanler(item.id)}} >Delete</button>

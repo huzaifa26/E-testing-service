@@ -12,7 +12,11 @@ import {useNavigate} from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import PeopleIcon from '@mui/icons-material/People';
 import KeyIcon from '@mui/icons-material/Key';
+import QuizIcon from '@mui/icons-material/Quiz';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import CountUp from 'react-countup';
+import { Paper } from '@mui/material';
+import { Box } from '@mui/system';
 
 const Courses=(props) => {
   const [cookie,setCookie]=useCookies();
@@ -27,10 +31,23 @@ const Courses=(props) => {
   
   const [courses,setCourses] = useState([])
   const [courseJoin,setCourseJoin] = useState([])
+  const [courseKey,setCourseKey] = useState("")
   console.log(courseIdredux)
 
 
   const [refreshTokenState,setRefreshToken]=useState(false);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/courseSetting/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    ).then((res)=>{
+        setCourseKey(res.data.data[0].courseKey)
+     
+    }).catch((err)=>{
+        console.log(err);
+    })
+}, [])
+
+
   // useEffect(()=>{
   //   axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
   //     if (res.status === 200){
@@ -138,45 +155,57 @@ const Courses=(props) => {
 
     { (typeof(courseIdredux)  !== "object" && user.userInfo.user.id == courseClickUserId) &&  
        
-      <div className={styles.courseInfo}>
+       <div className={styles.courseInfo}>
+        <h1 className={styles.hello}>Overview</h1>
+        <div className={styles.holll}>
 
+        <div className={styles.join2}>
         <div className={styles.join}>
-          <div className={styles.secondry}>
-            <div className={styles.people}>
               <KeyIcon style={{fontSize:'40px'}}/>
-            </div>
-
-            <div>
-            <p>JOINING KEY </p>
-            </div>
-          </div>
-
-          <div className={styles.footer}>
-            <b style={{fontSize:'40px'}}>{courseIdredux}</b>
-          </div>
+        </div>
+        <div className={styles.right}>
+            <h1>J O I N I N G &nbsp; K E Y </h1>
+            <p>{courseKey}</p>
+        </div>
         </div>
 
+        <div className={styles.join2}>
         <div className={styles.totalStudents}>
-          <div className={styles.secondry}>
-            <div className={styles.people}>
               <PeopleIcon style={{fontSize:'40px'}}/>
-            </div>
-
-            <div>
-            <p>E N R O L L E D</p>
-            </div>
-          </div>
-          <div className={styles.footer}>
-            <p style={{fontSize:'40px'}}><CountUp style={{fontSize:'40px'}} start={0} end={totalUser} /></p>
-          </div>
         </div>
-        
+        <div className={styles.right}>
+            <h1>E N R O L L E D</h1>
+            <p>{totalUser}</p>
+        </div>
+        </div>
+
+        <div className={styles.join2}>
+        <div className={styles.totalQuizzes}>
+              <QuizIcon style={{fontSize:'40px'}}/>
+        </div>
+        <div className={styles.right}>
+            <h1>Q U I Z Z E S</h1>
+            <p>{courseKey}</p>
+        </div>
+        </div>
+
+        <div className={styles.join2}>
+        <div className={styles.totalAssignments}>
+              <AssignmentIcon style={{fontSize:'40px'}}/>
+        </div>
+        <div className={styles.right}>
+            <h1>A S S I G N M E N T</h1>
+            <p>{courseKey}</p>
+        </div>
+        </div>
+        </div>
+      
       </div>
     } 
 
     { (typeof(courseIdredux)  !== "object" && user.userInfo.user.id !== courseClickUserId) &&  
        
-       <div className={styles.courseInfo}>
+       <div className={styles.courseInfo2}>
          <h3>Description</h3>
          <p>(To be added later)</p>
        </div>

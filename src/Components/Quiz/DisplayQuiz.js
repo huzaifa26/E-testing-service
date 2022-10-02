@@ -8,12 +8,16 @@ import Result from './Result';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { EditorState } from 'draft-js';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { MathComponent } from 'mathjax-react';
+import { toast } from 'react-toastify';
 
-function DisplayQuiz(props) {
 
+
+function DisplayQuiz() {
+const location= useLocation()
 const[editorState,setEditorState] = useState(EditorState.createEmpty());
-const[questions,setQuestions] = useState(props.data.questions)
+const[questions,setQuestions] = useState(location.state.data.questions)
 const[currentQuestion,setCurrentQuestion] = useState([])
 const [questionState,setQuestionsState]=useState([]);
 const[totalLength,setTotalLength] = useState(0)
@@ -38,11 +42,16 @@ const handleFocus = () => {
 };
 
 const handleBlur = () => {
+  setCountLostFocus((state) => state=state+1)
   setTabHasFocus(false);
   console.log('tab lost focus')
   let data = {
     userId : user.userInfo.user.id,
-    quizId : props.data.id
+    quizId : location.state.data.id
+  }
+  if(countLostFocus === 2)
+  {
+    console.log('lets cancell the quiz')
   }
   let url="http://localhost:5000/api/addToTabFocus/";
   axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
@@ -54,6 +63,8 @@ const handleBlur = () => {
     console.log(err)
   })
 };
+
+
 
 // const unloadCallback = (event) => {
 //   event.preventDefault();
@@ -73,39 +84,71 @@ return () => {
 };
 }, []);
 
+
+
 //TO GET TAB FOCUS ON EVERY DETECT
 useEffect(() =>
 {
-  axios.get("http://localhost:5000/api/getTabFocus/" + user.userInfo.user.id+"/"+props.data.id,{withCredentials:true})
+  axios.get("http://localhost:5000/api/getTabFocus/" + user.userInfo.user.id+"/"+location.state.data.id,{withCredentials:true})
   .then((res)=>{
     setCountLostFocus(res.data.data.length)
-    if(res.data.data.length === 10000 || res.data.data.length>3)
+    console.log(res.data.data.length)
+    if(res.data.data.length === 1)
     {
-      console.log("--------------------------------")
-      navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:props.data.id,afterQuiz:true,cancel:true}})
+      toast.error('Do not change tabs your quiz will be cancelled', {
+        position: toast.POSITION.TOP_CENTER,
+        
+      });
+    }
+    if(res.data.data.length === 2)
+    {
+      toast.error('YOUR QUIZ WILL BE CANCELLED ITS YOUR LAST CHANCE', {
+        position: toast.POSITION.TOP_CENTER,
+        
+      });
+    }
+    if(res.data.data.length === 3 || res.data.data.length>3)
+    {
+      let data = {
+        userId : user.userInfo.user.id,
+        quizId : location.state.data.id
+      }
+  
+      console.log('quiz cancell result ran')
+      let url="http://localhost:5000/api/quizCancellResult/";
+      axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+        if(res.status === 200)
+        {
+          // setTriggerGetTabFocus((state) => !state)
+        }
+      }).catch((err)=>{
+        console.log(err)
+      })
+      navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,cancel:true}})
     }
   }).catch((err)=>{
   console.log(err);
   })
 },[triggerGetTabFocus])
 
+
 //FOR GETTING INITIAL ATTEMPTED QUESTIONS
 useEffect(() => {
-  if(props.data.questionShuffle == 1)
-  {setQuestions(props.data.questions.sort(() => Math.random() - 0.5))}
+  if(location.state.data.questionShuffle == 1)
+  {setQuestions(location.state.data.questions.sort(() => Math.random() - 0.5))}
   else
-  {setQuestions(props.data.questions)}
+  {setQuestions(location.state.data.questions)}
 
-  if(props.data.answerShuffle == 1)
+  if(location.state.data.answerShuffle == 1)
   {}
 
-  if(props.data.seeAnswer == 1)
+  if(location.state.data.seeAnswer == 1)
   {}
 
-  if(props.data.detectMobile == 1)
+  if(location.state.data.detectMobile == 1)
   {}
 
-  axios.get("http://localhost:5000/api/getAtempttedQuizQuestions/" + user.userInfo.user.id+"/"+props.data.id,{withCredentials:true})
+  axios.get("http://localhost:5000/api/getAtempttedQuizQuestions/" + user.userInfo.user.id+"/"+location.state.data.id,{withCredentials:true})
   .then((res)=>{
     setCurrentIndex((state) => state + res?.data?.length)
     setTotalLength(questions.length)
@@ -113,7 +156,7 @@ useEffect(() => {
     let attempted = questions.filter(ar => !res.data.find(rm => (rm.quizQuestionId === ar.id) ))
     if(attempted?.length === 0){
       console.log("111111111111111111111111")
-      navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:props.data.id,afterQuiz:false}})
+      navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,afterQuiz:false}})
       return
     }
 
@@ -157,7 +200,7 @@ const handleCurrentQuestion =() =>{
     console.log('no subjective')
     let data ={
       userId: user.userInfo.user.id,
-      quizId: props.data.id,
+      quizId: location.state.data.id,
       quizQuestionId: currentQuestion.id,
       correctOption:currentQuestion.correctOption,
       selectedOption:selected}
@@ -196,7 +239,7 @@ const handleCurrentQuestion =() =>{
     console.log(editorState)
     let data ={
       userId: user.userInfo.user.id,
-      quizId: props.data.id,
+      quizId: location.state.data.id,
       quizQuestionId: currentQuestion.id,
       correctOption:currentQuestion.correctOption,
       selectedOption:editorState.getCurrentContent().getPlainText(),
@@ -239,7 +282,7 @@ const handleCurrentQuestion =() =>{
   else
   {
     console.log("55555555555555555555555555")
-    // navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:props.data.id,afterQuiz:true}})
+    // navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,afterQuiz:true}})
   } 
 }
 
@@ -256,7 +299,7 @@ const handleSelectedDiv = (e) =>{
     
       {!showResult && 
       <>
-        <button onClick={()=> props.handleStartQuiz(false)}>Go back</button>
+        <button onClick={()=> navigate('/courses/quiz')}>Go back</button>
         <div className={styles.Questioncontainer}>
 
           <div className={styles.quizHeader}>
@@ -267,8 +310,9 @@ const handleSelectedDiv = (e) =>{
           </div>  
 
           <div className={styles.quizBody}>
-            <div className={props.data.copyQuestion? styles.noCopyAllowed : styles.copyAllowed}>
-              <b style={{fontSize:'23px'}}>{currentQuestion.question}</b>
+            <div className={location.state.data.copyQuestion? styles.noCopyAllowed : styles.copyAllowed}>
+              {currentQuestion?.questionType === 'Formula' ? <div style={{display:"flex",justifyContent:'flex-start'}}><MathComponent style={{fontSize:'50px'}}  tex={currentQuestion?.question} /></div>
+              : <b style={{fontSize:'23px'}}>{currentQuestion?.question}</b>}
             </div>
             {currentQuestion?.options?.map((element) => {return (
             <>
@@ -292,7 +336,7 @@ const handleSelectedDiv = (e) =>{
         </div>
       </>}
         
-      {/* {showResult && <Result  userId={user.userInfo.user.id} quizId={props.data.id}/>} */}
+      {/* {showResult && <Result  userId={user.userInfo.user.id} quizId={location.state.data.id}/>} */}
     </div>
     </>
   )

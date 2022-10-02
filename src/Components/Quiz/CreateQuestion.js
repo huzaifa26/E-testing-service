@@ -135,8 +135,8 @@ function CreateQuestion({close,time,getQuestion}) {
         points:pts,
         isMathJax:false}
         inputFields.forEach((value,index) =>{ question.options.push(value.name)});
-        if (imageURL !== ""){question.questionImg=imageURL;alert('uploaded')}
-        else{question.questionImg=null;}
+        if (imageURL !== ""){question.questionImage=imageURL;alert('uploaded')}
+        else{question.questionImage=null;}
         getQuestion(question);
         close(false)
 
@@ -155,8 +155,8 @@ function CreateQuestion({close,time,getQuestion}) {
         points:pts,
         isMathJax:true}
         inputFields.forEach((value,index) =>{ question.options.push(value.name)});
-        if (imageURL !== ""){question.questionImg=imageURL;}
-        else{question.questionImg=null;}
+        if (imageURL !== ""){question.questionImage=imageURL;}
+        else{question.questionImage=null;}
         getQuestion(question);
         close(false)
       }
@@ -181,8 +181,8 @@ const handleTrues = () => {
       time:newtime,
       points:pts,
       isMathJax:false}
-      if (imageURL !== ""){question.questionImg=imageURL;}
-      else{question.questionImg=null;}
+      if (imageURL !== ""){question.questionImage=imageURL;}
+      else{question.questionImage=null;}
       getQuestion(question);
       close(false)
   }
@@ -205,8 +205,8 @@ const handleSubjective = () =>
     time:newtime,
     points:pts,
     isMathJax:false};
-    if (imageURL !== ""){question.questionImg=imageURL;}
-    else{question.questionImg=null;}
+    if (imageURL !== ""){question.questionImage=imageURL;}
+    else{question.questionImage=null;}
     getQuestion(question);
     close(false)
   }
