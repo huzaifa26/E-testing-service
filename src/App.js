@@ -54,6 +54,7 @@ function App() {
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
             <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
             <Route path="/courses/assignment" element={<Navbar><Assignment/></Navbar>} />
+            <Route path="/courses/assignment/submitResult" element={<Navbar><Assignment/></Navbar>} />
             <Route path="/courses/result" element={<Navbar><Result/></Navbar>} />
             <Route path="/courses/editQuiz" element={<Navbar><EditQuiz/></Navbar>} />
           </Route>

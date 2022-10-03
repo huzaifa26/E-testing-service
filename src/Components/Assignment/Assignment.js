@@ -16,10 +16,12 @@ import EditAssignment from './EditAssignment';
 import { toast } from 'react-toastify';
 import SubmitAssignment from './SubmitAssignment';
 import AssignmentResult from './AssignmentResult';
+import { useNavigate } from 'react-router-dom';
+import SubmitResult from './SubmitResult';
 
 function Assignment() {
 
-  
+  const navigate = useNavigate()
   const user=useSelector(state=> state.user);
   const courseClickUserId = useSelector(state => state.courseClickUserId.courseClickUserId)
   const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
@@ -28,6 +30,7 @@ function Assignment() {
   const [openEdit,setOpenEdit] = useState(false)
   const [openSubmit,setOpenSubmit] = useState(false)
   const [openResult,setOpenResult] = useState(false)
+  const [openSubmitResult,setOpenSubmitResult] = useState(false)
   const [detail,setDetail] = useState({})
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(7);
@@ -87,14 +90,20 @@ const handleDelete = (e) =>
 
 const handleSubmitAssignment = (item) =>
 {
+  setDetail(item)
   setOpenSubmit(true)
+}
+
+const handleSubmitResult = (item) =>
+{
+  setOpenSubmitResult(true)
   setDetail(item)
 }
 
 const handleResult = (item) =>
 {
-  setOpenResult(true)
   setDetail(item)
+  setOpenResult(true)
 } 
 
   return (
@@ -109,7 +118,7 @@ const handleResult = (item) =>
           </div>
 
         <div className={styles.okok}>
-      <div className={styles.headss}><p>Student</p></div>
+      <div className={styles.headss}><p>{user.userInfo.user.id == courseClickUserId ? "Teacher" : "Student"}</p></div>
       <TableContainer   >
         <Table sx={{ minWidth: 650}} aria-label="simple table" color="#F7F6F2">
 
@@ -141,15 +150,16 @@ const handleResult = (item) =>
                   <TableCell className={styles.ind}component="th">{item.fileType}</TableCell>
                   <TableCell className={styles.ind} component="th">{item.startTime}</TableCell>
                   <TableCell  className={styles.ind} component="th">{item.endTime}</TableCell>
-                  {user.userInfo.user.id !== courseClickUserId &&  <TableCell  component="th" className={styles.ind}>Status</TableCell> }
+                  {user.userInfo.user.id !== courseClickUserId &&  <TableCell  component="th" className={styles.ind}>Not Submitted</TableCell> }
                   <TableCell component="th" align='left'>
                     
                   {user.userInfo.user.id == courseClickUserId &&   <EditIcon style={{ color: '#2A84EB' }} onClick={() => handleEdit(item)}/> }
                   {user.userInfo.user.id == courseClickUserId &&   <DeleteIcon style={{ color: '#E53472' }} onClick={() =>{handleDelete(item)}}/> }
                   {user.userInfo.user.id == courseClickUserId &&   <ListAltIcon style={{ color: '#293462' }} onClick={() =>{handleResult(item)}}/> }
 
-                  {user.userInfo.user.id !== courseClickUserId &&  <ArrowDownwardIcon onClick={() => saveFile(item)}/>}
-                  {user.userInfo.user.id !== courseClickUserId &&  <UploadFileIcon onClick={() => handleSubmitAssignment(item) }/> }
+                  {user.userInfo.user.id !== courseClickUserId &&  <ArrowDownwardIcon style={{ color: '#E53472' }}  onClick={() => saveFile(item)}/>}
+                  {user.userInfo.user.id !== courseClickUserId &&  <UploadFileIcon style={{ color: '#2A84EB' }} onClick={() => handleSubmitAssignment(item) }/> }
+                  {user.userInfo.user.id !== courseClickUserId &&  <ListAltIcon style={{ color: '#2A84EB' }} onClick={() => handleSubmitResult(item) }/> }
                     
                   </TableCell>
               </TableRow>
@@ -173,6 +183,8 @@ const handleResult = (item) =>
     {openEdit && <EditAssignment closeEdit={setOpenEdit} item={detail}/>}
     {openSubmit && <SubmitAssignment closeSubmit={setOpenSubmit} item={detail} />}
     {openResult && <AssignmentResult closeResult={setOpenResult} item={detail} />}
+    {openSubmitResult && <SubmitResult closeStudentResult={setOpenSubmitResult} item={detail} />}
+    
 
     </div>
   )

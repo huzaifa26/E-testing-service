@@ -93,39 +93,70 @@ useEffect(() =>
   .then((res)=>{
     setCountLostFocus(res.data.data.length)
     console.log(res.data.data.length)
-    if(res.data.data.length === 1)
-    {
-      toast.error('Do not change tabs your quiz will be cancelled', {
-        position: toast.POSITION.TOP_CENTER,
-        
-      });
-    }
-    if(res.data.data.length === 2)
-    {
-      toast.error('YOUR QUIZ WILL BE CANCELLED ITS YOUR LAST CHANCE', {
-        position: toast.POSITION.TOP_CENTER,
-        
-      });
-    }
-    if(res.data.data.length === 3 || res.data.data.length>3)
-    {
-      let data = {
-        userId : user.userInfo.user.id,
-        quizId : location.state.data.id
-      }
-  
-      console.log('quiz cancell result ran')
-      let url="http://localhost:5000/api/quizCancellResult/";
-      axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-        if(res.status === 200)
+    axios.get("http://localhost:5000/api/showQuizResult/"+user.userInfo.user.id+"/"+location.state.data.id,{withCredentials:true}).then((response)=>{
+      console.log(response.data)
+      if(response.data.length === 0)
+      {
+        if(res.data.data.length === 1)
         {
-          // setTriggerGetTabFocus((state) => !state)
+          toast.error('Do not change tabs otherwise your quiz will be cancelled', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose:3000
+          });
         }
+        if(res.data.data.length === 2)
+        {
+          toast.error("It's your last chance your quiz will be cancelled", {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose:3000
+          });
+        }
+        if(res.data.data.length === 3 || res.data.data.length>3)
+        {
+          let data = {
+            userId : user.userInfo.user.id,
+            quizId : location.state.data.id
+          }
+      
+          console.log('quiz cancell result ran')
+          let url="http://localhost:5000/api/quizCancellResult/";
+          axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+            if(res.status === 200)
+            {
+              // setTriggerGetTabFocus((state) => !state)
+            }
+          }).catch((err)=>{
+            console.log(err)
+          })
+          navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,cancel:true}})
+        }
+      }
+      else
+      {
+        if(res.data.data.length === 3 || res.data.data.length>3)
+        {
+          let data = {
+            userId : user.userInfo.user.id,
+            quizId : location.state.data.id
+          }
+      
+          console.log('quiz cancell result ran')
+          let url="http://localhost:5000/api/quizCancellResult/";
+          axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+            if(res.status === 200)
+            {
+              // setTriggerGetTabFocus((state) => !state)
+            }
+          }).catch((err)=>{
+            console.log(err)
+          })
+          navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,cancel:true}})
+        }
+        // navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,cancel:true}})
+      }
       }).catch((err)=>{
-        console.log(err)
-      })
-      navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,cancel:true}})
-    }
+      console.log(err);
+    })
   }).catch((err)=>{
   console.log(err);
   })
@@ -171,10 +202,10 @@ useEffect(() => {
   console.log(err);
   })
   // TO PREVENT GOING BACK FROM QUIZ
-  // window.history.pushState(null, document.title, window.location.href);
-  // window.addEventListener('popstate', function (event){
-  // window.history.pushState(null, document.title,  window.location.href);
-  // });
+  window.history.pushState(null, document.title, window.location.href);
+  window.addEventListener('popstate', function (event){
+  window.history.pushState(null, document.title,  window.location.href);
+  });
 }, [])
 
 //FOR TIMER
@@ -244,7 +275,6 @@ const handleCurrentQuestion =() =>{
       correctOption:currentQuestion.correctOption,
       selectedOption:editorState.getCurrentContent().getPlainText(),
       obtainedMarks:0}
-
       if(quizLengthRef.current === 0){
         console.log({userId:data.userId,quizId:data.quizId})
         axios.post('http://localhost:5000/api/addQuizResult',{userId:data.userId,quizId:data.quizId},{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
@@ -278,6 +308,7 @@ const handleCurrentQuestion =() =>{
     setQuestions([...newArr])
     quizLengthRef.current=newArr.length
     setCurrentIndex((totalLength-questions.length)+1)
+    setEditorState(EditorState.createEmpty())
   }
   else
   {

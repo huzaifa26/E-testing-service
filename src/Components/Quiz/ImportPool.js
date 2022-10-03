@@ -19,7 +19,6 @@ function ImportPool({close,getQuestion}) {
       })
     : "";
 
-
    useEffect(()=>{
     if(user.userInfo.hasOwnProperty("user") === true){
       let link='http://localhost:5000/api/getCourseCategories/' + courseIdredux;
@@ -87,6 +86,7 @@ function ImportPool({close,getQuestion}) {
       getQuestion(checked)
       close(false)
   }
+  
   return (
     <>
         <div className={styles.modalBackground}  onClick={() => close(false)}></div>

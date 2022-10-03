@@ -123,3 +123,16 @@
     line-height: 20px;
     border-radius: 3px;
 }
+
+
+@media all and (max-width: 548px) {
+
+  .modalContainer {
+    width: 350px;}
+
+}
+@media all and (max-width: 408px) {
+
+  .modalContainer {
+    width: 300px;}
+}

@@ -46,16 +46,16 @@
     margin: 5px;
     text-decoration: none;
   }
-  .ind
-{
-  margin: 0px;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
-  font-size: 0.75rem;
-  line-height: 1.25;
-  letter-spacing: 0.03333em;
-  text-transform: none;
-  vertical-align: unset;
-  text-decoration: none;
-  color: rgb(123, 128, 154);
-  font-weight: 600;
-}
+  .ind{
+    margin: 0px;
+    font-family: Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 0.75rem !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.03333em !important;
+    opacity: 1 !important;
+    text-transform: none !important;
+    vertical-align: unset !important;
+    text-decoration: none !important;
+    color: rgb(123, 128, 154) !important;
+    font-weight: 600 !important;
+    }

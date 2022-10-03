@@ -1,3 +1,4 @@
+
 .Main
 {
     display: flex;
@@ -9,19 +10,7 @@
     /* min-height: 86vh; */
     /* height: 96%; */
 }
-.ind
-{
-  margin: 0px;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
-  font-size: 0.75rem;
-  line-height: 1.25;
-  letter-spacing: 0.03333em;
-  text-transform: none;
-  vertical-align: unset;
-  text-decoration: none;
-  color: rgb(123, 128, 154);
-  font-weight: 600;
-}
+
 
 .buttonHolder
 {
@@ -41,7 +30,7 @@
 .heads h1{
   font-size: 1.3rem;
   line-height: 1.625;
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  /* font-family: Roboto, Helvetica, Arial, sans-serif; */
   letter-spacing: 0.0075em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -52,7 +41,7 @@
   vertical-align: unset;
   text-decoration: none;
   color: rgb(52, 71, 103);
-  font-weight: 700;
+  /* font-weight: 700; */
   padding-left:10px
 }
 .okok
@@ -96,9 +85,23 @@
   color: rgb(123, 128, 154);
   box-shadow: none;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 800 !important;
   text-transform: uppercase;
 }
+.ind{
+  margin: 0px;
+  font-family: Roboto, Helvetica, Arial, sans-serif !important;
+  font-size: 0.75rem !important;
+  line-height: 1.25 !important;
+  letter-spacing: 0.03333em !important;
+  opacity: 1 !important;
+  text-transform: none !important;
+  vertical-align: unset !important;
+  text-decoration: none !important;
+  color: rgb(123, 128, 154) !important;
+  font-weight: 600 !important;
+  }
 .headTitle2
 {
   position: relative;
@@ -108,7 +111,7 @@
   color: rgb(123, 128, 154);
   box-shadow: none;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
 }
 .headss p
@@ -116,8 +119,9 @@
   margin: 0px;
     font-size: 1rem;
     line-height: 1.625;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 700;
+    /* font-family: Roboto, Helvetica, Arial, sans-serif; */
+    font-weight: 600;
+    
     letter-spacing: 0.0075em;
     opacity: 1;
     text-transform: none;

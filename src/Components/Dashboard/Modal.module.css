@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto Flex', sans-serif;
+  /* font-family: 'Roboto Flex', sans-serif; */
 }
 
 .modalBackground {
@@ -120,7 +120,7 @@
     text-decoration: none;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     letter-spacing: 0.02857em;
-    min-width: 64px;
+    min-width: 120px;
     display: inline-flex;
     -webkit-box-pack: center;
     justify-content: center;

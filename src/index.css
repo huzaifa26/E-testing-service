@@ -7,7 +7,9 @@
 }
 
 * {
-  font-family: 'Poppins', sans-serif;
+  /* font-family: 'Poppins', sans-serif; */
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+
   text-decoration: none;
   list-style: none;
   box-sizing: border-box;

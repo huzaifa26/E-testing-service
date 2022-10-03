@@ -26,7 +26,6 @@ h2{
 
 .joinedHeader button{
     /* margin: 0 0 0.7rem 0; */
-    position: relative;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
     outline: 0px;

@@ -55,7 +55,7 @@ const handleStartQuiz = (item) =>
   return (
       <TableRow key={props.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 
-        <TableCell className={styles.ind}  align="left">{props.id}</TableCell>
+        <TableCell className={styles.ind}  align="left">{props.index+1}</TableCell>
         <TableCell  className={styles.ind} component="th" scope="row"><b>{props.quizTitle}</b></TableCell>
         <TableCell  className={styles.ind} component="th">{props.startTime}</TableCell>
         <TableCell  className={styles.ind} component="th">{props.endTime}</TableCell>
@@ -65,9 +65,7 @@ const handleStartQuiz = (item) =>
         <button className={styles.button0} onClick={() => handleDelete(props.data)}>Delete</button>
         {/* <Button variant="contained" disabled={false} onClick={() =>handleStartQuiz(item)}>Start</Button> */}
         </TableCell>
-
         </TableRow>
-
 )}
   
   {if(props.student === true)
@@ -75,7 +73,7 @@ const handleStartQuiz = (item) =>
     <>
 
     <TableRow key={props.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-        <TableCell className={styles.ind}  align="left">{props.id}</TableCell>
+        <TableCell className={styles.ind}  align="left">{props.index+1}</TableCell>
         <TableCell  className={styles.ind} component="th" scope="row"><b>{props.quizTitle}</b></TableCell>
         <TableCell  className={styles.ind} component="th">{props.startTime}</TableCell>
         <TableCell  className={styles.ind} component="th">{props.endTime}</TableCell>

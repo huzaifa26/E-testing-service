@@ -1,21 +1,152 @@
 .Main
 {
+ margin: 15px 15px 0 15px;
+ color: rgba(0, 0, 0, 0.87);
+ transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+ display: flex;
+ flex-direction: column;
+ position: relative;
+ min-width: 0px;
+ overflow-wrap: break-word;
+ background-color: rgb(255, 255, 255);
+ background-clip: border-box;
+ border: 0px solid rgba(0, 0, 0, 0.125);
+ border-radius: 0.75rem;
+ box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
+ overflow: visible;
+ /* min-height: 82vh; */
+}
+
+.header
+{
+    padding: 16px;
+    opacity: 1;
+    background: transparent;
+    color: rgb(52, 71, 103);
+    box-shadow: none;
+}
+.header h1
+{
+    margin: 0px;
+    font-size: 1.25rem;
+    line-height: 1.375;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0em;
+    opacity: 1;
+    text-transform: none;
+    vertical-align: unset;
+    text-decoration: none;
+    color: rgb(52, 71, 103);
+}
+.body
+{
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    opacity: 1;
+    background: transparent;
+    color: rgb(52, 71, 103);
+    box-shadow: none;
+}
+.notificationContainer
+{
     display: flex;
-    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    display: flex;
-    flex-direction: column;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 3.75rem;
+    background-image: linear-gradient(195deg, rgb(239, 83, 80), rgb(229, 57, 53));
+    color: rgb(255, 255, 255);
     position: relative;
-    min-width: 0px;
-    overflow-wrap: break-word;
-    background-color: rgb(255, 255, 255);
-    background-clip: border-box;
-    border: 0px solid rgba(0, 0, 0, 0.125);
-    /* border-radius: 0.75rem; */
-    box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
-    /* align-items: center; */
-    flex-direction: column;
-    padding: 30px;
-    margin: 15px;
-    min-height: 86vh;
-    height: 96%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+}
+.p
+{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    opacity: 1;
+    background: transparent;
+    color: rgb(255, 255, 255);
+    box-shadow: none;
+}
+.p p{
+    margin: 0px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 0.01071em;
+    opacity: 1;
+    text-transform: none;
+    vertical-align: unset;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+.notificationContainer span{
+
+    color: rgb(255, 255, 255);
+    font-size: 1.25rem;
+    padding: 0.5625rem 0.375rem 0.5rem;
+    margin-left: 2.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 0;
+}
+.notificationContainer2 span{
+
+    color: rgb(255, 255, 255);
+    font-size: 1.25rem;
+    padding: 0.5625rem 0.375rem 0.5rem;
+    margin-left: 2.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 0;
+}
+.notificationContainer2
+{
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 3.75rem;
+    background-image: linear-gradient(195deg, rgb(255, 167, 38), rgb(251, 140, 0));
+    color: rgb(255, 255, 255);
+    position: relative;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+}
+.notificationContainer3 span{
+
+    color: rgb(255, 255, 255);
+    font-size: 1.25rem;
+    padding: 0.5625rem 0.375rem 0.5rem;
+    margin-left: 2.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 0;
+}
+.notificationContainer3
+{
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 3.75rem;
+    background-image: linear-gradient(195deg, rgb(102, 187, 106), rgb(67, 160, 71));
+    color: rgb(255, 255, 255);
+    position: relative;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
 }

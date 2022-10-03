@@ -1,13 +1,21 @@
 import styles from './Notifications.module.css';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import {useEffect} from "react";
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import { useSelector} from 'react-redux';
+import { useCookies } from 'react-cookie';
+
 
 const Notification=() => {
 
   const navigate=useNavigate();
+  const user=useSelector(state=> state.user);
+  const courseIdredux=useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
+  const [notifications,setNotifications] = useState([])
+  const [cookie,setCookie]=useCookies();
+
 
   // useEffect(()=>{
   //   axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
@@ -22,9 +30,60 @@ const Notification=() => {
   //   })
   // },[])
 
+  const handleRemove = (item) =>
+  {
+    let data ={
+      id:item.id
+    }
+    axios.post("http://localhost:5000/api/removeNotification",data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+          fetchNotifications()
+        }).catch((err)=>{
+            console.log(err);
+        })
+  }
+
+  const fetchNotifications = () =>
+  {
+    let data = {
+      userId:user.userInfo.user.id,
+      courseId:courseIdredux,
+    }
+    axios.get("http://localhost:5000/api/getNotification/"+user.userInfo.user.id+"/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    ).then((res)=>{
+      setNotifications(res.data.data)
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+
+  useEffect(() => {
+    fetchNotifications()
+  }, [])
+
+
+  
+
   return (
     <div className={styles.Main}>
-      Notification
+      <div className={styles.header}>
+        <h1>Notification</h1>
+      </div>
+
+      <div className={styles.body}>
+      {notifications.map((item,index) =>
+        (
+          <div>
+            <div className={(item.type === 'blocked' && styles.notificationContainer) || (item.type === 'unblocked' && styles.notificationContainer3 )}>
+              <div className={styles.p}>
+                <p>{item.notificationText}</p>
+              </div>
+              <span onClick={() => handleRemove(item)}>x</span>
+            </div>
+          </div>
+          ))}
+      </div>
+
+
     </div>
   );
 }

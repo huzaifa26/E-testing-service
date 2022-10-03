@@ -68,7 +68,7 @@ function Modal({closeModal}) {
 
   return (
     <>
-    <div className={styles.modalBackground}></div>
+    <div className={styles.modalBackground} onClick={() => closeModal(true)}></div>
         <form className={styles.modalContainer} onSubmit={(e) => {e.preventDefault();formik.handleSubmit();}}>
           <h1 className={styles.h1}>Join Class</h1>
           <div className={styles.fieldMain}>
@@ -90,7 +90,6 @@ function Modal({closeModal}) {
 
           </div>
             <div className={styles.footer}>
-                <button onClick={() => closeModal(true)}>Cancel</button>
                 <button type='submit'>Join</button>
             </div>
         </form>

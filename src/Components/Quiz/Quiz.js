@@ -330,7 +330,7 @@ return (
     </div>
 
     <div className={styles.okok}>
-      <div className={styles.headss}><p>Student</p></div>
+      <div className={styles.headss}><p>Teacher</p></div>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
           <TableHead sx= {{color:'white'}}>
@@ -351,7 +351,7 @@ return (
             {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
 
-                <QuizTable data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={false} />
+                <QuizTable index={index} data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={false} />
 
             ))}
           </TableBody>
@@ -397,7 +397,7 @@ return (
 
             {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
-                <QuizTable data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={true} />
+                <QuizTable index={index} data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={true} />
             ))}
           </TableBody>
 

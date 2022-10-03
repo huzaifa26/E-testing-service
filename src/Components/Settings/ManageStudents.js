@@ -87,18 +87,19 @@ const handleChangeRowsPerPage = (event) => {
 
   return (
     <div className={styles.Main}>
-        <Paper sx={{padding:'3px',marginTop:'20px'}}>
-      <TableContainer component={Paper}  >
+      <div className={styles.okok}>
+      <div className={styles.headss}><p>Students</p></div>
+      <TableContainer   >
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
 
-          <TableHead sx= {{backgroundColor:'#f5f5f5',color:'white'}}>
+          <TableHead sx= {{color:'white'}}>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell className={styles.headTitle}>#</TableCell>
+              <TableCell className={styles.headTitle}>Name</TableCell>
+              <TableCell className={styles.headTitle}>Email</TableCell>
+              <TableCell className={styles.headTitle}>Status</TableCell>
               {/* {user.userInfo.user.id !== courseClickUserId &&  <TableCell>Status</TableCell> } */}
-              <TableCell align='center'>Actions</TableCell>
+              <TableCell align='center' className={styles.headTitle2}>Actions</TableCell>
             </TableRow>
           </TableHead>
 
@@ -106,12 +107,12 @@ const handleChangeRowsPerPage = (event) => {
             {manageUsers?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
             (
               <TableRow key={item.id}  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <TableCell align="left">{index+1}</TableCell>
-                  <TableCell component="th" scope="row"><b>{item.fullName}</b></TableCell>
-                  <TableCell component="th">{item.email}</TableCell>
-                  <TableCell component="th">{item.blocked === 0 ? "Not Blocked":"Blocked"}</TableCell>
+                  <TableCell align="left"  className={styles.ind}>{index+1}</TableCell>
+                  <TableCell component="th" scope="row"  className={styles.ind}><b>{item.fullName}</b></TableCell>
+                  <TableCell component="th"  className={styles.ind}>{item.email}</TableCell>
+                  <TableCell component="th"  className={styles.ind}>{item.blocked === 0 ? "Not Blocked":"Blocked"}</TableCell>
                   {/* {user.userInfo.user.id !== courseClickUserId &&  <TableCell  component="th">Status</TableCell> } */}
-                  <TableCell component="th" align='center'>
+                  <TableCell component="th" align='center' >
                     <div className={styles.buttonHolder}>
 
                     
@@ -136,7 +137,7 @@ const handleChangeRowsPerPage = (event) => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-    </Paper>
+    </div>
         
     </div>
   )

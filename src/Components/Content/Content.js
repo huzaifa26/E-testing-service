@@ -64,7 +64,7 @@ const saveFile = (e) => {
       </div>
   
       <div className={styles.okok}>
-      <div className={styles.headss}><p>Student</p></div>
+      <div className={styles.headss}><p>{user.userInfo.user.id == courseClickUserId ? "Teacher" : "Student"}</p></div>
       <TableContainer  >
         <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
 
@@ -74,7 +74,7 @@ const saveFile = (e) => {
               <TableCell className={styles.headTitle} >Title</TableCell>
               <TableCell className={styles.headTitle} >File Type</TableCell>
               <TableCell className={styles.headTitle} >Time</TableCell>
-              <TableCell  className={styles.headTitle2} >Actions</TableCell>
+              <TableCell  className={styles.headTitle} >Actions</TableCell>
             </TableRow>
           </TableHead>
 
