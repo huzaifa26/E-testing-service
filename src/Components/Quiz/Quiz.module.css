@@ -1,13 +1,12 @@
 .main {
-    background-color: aqua !important;
     padding: 1.953125vw;
     margin: 0.9765625vw;
     min-height: 86vh;
+    background-color: white;
     height: 96%;
 }
 
 .main2 {
-    /* background-color: white; */
     margin: 0.9765625vw;
     padding: 0.6510416666666666vw 0.9765625vw 0.9765625vw 0.9765625vw;
 }

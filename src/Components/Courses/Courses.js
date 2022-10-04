@@ -252,7 +252,7 @@ const Courses = (props) => {
                 </div>
               </div>
 
-              <div className={styles.join2}>
+              <div onClick={() => navigate('/courses/quiz')} className={styles.join2}>
                 <div className={styles.totalQuizzes}>
                   <QuizIcon style={{ fontSize: '40px' }} />
                 </div>
@@ -262,7 +262,7 @@ const Courses = (props) => {
                 </div>
               </div>
 
-              <div className={styles.join2}>
+              <div onClick={() => navigate('/courses/assignment')} className={styles.join2}>
                 <div className={styles.totalAssignments}>
                   <AssignmentIcon style={{ fontSize: '40px' }} />
                 </div>

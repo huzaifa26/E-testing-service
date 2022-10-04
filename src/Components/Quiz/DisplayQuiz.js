@@ -35,7 +35,7 @@ function DisplayQuiz() {
   const [totalLength, setTotalLength] = useState(0)
   const [currentIndex, setCurrentIndex] = useState(1)
   const [selected, setSelected] = useState('')
-  const [time, setTime] = useState(2999)
+  const [time, setTime] = useState(30)
   const [showResult, setShowResult] = useState(false)
   const user = useSelector(state => state.user);
   const [cookie] = useCookies();
@@ -45,133 +45,6 @@ function DisplayQuiz() {
   const [triggerGetTabFocus, setTriggerGetTabFocus] = useState(false)
   const navigate = useNavigate();
   const quizLengthRef = useRef()
-
-
-  // CODE FOR CHECKING TIME.
-  // const [counter, setCounter] = useState(0)
-
-  // setTimeout(() => {
-  //   setCounter(counter + 1)
-  // }, 10);
-
-  // let endTime=location.state.data.endTime
-
-  // useEffect(() => {
-
-  // }, [counter])
-
-  //FOR TAB MONITORING
-  useEffect(() => {
-
-    const handleFocus = () => {
-      setTabHasFocus(true);
-    };
-
-    const handleBlur = () => {
-      setCountLostFocus((state) => state = state + 1)
-      setTabHasFocus(false);
-      let data = {
-        userId: user.userInfo.user.id,
-        quizId: location.state.data.id
-      }
-      if (countLostFocus === 2) {
-        // console.log('lets cancell the quiz')
-      }
-      let url = "http://localhost:5000/api/addToTabFocus/";
-      axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
-        if (res.status === 200) {
-          setTriggerGetTabFocus((state) => !state)
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
-    };
-
-
-
-    // const unloadCallback = (event) => {
-    //   event.preventDefault();
-    //   event.returnValue = "";
-    //   console.log('closed attempt')
-    //   return "";
-    // };
-
-    window.addEventListener('focus', handleFocus);
-    window.addEventListener('blur', handleBlur);
-    // window.addEventListener("beforeunload", unloadCallback);
-
-    return () => {
-      window.removeEventListener('focus', handleFocus);
-      window.removeEventListener('blur', handleBlur);
-      // window.removeEventListener("beforeunload", unloadCallback);
-    };
-  }, []);
-
-
-
-  //TO GET TAB FOCUS ON EVERY DETECT
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/getTabFocus/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true })
-      .then((res) => {
-        setCountLostFocus(res.data.data.length)
-        axios.get("http://localhost:5000/api/showQuizResult/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true }).then((response) => {
-          if (response.data.length === 0) {
-            if (res.data.data.length === 1) {
-              toast.error('Do not change tabs otherwise your quiz will be cancelled', {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 3000
-              });
-            }
-            if (res.data.data.length === 2) {
-              toast.error("It's your last chance your quiz will be cancelled", {
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 3000
-              });
-            }
-            if (res.data.data.length === 3 || res.data.data.length > 3) {
-              let data = {
-                userId: user.userInfo.user.id,
-                quizId: location.state.data.id
-              }
-
-              let url = "http://localhost:5000/api/quizCancellResult/";
-              axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
-                if (res.status === 200) {
-                  // setTriggerGetTabFocus((state) => !state)
-                }
-              }).catch((err) => {
-                console.log(err)
-              })
-              navigate("/courses/result", { state: { userId: user.userInfo.user.id, quizId: location.state.data.id, cancel: true } })
-            }
-          }
-          else {
-            if (res.data.data.length === 3 || res.data.data.length > 3) {
-              let data = {
-                userId: user.userInfo.user.id,
-                quizId: location.state.data.id
-              }
-
-              let url = "http://localhost:5000/api/quizCancellResult/";
-              axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
-                if (res.status === 200) {
-                  // setTriggerGetTabFocus((state) => !state)
-                }
-              }).catch((err) => {
-                console.log(err)
-              })
-              navigate("/courses/result", { state: { userId: user.userInfo.user.id, quizId: location.state.data.id, cancel: true } })
-            }
-            // navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,cancel:true}})
-          }
-        }).catch((err) => {
-          console.log(err);
-        })
-      }).catch((err) => {
-        console.log(err);
-      })
-  }, [triggerGetTabFocus])
-
 
   //FOR GETTING INITIAL ATTEMPTED QUESTIONS
   useEffect(() => {
@@ -183,6 +56,8 @@ function DisplayQuiz() {
     if (location.state.data.seeAnswer == 1) { }
 
     if (location.state.data.detectMobile == 1) { }
+
+    endQuizAfterTimeFinished()
 
     axios.get("http://localhost:5000/api/getAtempttedQuizQuestions/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true })
       .then((res) => {
@@ -199,22 +74,24 @@ function DisplayQuiz() {
         setCurrentQuestion(question)
         setQuestions([...attempted])
         quizLengthRef.current = attempted.length;
-        // console.log(location.state.from)
-        // console.log(location.state.from === null)
-        if(location.state.from === null){
-          console.log("----------------------------")
-          let oldTime=localStorage.getItem("counter")
-          oldTime = JSON.parse(oldTime)
-          setTime(()=> +oldTime)
-        } else if(location.state.from === "QuizTable"){
-          if(localStorage.getItem("counter") === undefined){
-            setTime(question?.time);
-          }
-          if(localStorage.getItem("counter") !== undefined){
+
+        if(location.state.from === "QuizTable")
+        {
+          if(localStorage.getItem("counter") === undefined)
+          {setTime(question?.time);
+          console.log('time of question added undefined')}
+          if(localStorage.getItem("counter") !== undefined)
+          {
             let oldTime=localStorage.getItem("counter")
             oldTime = JSON.parse(oldTime)
             setTime(()=> +oldTime)
           }
+        }
+        else
+        {
+          let oldTime=localStorage.getItem("counter")
+          oldTime = JSON.parse(oldTime)
+          setTime(()=> +oldTime)
         }
         setQuestionsState([...attempted])
       }).catch((err) => {
@@ -227,50 +104,7 @@ function DisplayQuiz() {
     });
   }, [])
 
-  const endQuizAfterTimeFinished = () => {
-    let endTime = location.state.data.endTime
-    let today = new Date();
-    today = today.toLocaleString()
-
-    let QuizFinishTime = new Date(endTime)
-    QuizFinishTime = QuizFinishTime.toLocaleString()
-
-    let newQuizFinishTime = moment(QuizFinishTime)
-
-    if (newQuizFinishTime.isBefore(today) === true) {
-      axios.post('http://localhost:5000/api/addQuizResult', { userId: user.userInfo.user.id, quizId: location.state.data.id }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
-        axios.get("http://localhost:5000/api/showQuizResult/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true }).then((res) => {
-          if (res.data.length > 0) {
-            navigate("/courses/result", { state: { result: res.data, afterQuiz: true } })
-          }
-        }).catch((err) => {
-          console.log(err);
-        })
-      }).catch((err) => {
-        console.log(err)
-      })
-    }
-  }
-
-  //FOR TIMER
-  useEffect(() => {
-    timer = setInterval(() => {
-      endQuizAfterTimeFinished()
-      console.log(location.state)
-      setTime(()=>{
-        localStorage.setItem("counter",time-1)
-        return time - 1
-      })
-      if (time === 0) {
-        handleCurrentQuestion()
-      }
-    }, 1000)
-
-    return () => {
-      clearInterval(timer)
-    }
-  })
-
+  
   //ONCLICK OF NEXT QUESTION
   const handleCurrentQuestion = () => {
     if (currentQuestion.questionType !== "Subjective") {
@@ -296,7 +130,9 @@ function DisplayQuiz() {
       })
 
       if (quizLengthRef.current === 0) {
+        console.log('i ran')
         axios.post('http://localhost:5000/api/addQuizResult', { userId: data.userId, quizId: data.quizId }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
+        // localStorage.removeItem('counter');
           axios.get("http://localhost:5000/api/showQuizResult/" + data.userId + "/" + data.quizId, { withCredentials: true }).then((res) => {
             navigate("/courses/result", { state: { result: res.data, afterQuiz: true } })
           }).catch((err) => {
@@ -305,9 +141,9 @@ function DisplayQuiz() {
         }).catch((err) => {
           console.log(err)
         })
+        }
       }
-    }
-    else {
+      else {
       let data = {
         userId: user.userInfo.user.id,
         quizId: location.state.data.id,
@@ -316,8 +152,11 @@ function DisplayQuiz() {
         selectedOption: editorState.getCurrentContent().getPlainText(),
         obtainedMarks: 0
       }
+
       if (quizLengthRef.current === 0) {
+        console.log('i ran 2')
         axios.post('http://localhost:5000/api/addQuizResult', { userId: data.userId, quizId: data.quizId }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
+        localStorage.removeItem('counter');
           axios.get("http://localhost:5000/api/showQuizResult/" + data.userId + "/" + data.quizId, { withCredentials: true }).then((res) => {
             navigate("/courses/result", { state: { result: res.data, afterQuiz: true } })
           }).catch((err) => {
@@ -335,11 +174,10 @@ function DisplayQuiz() {
       })
     }
 
-
     if (questions?.length > 0) {
       let newArr = [...questions]
       setCurrentQuestion(newArr.shift())
-      console.log(location.state)
+      localStorage.removeItem("counter")
       setTime(currentQuestion.time)
       setQuestions([...newArr])
       quizLengthRef.current = newArr.length
@@ -351,9 +189,89 @@ function DisplayQuiz() {
     }
   }
 
-  //SELECTED ANSWER
+    //FOR TIMER
+    useEffect(() => {
+      timer = setInterval(() => {
+        setTime(()=>{
+          localStorage.setItem("counter",time-1)
+          return time - 1
+        })
+        if (time === 0) {
+          handleCurrentQuestion()
+        }
+      }, 1000)
+  
+      return () => {
+        clearInterval(timer)
+      }
+    })
+  
+// FOR TIME CHECK IF QUIZ IS FINISHED
+  const endQuizAfterTimeFinished = () => {
+    let endTime = location.state.data.endTime
+    let today = new Date();
+    today = today.toLocaleString()
+
+    let QuizFinishTime = new Date(endTime)
+    QuizFinishTime = QuizFinishTime.toLocaleString()
+
+    let newQuizFinishTime = moment(QuizFinishTime)
+
+    if (newQuizFinishTime.isBefore(today) === true) {
+      console.log('i ran 3')
+      axios.post('http://localhost:5000/api/addQuizResult', { userId: user.userInfo.user.id, quizId: location.state.data.id }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
+        // localStorage.removeItem('counter');
+        axios.get("http://localhost:5000/api/showQuizResult/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true }).then((res) => {
+          if (res.data.length > 0) {
+            navigate("/courses/result", { state: { result: res.data, afterQuiz: true } })
+          }
+        }).catch((err) => {
+          console.log(err);
+        })
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  }
+
+
+
+    //FOR TAB MONITORING AND SENDING IN DATABASE
+    useEffect(() => {
+      const handleFocus = () => {setTabHasFocus(true);};
+      const handleBlur = () => {
+        setCountLostFocus((state) => state = state + 1)
+        setTabHasFocus(false);
+        console.log('tab focus detected')
+        toast.success('TAB CHANGE DETECTED', {position: toast.POSITION.TOP_CENTER,autoClose: 2000})
+
+        let data = {
+          userId: user.userInfo.user.id,
+          quizId: location.state.data.id
+        }
+        let url = "http://localhost:5000/api/addToTabFocus/";
+        axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
+          toast.success('Updated', {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        }).catch((err) => {
+          console.log(err)
+        })
+        
+      };
+  
+      window.addEventListener('focus', handleFocus);
+      window.addEventListener('blur', handleBlur);
+  
+      return () => {
+        window.removeEventListener('focus', handleFocus);
+        window.removeEventListener('blur', handleBlur);
+      };
+    }, []);
+  
+
+  //SELECTED ANSWER TO SEND IN DATABASE
   const handleSelectedDiv = (e) => {
-    localStorage.removeItem("counter")
     setSelected(e.options)
   }
 

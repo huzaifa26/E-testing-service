@@ -296,7 +296,7 @@ useEffect(()=>{
 },[]);
 
 return (
-<div className={createQuiz === true ? styles.main: styles.main2} >
+<div className={createQuiz ? styles.main: styles.main2} >
   {(!createQuiz && user.userInfo.user.id == courseClickUserId) && (
     <>
     <div className={styles.heads}>
