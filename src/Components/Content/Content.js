@@ -65,8 +65,8 @@ const saveFile = (e) => {
   
       <div className={styles.okok}>
       <div className={styles.headss}><p>{user.userInfo.user.id == courseClickUserId ? "Teacher" : "Student"}</p></div>
-      <TableContainer  >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
+      <TableContainer className={styles.container}  >
+        <Table className={styles.table} sx={{ minWidth: 1 }}  aria-label="simple table" color="#F7F6F2">
 
           <TableHead sx= {{color:'white'}}>
             <TableRow>

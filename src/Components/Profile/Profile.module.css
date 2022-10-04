@@ -13,12 +13,15 @@
 .leftTop {
   width: 70%;
   margin: 10px;
+
 }
 .h1 {
   background-color: white;
   margin-bottom: 10px;
   padding: 30px;
   border-radius: 10px;
+  box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
+
 }
 .h1 h1 {
   font-family: "Ubuntu", sans-serif;
@@ -31,7 +34,9 @@
   justify-content: center;
   border-radius: 10px;
   font-family: "Ubuntu", sans-serif;
-  min-height: 78vh;
+  min-height: 70vh;
+  box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
+
 }
 .left h1 {
   padding: 30px;
@@ -53,7 +58,7 @@
 }
 
 .footer {
-  height: 120px;
+  height: 116px;
   display: flex;
   justify-content: center;
 }
@@ -96,13 +101,37 @@
   align-items: center;
   margin: 10px 10px 10px 0;
   padding: 20px;
+  box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
 }
-
+.circularportrait {
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  user-select: none;
+  transition: all 200ms ease-in-out 0s;
+  background: transparent;
+  color: rgb(255, 255, 255);
+  font-weight: 400;
+  box-shadow: rgb(0 0 0 / 12%) 0rem 0.3125rem 0.625rem 0rem;
+  width: 130px;
+  height: 130px;
+  font-size: 1rem;
+}
 .circularportrait img {
-  max-width: 100%;
-  
+  width: 100%;
+  text-align: center;
+  object-fit: cover;
+  color: transparent;
+  text-indent: 10000px;
   height: auto;
-
 }
 .chooseImg {
   display: flex;
@@ -120,12 +149,19 @@
   width: 10px;
 }
 
-@media all and (max-width: 411px) {
+@media all and (max-width: 555px) {
   .left input {
     min-width: 130px;
   }
+  .circularportrait {
+    width: 80px;
+    height: 80px;
+  }
 }
+@media all and (max-width: 344px) {
 
-.circularportrait img{
-  object-fit: cover;
+  .circularportrait {
+    width: 50px;
+    height: 50px;
+  }
 }

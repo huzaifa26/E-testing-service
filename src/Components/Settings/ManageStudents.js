@@ -55,7 +55,7 @@ const handleChangeRowsPerPage = (event) => {
     axios.post("http://localhost:5000/api/blockUserFromCourse",data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
       setBlock((state) => !state)
-      toast.success('Student Blocked', {position: toast.POSITION.TOP_RIGHT,});
+      toast.warn('Student Blocked', {position: toast.POSITION.TOP_RIGHT,});
     }).catch((err)=>{
         console.log(err);
     })
@@ -90,7 +90,7 @@ const handleChangeRowsPerPage = (event) => {
       <div className={styles.okok}>
       <div className={styles.headss}><p>Students</p></div>
       <TableContainer   >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" color="#F7F6F2">
+        <Table sx={{ minWidth: 5 }} aria-label="simple table" color="#F7F6F2">
 
           <TableHead sx= {{color:'white'}}>
             <TableRow>

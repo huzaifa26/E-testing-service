@@ -37,26 +37,12 @@ const Courses = (props) => {
   const [courses, setCourses] = useState([]);
   const [courseJoin, setCourseJoin] = useState([]);
   const [courseKey, setCourseKey] = useState('');
+  const [totalQuizzes,setTotalQuizzes] = useState(0)
+  const [assignments,setAssignments] = useState(0)
   const [courseName, setCourseName] = useState('');
+  const [courseInfo, setCourseInfo] = useState([])
   const [courseDescription, setCourseDescription] = useState('');
   const [refreshTokenState, setRefreshToken] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get(
-        'http://localhost:5000/api/courseSetting/' + courseIdredux,
-        { withCredentials: true },
-        { headers: { Authorization: `Bearer ${cookie.token}` } }
-      )
-      .then((res) => {
-        setCourseKey(res.data.data[0].courseKey);
-        setCourseDescription(res.data.data[0].courseName);
-        setCourseDescription(res.data.data[0].courseDescription);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   // useEffect(()=>{
   //   axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
@@ -88,22 +74,63 @@ const Courses = (props) => {
   // })
 
   useEffect(() => {
+
+    axios
+    .get(
+      'http://localhost:5000/api/courses/' + user.userInfo.user.id,
+      { withCredentials: true },
+      { headers: { Authorization: `Bearer ${cookie.token}` } }
+    )
+    .then((res) => {
+      setCourses(res.data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+    ).then((res)=>{
+      setTotalQuizzes(res.data.data.length)
+    }).catch((err)=>{
+      console.log(err);
+    })
+
     axios
       .get(
-        'http://localhost:5000/api/courses/' + user.userInfo.user.id,
+        'http://localhost:5000/api/enrolledLength/' + courseIdredux,
         { withCredentials: true },
         { headers: { Authorization: `Bearer ${cookie.token}` } }
       )
       .then((res) => {
-        setCourses(res.data.data);
+        setTotalUser(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
 
-  useEffect(() => {
-    axios
+      axios.get("http://localhost:5000/api/getAssignments/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+      ).then((res)=>{
+        setAssignments(res.data.data.length)
+      }).catch((err)=>{
+        console.log(err);
+      })
+
+      axios
+      .get(
+        'http://localhost:5000/api/courseSetting/' + courseIdredux,
+        { withCredentials: true },
+        { headers: { Authorization: `Bearer ${cookie.token}` } }
+      )
+      .then((res) => {
+        setCourseKey(res.data.data[0].courseKey);
+        setCourseDescription(res.data.data[0].courseName);
+        setCourseDescription(res.data.data[0].courseDescription);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      axios
       .get(
         'http://localhost:5000/api/joinedCourses/' + user.userInfo.user.id,
         { withCredentials: true },
@@ -115,17 +142,29 @@ const Courses = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
 
-  useEffect(() => {
-    axios
+      axios
       .get(
-        'http://localhost:5000/api/enrolledLength/' + courseIdredux,
+        'http://localhost:5000/api/courses/' + user.userInfo.user.id,
         { withCredentials: true },
         { headers: { Authorization: `Bearer ${cookie.token}` } }
       )
       .then((res) => {
-        setTotalUser(res.data.data);
+        setCourses(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      axios
+      .get(
+        'http://localhost:5000/api/courseInfo/' + courseIdredux,
+        { withCredentials: true },
+        { headers: { Authorization: `Bearer ${cookie.token}` } }
+      )
+      .then((res) => {
+        console.log(res.data.data)
+        setCourseInfo(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -219,7 +258,7 @@ const Courses = (props) => {
                 </div>
                 <div className={styles.right}>
                   <h1>Q U I Z Z E S</h1>
-                  <p>{courseKey}</p>
+                  <p>{totalQuizzes}</p>
                 </div>
               </div>
 
@@ -228,8 +267,8 @@ const Courses = (props) => {
                   <AssignmentIcon style={{ fontSize: '40px' }} />
                 </div>
                 <div className={styles.right}>
-                  <h1>A S S I G N M E N T</h1>
-                  <p>{courseKey}</p>
+                  <h1>A S S I G N M E N T S</h1>
+                  <p>{assignments}</p>
                 </div>
               </div>
             </div>
@@ -242,8 +281,23 @@ const Courses = (props) => {
       {typeof courseIdredux !== 'object' &&
         user.userInfo.user.id !== courseClickUserId && (
           <div className={styles.courseInfo2}>
+            <div>
+            <h3>Course Name</h3>
+            <p>{courseInfo[0]?.courseName}</p>
+            </div>
+            <div>
+            <h3>Teacher</h3>
+            <p>{courseInfo[0]?.fullName}</p>
+            </div>
+            <div>
+            <h3>Teacher Email</h3>
+            <p>{courseInfo[0]?.email}</p>
+            </div>
+            <div>
             <h3>Description</h3>
             <p>{courseDescription}</p>
+            </div>
+            
           </div>
         )}
     </div>

@@ -155,19 +155,26 @@ const Dashboard=(props)=> {
           <h1>Published Classes</h1>
           <button onClick={createCourseHandler}>Create Class</button>
           </div>
+          <hr style={{marginLeft:'20px'}}></hr>
+
           <div  className={styles.joinedCourses}>  
-            {courses.length === 0 && <div className={styles.no}><p>No Class Joined Yet</p></div>}
+            {courses.length === 0 && <div className={styles.no}><p>No Class Created Yet</p></div>}
             {courses.map((item) => {
               return( 
-              <div onClick={(e)=>{
+              <div  onClick={(e)=>{
               dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
               dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
               // console.log(item.userId)
               navigate("/courses")}} className={styles.joinedList}>
+                <div className={styles.subMain}>
                 {item.imageUrl !== "" &&
                   <img src={item.imageUrl}></img>
                 }
+                <div className={styles.h2}>
                 <h2>{item.courseName}</h2>
+
+                </div>
+                </div>
               </div>
               )})}     
           </div>
@@ -177,6 +184,7 @@ const Dashboard=(props)=> {
         <h1>Joined Classes</h1>
         <button onClick={joinhandle}>Join Class</button>
         </div>
+        <hr style={{marginLeft:'20px'}}></hr>
         <div className={styles.joinedCourses}>  
             {courseJoin.length === 0 && <div className={styles.no}><p>No Class Joined Yet</p></div>}
             {courseJoin.map((item) => {
@@ -187,16 +195,24 @@ const Dashboard=(props)=> {
                 dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
                 dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
                 navigate("/courses")}}>
+                  <div className={styles.subMain}>
                 {item.imageUrl !== "" &&
                   <img src={item.imageUrl}></img>
                 }
+                <div className={styles.h2}>
                 <h2>{item.courseName}</h2>
+                </div>
+                </div>
               </div>:
-              <div className={styles.joinedList2}  onClick={(e)=>{toast.error("You're blocked by the teacher", { position: toast.POSITION.TOP_RIGHT, });}}>
+              <div className={styles.joinedList}  onClick={(e)=>{toast.error("You're blocked by the teacher", { position: toast.POSITION.TOP_RIGHT, });}}>
+                <div className={styles.subMain}>
                 {item.imageUrl !== "" &&
-                  <img src={item.imageUrl}></img>
+                  <img className={styles.imgg} src={item.imageUrl}></img>
                 }
+                </div>
+                <div className={styles.h2}>
                 <h2>{item.courseName}</h2>
+                </div>
               </div>
               })}     
           </div>

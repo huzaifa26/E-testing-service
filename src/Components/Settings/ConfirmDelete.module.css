@@ -28,9 +28,9 @@
     flex-direction: column;
     justify-content: space-between;
   }
-  .modalContainer h1
+  .modalContainer h3
   {
-    margin-top: 20px;
+    margin-top: 13px !important;
   }
   .buttonHolder
   {

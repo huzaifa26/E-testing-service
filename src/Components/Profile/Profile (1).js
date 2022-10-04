@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import styles from './Profile.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import {Storage} from "../Utils/firebase";
-import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
+import {ref,uploadBytes,getDownloadURL,uploadBytesResumable} from "firebase/storage"
 import { useRef } from 'react';
 import axios from 'axios';
 import {ToastContainer, toast } from 'react-toastify';
@@ -34,20 +34,55 @@ const Profile=() => {
     const [image , setImage] = useState('');
     const [imageURL , setImageURL] = useState('');
 
-    const imageHandler= async (e)=>{
+    const fileHandler= async (e)=>{
         setImage(e.target.files[0]);
-        console.log(e.target.files);
-        
+        const last_dot = e.target.files[0].name.lastIndexOf('.')
+        const ext = e.target.files[0].name.slice(last_dot + 1)
+        const name = e.target.files[0].name.slice(0, last_dot)
+  
         if(image == null)
             return;
-
-        const storageRef = ref(Storage, `/courseImages/${e.target.files[0].name}`);
-        const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
-        
-        getDownloadURL(ref(Storage, `/courseImages/${e.target.files[0].name}`)).then((url) => {
-            console.log(url);
-            setImageURL(url);
-        });
+  
+        toast(0,{autoClose:false, toastId: 1})
+  
+        try{
+          console.log("uploading")
+          const storageRef = ref(Storage, `/courseImages/${e.target.files[0].name}`);
+          const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
+          console.log("uploaded");
+          uploadTask.on('state_changed', 
+          (snapshot) => {
+            const p = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            toast.update(1, {
+              // position: toast.POSITION.TOP_CENTER,
+              render: 'Uploading ' + p.toFixed(0) + '%',
+            });
+            switch (snapshot.state) {
+              case 'paused':
+                console.log('Upload is paused');
+                break;
+              case 'running':
+                console.log('Upload is running');
+                break;
+            }
+          }, 
+          (error) => {
+              console.log(error);
+          }, 
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              setImageURL(url);
+              toast.update(1, {
+                type: toast.TYPE.SUCCESS,
+                render: 'File uploaded',
+                autoClose:1000
+              });
+            });
+          }
+        );
+      }catch(err){
+          console.log(err);
+      }
     }
 
     const editUserFormSubmitHanlder=(e)=>{
@@ -103,7 +138,7 @@ const Profile=() => {
     }
 
 
-    console.log(user.user);
+    console.log(user.user.userImg);
 
   return (
     <div className={styles.main}>
@@ -146,7 +181,7 @@ const Profile=() => {
         </div>
         <div className={styles.chooseImg}>
             <label for="files" class="btn">Change Image</label>
-            <input onChange={imageHandler} id="files" style={{visibility:"hidden"}} type="file" accept="image/png, image/gif, image/jpeg"/>
+            <input onChange={fileHandler} id="files" style={{visibility:"hidden"}} type="file" accept="image/png, image/gif, image/jpeg"/>
         </div>
     </div>
     </div>

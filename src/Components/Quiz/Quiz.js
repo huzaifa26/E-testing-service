@@ -194,13 +194,7 @@ const getQuestion = (question) => {
   {
     setTotalPoints((state) => state + parseInt(question.points))
   }
- 
 }
-useEffect(() => {
-  
-console.log(quizQuestions)
-}, [quizQuestions])
-
 
 const getQuestionFromPool = (question) =>
 {
@@ -304,7 +298,6 @@ const hidePreviewComponent=useCallback(()=>{
 },[preview])
 
 useEffect(()=>{
-  // console.log("------------------------------------------------")
     axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
     ).then((res)=>{
       console.log(res)
@@ -348,11 +341,8 @@ return (
             <TableCell colspan="7" style={{ "text-align": "center", }}>No Quiz Uploaded yet</TableCell>
           </TableRow>}
 
-            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>
-            (
-
+            {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>(
                 <QuizTable index={index} data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={false} />
-
             ))}
           </TableBody>
         </Table>

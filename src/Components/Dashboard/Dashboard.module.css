@@ -10,17 +10,15 @@ h2{
 
 .joinedHeader{
     display: flex;
-    background-color: white;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
+    padding:10px 30px 20px 30px;
     margin: 15px 15px 0px 15px;
     overflow-wrap: break-word;
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
     background-clip: border-box;
     border: 0px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.55rem;
-    box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
 
 }
 
@@ -90,92 +88,112 @@ h2{
     font-weight: 700;
 }
 .joinedCourses{
-    background-color: white;
-    padding: 20px;
-    display: flex;
-    min-height: 300px;
-    justify-content:flex-start;
+    /* background-color: white; */
+    padding: 40px 0px 20px 0px;
+    /* justify-content:space-between; */
     flex-wrap: wrap;
-    margin: 15px 15px 20px 15px;
+    margin: 15px 15px 0px 15px;
     gap: 30px;
+    row-gap: 50px;
+    overflow-wrap: break-word;
+    /* background-color: rgb(255, 255, 255); */
+    background-clip: border-box;
+    border: 0px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.55rem;
+    /* box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem; */
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    /* margin-left: -24px; */
+    
+}
+
+.joinedList{
+    color: rgba(0, 0, 0, 0.87);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    display: flex;
+    flex-direction: column;
+    /* flex-grow: 1; */
+    /* position: relative; */
+    min-width: 0px;
     overflow-wrap: break-word;
     background-color: rgb(255, 255, 255);
     background-clip: border-box;
     border: 0px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.55rem;
+    border-radius: 0.75rem;
     box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
-
-    
+    overflow: visible;
+    height: 100%;
+    min-width: 23%;
 }
 
+.subMain
+{
+    padding: 1rem;
+    opacity: 1;
+    background: transparent;
+    color: rgb(52, 71, 103);
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.joinedList img{
+    /* padding-top: 16px;
+    padding-bottom: 16px;
+    padding-right: 4px; */
+    margin-top: -40px;
+    height: 12.5rem;
+    opacity: 1;
+    /* background: linear-gradient(195deg, rgb(73, 163, 241), rgb(26, 115, 232)); */
+    color: rgb(52, 71, 103);
+    border-radius: 0.4rem;
+    /* box-shadow: rgb(0 0 0 / 14%) 0rem 0.25rem 1.25rem 0rem, rgb(0 187 212 / 40%) 0rem 0.4375rem 0.625rem -0.3125rem;; */
+    box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
+
+    width: 240px;
+    height: 170px;
+}
+.joinedList .h2
+{
+    padding: 24px 8px 8px;
+    opacity: 1;
+    background: transparent;
+    color: rgb(52, 71, 103);
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    
+}
 .joinedCourses div{
     cursor: pointer;
 }
 
-.joinedList2{
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    height: 250px;
+
+.imgg{
+    margin-top: -40px;
+    height: 12.5rem;
+    opacity: 1;
+    /* background: linear-gradient(195deg, rgb(73, 163, 241), rgb(26, 115, 232)); */
+    color: rgb(52, 71, 103);
+    border-radius: 0.4rem;
+    /* box-shadow: rgb(0 0 0 / 14%) 0rem 0.25rem 1.25rem 0rem, rgb(0 187 212 / 40%) 0rem 0.4375rem 0.625rem -0.3125rem;; */
+    box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
+
     width: 240px;
-    display: flex;
-    /* z-index: 7; */
-    align-items: center;
-    justify-content: center;
-}
-
-.joinedList2{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.joinedList2 img{
+    height: 170px;
     /* object-fit: cover; */
-    width: 100%;
+    /* width: 100%; */
     /* z-index: 2; */
-    -webkit-filter: blur(5px);
-    filter: blur(5px);
-    height: 70%;
+    -webkit-filter: blur(1px);
+    filter: blur(2px);
+    /* height: 70%; */
     border-radius: 5px 5px 0px 0px;
     background-color: grey;
 }
-.joinedList2 h2{
-    height: 30%;
-    display:flex ;
-    align-items:center ;
-    justify-content:center ;
 
-}
-.joinedList{
-    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    height: 250px;
-    width: 240px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.joinedList{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.joinedList img{
-    /* object-fit: cover; */
-    width: 100%;
-    height: 70%;
-    border-radius: 5px 5px 0px 0px;
-    background-color: grey;
-}
-.joinedList h2{
-    height: 30%;
-    display:flex ;
-    align-items:center ;
-    justify-content:center ;
-
-}
 .no
 {
     display: flex;
@@ -184,8 +202,48 @@ h2{
     width: 100%;
 }
 
-@media only screen and (max-width: 591px) {
-    .joinedCourses{
-        justify-content: center;
-    }
-  }
+@media only screen and (max-width: 1468px) {
+   
+    .joinedList{
+        width: 48%;
+    } 
+}
+@media only screen and (max-width: 1049px) {
+   
+    
+    .joinedList{
+        width: 100%;
+    } 
+/* .joinedList img{
+    height: 220px;
+    width: 54%;
+} */
+}
+@media only screen and (max-width: 1049px) {
+   
+    
+.joinedList img{
+    height: 220px;
+    width: 300px;
+}
+}
+
+@media only screen and (max-width: 453px) {
+   
+.joinedHeader h1{
+font-size: 1rem;
+width: 144px;
+text-overflow: clip;
+}
+.joinedHeader button{
+    padding: 0.525rem 0.5rem;
+}
+.joinedHeader{
+    padding: 30px 10px;
+}
+.joinedList img{
+    height: 180px;
+    width: 260px;
+}
+
+}

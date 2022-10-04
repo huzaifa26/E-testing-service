@@ -32,7 +32,7 @@ function ConfirmDelete({close}) {
         <div className={styles.modalBackground}></div>
         <div className={styles.modalContainer}>
             
-            <h1 style={{textAlign:'center'}}>Are you sure you want to delete this course</h1>
+            <h3 style={{textAlign:'center'}}>Are you sure you want to delete this course</h3>
             <div className={styles.buttonHolder}>
             <button onClick={() => close(false)} className={styles.cancel}>Cancel</button>
             <button onClick={handleDelete} className={styles.delete}>Delete</button>

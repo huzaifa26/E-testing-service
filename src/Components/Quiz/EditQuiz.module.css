@@ -553,3 +553,20 @@ padding: 10px;
   text-decoration: none;
   font-family: 'Roboto Flex', sans-serif;
 }
+
+
+@media only screen and (max-width: 406px) {
+.main{
+    padding: 5px;
+    margin: 5px;
+    min-height: 110vh;
+    padding: 10px 0 30px 0;
+    
+}}
+@media only screen and (max-width: 360px) {
+.main{
+    padding: 0px;
+    margin: 2px;
+    padding: 10px 0 40px 0;
+}
+}

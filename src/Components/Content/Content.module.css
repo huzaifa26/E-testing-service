@@ -231,3 +231,35 @@
     /* height: 90%; */
     text-decoration: none;
 }
+
+@media all and (max-width: 650px) {
+  .headss
+  {
+    overflow-x: auto;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.75rem;
+    box-shadow: none;
+    overflow: auto;
+
+  }
+  .container
+  {
+    overflow-x: auto;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.75rem;
+    box-shadow: none;
+    overflow: auto;
+
+
+  }
+  .table
+  {
+    overflow-x: auto;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.75rem;
+    box-shadow: none;
+    overflow: auto;
+
+  }
+  
+}

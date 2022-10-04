@@ -57,6 +57,7 @@ function PoolQuestions() {
   
     let url="http://localhost:5000/api/poolQuestions/";
       axios.post(url,question,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+        console.log(res)
         if(res.status === 200)
         {
             toast.success('Added', {

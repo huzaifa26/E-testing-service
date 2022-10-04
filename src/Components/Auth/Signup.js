@@ -58,6 +58,7 @@ function Signup() {
             toast.success('Check your Email to verify', {
               position: toast.POSITION.TOP_RIGHT,
             });
+            navigate('/');
           } else if (response?.response?.status === 400) {
             toast.error('Account with this email already exists', {
               position: toast.POSITION.TOP_RIGHT,

@@ -17,6 +17,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import KeyIcon from '@mui/icons-material/Key';
 import ConfirmDelete from './ConfirmDelete';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function Setting() {
 
@@ -135,8 +136,12 @@ function Setting() {
                 <div className={styles.imageDetails}>
                         <TextField id="outlined-basic" value={courseName} onChange={(e) => setCourseName(e.target.value)} variant="outlined" className={styles.inputMui} size="small" required />
                 </div>
-                <div className={styles.imageDetails}>
+                <div style={{display:'flex'}}  className={styles.imageDetails}>
                         <TextField disabled id="outlined-basic" value={courseInfo[0]?.courseKey} variant="outlined" size="small" className={styles.inputMui} required />
+                        <div title='Change Course Key' onClick={changeKey}>
+                        <KeyIcon  style={{ height:'20px',marginTop:'10px',marginLeft:'10px' }} />
+
+                        </div>
                 </div>
                 <div className={styles.imageDetails}>
                     <TextareaAutosize
@@ -147,6 +152,7 @@ function Setting() {
                     onChange={(e) => setCourseDescription(e.target.value)}
                     style={{ width: '80%', minWidth:'200px',marginBottom:'30px' }}
                     />
+                    
                 </div>
             </div>
 
@@ -154,34 +160,24 @@ function Setting() {
 
         <div className={styles.three}>
         
-            <div className={styles.list} onClick={changeKey}>
-                <KeyIcon style={{ height:'20px' }} />
-                <p> Change course key</p>
-            </div>
-            <hr className={styles.hr2}></hr>
-
-            <div className={styles.list} onClick={manageStudents}>
-                <PersonIcon style={{ height:'20px' }} />
-                <p> Manage Students</p>
-            </div>
-            <hr className={styles.hr2}></hr>
-            
             <div className={styles.list} onClick={() => setConfirmDelete(true)}>
-                <DeleteIcon style={{ height:'20px' }} />
-                <p> Delete this course</p>
+                {/* <DeleteIcon style={{ height:'20px' }} /> */}
+                {/* <p> Delete this course</p> */}
+                <Button sx={{backgroundColor:'transparent'}} variant="raised">Delete Course</Button>
+
             </div>
-            <hr className={styles.hr2}></hr>
+            {/* <hr className={styles.hr2}></hr> */}
             
         </div>
     
     </div>
 
     <div className={styles.footer}>
-        <hr className={styles.hr}></hr>
         <div className={styles.buttonContainer}>
-            <button  className={styles.save} onClick={handleSave}>
+            {/* <button  className={styles.save} >
             Update Course Detials
-            </button>
+            </button> */}
+            <Button variant="contained"  onClick={handleSave}>Update Course Detials</Button>
         </div>
     </div>
 
