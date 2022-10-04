@@ -188,7 +188,7 @@ const Navbar2= (props) => {
                   <img src={user?.userInfo?.user?.userImg} />
               </div>
               <div title='Logout'>
-              <LogoutIcon onClick={logout}/>
+              <LogoutIcon className="anc4" onClick={logout}/>
               </div>
               <MenuIcon className='anc1' onClick={showSidebar} />
             </div>

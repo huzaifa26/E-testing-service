@@ -46,7 +46,6 @@ function EditQuiz() {
   function showMainQuiz() {
   console.log('hello')
   navigate("/courses/quiz");
-    
   }
   
   const saveQuiz = ()=>
@@ -112,12 +111,10 @@ function EditQuiz() {
 
   let url="http://localhost:5000/api/editQuiz/";
     axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-      console.log(res)
       if(res.status === 200)
       {
         toast.success('Updated', {
           position: toast.POSITION.TOP_CENTER,
-          
         });
         navigate('/courses/quiz')
       }
@@ -127,12 +124,6 @@ function EditQuiz() {
         position: toast.POSITION.TOP_CENTER,
       });
     })
-    navigate('/courses/quiz')
-    toast.success('Updated', {
-      position: toast.POSITION.TOP_CENTER,
-      
-    });
-
   }
   
   const removeQuestion = (index,points) => {

@@ -1,16 +1,15 @@
-.main
-{
-    background-color: white;
-    padding: 30px;
-    margin: 15px;
+.main {
+    background-color: aqua !important;
+    padding: 1.953125vw;
+    margin: 0.9765625vw;
     min-height: 86vh;
     height: 96%;
 }
-.main2
-{
+
+.main2 {
     /* background-color: white; */
-    margin: 15px;
-    padding: 10px 15px 15px 15px;
+    margin: 0.9765625vw;
+    padding: 0.6510416666666666vw 0.9765625vw 0.9765625vw 0.9765625vw;
 }
 
 .heads
@@ -712,6 +711,7 @@ padding: 10px;
   color: rgba(0, 0, 0, 0.87);
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   display: flex;
+  overflow: auto;
   flex-direction: column;
   position: relative;
   min-width: 0px;
@@ -784,3 +784,30 @@ padding: 10px;
     text-decoration: none;
     color: rgb(255, 255, 255);
 }
+@media only screen and (max-width: 406px) {
+    .main{
+        padding: 5px;
+        margin: 5px;
+        min-height: 110vh;
+        padding: 10px 0 30px 0;
+        
+    }}
+    @media only screen and (max-width: 360px) {
+    .main{
+        padding: 0px;
+        margin: 2px;
+        padding: 10px 0 40px 0;
+    }
+    }
+
+    @media only screen and (max-width: 930px) {
+        .okok {
+            width: 65vw !important;
+        }
+      }
+      
+      @media only screen and (max-width: 765px) {
+        .okok {
+            width: 92vw !important;
+        }
+      }

@@ -18,7 +18,11 @@ function PoolMain() {
    const [triggerDelete,setTriggerDelete] = useState(false)
 
    useEffect(()=>{
-    if(user.userInfo.hasOwnProperty("user") === true){
+    fetchPools()
+    },[])
+
+   const fetchPools = () =>
+    {
       let link='http://localhost:5000/api/getCourseCategories/' + courseIdredux;
       axios.get(link,{withCredentials:true}).then((res)=>{
         console.log(res.data.data)
@@ -27,13 +31,13 @@ function PoolMain() {
         console.log(err);
       })
     }
-    },[showModal,triggerDelete])
 
     const openModalHandler=()=>{
         setShowModal(true);
       }
       const closeModalHandler=()=>{
         setShowModal(false);
+        fetchPools()
       }
 
     const handleClick = (value) =>
@@ -53,7 +57,7 @@ function PoolMain() {
           toast.success('Category deleted', {
           position: toast.POSITION.TOP_CENTER,
           });
-          setTriggerDelete((state) => !state )
+          fetchPools()
         }
       }).catch((err)=>{
           console.log("err")

@@ -31,7 +31,7 @@ function ImportPool({close,getQuestion}) {
     }
     
     if(user.userInfo.hasOwnProperty("user") === true){
-        axios.get("http://localhost:5000/api/poolQuestions2/" + user.userInfo.user.id+"/"+courseIdredux,{withCredentials:true}).then((res)=>{
+        axios.get("http://localhost:5000/api/poolQuestions3/" + user.userInfo.user.id+"/"+courseIdredux,{withCredentials:true}).then((res)=>{
         console.log(res.data)
         setPoolQuestions(res.data);
         }).catch((err)=>{

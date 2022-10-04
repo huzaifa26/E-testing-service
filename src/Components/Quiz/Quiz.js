@@ -29,9 +29,6 @@ const [value, setValue] = useState('1');
 const [createQuiz, setCreateQuiz] = useState(false);
 const [add, setAdd] = useState(false);
 const [importPool,setImportPool] = useState(false)
-const [preview,setPreview] = useState(false)
-const [previewDetail,setPreviewDetail] = useState({})
-
 const [quizQuestions,setQuizQuestions]=useState([]);
 const [title, setTitle] = useState('');
 const [time, setTime] = useState(30);
@@ -45,33 +42,13 @@ const [endTime,setEndTime] = useState('')
 const [totalQuizzes,setTotalQuizzes] = useState([])
 const [totalPoints,setTotalPoints] = useState(0)
 const [page, setPage] = useState(0);
-const [rowsPerPage, setRowsPerPage] = useState(7);
-const [triggerDelete,setTriggerDelete] = useState(false)
-const [changeState,setChangeState]=useState(false);
-const navigate = useNavigate();
+const [rowsPerPage, setRowsPerPage] = useState(6);
 
 
 
 function handleChange(event, newValue) {
   setValue(newValue);
   setAdd(false)
-}
-
-function handlePreview(item){
-  // setPreview(true)
-  setPreviewDetail(item)
-  console.log(item)
-  console.log("item-------------------------------")
-  // navigate("/courses/preview",{state:{data:item,handlePreviewStart:hidePreviewComponent,ok:false}})
-  navigate("/courses/preview",{state:{data:item}})
-  // navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:props.data.id,afterQuiz:true,cancel:true}})
-
-}
-function handleEdit(item)
-{
-  // setPreviewDetail(item)
-  // console.log(previewDetail)
-  navigate("/courses/editQuiz", { state: {previewDetails:item}});
 }
 
 function showAddQuiz() {
@@ -115,7 +92,7 @@ const saveQuiz = ()=>
     setValue('1')
     return
   }
-  setCreateQuiz(false);
+  
 
   let data =  {
     title:title,
@@ -153,8 +130,17 @@ const saveQuiz = ()=>
   let url="http://localhost:5000/api/quiz/";
       axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
         console.log(res)
-        setChangeState(!changeState)
-        
+        setCreateQuiz(false);
+        setTime(30)
+        setTitle('')
+        setCopyQuestion(false)
+        setSeeAnswer(false)
+        setQuestionShuffle(false)
+        setQuizQuestions([])
+        setDetectMobile(false)
+        setStartTime('')
+        setEndTime('')
+        fetchQuiz()
       }).catch((err)=>{
         console.log(err)
         toast.error('Failed', {
@@ -262,12 +248,7 @@ const handleDetectMobile = (event) =>
 const [quizData,setQuizData] = useState([])
 const [quizQuestionsModal,setQuizQuestionsModal] = useState(false)
 
-const handleStartQuiz = (item) =>
-{
-  console.log(item)
-  setQuizData(item)
-  setQuizQuestionsModal(true)
-}
+
 
 const handleChangePage = (event, newPage) => {
   setPage(newPage);
@@ -278,34 +259,41 @@ const handleChangeRowsPerPage = (event) => {
   setPage(0);
 };
 
-const handleDelete = (item) =>
-{
-  let data = {id:item.id}
-
-  let url= "http://localhost:5000/api/quizDelete/";
-  axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
-    setTriggerDelete((state) => !state)
-    if (res.status === 200) {
-      toast.success('Deleted', {position: toast.POSITION.TOP_RIGHT,});
-    }
+const fetchQuiz =  () =>{
+  console.log("11111111111111111111111111111111111111")
+  axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
+  ).then((res)=>{
+    console.log(res)
+    setTotalQuizzes(res.data.data)
   }).catch((err)=>{
     console.log(err);
   })
 }
 
-const hidePreviewComponent=useCallback(()=>{
-  setPreview(false)
-},[preview])
 
-useEffect(()=>{
-    axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
-    ).then((res)=>{
-      console.log(res)
-      setTotalQuizzes(res.data.data)
-    }).catch((err)=>{
+const handleEdit = (item) => {
+  console.log('edited')
+}
+
+const handleDelete = (item) => {
+  let data = { id: item.id }
+  let url = "http://localhost:5000/api/quizDelete/";
+  axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
+    if (res.status === 200) {
+      toast.success('Deleted', { position: toast.POSITION.TOP_RIGHT, });
+    }
+      console.log('deleted')
+      fetchQuiz()
+    }).catch((err) => {
       console.log(err);
     })
-},[createQuiz,triggerDelete,hidePreviewComponent]);
+}
+
+useEffect(()=>{
+  console.log("----------------------------------------------")
+   fetchQuiz()
+   console.log("222222222222222222222222222222222222")
+},[]);
 
 return (
 <div className={createQuiz === true ? styles.main: styles.main2} >
@@ -342,7 +330,7 @@ return (
           </TableRow>}
 
             {totalQuizzes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item,index) =>(
-                <QuizTable index={index} data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={false} />
+                <QuizTable handleEdit={handleEdit} handleDelete={handleDelete} index={index} data={item} id={item.id}  quizTitle={item.quizTitle} startTime={item.startTime} endTime={item.endTime} student={false} />
             ))}
           </TableBody>
         </Table>
@@ -424,29 +412,7 @@ return (
 
       <TabPanel sx={{padding:'20px'}} className={styles.hello} value="1" index={0}>
         <TextField id="outlined-basic" label="Quiz Title" variant="outlined" sx={{ marginLeft: '-22px', marginTop: '10px' }} size="small" value={title} onChange={(e) => setTitle(e.target.value)} required />
-        <p className={styles.instructions}>
-          <b>Quiz Instructions:</b>
-        </p>
-        <div className={styles.infolist}>
-          <div className={styles.info}>
-            1. You will have only <em>{time} seconds&nbsp;</em> per each
-            question.
-          </div>
-          <div className={styles.info}>
-            2. Once you select your answer, it can't be undone.
-          </div>
-          <div className={styles.info}>
-            3. You can't select any option once time goes off.
-          </div>
-          <div className={styles.info}>
-            4. You can't exit from the Quiz
-          </div>
-          <div className={styles.info}>
-            5. A complete quiz log will be created of your activities
-          </div>
-        </div>
-
-        <p className={styles.instructions}>
+        <p style={{marginBottom:'20px'}} className={styles.instructions}>
           <b>Options</b>
         </p>
 
@@ -477,14 +443,7 @@ return (
           <label for="checkbox-1">Shuffle Answers</label>
         </div>
 
-        <div className={styles.Options1}>
-          <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleSeeAnswer} />
-          <label for="checkbox-1">
-            Let Students See Correct Answer
-          </label>
-        </div>
-
-        <div className={styles.Options1}>
+        <div style={{marginBottom:'20px'}} className={styles.Options1}>
           <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleDetectMobile}/>
           <label for="checkbox-1">Detect Mobile</label>
         </div>

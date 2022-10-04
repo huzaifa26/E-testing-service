@@ -15,6 +15,7 @@
   color: rgba(0, 0, 0, 0.87);
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   display: flex;
+  overflow: auto;
   flex-direction: column;
   position: relative;
   min-width: 0px;
@@ -129,4 +130,16 @@
   text-decoration: none !important;
   color: rgb(123, 128, 154) !important;
   font-weight: 600 !important;
+  }
+
+  @media only screen and (max-width: 930px) {
+    .okok {
+        width: 65vw !important;
+    }
+  }
+  
+  @media only screen and (max-width: 765px) {
+    .okok {
+        width: 92vw !important;
+    }
   }

@@ -30,16 +30,8 @@ function QuizTable(props) {
   }
 
   const handleDelete = (item) => {
-    let data = { id: item.id }
-    let url = "http://localhost:5000/api/quizDelete/";
-    axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
-      // setTriggerDelete((state) => !state)
-      if (res.status === 200) {
-        toast.success('Deleted', { position: toast.POSITION.TOP_RIGHT, });
-      }
-    }).catch((err) => {
-      console.log(err);
-    })
+    
+    props.handleDelete(item)
   }
 
   const user = useSelector(state => state.user);

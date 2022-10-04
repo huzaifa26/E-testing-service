@@ -23,26 +23,35 @@ function PoolQuestions() {
   const [editDetail,setEditDetail] = useState({})
 
 
-  useEffect(() => {
+
+  const fetchPoolsQuestions = () =>
+  {
+    console.log('i ran')
     if(user.userInfo.hasOwnProperty("user") === true){
-        axios.get("http://localhost:5000/api/poolQuestions2/" + user.userInfo.user.id+"/"+courseIdredux,{withCredentials:true}).then((res)=>{
-        setPoolQuestions(res.data);
-        }).catch((err)=>{
-        console.log(err);
-        })
-    }
+      axios.get("http://localhost:5000/api/poolQuestions2/" + location.state.item.id+"/"+courseIdredux,{withCredentials:true}).then((res)=>{
+      setPoolQuestions(res.data);
+      console.log('i ran')
+      }).catch((err)=>{
+      console.log(err);
+      })
+  }
+  }
+  
+  useEffect(() => {
     
-  }, [triggerDelete])
+    fetchPoolsQuestions()
+  }, [])
 
   const deleteQuestionHanler=(id)=>{
     console.log(id)
     let data={id:id}
     if(user.userInfo.hasOwnProperty("user") === true){
       axios.post("http://localhost:5000/api/deletepoolQuestions",data,{withCredentials:true}).then((res)=>{
-      setTriggerDelete((state) => !state)
+      
       toast.success('Question Deleted', {
           position: toast.POSITION.TOP_RIGHT,
       })
+      fetchPoolsQuestions()
       }).catch((err)=>{
         toast.error('Question Deletion Failed', {
           position: toast.POSITION.TOP_RIGHT,
@@ -63,8 +72,8 @@ function PoolQuestions() {
             toast.success('Added', {
               position: toast.POSITION.TOP_CENTER,
             });
-            setTriggerDelete((state) => !state)
-        }
+          }
+          fetchPoolsQuestions()
       }).catch((err)=>{
         console.log(err)
         toast.error('Failed', {
@@ -103,7 +112,7 @@ function PoolQuestions() {
         toast.success('Edited', {
         position: toast.POSITION.TOP_CENTER,
         });}
-      setTriggerDelete((state) => !state)
+        fetchPoolsQuestions()
       close()
     }).catch((err)=>{
         console.log("err")
@@ -125,7 +134,8 @@ function PoolQuestions() {
       <div className={styles.Main2}>
 
         <div className={styles.left}>
-        {poolQuestion.filter((data) => {return +data.poolCategoryId === location.state.item.id}).map((item,index) => {
+          {(poolQuestion.length === 0 && !add) && <p style={{paddingTop:'22px',paddingLeft:'10px'}}>No questions yet in this pool category</p>}
+        {poolQuestion.map((item,index) => {
         return (editDetail?.id === item.id) ? 
         <EditPool editData={editData} editDetail={item} close={close}/>
         :

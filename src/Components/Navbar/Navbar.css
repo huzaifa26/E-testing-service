@@ -490,6 +490,8 @@
   /* .hamza
   {
     background-color: aquamarine;
+    overflow: auto;
+    width: 300px;
   } */
   /* .mainDiv main {
     position: absolute;
@@ -552,6 +554,8 @@
     /* color: rgb(52, 71, 103); */
     font-weight: 700;
   }
+  .anc4
+  {visibility: hidden;}
 }
 @media only screen and (max-width: 375px) {
   .helll span{
@@ -571,4 +575,7 @@
     font-weight: 700;
   }
 
+  .circularportrait {
+   display: none;
+  }
 }

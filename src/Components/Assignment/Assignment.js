@@ -29,7 +29,7 @@ function Assignment() {
   const [openSubmitResult, setOpenSubmitResult] = useState(false)
   const [detail, setDetail] = useState({})
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
   const [assignments, setAssignments] = useState([])
   const [deleteme, setDelete] = useState(false)
 
@@ -49,7 +49,7 @@ function Assignment() {
   useEffect(() => {
     console.log(courseIdredux)
     console.log('-------------------')
-    axios.get("http://localhost:5000/api/getAssignments/" + courseIdredux + "/" + user.userInfo.user.id, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } })
+    axios.get("http://localhost:5000/api/getAssignments/" + courseIdredux + "/" + user.userInfo.user.id,  { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } })
     .then((res) => {
       console.log(res.data.data)
       setAssignments(res.data.data)

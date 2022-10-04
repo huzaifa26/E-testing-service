@@ -1,16 +1,14 @@
 
-.Main
-{
-    display: flex;
-    /* background-color: white; */
-    /* align-items: center; */
-    flex-direction: column;
-    padding: 7px 15px 15px 15px;
-    margin: 15px;
-    /* min-height: 86vh; */
-    /* height: 96%; */
+.Main {
+  display: flex;
+  /* background-color: white; */
+  /* align-items: center; */
+  flex-direction: column;
+  margin: 0.9765625vw;
+  padding: 0.4557291666666667vw 0.9765625vw 0.9765625vw 0.9765625vw;
+  /* min-height: 86vh; */
+  /* height: 96%; */
 }
-
 
 .buttonHolder
 {
@@ -47,6 +45,7 @@
 .okok
 {
   color: rgba(0, 0, 0, 0.87);
+  overflow: auto;
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   display: flex;
   flex-direction: column;
@@ -175,3 +174,15 @@
 /* .button1 svg{
   padding-top: 3px;
 } */
+
+@media only screen and (max-width: 930px) {
+  .okok {
+      width: 65vw !important;
+  }
+}
+
+@media only screen and (max-width: 765px) {
+  .okok {
+      width: 92vw !important;
+  }
+}
