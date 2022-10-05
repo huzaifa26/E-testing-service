@@ -5,9 +5,10 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import EditIcon from '@mui/icons-material/Edit';
 import { useSelector } from 'react-redux';
 import styles from './Assignment.module.css'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, Paper, IconButton } from '@mui/material';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import Stack from '@mui/material/Stack';
 import moment from "moment";
 
 export default function AssignmentRow(props) {
@@ -45,15 +46,19 @@ export default function AssignmentRow(props) {
                 <TableCell className={styles.ind} component="th">{props.item.endTime}</TableCell>
                 {user.userInfo.user.id !== courseClickUserId && <TableCell component="th" className={styles.ind}>{props.item.submitted === 0?"Not Submitted":"Submitted"}</TableCell>}
                 <TableCell component="th" align='left'>
-                    {user.userInfo.user.id == courseClickUserId && <EditIcon style={{ color: '#2A84EB' }} onClick={() => props.handleEdit(props.item)} />}
-                    {user.userInfo.user.id == courseClickUserId && <DeleteIcon style={{ color: '#E53472' }} onClick={() => { props.handleDelete(props.item) }} />}
-                    {user.userInfo.user.id == courseClickUserId && <ListAltIcon style={{ color: '#293462' }} onClick={() => { props.handleResult(props.item) }} />}
+                <Stack direction="row" spacing={0} sx={{marginTop:'-15px'}}>
+                {user.userInfo.user.id == courseClickUserId && <IconButton color="primary" aria-label="add to shopping cart">
+                  <EditIcon style={{ color: '#2A84EB' }} onClick={() => props.handleEdit(props.item)}/> 
+                  </IconButton>}
+                    {/* {user.userInfo.user.id == courseClickUserId && <EditIcon style={{ color: '#2A84EB' }} onClick={() => props.handleEdit(props.item)} />} */}
+                    {user.userInfo.user.id == courseClickUserId && <IconButton color="primary" aria-label="add to shopping cart"><DeleteIcon style={{ color: '#E53472' }} onClick={() => { props.handleDelete(props.item) }} /></IconButton>}
+                    {user.userInfo.user.id == courseClickUserId && <IconButton color="primary" aria-label="add to shopping cart"><ListAltIcon style={{ color: '#293462' }} onClick={() => { props.handleResult(props.item) }} /></IconButton>}
 
-                    {user.userInfo.user.id !== courseClickUserId && <ArrowDownwardIcon style={{ color: '#E53472' }} onClick={() => props.saveFile(props.item)} />}
-                    {(user.userInfo.user.id !== courseClickUserId && timeFinished === false) && <UploadFileIcon style={{ color: '#2A84EB' }} onClick={() => props.handleSubmitAssignment(props.item)} />}
-                    {(user.userInfo.user.id !== courseClickUserId && timeFinished === true) && <UploadFileIcon style={{ color: '#2A84EB',pointerEvents:"none" }} />}
-                    {user.userInfo.user.id !== courseClickUserId && <ListAltIcon style={{ color: '#2A84EB' }} onClick={() => props.handleSubmitResult(props.item)} />}
-
+                    {user.userInfo.user.id !== courseClickUserId && <IconButton color="primary" aria-label="add to shopping cart"><ArrowDownwardIcon style={{ color: '#E53472' }} onClick={() => props.saveFile(props.item)} /></IconButton>}
+                    {(user.userInfo.user.id !== courseClickUserId && timeFinished === false) && <IconButton disabled={true} color="primary" aria-label="add to shopping cart"><UploadFileIcon style={{ color: '#EBEBE4',pointerEvents:"none" }} onClick={() => props.handleSubmitAssignment(props.item)} /></IconButton>}
+                    {(user.userInfo.user.id !== courseClickUserId && timeFinished === true) && <IconButton disabled={true} color="primary" aria-label="add to shopping cart"><UploadFileIcon style={{ color: '#EBEBE4',pointerEvents:"none" }} /></IconButton>}
+                    {user.userInfo.user.id !== courseClickUserId && <IconButton color="primary" aria-label="add to shopping cart"><ListAltIcon style={{ color: '#2A84EB' }} onClick={() => props.handleSubmitResult(props.item)} /></IconButton>}
+                </Stack>
                 </TableCell>
             </TableRow>
         </>

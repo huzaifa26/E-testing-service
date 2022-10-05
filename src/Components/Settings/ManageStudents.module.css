@@ -17,7 +17,6 @@
   display: flex;
   overflow: auto;
   flex-direction: column;
-  position: relative;
   min-width: 0px;
   overflow-wrap: break-word;
   background-color: rgb(255, 255, 255);

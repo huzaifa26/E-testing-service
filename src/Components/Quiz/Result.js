@@ -14,6 +14,7 @@ function Result(props) {
     console.log(location.state.userId)
     console.log('----------------------')
     console.log(location.state.quizId)
+    localStorage.removeItem("counter")
     if(location.state.cancel === true)
   {
     console.log('----------------------------------')

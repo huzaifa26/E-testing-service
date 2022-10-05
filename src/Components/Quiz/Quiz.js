@@ -16,6 +16,7 @@ import Preview from './Preview';
 import { useNavigate } from "react-router-dom";
 import { MathComponent } from 'mathjax-react';
 import QuizTable from './QuizTable';
+import moment from 'moment';
 
 
 function Quiz(props) {
@@ -63,7 +64,7 @@ function showMainQuiz() {
   setTitle('')
   setStartTime('')
   setEndTime('')
-  setTime(1)    
+  setTime(30)    
 }
 
 const saveQuiz = ()=>
@@ -92,7 +93,31 @@ const saveQuiz = ()=>
     setValue('1')
     return
   }
-  
+  // let endTime = endTime
+  // let today = new Date();
+  // today = today.toLocaleString()
+
+  // let QuizFinishTime = new Date(endTime)
+  // QuizFinishTime = QuizFinishTime.toLocaleString()
+
+  // let newQuizFinishTime = moment(QuizFinishTime)
+
+  // if (newQuizFinishTime.isBefore(today) === true) {
+  //   alert("You can't assign End time before today")
+  // }
+
+  // let startTime = startTime
+  // let today2 = new Date();
+  // today2 = today2.toLocaleString()
+
+  // let QuizFinishTime2 = new Date(startTime)
+  // QuizFinishTime2 = QuizFinishTime2.toLocaleString()
+
+  // let newQuizFinishTime2 = moment(QuizFinishTime2)
+
+  // if (newQuizFinishTime2.isBefore(today) === true) {
+  //   alert("You can't assign Start time before today")
+  // }
 
   let data =  {
     title:title,

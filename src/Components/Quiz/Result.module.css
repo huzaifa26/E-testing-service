@@ -148,3 +148,15 @@
     align-items: center;
     padding-right: 10px;
 }
+
+@media all and (max-width: 600px) {
+
+    .Questioncontainer
+{
+    width: 100%;
+}
+.label h1
+{
+    width: 194px;
+}
+}

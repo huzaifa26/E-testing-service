@@ -17,7 +17,7 @@ function Content() {
   const [courseContent,setCourseContent] = useState([])
   const [openModal,setOpenModal] =useState(false)
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [rowsPerPage, setRowsPerPage] = useState(7);
 
 
   const handleChangePage = (event, newPage) => {

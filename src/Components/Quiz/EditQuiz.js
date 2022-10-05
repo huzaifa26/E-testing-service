@@ -111,6 +111,7 @@ function EditQuiz() {
 
   let url="http://localhost:5000/api/editQuiz/";
     axios.post(url,data,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}).then((res)=>{
+      console.log(res)
       if(res.status === 200)
       {
         toast.success('Updated', {
@@ -309,7 +310,7 @@ function EditQuiz() {
   
             {(item.questionImage !== null ) &&
             <div>
-              <img src={item.questionImage} style={{height:'150px',marginBottom:'5px'}} alt="Question Image"/>
+              <img src={item.questionImage} style={{maxWidth:'200px',height:'150px',marginBottom:'5px'}} alt="Question Image"/>
             </div>}
   
             {item.questionType === 'Formula' ? <div style={{display:"flex",justifyContent:'flex-start'}}><MathComponent  tex={item.question} /></div>

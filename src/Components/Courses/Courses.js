@@ -176,7 +176,7 @@ const Courses = (props) => {
       {typeof courseIdredux === 'object' && (
         <>
           <div className={styles.publishedHeader}>
-            <h1>Classes</h1>
+            <h1 className={styles.kaj}>Classes</h1>
           </div>
 
           <div className={styles.publishedCoursesOuter}>
@@ -282,8 +282,8 @@ const Courses = (props) => {
         user.userInfo.user.id !== courseClickUserId && (
           <div className={styles.courseInfo2}>
             <div>
-            <h3>Course Name</h3>
-            <p>{courseInfo[0]?.courseName}</p>
+              <h3>Course Name</h3>
+              <p>{courseInfo[0]?.courseName}</p>
             </div>
             <div>
             <h3>Teacher</h3>
@@ -293,7 +293,7 @@ const Courses = (props) => {
             <h3>Teacher Email</h3>
             <p>{courseInfo[0]?.email}</p>
             </div>
-            <div>
+            <div className={styles.hdh}>
             <h3>Description</h3>
             <p>{courseDescription}</p>
             </div>

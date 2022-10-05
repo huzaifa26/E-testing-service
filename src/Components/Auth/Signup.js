@@ -13,15 +13,18 @@ const MailService = async (data) => {
   console.log("IN MAILSERVICE FUNCTION");
   data.link = 'http://localhost:3000/emailVerification/' + data.id;
   emailjs
-    .send('service_gvyqi7g', 'template_ojllmfn', data, 'PCrkZDdTgRVPTxMHf')
-    .then(
-      (result) => {
-        console.log(result.text);
-      },
-      (error) => {
-        console.log(error.text);
-      }
-    );
+  .send('service_vimsp8b', 'template_n2tq68o', data, '_skPtTuhpdi0bie5x')
+  .then(
+    (result) => {
+      console.log(result.text);
+      toast.success('Check your Email to verify', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    },
+    (error) => {
+      console.log(error.text);
+    }
+  );
 };
 
 function Signup() {
@@ -140,6 +143,7 @@ function Signup() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.confirmpassword}
+              required
             />
             {formik.touched.confirmpassword && formik.errors.confirmpassword ? (
               <p>{formik.errors.confirmpassword}</p>

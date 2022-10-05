@@ -57,7 +57,13 @@ function DisplayQuiz() {
 
     if (location.state.data.detectMobile == 1) { }
 
-    endQuizAfterTimeFinished()
+    axios.get("http://localhost:5000/api/showQuizResult/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true }).then((res) => {
+          if (res.data.length === 0) {
+            endQuizAfterTimeFinished()
+          }
+        }).catch((err) => {
+          console.log(err);
+        })
 
     axios.get("http://localhost:5000/api/getAtempttedQuizQuestions/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true })
       .then((res) => {
@@ -77,18 +83,27 @@ function DisplayQuiz() {
 
         if(location.state.from === "QuizTable")
         {
+          console.log('time set 1')
           if(localStorage.getItem("counter") === undefined)
           {setTime(question?.time);
-          console.log('time of question added undefined')}
+          console.log('time set 2')}
           if(localStorage.getItem("counter") !== undefined)
           {
+            console.log(localStorage.getItem('counter'))
             let oldTime=localStorage.getItem("counter")
             oldTime = JSON.parse(oldTime)
             setTime(()=> +oldTime)
+            console.log('time set 3')
+          }
+          if(localStorage.getItem("counter") === null)
+          {
+            setTime(question?.time);
+            console.log('time set 4')
           }
         }
         else
         {
+          console.log('time set 5')
           let oldTime=localStorage.getItem("counter")
           oldTime = JSON.parse(oldTime)
           setTime(()=> +oldTime)
@@ -100,7 +115,7 @@ function DisplayQuiz() {
     // TO PREVENT GOING BACK FROM QUIZ
     window.history.pushState(null, document.title, window.location.href);
     window.addEventListener('popstate', function (event) {
-      window.history.pushState(null, document.title, window.location.href);
+    window.history.pushState(null, document.title, window.location.href);
     });
   }, [])
 
@@ -130,7 +145,6 @@ function DisplayQuiz() {
       })
 
       if (quizLengthRef.current === 0) {
-        console.log('i ran')
         axios.post('http://localhost:5000/api/addQuizResult', { userId: data.userId, quizId: data.quizId }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
         // localStorage.removeItem('counter');
           axios.get("http://localhost:5000/api/showQuizResult/" + data.userId + "/" + data.quizId, { withCredentials: true }).then((res) => {
@@ -154,7 +168,6 @@ function DisplayQuiz() {
       }
 
       if (quizLengthRef.current === 0) {
-        console.log('i ran 2')
         axios.post('http://localhost:5000/api/addQuizResult', { userId: data.userId, quizId: data.quizId }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
         localStorage.removeItem('counter');
           axios.get("http://localhost:5000/api/showQuizResult/" + data.userId + "/" + data.quizId, { withCredentials: true }).then((res) => {
@@ -192,6 +205,7 @@ function DisplayQuiz() {
     //FOR TIMER
     useEffect(() => {
       timer = setInterval(() => {
+        endQuizAfterTimeFinished()
         setTime(()=>{
           localStorage.setItem("counter",time-1)
           return time - 1
@@ -218,7 +232,6 @@ function DisplayQuiz() {
     let newQuizFinishTime = moment(QuizFinishTime)
 
     if (newQuizFinishTime.isBefore(today) === true) {
-      console.log('i ran 3')
       axios.post('http://localhost:5000/api/addQuizResult', { userId: user.userInfo.user.id, quizId: location.state.data.id }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
         // localStorage.removeItem('counter');
         axios.get("http://localhost:5000/api/showQuizResult/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true }).then((res) => {
@@ -243,15 +256,13 @@ function DisplayQuiz() {
         setCountLostFocus((state) => state = state + 1)
         setTabHasFocus(false);
         console.log('tab focus detected')
-        toast.success('TAB CHANGE DETECTED', {position: toast.POSITION.TOP_CENTER,autoClose: 2000})
-
         let data = {
           userId: user.userInfo.user.id,
           quizId: location.state.data.id
         }
         let url = "http://localhost:5000/api/addToTabFocus/";
         axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
-          toast.success('Updated', {
+          toast.warn('Tab Change Detected', {
             position: toast.POSITION.TOP_CENTER,
           });
         }).catch((err) => {
@@ -283,40 +294,62 @@ function DisplayQuiz() {
 
         {!showResult &&
           <>
-            <button onClick={() => navigate('/courses/quiz')}>Go back</button>
+            {/* <button onClick={() => navigate('/courses/quiz')}>Go back</button> */}
             <div className={styles.Questioncontainer}>
 
               <div className={styles.quizHeader}>
-                <div className={styles.points}>Points&nbsp;<span>{currentQuestion.points}</span></div>
+                <div className={styles.points}><span>Points&nbsp;{currentQuestion.points}</span></div>
                 <div className={styles.timeContainer}>
                   <p>Time Left<span className={styles.time}>{time}</span></p>
                 </div>
               </div>
 
-              <div className={styles.quizBody}>
+            <div className={(currentQuestion?.questionType !== "Subjective" && styles.quizBody) || ((currentQuestion.questionImage === null && currentQuestion?.questionType === "Subjective")  && styles.hello2) || ((currentQuestion.questionImage !== null && currentQuestion?.questionType === "Subjective")  && styles.hello)  }>
                 <div className={location.state.data.copyQuestion ? styles.noCopyAllowed : styles.copyAllowed}>
-                  {currentQuestion?.questionType === 'Formula' ? <div style={{ display: "flex", justifyContent: 'flex-start' }}><MathComponent style={{ fontSize: '50px' }} tex={currentQuestion?.question} /></div>
-                    : <b style={{ fontSize: '23px' }}>{currentQuestion?.question}</b>}
-                </div>
-                {currentQuestion?.options?.map((element) => {
-                  return (
-                    <>
-                      <div className={selected === element.options ? styles.notSelected : styles.questionContainer} onClick={() => handleSelectedDiv(element)}>
-                        {element.options}
-                      </div>
-                    </>
-                  )
-                })}
-                {currentQuestion.questionType === "Subjective" &&
-                  <div className={styles.editorContainer}>
-                    <Editor toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName" editorClassName="editorClassName" editorState={editorState} onEditorStateChange={(newState) => { setEditorState(newState); }} wrapperStyle={{ width: '100%', border: '1px solid #88959a', minHeight: '350px', minWidth: '315px', maxHeight: '350px', overflow: 'clip', }} />
-                  </div>
-                }
-              </div>
+                {currentQuestion?.questionType === 'Formula' ? <div style={{display:"flex",justifyContent:'flex-start',paddingTop:'20px'}}><MathComponent style={{fontSize:'50px'}}  tex={currentQuestion?.question} /></div>
+            : <b className={styles.pp} >{currentQuestion?.question}</b>}
 
+            {(currentQuestion?.questionImage !== null ) &&
+            <div className={styles.image3}>
+              <img src={currentQuestion?.questionImage} className={currentQuestion.questionImage !== null && currentQuestion?.questionType === "Subjective" ? styles.image2: styles.image}  alt="Question Image"/>
+            </div>}
+
+            </div>
+            {currentQuestion?.options?.map((element) => {
+              return (
+            <>
+               <div className={selected === element.options ? styles.notSelected : styles.questionContainer} onClick={() => handleSelectedDiv(element)}>
+                       <span> {element.options}</span>
+              </div>
+            </>
+            )})}
+            {currentQuestion.questionType === "Subjective" && 
+             <div className={currentQuestion.questionImage === null ?styles.editorContainer:styles.editorContainer2}>
+             <Editor
+               toolbarClassName="toolbarClassName"
+               wrapperClassName="wrapperClassName"
+               editorClassName="editorClassName"
+               editorState={editorState}
+               onEditorStateChange={(newState) => {
+                 setEditorState(newState);
+               }}
+               wrapperStyle={{
+                width: '100%',
+                border: '1px solid #88959a',
+                minHeight: currentQuestion.questionImage === null? '390px':'300px',
+                minWidth: '315px',
+                maxWidth:currentQuestion.questionImage === null?'100%':'100%',
+                maxHeight:  currentQuestion.questionImage === null? '390px':'300px',
+                overflow: 'clip',
+              }}
+             />
+             
+          </div>
+            }
+          </div>
               <hr className={styles.hr}></hr>
               <div className={styles.quizFooter}>
-                <p><b>{currentIndex}</b> of <b>{totalLength}</b> Questions</p>
+                <p  className={styles.pp2}><b>{currentIndex}</b> of <b>{totalLength}</b> Questions</p>
                 <button onClick={handleCurrentQuestion} className={styles.next}>Next Question</button>
               </div>
             </div>
