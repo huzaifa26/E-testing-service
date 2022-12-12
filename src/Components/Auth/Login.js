@@ -32,12 +32,12 @@ function Login() {
             position: toast.POSITION.TOP_RIGHT,
           });
           navigate('/dashboard');
-        } else if (response?.response?.status === 400 || response?.response?.status === 403 ) {
+        } else if (response?.response?.status === 400  ) {
           toast.error('Wrong Email or Password', {
             position: toast.POSITION.TOP_RIGHT,
           });
-        } else  if (response?.response?.status === 405) {
-          toast.error('Please verify email', {
+        } else  if (response?.response?.status === 405 ||  response?.response?.status === 403) {
+          toast.error('Please verify email or create account', {
             position: toast.POSITION.TOP_RIGHT,
           });
         }

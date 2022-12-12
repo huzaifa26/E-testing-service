@@ -1,26 +1,25 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import {  Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { userActions } from '../Redux/user-slice';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import {useState} from "react";
+import { useState } from "react";
 
 function Auth() {
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
-  const [cookies, setCookie,removeCookies] = useCookies();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [cookies, setCookie, removeCookies] = useCookies();
 
-  useEffect(() =>{
-    console.log(cookies.token);
-      if (cookies.token === undefined) {
-        navigate('/');
-      }
-  },[])
+  useEffect(() => {
+    if (cookies.token === undefined) {
+      navigate('/');
+    }
+  }, [])
 
   return (
-    <Outlet/>
+    <Outlet />
   )
 }
 export default Auth;

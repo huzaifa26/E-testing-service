@@ -37,8 +37,8 @@ const Courses = (props) => {
   const [courses, setCourses] = useState([]);
   const [courseJoin, setCourseJoin] = useState([]);
   const [courseKey, setCourseKey] = useState('');
-  const [totalQuizzes,setTotalQuizzes] = useState(0)
-  const [assignments,setAssignments] = useState(0)
+  const [totalQuizzes, setTotalQuizzes] = useState(0)
+  const [assignments, setAssignments] = useState(0)
   const [courseName, setCourseName] = useState('');
   const [courseInfo, setCourseInfo] = useState([])
   const [courseDescription, setCourseDescription] = useState('');
@@ -76,22 +76,22 @@ const Courses = (props) => {
   useEffect(() => {
 
     axios
-    .get(
-      'http://localhost:5000/api/courses/' + user.userInfo.user.id,
-      { withCredentials: true },
-      { headers: { Authorization: `Bearer ${cookie.token}` } }
-    )
-    .then((res) => {
-      setCourses(res.data.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get(
+        'http://localhost:5000/api/courses/' + user.userInfo.user.id,
+        { withCredentials: true },
+        { headers: { Authorization: `Bearer ${cookie.token}` } }
+      )
+      .then((res) => {
+        setCourses(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    axios.get("http://localhost:5000/api/getAllQuizzes/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
-    ).then((res)=>{
+    axios.get("http://localhost:5000/api/getAllQuizzes/" + courseIdredux, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }
+    ).then((res) => {
       setTotalQuizzes(res.data.data.length)
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err);
     })
 
@@ -108,14 +108,15 @@ const Courses = (props) => {
         console.log(err);
       });
 
-      axios.get("http://localhost:5000/api/getAssignments/"+courseIdredux,{withCredentials:true},{headers: { Authorization: `Bearer ${cookie.token}`}}
-      ).then((res)=>{
-        setAssignments(res.data.data.length)
-      }).catch((err)=>{
-        console.log(err);
-      })
+    axios.get("http://localhost:5000/api/getAssignments/" + courseIdredux + '/' + user.userInfo.user.id, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }
+    ).then((res) => {
+      console.log(res)
+      setAssignments(res.data.data.length)
+    }).catch((err) => {
+      console.log(err);
+    })
 
-      axios
+    axios
       .get(
         'http://localhost:5000/api/courseSetting/' + courseIdredux,
         { withCredentials: true },
@@ -130,7 +131,7 @@ const Courses = (props) => {
         console.log(err);
       });
 
-      axios
+    axios
       .get(
         'http://localhost:5000/api/joinedCourses/' + user.userInfo.user.id,
         { withCredentials: true },
@@ -143,11 +144,10 @@ const Courses = (props) => {
         console.log(err);
       });
 
-      axios
+    axios
       .get(
         'http://localhost:5000/api/courses/' + user.userInfo.user.id,
-        { withCredentials: true },
-        { headers: { Authorization: `Bearer ${cookie.token}` } }
+
       )
       .then((res) => {
         setCourses(res.data.data);
@@ -156,7 +156,7 @@ const Courses = (props) => {
         console.log(err);
       });
 
-      axios
+    axios
       .get(
         'http://localhost:5000/api/courseInfo/' + courseIdredux,
         { withCredentials: true },
@@ -286,18 +286,18 @@ const Courses = (props) => {
               <p>{courseInfo[0]?.courseName}</p>
             </div>
             <div>
-            <h3>Teacher</h3>
-            <p>{courseInfo[0]?.fullName}</p>
+              <h3>Teacher</h3>
+              <p>{courseInfo[0]?.fullName}</p>
             </div>
             <div>
-            <h3>Teacher Email</h3>
-            <p>{courseInfo[0]?.email}</p>
+              <h3>Teacher Email</h3>
+              <p>{courseInfo[0]?.email}</p>
             </div>
             <div className={styles.hdh}>
-            <h3>Description</h3>
-            <p>{courseDescription}</p>
+              <h3>Description</h3>
+              <p>{courseDescription}</p>
             </div>
-            
+
           </div>
         )}
     </div>

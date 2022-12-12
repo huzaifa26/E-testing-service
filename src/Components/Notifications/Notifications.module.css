@@ -1,32 +1,30 @@
-.Main
-{
- margin: 15px 15px 0 15px;
- color: rgba(0, 0, 0, 0.87);
- transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
- display: flex;
- flex-direction: column;
- position: relative;
- min-width: 0px;
- overflow-wrap: break-word;
- background-color: rgb(255, 255, 255);
- background-clip: border-box;
- border: 0px solid rgba(0, 0, 0, 0.125);
- border-radius: 0.75rem;
- box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
- overflow: visible;
- /* min-height: 82vh; */
+.Main {
+    margin: 15px 15px 0 15px;
+    color: rgba(0, 0, 0, 0.87);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-width: 0px;
+    overflow-wrap: break-word;
+    background-color: rgb(255, 255, 255);
+    background-clip: border-box;
+    border: 0px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.75rem;
+    box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
+    overflow: visible;
+    /* min-height: 82vh; */
 }
 
-.header
-{
+.header {
     padding: 16px;
     opacity: 1;
     background: transparent;
     color: rgb(52, 71, 103);
     box-shadow: none;
 }
-.header h1
-{
+
+.header h1 {
     margin: 0px;
     font-size: 1.25rem;
     line-height: 1.375;
@@ -39,8 +37,8 @@
     text-decoration: none;
     color: rgb(52, 71, 103);
 }
-.body
-{
+
+.body {
     padding-top: 16px;
     padding-left: 16px;
     padding-right: 16px;
@@ -49,8 +47,8 @@
     color: rgb(52, 71, 103);
     box-shadow: none;
 }
-.notificationContainer
-{
+
+.notificationContainer {
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
@@ -65,8 +63,8 @@
     border-radius: 0.375rem;
     font-weight: 600;
 }
-.p
-{
+
+.p {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -75,7 +73,8 @@
     color: rgb(255, 255, 255);
     box-shadow: none;
 }
-.p p{
+
+.p p {
     margin: 0px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 1rem;
@@ -88,7 +87,8 @@
     text-decoration: none;
     color: rgb(255, 255, 255);
 }
-.notificationContainer span{
+
+.notificationContainer span {
 
     color: rgb(255, 255, 255);
     font-size: 1.25rem;
@@ -98,7 +98,8 @@
     cursor: pointer;
     line-height: 0;
 }
-.notificationContainer2 span{
+
+.notificationContainer2 span {
 
     color: rgb(255, 255, 255);
     font-size: 1.25rem;
@@ -108,8 +109,8 @@
     cursor: pointer;
     line-height: 0;
 }
-.notificationContainer2
-{
+
+.notificationContainer2 {
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
@@ -124,7 +125,8 @@
     border-radius: 0.375rem;
     font-weight: 600;
 }
-.notificationContainer3 span{
+
+.notificationContainer4 span {
 
     color: rgb(255, 255, 255);
     font-size: 1.25rem;
@@ -134,8 +136,35 @@
     cursor: pointer;
     line-height: 0;
 }
-.notificationContainer3
-{
+
+.notificationContainer4 {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 3.75rem;
+    background-image: linear-gradient(195deg, rgb(73, 163, 241), rgb(26, 115, 232));
+    color: rgb(255, 255, 255);
+    position: relative;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+}
+
+.notificationContainer3 span {
+
+    color: rgb(255, 255, 255);
+    font-size: 1.25rem;
+    padding: 0.5625rem 0.375rem 0.5rem;
+    margin-left: 2.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.notificationContainer3 {
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;

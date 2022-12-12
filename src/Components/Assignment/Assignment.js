@@ -49,13 +49,13 @@ function Assignment() {
   useEffect(() => {
     console.log(courseIdredux)
     console.log('-------------------')
-    axios.get("http://localhost:5000/api/getAssignments/" + courseIdredux + "/" + user.userInfo.user.id,  { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } })
-    .then((res) => {
-      console.log(res.data.data)
-      setAssignments(res.data.data)
-    }).catch((err) => {
-      console.log(err);
-    })
+    axios.get("http://localhost:5000/api/getAssignments/" + courseIdredux + "/" + user.userInfo.user.id, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } })
+      .then((res) => {
+        console.log(res.data.data)
+        setAssignments(res.data.data)
+      }).catch((err) => {
+        console.log(err);
+      })
   }, [openUplodad, openEdit, deleteme]);
 
   const handleEdit = (item) => {
