@@ -11,10 +11,9 @@ import Notification from './Components/Notifications/Notifications';
 import EmailForgotPassword from './Components/Auth/EmailForgotPassword';
 import ForgotPassword from './Components/Auth/ForgotPassword';
 import Profile from './Components/Profile/Profile (1)';
-import Auth from './Protected/Auth';
+import Auth from './Layout/Auth';
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
-import Auth2 from './Protected/Auth2';
 import Content from './Components/Content/Content';
 import Quiz from './Components/Quiz/Quiz';
 import Assignment from './Components/Assignment/Assignment';
@@ -27,6 +26,9 @@ import CreateCourse from './Components/Dashboard/CreateCourse';
 import Result from './Components/Quiz/Result';
 import Preview from './Components/Quiz/Preview';
 import DisplayQuiz from './Components/Quiz/DisplayQuiz';
+import Layout from './Layout/Layout';
+import Unauthorized from './Layout/Unauthorized';
+import Missing from './Layout/Missing';
 
 function App() {
   let uid = uuidv4();
@@ -34,33 +36,39 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/emailVerification/:id" element={<VerifyEmail />} />
-        <Route path="/forgotPassword" element={<EmailForgotPassword />} />
-        <Route path="/forgotPasswordChange/:id" element={<ForgotPassword />} />
+        <Route path="/" element={<Layout />} >
 
-        <Route path='/' element={<Auth />} >
-          <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
-          <Route path="/dashboard/createCourse" element={<Navbar><CreateCourse /></Navbar>} />
-          <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
-          <Route path="/courses/pools" element={<Navbar><PoolMain /></Navbar>} />
-          <Route path="/courses/poolQuestions" element={<Navbar><PoolQuestions /></Navbar>} />
-          <Route path="/courses/content" element={<Navbar><Content /></Navbar>} />
-          <Route path="/courses/quiz" element={<Navbar><Quiz /></Navbar>} />
-          <Route path="/courses/displayQuiz" element={<Navbar><DisplayQuiz /></Navbar>} />
-          <Route path="/courses/preview" element={<Navbar><Preview /></Navbar>} />
-          <Route path="/courses/manangeStudents" element={<Navbar><ManageStudents /></Navbar>} />
-          <Route path="/courses/setting" element={<Navbar><Setting /></Navbar>} />
-          <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
-          <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
-          <Route path="/courses/assignment" element={<Navbar><Assignment /></Navbar>} />
-          <Route path="/courses/assignment/submitResult" element={<Navbar><Assignment /></Navbar>} />
-          <Route path="/courses/result" element={<Navbar><Result /></Navbar>} />
-          <Route path="/courses/editQuiz" element={<Navbar><EditQuiz /></Navbar>} />
-        </Route>
+          {/* Public routes */}
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/emailVerification/:id" element={<VerifyEmail />} />
+          <Route path="/forgotPassword" element={<EmailForgotPassword />} />
+          <Route path="/forgotPasswordChange/:id" element={<ForgotPassword />} />
 
-        <Route path='/' element={<Auth />} >
+          {/* Protected routes */}
+          <Route path='/' element={<Auth />} >
+            <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
+            <Route path="/dashboard/createCourse" element={<Navbar><CreateCourse /></Navbar>} />
+            <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
+            <Route path="/courses/pools" element={<Navbar><PoolMain /></Navbar>} />
+            <Route path="/courses/poolQuestions" element={<Navbar><PoolQuestions /></Navbar>} />
+            <Route path="/courses/content" element={<Navbar><Content /></Navbar>} />
+            <Route path="/courses/quiz" element={<Navbar><Quiz /></Navbar>} />
+            <Route path="/courses/displayQuiz" element={<Navbar><DisplayQuiz /></Navbar>} />
+            <Route path="/courses/preview" element={<Navbar><Preview /></Navbar>} />
+            <Route path="/courses/manangeStudents" element={<Navbar><ManageStudents /></Navbar>} />
+            <Route path="/courses/setting" element={<Navbar><Setting /></Navbar>} />
+            <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
+            <Route path="/profile" element={<Navbar><Profile /></Navbar>} />  
+            <Route path="/courses/assignment" element={<Navbar><Assignment /></Navbar>} />
+            <Route path="/courses/assignment/submitResult" element={<Navbar><Assignment /></Navbar>} />
+            <Route path="/courses/result" element={<Navbar><Result /></Navbar>} />
+            <Route path="/courses/editQuiz" element={<Navbar><EditQuiz /></Navbar>} />
+          </Route>
+
+          {/* Catch all */}
+          <Route path="*" element={<Missing />} />
+          <Route path="Unauthorized" element={<Unauthorized />} />
         </Route>
       </Routes>
       <ToastContainer position="top-right"

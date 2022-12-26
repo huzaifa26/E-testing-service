@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
-:root{
+:root {
   --primary: #212123;
   --secondry: var(--white);
 }
@@ -39,6 +39,10 @@ input {
   } */
 
 
-  .active{
-    border-left:5px solid white;
-  }
+.active {
+  border-left: 5px solid white;
+}
+
+.css-1yt7yx7-MuiLoadingButton-loadingIndicator {
+  color: white !important;
+}

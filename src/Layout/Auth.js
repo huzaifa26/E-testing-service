@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { userActions } from '../Redux/user-slice';
@@ -10,16 +10,28 @@ import { useState } from "react";
 function Auth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation()
   const [cookies, setCookie, removeCookies] = useCookies();
 
-  useEffect(() => {
-    if (cookies.token === undefined) {
-      navigate('/');
-    }
-  }, [])
+  const user = useSelector(state => state.user.userInfo);
+  console.log();
 
-  return (
+
+  // useEffect(() => {
+  //   if () {
+  //     navigate('/');
+  //   }
+  // }, [])
+
+  // return (
+  //   <Outlet />
+  // )
+
+
+  return cookies.token === undefined ? (
+    (<Navigate to="/Unauthorized" state={{ from: location }} replace />)
+  ) :
     <Outlet />
-  )
+
 }
 export default Auth;

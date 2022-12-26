@@ -18,6 +18,7 @@ import CountUp from 'react-countup';
 import { Paper } from '@mui/material';
 import { Box } from '@mui/system';
 import ManageStudents from '../Settings/ManageStudents';
+import { toast } from 'react-toastify';
 
 const Courses = (props) => {
   const [cookie, setCookie] = useCookies();
@@ -209,7 +210,7 @@ const Courses = (props) => {
                 </h1>
               </div>
               {courseJoin.map((item, index) => {
-                return (
+                return (item.blocked === 0) ?
                   <div
                     className={styles.flexDiv2}
                     onClick={(e) => {
@@ -220,7 +221,14 @@ const Courses = (props) => {
                   >
                     <h1>{item.courseName}</h1>
                   </div>
-                );
+                  :
+                  <div className={styles.flexDiv2}
+                    onClick={() => {
+                      toast.error("You're blocked by the teacher", { position: toast.POSITION.TOP_RIGHT, });
+                    }}
+                  >
+                    <h1 style={{ color: 'red' }}>{item.courseName}</h1>
+                  </div>
               })}
             </div>
           </div>

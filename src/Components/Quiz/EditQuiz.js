@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import { MathComponent } from 'mathjax-react';
+import moment from 'moment';
 
 function EditQuiz() {
 
@@ -38,6 +39,8 @@ function EditQuiz() {
   const [importPool, setImportPool] = useState(false)
 
 
+  console.log(location.state.previewDetails.totalPoints);
+
   function handleChange(event, newValue) {
     setValue(newValue);
     setAdd(false)
@@ -49,6 +52,23 @@ function EditQuiz() {
   }
 
   const saveQuiz = () => {
+    const checkEndTme = (endTime) => {
+      let today = new Date();
+      today = today.toLocaleString()
+
+      let assignmentStartTime = new Date(endTime)
+      assignmentStartTime = assignmentStartTime.toLocaleString()
+
+      let newassignmentStartTime = moment(assignmentStartTime)
+
+      if (newassignmentStartTime.isBefore(today)) {
+        return true
+      }
+      else {
+        return false
+      }
+    }
+
     if (quizQuestions.length == 0) {
       alert('you must add atleast one question')
       setValue('2')
@@ -69,6 +89,32 @@ function EditQuiz() {
       setValue('1')
       return
     }
+    if (checkEndTme(startTime)) {
+      alert('Start time can not be from past')
+      return
+    }
+
+    if (checkEndTme(endTime)) {
+      alert('End time can not be from past')
+      return
+    }
+
+
+    let assignmentStartTime = new Date(startTime)
+    assignmentStartTime = assignmentStartTime.toLocaleString()
+    let newassignmentStartTime = moment(assignmentStartTime)
+
+    let assignmentStartTime2 = new Date(endTime)
+    assignmentStartTime2 = assignmentStartTime2.toLocaleString()
+    let newassignmentStartTime2 = moment(assignmentStartTime2)
+
+    console.log(newassignmentStartTime);
+    console.log(newassignmentStartTime2);
+    if (!newassignmentStartTime.isBefore(newassignmentStartTime2)) {
+      alert('endTime is before startTime')
+      return
+    }
+
 
     let data = {
       id: location.state.previewDetails.id,
@@ -149,8 +195,33 @@ function EditQuiz() {
   }
 
   const getQuestionFromPool = (question) => {
-    console.log(question)
-    console.log(typeof (question))
+    console.log(question.length);
+    var points = 0
+    if (question.length === 1) {
+      if (typeof (question[0].points) === 'string') {
+        setTotalPoints((state) => state + parseInt(question[0].points))
+      }
+      else {
+        setTotalPoints((state) => state + parseInt(question[0].points))
+      }
+    }
+    else {
+      question.forEach((val, index) => {
+        if (typeof (val.points) === 'string') {
+          setTotalPoints((state) => state + parseInt(val.points))
+        }
+        else {
+          setTotalPoints((state) => state + parseInt(val.points))
+        }
+
+      })
+    }
+    // if (typeof (question.points) === 'string') {
+    //   setTotalPoints((state) => state + parseInt(question.points))
+    // }
+    // else {
+    //   setTotalPoints((state) => state + parseInt(question.points))
+    // }
     setQuizQuestions([...quizQuestions, ...question]);
     console.log(quizQuestions)
   }

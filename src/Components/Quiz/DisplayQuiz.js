@@ -126,7 +126,9 @@ function DisplayQuiz() {
         quizId: location.state.data.id,
         quizQuestionId: currentQuestion.id,
         correctOption: currentQuestion.correctOption,
-        selectedOption: selected
+        selectedOption: selected,
+        subjective: false,
+        points: currentQuestion.points
       }
 
       if (selected !== "") { data.selectedOption = selected; setSelected('') }
@@ -155,34 +157,71 @@ function DisplayQuiz() {
       }
     }
 
+    //IF ITS SUBJECTIVE
     else {
+
       let data = {
         userId: user.userInfo.user.id,
         quizId: location.state.data.id,
         quizQuestionId: currentQuestion.id,
         correctOption: currentQuestion.correctOption,
         selectedOption: editorState.getCurrentContent().getPlainText(),
-        obtainedMarks: 0
-      }
-
-      if (quizLengthRef.current === 0) {
-        axios.post('http://localhost:5000/api/addQuizResult', { userId: data.userId, quizId: data.quizId }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
-          axios.get("http://localhost:5000/api/showQuizResult/" + data.userId + "/" + data.quizId, { withCredentials: true }).then((res) => {
-            navigate("/courses/result", { state: { result: res.data, afterQuiz: true } })
-          }).catch((err) => {
-            console.log(err);
-          })
-        }).catch((err) => {
-          console.log(err)
-        })
+        obtainedMarks: 0,
+        subjective: true,
+        points: currentQuestion.points
       }
 
       let url = "http://localhost:5000/api/atempttedQuizQuestions/";
       axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
+        console.log('success');
         console.log(res)
       }).catch((err) => {
         console.log(err)
       })
+
+      // else {
+
+      //   console.log(currentQuestion.points);
+      //   let data2 = {
+      //     sentence1: currentQuestion.correctOption,
+      //     sentence2: editorState.getCurrentContent().getPlainText(),
+      //   }
+      //   function getMarks(score, maxMarks) {
+      //     return score * maxMarks;
+      //   }
+      //   axios.post("http://127.0.0.1:8000/question-grading/", data2)
+      //     .then((res) => {
+      //       console.log(res.data.grade)
+      //       const abc = getMarks(res.data.score, currentQuestion.points)
+      //       data.obtainedMarks = abc
+      //       let url = "http://localhost:5000/api/atempttedQuizQuestions/";
+      //       axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
+      //         console.log('success');
+      //         console.log(res)
+      //       }).catch((err) => {
+      //         console.log(err)
+      //       })
+
+      //     })
+      //     .catch(e => console.log(e))
+
+
+      if (quizLengthRef.current === 0) {
+        console.log('inside haha');
+        setTimeout(function () {
+          axios.post('http://localhost:5000/api/addQuizResult', { userId: data.userId, quizId: data.quizId }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
+            axios.get("http://localhost:5000/api/showQuizResult/" + data.userId + "/" + data.quizId, { withCredentials: true }).then((res) => {
+              navigate("/courses/result", { state: { result: res.data, afterQuiz: true } })
+            }).catch((err) => {
+              console.log(err);
+            })
+          }).catch((err) => {
+            console.log(err)
+          })
+        }, 1000);
+      }
+
+
     }
 
     if (questions?.length > 0) {
@@ -286,6 +325,7 @@ function DisplayQuiz() {
   const [isListening, setIsListening] = useState(false);
   const [note, setNote] = useState(null);
   const [savedNotes, setSavedNotes] = useState([]);
+  const transcriptRef = useRef(null)
 
   useEffect(() => {
     handleListen();
@@ -298,9 +338,12 @@ function DisplayQuiz() {
         console.log("continue..");
         mic.start();
       };
-    } else {
+    }
+    else {
       mic.stop();
-      mic.onend = () => {
+      mic.onend = (event) => {
+        console.log(event)
+        handleSaveNote()
         console.log("Stopped Mic on Click");
       };
     }
@@ -313,8 +356,10 @@ function DisplayQuiz() {
         .map((result) => result[0])
         .map((result) => result.transcript)
         .join("");
-      console.log(transcript);
-      setNote(transcript);
+      setNote((prev) => {
+        console.log(prev + " " + transcript);
+        return transcript
+      });
       const blocksFromHTML = convertFromHTML(transcript)
       const contentState = ContentState.createFromBlockArray(blocksFromHTML)
       setEditorState(EditorState.createWithContent(contentState));
@@ -326,13 +371,17 @@ function DisplayQuiz() {
 
   const handleSaveNote = () => {
     setIsListening(false)
-    setSavedNotes([...savedNotes, note]);
+    setSavedNotes((savedNotes) => {
+      let arr = [...savedNotes, note]
+      console.log(arr)
+      arr = arr.join()
+      arr = arr.replace(",", '');
+      console.log(arr)
+      return arr
+    });
 
-    const blocksFromHTML = convertFromHTML(note)
-    const contentState = ContentState.createFromBlockArray(blocksFromHTML)
-    setEditorState(EditorState.createWithContent(contentState));
+    console.log([savedNotes, note]);
 
-    // setNote("");
   };
 
   return (
@@ -349,7 +398,7 @@ function DisplayQuiz() {
           </div>
 
           <div className={(currentQuestion?.questionType !== "Subjective" && styles.quizBody) || ((currentQuestion.questionImage === null && currentQuestion?.questionType === "Subjective") && styles.hello2) || ((currentQuestion.questionImage !== null && currentQuestion?.questionType === "Subjective") && styles.hello)}>
-            <div className={location.state.data.copyQuestion ? styles.noCopyAllowed : styles.copyAllowed}>
+            <div className={location?.state?.data?.copyQuestion ? styles.noCopyAllowed : styles.copyAllowed}>
               {currentQuestion?.questionType === 'Formula' ? <div style={{ display: "flex", justifyContent: 'flex-start', paddingTop: '20px' }}><MathComponent style={{ fontSize: '50px' }} tex={currentQuestion?.question} /></div>
                 : <b className={styles.pp} >{currentQuestion?.question}</b>}
 
@@ -370,14 +419,11 @@ function DisplayQuiz() {
             })}
             {currentQuestion.questionType === "Subjective" &&
               <>
-                {/* <RecordVoiceOverIcon /> */}
                 <div className={styles.Icon}>
 
                   {!isListening && <Tooltip placement="top" arrow title="Answer by Recording"><IconButton onClick={() => setIsListening((prev) => !prev)} color="primary" aria-label="add to shopping cart"><KeyboardVoiceIcon onClick={() => setIsListening((prev) => !prev)} style={{ color: 'black', fontSize: '30px', pointerEvents: "none" }} /></IconButton></Tooltip>}
                   {isListening && <Tooltip placement="top" arrow title="Stop" ><IconButton data-recording={isListening} onClick={() => setIsListening((prev) => !prev)} color="primary" aria-label="add to shopping cart"><KeyboardVoiceIcon onClick={() => setIsListening((prev) => !prev)} style={{ color: 'red', fontSize: '30px', pointerEvents: "none" }} /></IconButton></Tooltip>}
 
-                  {/* <span className={isListening ? styles.stop : styles.start}>{isListening ? "Stop" : ""}</span> */}
-                  {/* <img onClick={() => setIsListening((prev) => !prev)} className={isListening ? styles.stop : styles.start} data-recording={isListening} src={micIcon} alt="" /> */}
                 </div>
                 <p></p>
                 <div className={currentQuestion.questionImage === null ? styles.editorContainer : styles.editorContainer2}>

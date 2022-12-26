@@ -1,5 +1,4 @@
-
-.kaj{
+.kaj {
     font-size: 1.3rem !important;
     line-height: 1.625;
     font-family: Roboto, Helvetica, Arial, sans-serif !important;
@@ -15,16 +14,17 @@
     color: rgb(52, 71, 103) !important;
     font-weight: 700 !important;
 }
-.publishedHeader{
+
+.publishedHeader {
     display: flex;
     background-color: white;
     justify-content: space-between;
     align-items: center;
     padding: 3.787878787878788vh 1.9543973941368078vw;
-    margin:2.525252525252525vh 1.3029315960912051vw;
+    margin: 2.525252525252525vh 1.3029315960912051vw;
 }
-.courseInfo2
-{
+
+.courseInfo2 {
     margin: 15px 15px 0 15px;
     color: rgba(0, 0, 0, 0.87);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -46,8 +46,8 @@
     display: flex;
     min-height: 83.4vh;
 }
-.courseInfo2 p
-{
+
+.courseInfo2 p {
     margin: 0px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 0.95rem;
@@ -60,12 +60,12 @@
     color: rgb(123, 128, 154);
     font-weight: 400;
 }
-.hdh
-{
+
+.hdh {
     width: 80%;
 }
-.courseInfo2 h3
-{
+
+.courseInfo2 h3 {
     margin: 0px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 1.2rem;
@@ -76,13 +76,16 @@
     vertical-align: unset;
     text-decoration: none;
     color: rgb(52, 71, 103);
-    font-weight: 600;}
-.publishedHeader h1{
+    font-weight: 600;
+}
+
+.publishedHeader h1 {
     font-size: 25px;
     font-weight: 500;
-    color: var(--primary);}
-.hello
-{
+    color: var(--primary);
+}
+
+.hello {
     margin-top: -20px;
     font-size: 1.3rem;
     line-height: 1.625;
@@ -101,7 +104,7 @@
     font-weight: 700;
 }
 
-.publishedCoursesOuter{
+.publishedCoursesOuter {
     display: flex;
     background-color: white;
     justify-content: space-between;
@@ -111,20 +114,20 @@
     min-height: 74vh;
 }
 
-.publishedCourses{
+.publishedCourses {
     display: flex;
     flex-direction: column;
-    justify-content:flex-start;
+    justify-content: flex-start;
     flex-wrap: wrap;
     margin: 20px;
     gap: 15px;
     width: 100%;
 }
 
-.joinedCourses{
+.joinedCourses {
     display: flex;
     flex-direction: column;
-    justify-content:flex-start;
+    justify-content: flex-start;
     flex-wrap: wrap;
     margin: 20px;
     gap: 15px;
@@ -132,25 +135,26 @@
 }
 
 
-.flexDiv, .flexDiv2{
+.flexDiv,
+.flexDiv2 {
     display: flex;
-    flex: 1;    
+    flex: 1;
     padding-left: 5px;
     justify-content: space-between;
 }
-.flexDiv h1
-{
+
+.flexDiv h1 {
     font-size: 18px !important;
 
 }
 
-.flexDiv2{
+.flexDiv2 {
     box-shadow: 1px 1px 1px 1.5px rgba(0, 0, 0, 0.064);
     border-radius: 4px;
     font-size: 1px;
 }
 
-.flexDiv2 h1{
+.flexDiv2 h1 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -162,11 +166,11 @@
     cursor: pointer;
 }
 
-.flexDiv2 h1:hover{
+.flexDiv2 h1:hover {
     text-decoration: underline;
 }
-.courseInfo
-{
+
+.courseInfo {
     display: flex;
     /* justify-content: space-between; */
     /* justify-content: space-between; */
@@ -178,8 +182,7 @@
 
 }
 
-.right
-{
+.right {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
@@ -187,7 +190,8 @@
     padding-right: 20px;
     padding-top: 10px;
 }
-.right h1{
+
+.right h1 {
     margin: 0px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-size: 0.875rem;
@@ -200,7 +204,8 @@
     color: rgb(123, 128, 154);
     font-weight: 100;
 }
-.right p{
+
+.right p {
     margin: 0px;
     font-size: 1.5rem;
     line-height: 1.375;
@@ -214,8 +219,8 @@
     color: rgb(52, 71, 103);
 
 }
-.join
-{
+
+.join {
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
@@ -231,8 +236,8 @@
     border-radius: 0.35rem;
     box-shadow: rgb(0 0 0 / 14%) 0rem 0.25rem 1.25rem 0rem, rgb(0 187 212 / 40%) 0rem 0.4375rem 0.625rem -0.3125rem;
 }
-.totalStudents
-{
+
+.totalStudents {
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
@@ -250,8 +255,8 @@
     color: white;
     padding: 20px;
 }
-.totalQuizzes
-{
+
+.totalQuizzes {
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
@@ -270,8 +275,8 @@
     box-shadow: rgb(0 0 0 / 14%) 0rem 0.25rem 1.25rem 0rem, rgb(233 30 98 / 40%) 0rem 0.4375rem 0.625rem -0.3125rem;
 
 }
-.totalAssignments
-{
+
+.totalAssignments {
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
@@ -285,37 +290,39 @@
     color: rgb(255, 255, 255);
     border-radius: 0.35rem;
     background-image: linear-gradient(195deg, rgb(116, 123, 138), rgb(73, 83, 97));
-    color: rgb(255, 255, 255);}
-.people
-{
+    color: rgb(255, 255, 255);
+}
+
+.people {
     padding: 5px 20px 5px 5px;
 }
-.secondry
-{
+
+.secondry {
     display: flex;
     align-items: center;
     height: 60%;
     justify-content: center;
 }
-.footer
-{
+
+.footer {
     height: 40%;
     display: flex;
     justify-content: center;
     align-items: flex-start;
 }
-.footer p
-{
+
+.footer p {
     font-size: 30px;
 }
+
 .box {
     width: 200px;
     height: 200px;
     border-radius: 50%;
     background: var(--accent);
-  }
-  .holll
-  {
+}
+
+.holll {
     /* background-color: blue; */
     display: flex;
     justify-content: space-between;
@@ -327,11 +334,10 @@
     /* justify-content: space-between; */
     height: 30%;
     flex-wrap: wrap;
-  }
+}
 
-  
-.join2
-{
+
+.join2 {
     /* flex-grow: 1; */
     color: rgba(0, 0, 0, 0.87);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -348,8 +354,7 @@
     box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
 }
 
-  .manage
-  {
+.manage {
     min-width: 83vw;
     padding: 10px;
     /* display: flex; */
@@ -359,20 +364,21 @@
     margin-top: -13px;
     margin-left: -3px;
     /* width: 100%; */
-  }
+}
 
 
-  @media all and (max-width: 1250px) {
-    .join2{
+@media all and (max-width: 1250px) {
+    .join2 {
         width: 48%;
     }
-    .holll
-    {
+
+    .holll {
         row-gap: 40px;
     }
 }
-  @media all and (max-width: 930px) {
-    .join2{
+
+@media all and (max-width: 930px) {
+    .join2 {
         width: 100%;
         min-width: 280px;
         /* margin:0px -10px; */

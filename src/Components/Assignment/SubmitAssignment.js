@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './SubmitAssignment.module.css';
-import { Storage } from './../Utils/firebase';
+import { Storage } from '../../Utils/firebase';
 import {
   ref,
   uploadBytes,

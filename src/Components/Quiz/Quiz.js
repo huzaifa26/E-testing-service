@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { MathComponent } from 'mathjax-react';
 import QuizTable from './QuizTable';
 import moment from 'moment';
+import BuildQuestion from './BuildQuestion';
 
 
 function Quiz(props) {
@@ -30,6 +31,7 @@ function Quiz(props) {
   const [createQuiz, setCreateQuiz] = useState(false);
   const [add, setAdd] = useState(false);
   const [importPool, setImportPool] = useState(false)
+  const [build, setBuild] = useState(false)
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [title, setTitle] = useState('');
   const [time, setTime] = useState(30);
@@ -66,6 +68,25 @@ function Quiz(props) {
   }
 
   const saveQuiz = () => {
+
+    const checkEndTme = (endTime) => {
+      let today = new Date();
+      today = today.toLocaleString()
+
+      let assignmentStartTime = new Date(endTime)
+      assignmentStartTime = assignmentStartTime.toLocaleString()
+
+      let newassignmentStartTime = moment(assignmentStartTime)
+
+      if (newassignmentStartTime.isBefore(today)) {
+        return true
+      }
+      else {
+        return false
+      }
+    }
+
+
     if (quizQuestions.length == 0) {
       alert('you must add atleast one question')
       setValue('2')
@@ -86,6 +107,34 @@ function Quiz(props) {
       setValue('1')
       return
     }
+    if (checkEndTme(startTime)) {
+      alert('Start time can not be from past')
+      return
+    }
+
+    if (checkEndTme(endTime)) {
+      alert('End time can not be from past')
+      return
+    }
+
+
+    let assignmentStartTime = new Date(startTime)
+    assignmentStartTime = assignmentStartTime.toLocaleString()
+    let newassignmentStartTime = moment(assignmentStartTime)
+
+    let assignmentStartTime2 = new Date(endTime)
+    assignmentStartTime2 = assignmentStartTime2.toLocaleString()
+    let newassignmentStartTime2 = moment(assignmentStartTime2)
+
+    console.log(newassignmentStartTime);
+    console.log(newassignmentStartTime2);
+    if (!newassignmentStartTime.isBefore(newassignmentStartTime2)) {
+      alert('endTime is before startTime')
+      return
+    }
+
+
+
     // let endTime = endTime
     // let today = new Date();
     // today = today.toLocaleString()
@@ -195,7 +244,6 @@ function Quiz(props) {
   }
 
   const getQuestionFromPool = (question) => {
-    console.log(question)
 
     question.forEach(element => {
       if (typeof (element.points) === 'string') {
@@ -207,6 +255,21 @@ function Quiz(props) {
     });
 
     setQuizQuestions([...quizQuestions, ...question]);
+  }
+
+  const getQuestionFromBuild = (question) => {
+
+    question.forEach(element => {
+      if (typeof (element.points) === 'string') {
+        setTotalPoints((state) => state + parseInt(element.points))
+      }
+      else {
+        setTotalPoints((state) => state + parseInt(element.points))
+      }
+    });
+
+    setQuizQuestions([...quizQuestions, ...question]);
+
   }
 
   const handleQuestionShuffle = (event) => {
@@ -487,6 +550,7 @@ function Quiz(props) {
 
                 {add && <CreateQuestion close={setAdd} time={time} getQuestion={getQuestion} />}
                 {importPool && <ImportPool close={setImportPool} getQuestion={getQuestionFromPool} />}
+                {build && <BuildQuestion close={setBuild} getQuestion={getQuestionFromBuild} />}
 
                 <div className={styles.buttonContainer1}>
                   <button className={styles.cancel} onClick={() => setAdd(true)}>
@@ -495,6 +559,9 @@ function Quiz(props) {
                   </button>
                   <button className={styles.cancel} onClick={() => setImportPool(true)}>
                     <i class="bi bi-search"></i>Find Questions
+                  </button>
+                  <button className={styles.cancel} onClick={() => setBuild(true)}>
+                    <i class="bi bi-arrow-right-circle"></i>Build Questions
                   </button>
                 </div>
 

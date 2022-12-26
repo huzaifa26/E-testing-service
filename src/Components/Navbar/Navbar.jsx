@@ -71,7 +71,7 @@ const Navbar2 = (props) => {
   //FOR UNBLOCK ON MANAGE USER TO ROUTE THEN HERE
   useEffect(() => {
     socket?.on('getNotification2', data => {
-      toast.success('You have a new notification2', { position: toast.POSITION.TOP_RIGHT, });
+      toast.success('You have a new notification', { position: toast.POSITION.TOP_RIGHT, });
       setNotifications(notification => [...notification, data])
       setTrigger(state => !state)
     })
