@@ -17,12 +17,9 @@
   box-shadow: none;
   padding: 14px;
   min-height: 100vh;
-  /* min-width: 100vw; */
   display: flex;
-  position: relative;
-  /* background-color: aqua; */
   flex-direction: row;
-  /* justify-content: space-between; */
+  position: relative;
 }
 
 .hello {
@@ -46,7 +43,7 @@
   width: 100%;
   position: sticky;
   position: sticky;
-  /* z-index: 1100; */
+  z-index: 99;
   left: auto;
   top: 0.75rem;
   right: 0px;
@@ -59,7 +56,7 @@
   box-sizing: border-box;
   flex-shrink: 0;
   position: sticky;
-  z-index: 1132322300;
+  z-index: 99;
   left: auto;
   right: 0px;
   box-shadow: rgb(255 255 255 / 90%) 0rem 0rem 0.0625rem 0.0625rem inset, rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem;
@@ -67,7 +64,6 @@
   background-color: rgba(255, 255, 255, 0.8);
   color: rgb(52, 71, 103);
   top: 0.75rem;
-
   min-height: 4.6875rem;
   border-radius: 0.75rem;
   padding: 0.5rem 0.5rem;
@@ -81,9 +77,8 @@
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   width: 100%;
   box-sizing: border-box;
-  /* flex-shrink: 0; */
   position: sticky;
-  z-index: 1100;
+  z-index: 99;
   left: auto;
   right: 0px;
   box-shadow: none;
@@ -157,8 +152,6 @@
 .mainDiv {
   display: flex;
 
-  /* height: 100%; 
-  min-height: 91.7vh; */
 }
 
 .nav-menu {
@@ -169,7 +162,6 @@
   justify-content: center;
   max-width: 230px;
   border-radius: 0.75rem;
-  /* background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25)); */
   box-shadow: rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem;
   margin-bottom: inherit;
   top: 14px;
@@ -183,10 +175,11 @@
   z-index: 99;
   position: fixed;
   height: calc(100vh - 2rem);
-  /* background-color: var(--primary); */
 }
 
+
 .nav-menu-active1 {
+  top: 14px;
   left: 20px;
   width: 250px;
   position: fixed;
@@ -194,19 +187,16 @@
   justify-content: center;
   max-width: 230px;
   border-radius: 0.75rem;
-  /* background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25)); */
   box-shadow: rgb(0 0 0 / 5%) 0rem 1.25rem 1.6875rem 0rem;
   margin-bottom: inherit;
   left: 10px;
   width: 230px;
   transform: translateX(0px);
   background: linear-gradient(195deg, rgb(62, 62, 73), rgb(25, 25, 25));
-  transform: translateX(0px);
   transition: width 225ms;
   transition: 0.6s;
   z-index: 99;
   height: calc(100vh - 2rem);
-  /* background-color: var(--primary); */
 }
 
 .nav-menu-active1 .nav-menu-items .hr {
@@ -398,12 +388,14 @@
   justify-content: center !important;
   /* padding-left: 40px; */
   border-left: 5px solid white;
+  border-radius: 1px;
 }
 
 .flexcenterborder {
   justify-content: flex-start !important;
   border-left: 5px solid white;
   padding-left: 35px;
+  border-radius: 1px;
 }
 
 .subMenu {
@@ -466,10 +458,11 @@
 .top {
   padding: 24px 0px 0px 0;
   text-align: center;
-  opacity: 1;
   background: transparent;
-  color: rgb(52, 71, 103);
   box-shadow: none;
+  display: flex;
+    align-content: center;
+    justify-content: center;
 }
 
 .circularportrait {
@@ -505,49 +498,14 @@
   height: auto;
 }
 
+
+
 @media only screen and (max-width: 764px) {
   .anc1 {
     font-size: 3px;
     visibility: visible;
   }
 
-  /* .hamza
-  {
-    background-color: aquamarine;
-    overflow: auto;
-    width: 300px;
-  } */
-  /* .mainDiv main {
-    position: absolute;
-    z-index: 1;
-    min-width: 100%;
-
-    min-height: 100vh;
-  }
-  .Main {
-    padding: 0px;
-  }
-
-  .navbar {
-    z-index: 3;
-  }
-
-  .mainDiv nav {
-    position: relative;
-    z-index: 2;
-  }
-  .nav-menu {
-    display: none;
-  }
-  .nav-menu-active1 {
-    display: block;
-  }
-  .nav-menu-active1 .nav-menu-items .hr1 {
-    margin-left: 29px;
-  }
-  .nav-menu-active1 .nav-menu-items .hr {
-    margin-left: 29px;
-  } */
   .nav-menu-active1 {
     left: -1110px;
 
@@ -567,17 +525,7 @@
   .helll span {
     margin: 0px;
     font-size: 0.8rem;
-    /* line-height: 1.625; */
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    /* letter-spacing: 0.0075em; */
-    /* overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    opacity: 1;
-    text-transform: capitalize;
-    vertical-align: unset;
-    text-decoration: none; */
-    /* color: rgb(52, 71, 103); */
     font-weight: 700;
   }
 
@@ -590,17 +538,7 @@
   .helll span {
     margin: 0px;
     font-size: 0.6rem;
-    /* line-height: 1.625; */
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    /* letter-spacing: 0.0075em; */
-    /* overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    opacity: 1;
-    text-transform: capitalize;
-    vertical-align: unset;
-    text-decoration: none; */
-    /* color: rgb(52, 71, 103); */
     font-weight: 700;
   }
 

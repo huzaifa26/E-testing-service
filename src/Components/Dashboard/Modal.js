@@ -39,6 +39,8 @@ function Modal({ closeModal }) {
         joiningkey: values.joiningkey,
         joinTime: yourDate
       }
+
+      console.log(data)
       axios.post('http://localhost:5000/api/joinCourse', data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } })
         .then(function (response) {
           if (response.status === 200) {

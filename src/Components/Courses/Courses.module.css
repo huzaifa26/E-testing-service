@@ -355,15 +355,10 @@
 }
 
 .manage {
-    min-width: 83vw;
     padding: 10px;
-    /* display: flex; */
-    /* justify-content: center; */
-
-    /* overflow: scroll; */
     margin-top: -13px;
     margin-left: -3px;
-    /* width: 100%; */
+    width: 100%;
 }
 
 

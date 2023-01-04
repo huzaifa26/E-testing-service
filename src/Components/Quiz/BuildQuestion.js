@@ -184,9 +184,10 @@ function BuildQuestion({ close, getQuestion }) {
     }
 
     return (
-        <><div className={styles.modalBackground} onClick={() => close(false)}></div>
-            <div className={styles.modalContainer}>
-                <h1>Build Questions</h1>
+        <>
+        <div className={styles.modalBackground} onClick={() => close(false)}></div>
+            <div className={`${styles.modalContainer} divide-y-2`}>
+                <h1>Generate Questions</h1>
                 <div className={styles.Main2}>
                     {!showQuestions && <textarea
                         name=""
@@ -267,6 +268,7 @@ function BuildQuestion({ close, getQuestion }) {
                         loadingPosition="center"
                         variant="contained"
                         onClick={handleSentence}
+                        className="button"
                     >
                         Next
                     </ColorButton>

@@ -571,14 +571,13 @@ function Quiz(props) {
 
           <hr className={styles.hr}></hr>
           <div className={styles.buttonContainer}>
-            <button onClick={showMainQuiz} className={styles.cancel}>
+            <button style={{background:"white"}} onClick={showMainQuiz} className={"!bg-white button !border-[2px] !border-black !text-black "}>
               Cancel
             </button>
-            <button onClick={saveQuiz} className={styles.save}>
+            <button onClick={saveQuiz} className={"button"}>
               Save
             </button>
           </div>
-          <hr></hr>
         </div>
       )}
     </div>

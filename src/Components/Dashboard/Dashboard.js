@@ -16,6 +16,7 @@ import { async } from '@firebase/util';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client'
 import { socketActions } from '../../Redux/socket-slice';
+import LazyImage from '../../Utils/LazyImage';
 
 
 
@@ -145,14 +146,13 @@ const Dashboard = (props) => {
       {showCourse && <Courses id={courseIdState} />}
 
       {showDashboard && <div className={openModal ? styles.mainDashboard1 : styles.mainDashboard}>
-        <div>
-          <div>
+        <div >
+          <div className='bg-[#FFFFFF] rounded-[10px] ml-[10px] pt-[2px] mt-[10px]'>
             <div className={styles.joinedHeader} >
               <h1>Published Classes</h1>
               <button onClick={createCourseHandler}>Create Class</button>
             </div>
             <hr style={{ marginLeft: '20px' }}></hr>
-
             <div className={styles.joinedCourses}>
               {courses.length === 0 && <div className={styles.no}><p>No Class Created Yet</p></div>}
               {courses.map((item, index) => {
@@ -165,11 +165,11 @@ const Dashboard = (props) => {
                   }} className={styles.joinedList}>
                     <div className={styles.subMain}>
                       {item.imageUrl !== "" &&
-                        <img src={item.imageUrl}></img>
+                        // <img src={item.imageUrl}></img>
+                        <LazyImage src={item.imageUrl} alt={""}/>
                       }
                       <div className={styles.h2}>
                         <h2>{item.courseName}</h2>
-
                       </div>
                     </div>
                   </div>
@@ -177,44 +177,47 @@ const Dashboard = (props) => {
               })}
             </div>
           </div>
+          <div className='bg-[#FFFFFF] rounded-[10px] ml-[10px] mb-[50px]  pt-[2px] mt-[10px]'>
+            <div className={styles.joinedHeader} >
+              <h1>Joined Classes</h1>
+              <button onClick={joinhandle}>Join Class</button>
+            </div>
+            <hr style={{ marginLeft: '20px' }}></hr>
+            <div className={styles.joinedCourses}>
+              {courseJoin.length === 0 && <div className={styles.no}><p>No Class Joined Yet</p></div>}
+              {courseJoin.map((item, index) => {
+                // {item.blocked !==0 &&}
+                return (item.blocked === 0) ?
 
-          <div className={styles.joinedHeader} >
-            <h1>Joined Classes</h1>
-            <button onClick={joinhandle}>Join Class</button>
-          </div>
-          <hr style={{ marginLeft: '20px' }}></hr>
-          <div className={styles.joinedCourses}>
-            {courseJoin.length === 0 && <div className={styles.no}><p>No Class Joined Yet</p></div>}
-            {courseJoin.map((item, index) => {
-              // {item.blocked !==0 &&}
-              return (item.blocked === 0) ?
-
-                <div key={index} className={styles.joinedList} onClick={(e) => {
-                  dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
-                  dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
-                  navigate("/courses")
-                }}>
-                  <div className={styles.subMain}>
-                    {item.imageUrl !== "" &&
-                      <img src={item.imageUrl}></img>
-                    }
+                  <div key={index} className={styles.joinedList} onClick={(e) => {
+                    dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
+                    dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
+                    navigate("/courses")
+                  }}>
+                    <div className={styles.subMain}>
+                      {item.imageUrl !== "" &&
+                        // <img src={item.imageUrl}></img>
+                        <LazyImage src={item.imageUrl} alt={""}/>
+                      }
+                      <div className={styles.h2}>
+                        <h2>{item.courseName}</h2>
+                      </div>
+                    </div>
+                  </div> :
+                  <div className={styles.joinedList} onClick={(e) => { toast.error("You're blocked by the teacher", { position: toast.POSITION.TOP_RIGHT, }); }}>
+                    <div className={styles.subMain}>
+                      {item.imageUrl !== "" &&
+                        <img className={styles.imgg} src={item.imageUrl}></img>
+                      }
+                    </div>
                     <div className={styles.h2}>
                       <h2>{item.courseName}</h2>
                     </div>
                   </div>
-                </div> :
-                <div className={styles.joinedList} onClick={(e) => { toast.error("You're blocked by the teacher", { position: toast.POSITION.TOP_RIGHT, }); }}>
-                  <div className={styles.subMain}>
-                    {item.imageUrl !== "" &&
-                      <img className={styles.imgg} src={item.imageUrl}></img>
-                    }
-                  </div>
-                  <div className={styles.h2}>
-                    <h2>{item.courseName}</h2>
-                  </div>
-                </div>
-            })}
+              })}
+            </div>
           </div>
+
           {openModal && <Modal closeModal={modelOpenHandler} />}
         </div>
       </div>}

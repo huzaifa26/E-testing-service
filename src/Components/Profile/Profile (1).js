@@ -170,19 +170,19 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className={styles.footer}>
-                        <button>Save</button>
+                        <button className='button'>Save</button>
                     </div>
                 </form>
             </div>
 
-            <div className={styles.right}>
+            <div className={'rounded-[16px] w-[30%] bg-white flex flex-col items-center m-[10px] ml-0 p-[20px] right relative pt-[59px]'}>
                 <div className={styles.circularportrait}>
-                    <img src={imgSrc} />
+                    <img style={!imgSrc ? { padding: "30px" } : { padding: 0 }} src={imgSrc || "./user-solid.svg"} />
                 </div>
-                <div className={styles.chooseImg}>
-                    <label for="files" class="btn">Change Image</label>
-                    <input onChange={fileHandler} id="files" style={{ visibility: "hidden" }} type="file" accept="image/png, image/gif, image/jpeg" />
-                </div>
+                <label className='!mt-[15px] button text-center' htmlFor="files">
+                    Upload Image
+                </label>
+                <input onChange={fileHandler} id="files" style={{ visibility: "hidden" }} type="file" accept="image/png, image/gif, image/jpeg" />
             </div>
         </div>
 

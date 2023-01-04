@@ -40,15 +40,15 @@ function CreateCategoryModal(props) {
 
     return (
         <>
-            <div onClick={()=>{props.closeModalHandler()}} className={styles.CreateCategoryModalBackground}>
+            <div onClick={()=>{props.closeModalHandler()}} className={`${styles.CreateCategoryModalBackground}`}>
             </div>
             <div onClick={()=>{}} className={styles.CreateCategoryModal}>
                 <form style={{width:'100%',height:'100%',display:'flex',alignItems:'center',flexDirection:'column'}}  ref={formRef} onSubmit={formSubmitHandler}>
                     <h2 style={{height:"15%",marginBottom:'15px',textAlign:"center",fontSize:'25px',color:'var(--primary)',fontWeight:"500" }}>Create Category</h2>
                     <input type={"text"} name="categoryName" placeholder="Category Name" required></input>
                     <div className={styles.btnDiv}>
-                        <button onClick={()=>{props.closeModalHandler()}}>Close</button>
-                        <button type="submit">Create</button>
+                        <button style={{background:"White",color:"black",border:"2px solid black",boxShadow:"0px 0px 0px #000"}} className="button" onClick={()=>{props.closeModalHandler()}}>Close</button>
+                        <button className="button" type="submit">Create</button>
                     </div>
                 </form>
 

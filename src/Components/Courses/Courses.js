@@ -75,7 +75,6 @@ const Courses = (props) => {
   // })
 
   useEffect(() => {
-
     axios
       .get(
         'http://localhost:5000/api/courses/' + user.userInfo.user.id,
@@ -83,7 +82,7 @@ const Courses = (props) => {
         { headers: { Authorization: `Bearer ${cookie.token}` } }
       )
       .then((res) => {
-        setCourses(res.data.data);
+        setCourses(res?.data?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -124,9 +123,9 @@ const Courses = (props) => {
         { headers: { Authorization: `Bearer ${cookie.token}` } }
       )
       .then((res) => {
-        setCourseKey(res.data.data[0].courseKey);
-        setCourseDescription(res.data.data[0].courseName);
-        setCourseDescription(res.data.data[0].courseDescription);
+        setCourseKey(res?.data?.data[0]?.courseKey);
+        setCourseDescription(res?.data?.data[0]?.courseName);
+        setCourseDescription(res?.data?.data[0]?.courseDescription);
       })
       .catch((err) => {
         console.log(err);
@@ -151,7 +150,7 @@ const Courses = (props) => {
 
       )
       .then((res) => {
-        setCourses(res.data.data);
+        setCourses(res?.data?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -187,7 +186,7 @@ const Courses = (props) => {
                   Published Classes
                 </h1>
               </div>
-              {courses.map((item, index) => {
+              {courses?.map((item, index) => {
                 return (
                   <div
                     className={styles.flexDiv2}
