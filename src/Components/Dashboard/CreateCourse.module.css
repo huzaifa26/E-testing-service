@@ -160,8 +160,6 @@
   }
 
 @media all and (max-width: 473px) {
-
-
     .form textarea
     {
         min-width: 170px !important;

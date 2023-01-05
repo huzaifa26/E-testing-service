@@ -8,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import TextField from '@mui/material/TextField';
 
 function UploadModal({ closeModal }) {
 
@@ -17,6 +18,7 @@ function UploadModal({ closeModal }) {
   const [fileURL, setfileURL] = useState('');
   const [fileName, setFileName] = useState('')
   const [fileExtension, setFileExtention] = useState('')
+  const [contentFileName, setContentFileName] = useState(null);
 
 
   function getTime() {
@@ -32,12 +34,14 @@ function UploadModal({ closeModal }) {
 
 
   const fileHandler = async (e) => {
+    console.log(e.target.files);
+    setContentFileName(e.target.files[0].name);
     setfile(e.target.files[0]);
     const last_dot = e.target.files[0].name.lastIndexOf('.')
     const ext = e.target.files[0].name.slice(last_dot + 1)
     const name = e.target.files[0].name.slice(0, last_dot)
-    setFileExtention(ext)
-    setFileName(name)
+    setFileExtention(ext);
+    setFileName(name);
 
     if (file == null)
       return;
@@ -114,20 +118,24 @@ function UploadModal({ closeModal }) {
   return (
     <>
       <div className={styles.modalBackground} onClick={() => closeModal(false)}></div>
-      <form className={styles.modalContainer} onSubmit={handle}>
-        <div className={styles.borderInput}>
-          <input required className={styles.input} type="file" onChange={fileHandler} accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip,.rar,.7zip" />
+      <form className={`divide-y-2 ${styles.modalContainer}`} onSubmit={handle}>
+        <h1 className='font-[700] text-[22px]'>Upload Content</h1>
+        <div className={"mb-[10px]  flex justify-center flex-col items-center"}>
+          <p className='text-[14px] font-[400] mb-[6px] mt-[6px]'>{contentFileName ? contentFileName : "No Files choosen"}</p>
+          <label className='button' htmlFor="content">Upload File</label>
+          <input id="content" required className={"hidden"} type="file" onChange={fileHandler} accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip,.rar,.7zip" />
         </div>
         <FormControl variant="standard">
-          <InputLabel htmlFor="component-helper">Title</InputLabel>
-          <Input
+          <TextField
             id="component-helper"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            variant="outlined"
+            label="Title"
           />
         </FormControl>
-        <button className={styles.button1} type='submit'>Add</button>
+        <button className={`!mt-[10px] ${styles.button1}`} type='submit'>Add</button>
       </form>
     </>
   )

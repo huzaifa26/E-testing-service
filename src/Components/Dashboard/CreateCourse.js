@@ -6,18 +6,14 @@ import { useState } from "react";
 import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage"
 import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { courseActions } from "./../../Redux/course-slice";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 
 
 const CreateCourse = (props) => {
   const user = useSelector(state => { return state.user; })
-  const [cookie, setCookie] = useCookies();
   const [image, setImage] = useState('');
-  const [imageURL, setImageURL] = useState('https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/cb/3c4030d65011e682d8b14e2f0915fa/shutterstock_226881610.jpg?auto=format%2Ccompress&dpr=1');
+  const [imageURL, setImageURL] = useState(null);
   const formRef = useRef();
   const navigate = useNavigate()
   const [file, setfile] = useState('');
@@ -123,19 +119,23 @@ const CreateCourse = (props) => {
       <div className={styles.joinedHeader2}>
         <form ref={formRef} onSubmit={CreateClassSubmithandler} className={styles.form}>
           <div className={styles.imageContainer}>
-            <div className={styles.joinss}>
-              <img src={imageURL === "" ? "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/cb/3c4030d65011e682d8b14e2f0915fa/shutterstock_226881610.jpg?auto=format%2Ccompress&dpr=1" : imageURL}></img>
-              <div style={{ marginLeft: '6.541vw', marginTop: '10px' }}>
-                <label for="files" class="btn">Change Image</label>
-                <input accept=".png,.jpg,.jpeg" onChange={fileHandler} id="files" style={{ visibility: "hidden" }} type="file" />
+            <div>
+              <div className="flex items-center justify-center flex-col" style={imageURL ? { height: "auto", maxHeight: "200px", width: "auto", maxWidth: "300px" } : { height: "280px", width: "300px" }}>
+                <div style={imageURL ? { height: "auto", maxHeight: "200px", width: "auto", maxWidth: "300px" } : { height: "230px", width: "300px" }} className="flex justify-center items-center rounded-[10px] shadow-md">
+                  <img className="rounded-[10px] max-h-[200px]" src={imageURL ? imageURL : "/book-open-solid.svg"}></img>
+                </div>
+                <div className="flex justify-center" style={{ marginTop: '10px' }}>
+                  <label for="files" class="button">Change Image</label>
+                  <input accept=".png,.jpg,.jpeg" onChange={fileHandler} id="files" style={{ display: "none" }} type="file" />
+                </div>
               </div>
             </div>
-
           </div>
           {/* <input required name="courseName"  placeholder="Class Name"></input> */}
-          <TextField className={styles.Textfield} name="courseName" type={"text"} id="outlined-basic" label="Class Name" variant="outlined" sx={{ width: 'auto' }} size="medium" required />
+          <TextField name="courseName" type={"text"} id="outlined-basic" label="Class Name" variant="outlined" sx={{ width: 'auto' }} size="medium" required />
 
-          <textarea required style={{ resize: 'none', width: '100%', fontSize: '18px', borderRadius: "4px", padding: '10px' }} name="description" rows='10' type={"text"} placeholder="Description"></textarea>
+          {/* <textarea required style={{ resize: 'none', width: '100%', fontSize: '18px', borderRadius: "4px", padding: '10px' }} name="description" rows='10' type={"text"} placeholder="Description"></textarea> */}
+          <TextField name="description" type={"text"} id="outlined-basic" label="Description" variant="outlined" sx={{ width: 'auto' }} size="medium" multiline rows={4} maxRows={6} required />
 
           <div className={styles.button}>
             <button type="submit">Create Class</button>
