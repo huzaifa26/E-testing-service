@@ -86,6 +86,7 @@
     background-size: 150% !important;
     background-position-x: 25% !important;
 }
+
 .CreateCourse .joinedHeader2 .button{
     width: 100%;
     display: flex;
@@ -159,8 +160,6 @@
   }
 
 @media all and (max-width: 473px) {
-
-
     .form textarea
     {
         min-width: 170px !important;

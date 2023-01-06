@@ -6,21 +6,18 @@ import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { userActions } from './../../Redux/user-slice';
-import { courseActions, courseCategoriesActions, getCourseIdOnClickactions, courseId_NameActions } from './../../Redux/course-slice';
+import { getCourseIdOnClickactions } from './../../Redux/course-slice';
 import useBreadcrumbs from 'use-react-router-breadcrumbs';
-import PersonIcon from '@mui/icons-material/Person';
 import MenuIcon from '@mui/icons-material/Menu';
-import TextField from '@mui/material/TextField';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { io } from 'socket.io-client'
-import { socketActions } from '../../Redux/socket-slice';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useMemo } from 'react';
+import { useScroll } from 'framer-motion';
 
 const Navbar2 = (props) => {
 
-  const breadcrumbs = useBreadcrumbs()
+  const breadcrumbs = useBreadcrumbs();
   const user = useSelector(state => state.user);
   const courseIdredux = useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const courseClickUserId = useSelector(state => state.courseClickUserId.courseClickUserId)
@@ -31,12 +28,19 @@ const Navbar2 = (props) => {
   const locationName = location.pathname;
   let newLocationName = ""
   let counter = 0;
-  // const socketData = useSelector(state => state.socket.socket)
-  const [notification, setNotifications] = useState([])
-  const [length, setLength] = useState(0)
-  const [socket, setSocket] = useState(null)
-  const [trigger, setTrigger] = useState(false)
+  const [notification, setNotifications] = useState([]);
+  const [length, setLength] = useState(0);
+  const [socket, setSocket] = useState(null);
+  const [trigger, setTrigger] = useState(false);
 
+  const { scrollY } = useScroll();
+
+  const [scrollCounter, setScrollCounter] = useState(0);
+  useEffect(() => {
+    return scrollY.onChange((latest) => {
+      setScrollCounter(latest)
+    })
+  }, [])
 
   const fetchNotifications = () => {
     axios.get("http://localhost:5000/api/getNotification/" + user.userInfo.user.id, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookies.token}` } }
@@ -49,9 +53,6 @@ const Navbar2 = (props) => {
   useEffect(() => {
     let abc = io("http://localhost:5001")
     setSocket(abc)
-    // console.log(abc)
-    // dispatch(socketActions.socket(abc));
-    // console.log(socketData)
   }, [])
 
   useEffect(() => {
@@ -127,18 +128,15 @@ const Navbar2 = (props) => {
 
   const make = (window) => {
 
-    if (window.pageYOffset > 8)
+    if (window.pageYOffset > 30)
       setTop(true)
     else
       setTop(false)
   }
 
-
   React.useEffect(() => {
     window.onscroll = () =>
-
       window.pageYOffset && make(window)
-
     return () => (window.onscroll = null);
   });
 
@@ -149,8 +147,6 @@ const Navbar2 = (props) => {
     ).then((res) => {
       console.log(res);
       fetchNotifications()
-
-      // setLength(res.data.data.filter(value => value.open === 0).length);
     }).catch((err) => {
       console.log(err);
     })
@@ -158,7 +154,7 @@ const Navbar2 = (props) => {
 
   return (
     <div className="Main">
-      <div>
+      <div className='relative z-[100]'>
         <nav className={sidebar ? 'nav-menu-active1' : 'nav-menu'}>
           <ul className="nav-menu-items">
             <div className="top">
@@ -250,9 +246,8 @@ const Navbar2 = (props) => {
         </nav>
       </div>
       <main className='main' onClick={closeSidebar}>
-
         <div className='navbarMain'>
-          <div className={top ? 'navbar' : 'navbar2'}>
+          <div className={scrollCounter > 0 ? 'navbar' : 'navbar2'}>
             <div className="helll">
               {breadcrumbs.map(({ breadcrumb, index }) =>
                 <div key={index} >
@@ -261,15 +256,13 @@ const Navbar2 = (props) => {
                 </div>)}
             </div>
             <div style={{ display: "flex", gap: '5px', alignItems: 'center', justifyContent: 'center' }}>
-              {/* <TextField className='anc1' id="outlined-basic" label="Search" variant="outlined" size='small' style={{width:'185px',height:'44px'}}/> */}
-              {/* <PersonIcon className='anc' /> */}
               <div className="circularportrait">
-                <img src={user?.userInfo?.user?.userImg} />
+                <img style={!user?.userInfo?.user?.userImg ? {padding:"10px"} : {padding:0}} src={user?.userInfo?.user?.userImg || "/user-solid.svg"} />
               </div>
               <div title='Logout'>
                 <LogoutIcon className="anc4" onClick={logout} />
               </div>
-              <MenuIcon className='anc1' onClick={showSidebar} />
+              <MenuIcon className='anc1 cursor-pointer' onClick={showSidebar} />
             </div>
           </div>
         </div>

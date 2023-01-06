@@ -539,14 +539,13 @@ function EditPool({ close, editDetail, editData }) {
                   gap: '10px',
                   margin: '-10px 0 10px 0',
                   fontSize: '14px',
-                }}>This answer will be used for grading by our model </p>
+                }}>The Answer must be provided if you want to auto grade students answer.</p>
                 <div className={styles.editorContainer}>
                   <Editor
                     toolbar={config}
                     toolbarClassName="toolbarClassName"
                     wrapperClassName="wrapperClassName"
                     editorClassName="editorClassName"
-                    // ref={rtQuestionRef}
                     editorState={editorState2}
                     onEditorStateChange={(newState) => {
                       setEditorState2(newState);
@@ -555,8 +554,6 @@ function EditPool({ close, editDetail, editData }) {
                       width: '95%',
                       marginBottom: '10px',
                       border: '1px solid #DAEAF1',
-                      // minHeight: '300px',
-                      // minWidth: '315px',
                       maxHeight: '400px',
                       height: '300px',
                       overflow: 'clip',

@@ -1,94 +1,93 @@
 .modalBackground {
-    width: 100%;
-    min-width: calc(100vw - 100%);
-    height: 100vh;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    z-index: 10;
-    background-color: rgba(0, 0, 0,0.3);
+
+  width: 100%;
+  min-width: calc(100vw - 100%);
+  height: 100vh;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .modalContainer {
-  width: 450px;
-  /* height: 430px; */
-    border-radius: 6px;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 25px;
-    font-family: 'Roboto Flex', sans-serif;
-    position: fixed;
+  width: 60vw;
+  height: 80vh;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 25px;
+  font-family: 'Roboto Flex', sans-serif;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  animation-name: animateModal;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+
+@keyframes animateModal {
+  0% {
+    top: -20px;
+  }
+
+  100% {
     top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    z-index: 11;
-    animation-name: animateModal;
-    animation-duration: 0.5s;
-    animation-timing-function: ease-out;
   }
-  
-  
-  @keyframes animateModal {
-    0% {
-      top: -20px;
-    }
-    100% {
-      top: 50%;
-    }
-  }
-  
-
-.modalContainer i{
-    color: red;
-    display: inline-block;
-    /* justify-content: flex-end; */
-}
-.header
-{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0px;
-    margin-bottom: 5px;
-}
-.body
-{
-    height: 300px;
-    display: flex;
-    margin-top: 10px;
-}
-.left
-{
-    width: 30%;
-}
-.categoryName
-{
-    margin:5px 5px 5px 0px;
-    height: 41px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding-left: 3px;
-    cursor: pointer;
 }
 
-.first
-{
-color: #0374B5;
-font-size: 14px;
+
+.modalContainer i {
+  color: red;
+  display: inline-block;
+  /* justify-content: flex-end; */
 }
-.second
-{
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  margin-bottom: 5px;
+}
+
+.body {
+  display: flex;
+  margin-top: 10px;
+}
+
+.left {
+  width: 30%;
+}
+
+.categoryName {
+  margin: 5px 5px 5px 0px;
+  height: 41px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 3px;
+  cursor: pointer;
+}
+
+.first {
+  color: #0374B5;
+  font-size: 14px;
+}
+
+.second {
   color: #888;
   font-size: 10px;
   padding-left: 10px;
 }
 
-.selected
-{
+.selected {
   background-color: #eee;
   cursor: pointer;
-  margin:5px 5px 5px 0px;
+  margin: 5px 5px 5px 0px;
   height: 41px;
   display: flex;
   justify-content: center;
@@ -96,57 +95,58 @@ font-size: 14px;
   padding-left: 3px;
 }
 
-.categoryName:hover{
+.categoryName:hover {
   background-color: rgba(238, 238, 238, 0.491);
 }
-.right
-{
+
+.right {
   height: 100%;
   width: 70%;
   margin-left: 10px;
   display: flex;
   flex-direction: column
 }
-.question{
+
+.question {
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;
   padding-left: 5px;
 }
-.questionHeader
-{
+
+.questionHeader {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
-.questionFooter
-{
-  margin: 10px 0px 7px 23px;  
+
+.questionFooter {
+  margin: 10px 0px 7px 23px;
 }
-.questionFooter p
-{
+
+.questionFooter p {
   font-size: 11.2px !important;
   font-weight: normal !important;
 }
-.question p
-{
+
+.question p {
   font-weight: 600;
-  font-size: 14px ;
+  font-size: 14px;
 }
-.header2
-{
+
+.header2 {
   overflow-y: auto;
   gap: 10px;
   height: 100%;
 }
-.footer
-{
+
+.footer {
   display: flex;
   justify-content: center;
   height: 10%;
   margin-top: 5px;
 }
-.adds
-{
+
+.adds {
   cursor: pointer;
   background-color: #2A84EB;
   align-self: center;
@@ -163,11 +163,14 @@ font-size: 14px;
 @media all and (max-width: 548px) {
 
   .modalContainer {
-    width: 350px;}
+    width: 350px;
+  }
 
 }
+
 @media all and (max-width: 408px) {
 
   .modalContainer {
-    width: 310px;}
+    width: 310px;
+  }
 }

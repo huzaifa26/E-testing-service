@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --primary: #212123;
   --secondry: var(--white);
@@ -19,6 +23,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.right{
+  box-shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem, rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
 }
 
 body {
@@ -45,4 +53,116 @@ input {
 
 .css-1yt7yx7-MuiLoadingButton-loadingIndicator {
   color: white !important;
+}
+
+
+.button{
+  position: relative;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0px;
+  border: 0px;
+  margin: 0px;
+  cursor: pointer;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.02857em;
+  /* min-width: 64px; */
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  line-height: 1.4;
+  text-align: center;
+  text-transform: uppercase;
+  user-select: none;
+  transition: all 50ms ease-in 0s;
+  min-height: 2.5rem;
+  padding: 0.625rem 1.5rem;
+  background-image: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+  background-position-y: initial;
+  background-repeat: initial;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+  color: rgb(255, 255, 255);
+  gap: 10px;
+  box-shadow: rgb(52 71 103 / 15%) 0rem 0.1875rem 0.1875rem 0rem, rgb(52 71 103 / 20%) 0rem 0.1875rem 0.0625rem -0.125rem, rgb(52 71 103 / 15%) 0rem 0.0625rem 0.3125rem 0rem;
+  background-size: 150% !important;
+  background-position-x: 25% !important;
+  outline: none;
+  border: 1px solid black;
+}
+
+.button:hover{
+  position: relative;
+  top: 2px;
+}
+
+.button:focus{
+  position: relative;
+  top: 4px;
+}
+
+.css-zylse7-MuiButtonBase-root-MuiIconButton-root.Mui-disabled{
+  background:"aqua" !important;
+}
+
+.userIcon{
+  background-image: url("./Assets/user.svg");
+  background-repeat: no-repeat;
+  text-indent: 20px;
+  background-size: clamp(16px,0.562vw,23px);
+  background-position: 4px,10px;
+  background-size: 14px;
+}
+
+.emailIcon{
+  background-image: url("./Assets/envelope.svg");
+  background-repeat: no-repeat;
+  text-indent: 20px;
+  background-size: clamp(16px,0.562vw,23px);
+  background-position: 4px,10px;
+  background-size: 14px;
+}
+
+.passwordIcon{
+  background-image: url("./Assets/password.svg");
+  background-repeat: no-repeat;
+  text-indent: 20px;
+  background-size: clamp(16px,0.562vw,23px);
+  background-position: 4px,10px;
+  background-size: 14px;
+}
+
+input:-webkit-autofill,
+input::-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px blue inset;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

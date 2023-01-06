@@ -108,13 +108,10 @@ function EditQuiz() {
     assignmentStartTime2 = assignmentStartTime2.toLocaleString()
     let newassignmentStartTime2 = moment(assignmentStartTime2)
 
-    console.log(newassignmentStartTime);
-    console.log(newassignmentStartTime2);
     if (!newassignmentStartTime.isBefore(newassignmentStartTime2)) {
       alert('endTime is before startTime')
       return
     }
-
 
     let data = {
       id: location.state.previewDetails.id,
@@ -134,7 +131,6 @@ function EditQuiz() {
 
     data.questions.forEach((item, index) => {
 
-      // console.log(item)
       let newArr = []
       if (item.questionType !== 'Subjective') {
 
@@ -146,7 +142,6 @@ function EditQuiz() {
           item.options = newArr
       }
     })
-    // console.log(data.questions)
 
     let url = "http://localhost:5000/api/editQuiz/";
     axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {

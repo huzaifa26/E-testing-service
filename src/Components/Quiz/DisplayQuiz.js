@@ -10,20 +10,16 @@ import { MathComponent } from 'mathjax-react';
 import { toast } from 'react-toastify';
 import moment from "moment";
 import axios from 'axios';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
-// import { Offline, Online } from "react-detect-offline";
-// import Result from './Result';
-import micIcon from './../../Assets/mic.svg'
 import { IconButton, Tooltip } from '@mui/material';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 
-const SpeechRecognition =
+let speechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
-const mic = new SpeechRecognition();
 
-mic.continuous = true;
-mic.interimResults = true;
-mic.lang = "en-US";
+speechRecognition = new speechRecognition();
+speechRecognition.continuous = true;
+speechRecognition.interimResults = true;
+speechRecognition.lang = 'en-US';
 
 function DisplayQuiz() {
   const location = useLocation()
@@ -320,69 +316,116 @@ function DisplayQuiz() {
     setSelected(e.options)
   }
 
+  // const [isListening, setIsListening] = useState(false);
+  // const [note, setNote] = useState(null);
+  // const [savedNotes, setSavedNotes] = useState([]);
+  // const transcriptRef = useRef(null);
 
-
+  const [transcripts, setTranscripts] = useState([]);
   const [isListening, setIsListening] = useState(false);
-  const [note, setNote] = useState(null);
-  const [savedNotes, setSavedNotes] = useState([]);
-  const transcriptRef = useRef(null)
 
   useEffect(() => {
-    handleListen();
-  }, [isListening]);
-
-  const handleListen = () => {
-    if (isListening) {
-      mic.start();
-      mic.onend = () => {
-        console.log("continue..");
-        mic.start();
-      };
-    }
-    else {
-      mic.stop();
-      mic.onend = (event) => {
-        console.log(event)
-        handleSaveNote()
-        console.log("Stopped Mic on Click");
-      };
-    }
-    mic.onstart = () => {
-      console.log("Mics on");
+    speechRecognition.onstart = () => {
+      setIsListening(true);
     };
 
-    mic.onresult = (event) => {
-      const transcript = Array.from(event.results)
-        .map((result) => result[0])
-        .map((result) => result.transcript)
-        .join("");
-      setNote((prev) => {
-        console.log(prev + " " + transcript);
-        return transcript
-      });
-      const blocksFromHTML = convertFromHTML(transcript)
-      const contentState = ContentState.createFromBlockArray(blocksFromHTML)
-      setEditorState(EditorState.createWithContent(contentState));
-      mic.onerror = (event) => {
-        console.log(event.error);
-      };
+    speechRecognition.onresult = (event) => {
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          let localTranscript=null;
+          setTranscripts((prevTranscripts) => {
+            let newArr = [...prevTranscripts, transcript];
+            newArr = newArr.join(',');
+            newArr = newArr.replace(',', ' ');
+            localTranscript=newArr;
+            return [newArr];
+          });
+          const blocksFromHTML = convertFromHTML(localTranscript)
+          const contentState = ContentState.createFromBlockArray(blocksFromHTML)
+          setEditorState(EditorState.createWithContent(contentState));
+        }
+      }
     };
+
+    speechRecognition.onerror = (event) => {
+      console.error(event.error);
+    };
+
+    speechRecognition.onend = () => {
+      setIsListening(false);
+    };
+
+    return () => {
+      speechRecognition.stop();
+    };
+  }, []);
+
+  const startListening = () => {
+    speechRecognition.start();
   };
 
-  const handleSaveNote = () => {
-    setIsListening(false)
-    setSavedNotes((savedNotes) => {
-      let arr = [...savedNotes, note]
-      console.log(arr)
-      arr = arr.join()
-      arr = arr.replace(",", '');
-      console.log(arr)
-      return arr
-    });
-
-    console.log([savedNotes, note]);
-
+  const stopListening = () => {
+    speechRecognition.stop();
   };
+
+
+  // useEffect(() => {
+  //   handleListen();
+  // }, [isListening]);
+
+  // const handleListen = () => {
+  //   if (isListening) {
+  //     mic.start();
+  //     mic.onend = () => {
+  //       mic.start();
+  //     };
+  //   }
+  //   else {
+  //     mic.stop();
+  //     mic.onend = (event) => {
+  //       console.log(event)
+  //       handleSaveNote()
+  //     };
+  //   }
+  //   mic.onstart = () => {
+  //     console.log("Mics on");
+  //   };
+
+  //   mic.onresult = (event) => {
+  //     const transcript = Array.from(event.results)
+  //       .map((result) => result[0])
+  //       .map((result) => result.transcript)
+  //       .join("");
+  //     setNote((prev) => {
+  //       console.log(prev + " " + transcript);
+  //       return transcript
+  //     });
+
+  //     const blocksFromHTML = convertFromHTML(transcript)
+  //     const contentState = ContentState.createFromBlockArray(blocksFromHTML)
+  //     setEditorState(EditorState.createWithContent(contentState));
+
+  //     mic.onerror = (event) => {
+  //       console.log(event.error);
+  //     };
+  //   };
+  // };
+
+  // const handleSaveNote = () => {
+  //   setIsListening(false)
+  //   setSavedNotes((savedNotes) => {
+  //     let arr = [...savedNotes, note]
+  //     console.log(arr)
+  //     arr = arr.join()
+  //     arr = arr.replace(",", '');
+  //     console.log(arr)
+  //     return arr
+  //   });
+
+  //   console.log([savedNotes, note]);
+
+  // };
 
   return (
     <>
@@ -421,8 +464,8 @@ function DisplayQuiz() {
               <>
                 <div className={styles.Icon}>
 
-                  {!isListening && <Tooltip placement="top" arrow title="Answer by Recording"><IconButton onClick={() => setIsListening((prev) => !prev)} color="primary" aria-label="add to shopping cart"><KeyboardVoiceIcon onClick={() => setIsListening((prev) => !prev)} style={{ color: 'black', fontSize: '30px', pointerEvents: "none" }} /></IconButton></Tooltip>}
-                  {isListening && <Tooltip placement="top" arrow title="Stop" ><IconButton data-recording={isListening} onClick={() => setIsListening((prev) => !prev)} color="primary" aria-label="add to shopping cart"><KeyboardVoiceIcon onClick={() => setIsListening((prev) => !prev)} style={{ color: 'red', fontSize: '30px', pointerEvents: "none" }} /></IconButton></Tooltip>}
+                  {!isListening && <Tooltip placement="top" arrow title="Answer by Recording"><IconButton onClick={() => startListening()} color="primary" aria-label="add to shopping cart"><KeyboardVoiceIcon onClick={() => setIsListening((prev) => !prev)} style={{ color: 'black', fontSize: '30px', pointerEvents: "none" }} /></IconButton></Tooltip>}
+                  {isListening && <Tooltip placement="top" arrow title="Stop" ><IconButton data-recording={isListening} onClick={() => stopListening()} color="primary" aria-label="add to shopping cart"><KeyboardVoiceIcon onClick={() => setIsListening((prev) => !prev)} style={{ color: 'red', fontSize: '30px', pointerEvents: "none" }} /></IconButton></Tooltip>}
 
                 </div>
                 <p></p>
