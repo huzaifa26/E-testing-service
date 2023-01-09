@@ -30,6 +30,10 @@ import Layout from './Layout/Layout';
 import Unauthorized from './Layout/Unauthorized';
 import Missing from './Layout/Missing';
 import Auth2 from './Components/Auth/Auth'
+import QuizResult from './Components/Quiz/QuizResult';
+import QuizAnswers from './Components/Quiz/QuizAnswers';
+import QuizLog from './Components/Quiz/QuizLog';
+
 
 function App() {
   let uid = uuidv4();
@@ -55,6 +59,9 @@ function App() {
             <Route path="/courses/poolQuestions" element={<Navbar><PoolQuestions /></Navbar>} />
             <Route path="/courses/content" element={<Navbar><Content /></Navbar>} />
             <Route path="/courses/quiz" element={<Navbar><Quiz /></Navbar>} />
+            <Route path="/courses/quiz/result" element={<Navbar><QuizResult /></Navbar>} />
+            <Route path="/courses/quiz/result/log" element={<Navbar><QuizLog /></Navbar>} />
+            <Route path="/courses/quiz/result/answers" element={<Navbar><QuizAnswers /></Navbar>} />
             <Route path="/courses/displayQuiz" element={<Navbar><DisplayQuiz /></Navbar>} />
             <Route path="/courses/preview" element={<Navbar><Preview /></Navbar>} />
             <Route path="/courses/manangeStudents" element={<Navbar><ManageStudents /></Navbar>} />

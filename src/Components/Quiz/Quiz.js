@@ -327,10 +327,8 @@ function Quiz(props) {
   };
 
   const fetchQuiz = () => {
-    console.log("11111111111111111111111111111111111111")
     axios.get("http://localhost:5000/api/getAllQuizzes/" + courseIdredux, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }
     ).then((res) => {
-      console.log(res)
       setTotalQuizzes(res.data.data)
     }).catch((err) => {
       console.log(err);
@@ -349,7 +347,6 @@ function Quiz(props) {
       if (res.status === 200) {
         toast.success('Deleted', { position: toast.POSITION.TOP_RIGHT, });
       }
-      console.log('deleted')
       fetchQuiz()
     }).catch((err) => {
       console.log(err);
@@ -357,9 +354,7 @@ function Quiz(props) {
   }
 
   useEffect(() => {
-    console.log("----------------------------------------------")
     fetchQuiz()
-    console.log("222222222222222222222222222222222222")
   }, []);
 
   return (
@@ -571,7 +566,7 @@ function Quiz(props) {
 
           <hr className={styles.hr}></hr>
           <div className={styles.buttonContainer}>
-            <button style={{background:"white",boxShadow:"0px 0px 0px #000000"}} onClick={showMainQuiz} className={"!bg-white button !border-[2px] !border-black !text-black "}>
+            <button style={{ background: "white", boxShadow: "0px 0px 0px #000000" }} onClick={showMainQuiz} className={"!bg-white button !border-[2px] !border-black !text-black "}>
               Cancel
             </button>
             <button onClick={saveQuiz} className={"button"}>

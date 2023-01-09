@@ -28,6 +28,10 @@ function QuizTable(props) {
     navigate("/courses/editQuiz", { state: { previewDetails: item, from: 'QuizTable' } });
   }
 
+  const handleResult = (item) => {
+    navigate("/courses/quiz/result", { state: { previewDetails: item, from: 'QuizTable' } });
+  }
+
   const handleDelete = (item) => {
 
     props.handleDelete(item)
@@ -111,7 +115,7 @@ function QuizTable(props) {
           <TableCell className={styles.ind} component="th">{props.endTime}</TableCell>
           <TableCell className={styles.ind} component="th" align='center'>
             {!checkEndTme(props.endTime) && <button className={styles.preview} onClick={() => handlePreview(props.data)}>Preview</button>}
-            {checkEndTme(props.endTime) && <button className={styles.preview2} onClick={() => handlePreview(props.data)}>Result</button>}
+            {checkEndTme(props.endTime) && <button className={styles.preview2} onClick={() => handleResult(props.data)}>Result</button>}
             <button className={styles.edit} onClick={() => handleEdit(props.data)}>Edit</button>
             <button className={styles.button0} onClick={() => handleDelete(props.data)}>Delete</button>
 

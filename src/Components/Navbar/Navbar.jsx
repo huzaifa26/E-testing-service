@@ -178,7 +178,7 @@ const Navbar2 = (props) => {
               </Link>
             </li>
 
-            {typeof (courseIdredux) === "number" && (location.pathname === "/courses" || location.pathname === "/courses/pools" || location.pathname === "/courses/setting" || location.pathname === "/courses/content" || location.pathname === "/courses/quiz" || location.pathname === "/courses/assignment" || location.pathname === "/courses/editQuiz" || location.pathname === '/courses/poolQuestions' || location.pathname === '/courses/manangeStudents' || location.pathname === '/courses/poolQuestions') &&
+            {typeof (courseIdredux) === "number" && (location.pathname === "/courses" || location.pathname === "/courses/pools" || location.pathname === "/courses/setting" || location.pathname === "/courses/content" || location.pathname === "/courses/quiz" || location.pathname === "/courses/assignment" || location.pathname === "/courses/editQuiz" || location.pathname === '/courses/poolQuestions' || location.pathname === '/courses/manangeStudents' || location.pathname === '/courses/poolQuestions' || location.pathname === '/courses/quiz/result' || location.pathname === '/courses/quiz/result/log' || location.pathname === '/courses/quiz/result/answers') &&
               <div style={sidebar === true ? { padding: "0 10px" } : { padding: "0 10px" }} className={"subMenu"}>
 
 
@@ -190,7 +190,7 @@ const Navbar2 = (props) => {
                 </li>
 
                 <li className="nav-text" title='Quizzes'>
-                  <NavLink onClick={() => setTop(false)} className={(location.pathname === "/courses/editQuiz" || location.pathname === '/courses/preview' || location.state === "/courses/displayQuiz" || location.state === "/courses/result") && sidebar === false ? "flexstartborder" : sidebar === true && (location.pathname === "/courses/quiz" || location.pathname === '/courses/editQuiz') ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses/quiz'}>
+                  <NavLink onClick={() => setTop(false)} className={(location.pathname === "/courses/editQuiz" || location.pathname === '/courses/preview' || location.state === "/courses/displayQuiz" || location.state === "/courses/result" || location.pathname === '/courses/quiz/result' || location.pathname === '/courses/quiz/result/log' || location.pathname === '/courses/quiz/result/answers') && sidebar === false ? "flexstartborder" : sidebar === true && (location.pathname === "/courses/quiz" || location.pathname === '/courses/editQuiz' || location.pathname === '/courses/quiz/result' || location.pathname === '/courses/quiz/result/log' || location.pathname === '/courses/quiz/result/answers') ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses/quiz'}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video3" viewBox="0 0 16 16">
                       <path d="M14 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-6 5.7c0 .8.8.8.8.8h6.4s.8 0 .8-.8-.8-3.2-4-3.2-4 2.4-4 3.2Z" />
                       <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h5.243c.122-.326.295-.668.526-1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v7.81c.353.23.656.496.91.783.059-.187.09-.386.09-.593V4a2 2 0 0 0-2-2H2Z" />
@@ -257,7 +257,7 @@ const Navbar2 = (props) => {
             </div>
             <div style={{ display: "flex", gap: '5px', alignItems: 'center', justifyContent: 'center' }}>
               <div className="circularportrait">
-                <img style={!user?.userInfo?.user?.userImg ? {padding:"10px"} : {padding:0}} src={user?.userInfo?.user?.userImg || "/user-solid.svg"} />
+                <img style={!user?.userInfo?.user?.userImg ? { padding: "10px" } : { padding: 0 }} src={user?.userInfo?.user?.userImg || "/user-solid.svg"} />
               </div>
               <div title='Logout'>
                 <LogoutIcon className="anc4" onClick={logout} />

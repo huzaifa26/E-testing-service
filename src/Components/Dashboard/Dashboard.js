@@ -147,7 +147,7 @@ const Dashboard = (props) => {
 
       {showDashboard && <div className={openModal ? styles.mainDashboard1 : styles.mainDashboard}>
         <div >
-          <div className='bg-[#FFFFFF] rounded-[10px] ml-[10px] pt-[2px] mt-[10px]'>
+          <div className='bg-[#FFFFFF] rounded-[10px] ml-[10px] pt-[2px] mt-[10px] !mb-[20px]'>
             <div className={styles.joinedHeader} >
               <h1>Published Classes</h1>
               <button onClick={createCourseHandler}>Create Class</button>
