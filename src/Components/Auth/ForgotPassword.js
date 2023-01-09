@@ -25,27 +25,27 @@ function ForgotPassword() {
         'Passwords must match'
       ),
     }),
-       onSubmit: (values, { resetForm }) => {
-       const newPassword = values.password
+    onSubmit: (values, { resetForm }) => {
+      const newPassword = values.password
       axios
-      .post('http://localhost:5000/api/forgotPasswordChange', { id,newPassword})
-      .then(function (response) {
-        if (response.status === 200) {
-          toast.success('Password Changed', {
+        .post('http://localhost:5000/api/forgotPasswordChange', { id, newPassword })
+        .then(function (response) {
+          if (response.status === 200) {
+            toast.success('Password Changed', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+            //run this after 5.7 seconds.
+            setTimeout(function () {
+              navigate('/');
+            }, 5700);
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+          toast.error('Something Wrong Happend', {
             position: toast.POSITION.TOP_RIGHT,
           });
-          //run this after 5.7 seconds.
-          setTimeout(function () {
-            navigate('/');
-          }, 5700); 
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-        toast.error('Something Wrong Happend', {
-          position: toast.POSITION.TOP_RIGHT,
         });
-      });
     },
   });
 
@@ -90,7 +90,9 @@ function ForgotPassword() {
             ) : null}
           </div>
           <div className={styles.footer}>
-            <button type="submit">Update</button>
+            <button type='submit' style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} class="button h-[4.3518518518519vh] min-w-[150px] min-h-[30px] !mt-[2.051vh] !mb-[1.221vh] rounded-full !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
+              Update
+            </button>
           </div>
         </form>
       </div>

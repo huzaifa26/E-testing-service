@@ -29,6 +29,7 @@ import DisplayQuiz from './Components/Quiz/DisplayQuiz';
 import Layout from './Layout/Layout';
 import Unauthorized from './Layout/Unauthorized';
 import Missing from './Layout/Missing';
+import Auth2 from './Components/Auth/Auth'
 
 function App() {
   let uid = uuidv4();
@@ -39,7 +40,7 @@ function App() {
         <Route path="/" element={<Layout />} >
 
           {/* Public routes */}
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Auth2 />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/emailVerification/:id" element={<VerifyEmail />} />
           <Route path="/forgotPassword" element={<EmailForgotPassword />} />
@@ -59,7 +60,7 @@ function App() {
             <Route path="/courses/manangeStudents" element={<Navbar><ManageStudents /></Navbar>} />
             <Route path="/courses/setting" element={<Navbar><Setting /></Navbar>} />
             <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
-            <Route path="/profile" element={<Navbar><Profile /></Navbar>} />  
+            <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
             <Route path="/courses/assignment" element={<Navbar><Assignment /></Navbar>} />
             <Route path="/courses/assignment/submitResult" element={<Navbar><Assignment /></Navbar>} />
             <Route path="/courses/result" element={<Navbar><Result /></Navbar>} />

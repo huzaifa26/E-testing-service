@@ -1,5 +1,4 @@
 main#page404 {
-    background-color: #3D405B;
     margin-top: -17px;
     height: 100vh;
 }
@@ -13,7 +12,7 @@ main#page404 div#outer-space {
 }
 
 main#page404 div#message-404 {
-    color: #E1E1E1;
+    color: black;
     z-index: 100;
 }
 

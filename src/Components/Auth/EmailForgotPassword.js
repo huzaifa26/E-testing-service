@@ -45,21 +45,22 @@ function EmailForgotPassword() {
           email: values.email,
         })
         .then(function (response) {
-          if (response.status === 200)
-         { console.log(response.data)
-          MailService(response.data);}
-          else if(response.status === 204)
-          toast.warning('You have no account', {
-            position: toast.POSITION.TOP_RIGHT,
-          });
+          if (response.status === 200) {
+            console.log(response.data)
+            MailService(response.data);
+          }
+          else if (response.status === 204)
+            toast.warning('You have no account', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
         })
         .catch(function (error) {
           if (error.response.status === 403)
-          toast.warning('Please verify your email first', {
-            position: toast.POSITION.TOP_RIGHT,
-          });
+            toast.warning('Please verify your email first', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
           else
-          console.log(error)
+            console.log(error)
         });
     },
   });
@@ -93,8 +94,10 @@ function EmailForgotPassword() {
             ) : null}
           </div>
           <div className={styles.footer}>
-            <button type="submit">Send</button>
-            
+            <button type='submit' style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} class="button h-[4.3518518518519vh] min-w-[150px] min-h-[30px] !mt-[2.051vh] !mb-[1.221vh] rounded-full !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
+              Send
+            </button>
+
           </div>
         </form>
       </div>

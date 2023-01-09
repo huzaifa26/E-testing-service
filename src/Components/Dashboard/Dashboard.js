@@ -166,7 +166,7 @@ const Dashboard = (props) => {
                     <div className={styles.subMain}>
                       {item.imageUrl !== "" &&
                         // <img src={item.imageUrl}></img>
-                        <LazyImage src={item.imageUrl} alt={""}/>
+                        <LazyImage src={item.imageUrl} alt={""} />
                       }
                       <div className={styles.h2}>
                         <h2>{item.courseName}</h2>
@@ -197,7 +197,7 @@ const Dashboard = (props) => {
                     <div className={styles.subMain}>
                       {item.imageUrl !== "" &&
                         // <img src={item.imageUrl}></img>
-                        <LazyImage src={item.imageUrl} alt={""}/>
+                        <LazyImage src={item.imageUrl} alt={""} />
                       }
                       <div className={styles.h2}>
                         <h2>{item.courseName}</h2>

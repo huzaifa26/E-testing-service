@@ -10,6 +10,8 @@ export const getCourseIdOnClick = createSlice({
   reducers: {
     getCourseIdOnClick(state, actions) {
       state.getCourseIdOnClick = actions.payload
+      console.log(JSON.stringify(state, undefined, 2));
+
     }
   }
 })
@@ -23,6 +25,8 @@ export const courseClickUserId = createSlice({
   reducers: {
     courseClickUserId(state, actions) {
       state.courseClickUserId = actions.payload
+      console.log(JSON.stringify(state, undefined, 2));
+
     }
   }
 })

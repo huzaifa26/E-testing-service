@@ -74,7 +74,7 @@ const Notification = () => {
               <div className={styles.p}>
                 <p>{item.notificationText}</p>
               </div>
-              <span onClick={() => handleRemove(item)}>x</span>
+              <span className={styles.abc} onClick={() => handleRemove(item)}>x</span>
             </div>
           </div>
         ))}

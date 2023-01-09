@@ -5,6 +5,7 @@ import 'draft-js/dist/Draft.css';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getCourseIdOnClickactions } from './../../Redux/course-slice';
+import { courseClickUserIdActions } from './../../Redux/course-slice';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -74,6 +75,23 @@ const Courses = (props) => {
   //   })
   // })
 
+  const fetchData = (id) => {
+    axios
+      .get(
+        'http://localhost:5000/api/courseInfo/' + id,
+        { withCredentials: true },
+        { headers: { Authorization: `Bearer ${cookie.token}` } }
+      )
+      .then((res) => {
+        console.log(res.data.data)
+        setCourseInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  }
+
   useEffect(() => {
     axios
       .get(
@@ -110,7 +128,6 @@ const Courses = (props) => {
 
     axios.get("http://localhost:5000/api/getAssignments/" + courseIdredux + '/' + user.userInfo.user.id, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }
     ).then((res) => {
-      console.log(res)
       setAssignments(res.data.data.length)
     }).catch((err) => {
       console.log(err);
@@ -124,6 +141,7 @@ const Courses = (props) => {
       )
       .then((res) => {
         setCourseKey(res?.data?.data[0]?.courseKey);
+        console.log(courseIdredux);
         setCourseDescription(res?.data?.data[0]?.courseName);
         setCourseDescription(res?.data?.data[0]?.courseDescription);
       })
@@ -147,7 +165,8 @@ const Courses = (props) => {
     axios
       .get(
         'http://localhost:5000/api/courses/' + user.userInfo.user.id,
-
+        { withCredentials: true },
+        { headers: { Authorization: `Bearer ${cookie.token}` } }
       )
       .then((res) => {
         setCourses(res?.data?.data);
@@ -191,9 +210,8 @@ const Courses = (props) => {
                   <div
                     className={styles.flexDiv2}
                     onClick={(e) => {
-                      dispatch(
-                        getCourseIdOnClickactions.getCourseIdOnClick(item.id)
-                      );
+                      dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
+                      dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
                     }}
                   >
                     <h1>{item.courseName}</h1>
@@ -213,9 +231,9 @@ const Courses = (props) => {
                   <div
                     className={styles.flexDiv2}
                     onClick={(e) => {
-                      dispatch(
-                        getCourseIdOnClickactions.getCourseIdOnClick(item.id)
-                      );
+                      dispatch(getCourseIdOnClickactions.getCourseIdOnClick(item.id));
+                      dispatch(courseClickUserIdActions.courseClickUserId(item.userId))
+                      fetchData(item.id)
                     }}
                   >
                     <h1>{item.courseName}</h1>
@@ -302,7 +320,7 @@ const Courses = (props) => {
             </div>
             <div className={styles.hdh}>
               <h3>Description</h3>
-              <p>{courseDescription}</p>
+              <p>{courseInfo[0]?.courseDescription}</p>
             </div>
 
           </div>

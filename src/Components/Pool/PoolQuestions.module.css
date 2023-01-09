@@ -213,6 +213,7 @@
 
 .Main2 {
   display: flex;
+  margin-bottom: 30px;
 }
 
 .headerQuiz {
