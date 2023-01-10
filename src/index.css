@@ -142,11 +142,6 @@ input {
   background-size: 14px;
 }
 
-input:-webkit-autofill,
-input::-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px blue inset;
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -165,12 +160,6 @@ input::-webkit-autofill {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-.shadow-lg {
-  --tw-shadow: 10px 10px 15px 5px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 input::-webkit-contacts-auto-fill-button {

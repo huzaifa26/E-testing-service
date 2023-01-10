@@ -74,9 +74,9 @@ function QuizResult() {
                                     <TableCell className={styles.ind} component="th">{item.attemptedQuestions.length}</TableCell>
                                     <TableCell className={styles.ind} component="th">{item.totalMarks}</TableCell>
                                     <TableCell className={styles.ind} component="th">{item.obtainedMarks}</TableCell>
-                                    <TableCell className={styles.ind} component="th" align='left'>
+                                    <TableCell className={`!flex !gap-[2px] ${styles.ind}`} component="th" align='left'>
                                         {item.attemptedQuestions.length > 0 && <button variant="contained" className={styles.preview} onClick={() => handleAnswers(item.attemptedQuestions, item.fullName, item.email)} >Answers</button>}
-                                        {item.log.length > 0 && <button variant="contained" className={styles.preview2} onClick={() => handleLog(item.log, item.fullName, item.email)} >Log</button>}
+                                        {item.log.length > 0 && <button variant="contained" className={`!bg-[#2A84EB] !border-[2px] !border-[#2A84EB] ${styles.preview2}`} onClick={() => handleLog(item.log, item.fullName, item.email)} >Log</button>}
                                         {(!item.log.length > 0 && !item.attemptedQuestions.length > 0) && <p className='ml-[5px]'>Not Attempted</p>}
 
                                     </TableCell>

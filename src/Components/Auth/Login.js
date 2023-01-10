@@ -66,34 +66,6 @@ function Login() {
   const [showPassword,setShowPassword]=useState(false);
 
   return (
-    // <div className={styles.LoginMain}>
-    //   <div className={styles.LoginImage}>
-    //     <img src={image} alt="logo"></img>
-    //   </div>
-    //   <div className={styles.LoginContainer}>
-    //     <form
-    //       className={styles.LoginForm}
-    //       ref={loginData}
-    //       onSubmit={loginSubmitHandler}
-    //     >
-    //       <h1 className={styles.LoginName}>LOGIN</h1>
-    //       <input required type="email" name="email" placeholder="Email"></input>
-    //       <input required type="password" name="password" placeholder="Password"></input>
-    //       <p className={styles.LoginFormForget} onClick={() => {navigate('/forgotPassword');}}>forget password?</p>
-    //       <div className={styles.footer}>
-    //         <button className='button'>Login</button>
-    //         <p
-    //           className={styles.LoginFormAlready}
-    //           onClick={() => {
-    //             navigate('/signup');
-    //           }}
-    //         >
-    //           Create Account
-    //         </p>
-    //       </div>
-    //     </form>
-    //   </div>
-    // </div>
     <div class='bg-[#F0F2F5] h-screen w-screen flex justify-center items-center'>
       {/* <img src={image} className='absolute top-[5%] left-[5%] w-[10%]'/> */}
       <div class="bg-white px-6 py-3 rounded-[10px] min-w-[300px] shadow-lg w-[21.216vw]">
