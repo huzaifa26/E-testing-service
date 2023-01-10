@@ -16,24 +16,53 @@ export default function AssignmentRow(props) {
     const courseClickUserId = useSelector(state => state.courseClickUserId.courseClickUserId)
 
     const [counter, setCounter] = useState(0)
+    const [abc, setAbc] = useState(0)
     const [timeFinished, setTimeFinished] = useState(false)
 
     setTimeout(() => {
         setCounter(counter + 1)
     }, 10);
 
-    useEffect(() => {
+
+    const checkTime = (startTime) => {
         let today = new Date();
         today = today.toLocaleString()
 
-        let assignmentStartTime = new Date(props.item.endTime)
+        let assignmentStartTime = new Date(startTime)
         assignmentStartTime = assignmentStartTime.toLocaleString()
 
         let newassignmentStartTime = moment(assignmentStartTime)
 
+
         if (newassignmentStartTime.isBefore(today)) {
-            setTimeFinished(true)
+            return true
         }
+        else {
+            return false
+        }
+    }
+
+    const checkTime2 = (EndTime) => {
+        let today = new Date();
+        today = today.toLocaleString()
+
+        let assignmentEndTime = new Date(EndTime)
+        assignmentEndTime = assignmentEndTime.toLocaleString()
+
+        let newassignmentEndTime = moment(assignmentEndTime)
+
+
+        if (newassignmentEndTime.isBefore(today)) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    useEffect(() => {
+        setAbc(prev => prev + 1)
+
     }, [counter])
 
     return (
@@ -51,18 +80,18 @@ export default function AssignmentRow(props) {
                             <EditIcon style={{ color: '#2A84EB' }} onClick={() => props.handleEdit(props.item)} />
                         </IconButton></Tooltip>}
                         {/* {user.userInfo.user.id == courseClickUserId && <EditIcon style={{ color: '#2A84EB' }} onClick={() => props.handleEdit(props.item)} />} */}
+                        {(user.userInfo.user.id !== courseClickUserId && checkTime2(props.item.endTime)) && <Tooltip placement="top" arrow title="Result"><IconButton color="primary" aria-label="add to shopping cart"><ListAltIcon style={{ color: '#2A84EB' }} onClick={() => props.handleSubmitResult(props.item)} /></IconButton></Tooltip>}
                         {user.userInfo.user.id == courseClickUserId && <Tooltip placement="top" arrow title="Delete"><IconButton color="primary" aria-label="add to shopping cart"><DeleteIcon style={{ color: '#E53472' }} onClick={() => { props.handleDelete(props.item) }} /></IconButton></Tooltip>}
                         {user.userInfo.user.id == courseClickUserId && <Tooltip placement="top" arrow title="Result"><IconButton color="primary" aria-label="add to shopping cart"><ListAltIcon style={{ color: '#293462' }} onClick={() => { props.handleResult(props.item) }} /></IconButton></Tooltip>}
-                        {(user.userInfo.user.id !== courseClickUserId && timeFinished === true) && <Tooltip placement="top" arrow title="Time Finished"><IconButton onClick={() => console.log('hello')} color="primary" aria-label="add to shopping cart"><UploadFileIcon style={{ color: '#DEDEDE', pointerEvents: "none" }} /></IconButton></Tooltip>}
+                        {/* {(user.userInfo.user.id !== courseClickUserId && !checkTime(props.item.startTime)) && <Tooltip placement="top" arrow title="Time Not Started"><IconButton onClick={() => console.log('hello')} color="primary" aria-label="add to shopping cart"><UploadFileIcon style={{ color: '#DEDEDE', pointerEvents: "none" }} /></IconButton></Tooltip>} */}
 
-                        {(user.userInfo.user.id !== courseClickUserId && timeFinished === false) && <Tooltip placement="top" arrow title="Upload"><IconButton color="primary" aria-label="add to shopping cart"
+                        {(user.userInfo.user.id !== courseClickUserId && checkTime(props.item.startTime) && !checkTime2(props.item.endTime)) && <Tooltip placement="top" arrow title="Upload"><IconButton color="primary" aria-label="add to shopping cart"
                             onClick={() => {
                                 props.handleSubmitAssignment(props.item)
                                 console.log('hello2')
                             }}><UploadFileIcon style={{ color: '#495579', pointerEvents: "none" }}
                             /></IconButton></Tooltip>}
                         {user.userInfo.user.id !== courseClickUserId && <Tooltip placement="top" arrow title="Download"><IconButton color="primary" aria-label="add to shopping cart"><ArrowDownwardIcon style={{ color: '#DC3535' }} onClick={() => props.saveFile(props.item)} /></IconButton></Tooltip>}
-                        {user.userInfo.user.id !== courseClickUserId && <Tooltip placement="top" arrow title="Result"><IconButton color="primary" aria-label="add to shopping cart"><ListAltIcon style={{ color: '#2A84EB' }} onClick={() => props.handleSubmitResult(props.item)} /></IconButton></Tooltip>}
                     </Stack>
                 </TableCell>
             </TableRow>

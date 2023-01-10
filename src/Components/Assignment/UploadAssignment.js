@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-function UploadAssignment({ closeUpload }) {
+function UploadAssignment({ closeUpload, fetchData }) {
 
   const courseIdredux = useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const [title, setTitle] = useState('');
@@ -22,8 +22,6 @@ function UploadAssignment({ closeUpload }) {
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
   const [marks, setMarks] = useState('')
-
-
 
   const fileHandler = async (e) => {
     setfile(e.target.files[0]);
@@ -97,8 +95,7 @@ function UploadAssignment({ closeUpload }) {
       // }
 
       // console.log(startTime)
-
-      axios.post('http://localhost:5000/api/uploadAssignment', {
+      let data = {
         courseId: courseIdredux,
         fileUrl: fileURL,
         fileName: fileName,
@@ -107,18 +104,10 @@ function UploadAssignment({ closeUpload }) {
         startTime: startTime,
         endTime: endTime,
         totalMarks: marks,
-      }, { withCredentials: true })
-        .then(function (response) {
-          if (response.status === 200) {
-            toast.success('Assignment Added', { position: toast.POSITION.TOP_RIGHT, });
-            closeUpload(false)
-          }
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error)
-          toast.error('Unable to upload', { position: toast.POSITION.TOP_RIGHT, });
-        });;
+      }
+      fetchData(data)
+
+
     }
   }
 

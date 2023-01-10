@@ -118,7 +118,6 @@ function QuizTable(props) {
             {checkEndTme(props.endTime) && <button className={styles.preview2} onClick={() => handleResult(props.data)}>Result</button>}
             <button className={styles.edit} onClick={() => handleEdit(props.data)}>Edit</button>
             <button className={styles.button0} onClick={() => handleDelete(props.data)}>Delete</button>
-
           </TableCell>
         </TableRow>
       )

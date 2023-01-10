@@ -12,20 +12,20 @@ import { persistStore } from "redux-persist";
 
 let persistor = persistStore(redux);
 
-axios.interceptors.request.use(async(req)=>{
+axios.interceptors.request.use(async (req) => {
   return req;
-}, err=> {return Promise.resolve(err)}
+}, err => { return Promise.resolve(err) }
 )
 
-axios.interceptors.response.use((response)=>{
+axios.interceptors.response.use((response) => {
   return response;
 }, async (error) => {
   const originalRequest = error.config;
   if (error.response.status === 403 && !originalRequest._retry) {
     originalRequest._retry = true;
-    axios.get("http://localhost:5000/api/refreshtoken",{withCredentials:true}).then((res)=>{
-      axios.defaults.withCredentials=true;
-    }).catch((err)=>{
+    axios.get("http://localhost:5000/api/refreshtoken", { withCredentials: true }).then((res) => {
+      axios.defaults.withCredentials = true;
+    }).catch((err) => {
       console.log(err);
     })
     return axios(originalRequest);
@@ -38,10 +38,10 @@ root.render(
   <CookiesProvider>
     <BrowserRouter>
       <Provider store={redux}>
-      <PersistGate persistor={persistor}>
-        <Routes>
-          <Route path="/*" element={<App />} />
-        </Routes>
+        <PersistGate persistor={persistor}>
+          <Routes>
+            <Route path="/*" element={<App />} />
+          </Routes>
         </PersistGate>
       </Provider>
     </BrowserRouter>

@@ -39,7 +39,6 @@ function Auth() {
             password: loginData.current.password.value,
         }, { withCredentials: true })
             .then(function (response) {
-                console.log(response);
 
                 if (response.status === 200) {
                     dispatch(userActions.userInfo(response.data));

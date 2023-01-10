@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 
-function EditAssignment({ closeEdit, item }) {
+function EditAssignment({ closeEdit, item, fetchData }) {
 
   const courseIdredux = useSelector(state => state.getCourseIdOnClick.getCourseIdOnClick);
   const [title, setTitle] = useState(item.assignmentTitle);
@@ -87,8 +87,7 @@ function EditAssignment({ closeEdit, item }) {
     //     }
     // else
     // {
-
-    axios.post('http://localhost:5000/api/editAssignment', {
+    let data = {
       id: item.id,
       courseId: courseIdredux,
       fileUrl: fileURL,
@@ -98,17 +97,11 @@ function EditAssignment({ closeEdit, item }) {
       startTime: startTime,
       endTime: endTime,
       totalMarks: marks,
-    }, { withCredentials: true })
-      .then(function (response) {
-        if (response.status === 200) {
-          toast.success('Assignment Updated', { position: toast.POSITION.TOP_RIGHT, });
-          closeEdit(false)
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-        toast.error('Unable to upload', { position: toast.POSITION.TOP_RIGHT, });
-      });;
+    }
+
+    fetchData(data)
+
+
 
     // }
   }

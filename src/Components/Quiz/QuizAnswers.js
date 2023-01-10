@@ -5,6 +5,7 @@ import styles from './QuizAnswers.module.css'
 function QuizAnswers() {
     const location = useLocation()
     const [data, setData] = useState(location.state.data)
+    console.log(location.state.data);
     return (
         <div className={styles.Main}>
             <h1 className={styles.hahah}>{location.state.name} </h1>

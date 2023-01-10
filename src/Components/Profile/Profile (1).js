@@ -145,7 +145,7 @@ const Profile = () => {
             <div className={styles.leftTop}>
 
                 <div className={styles.h1}>
-                    <h1>P R O F I L E</h1>
+                    <h1>Profile</h1>
                 </div>
 
                 <form ref={formRef} onSubmit={editUserFormSubmitHanlder} className={styles.left}>

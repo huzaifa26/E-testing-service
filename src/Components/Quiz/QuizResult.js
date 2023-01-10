@@ -43,9 +43,8 @@ function QuizResult() {
 
     return (
         <div className={styles.Main}>
-            <h1 className={styles.h1}>{"Quiz Result" + " : " + location.state.previewDetails.quizTitle}</h1>
             <div className={styles.okok}>
-                <div className={styles.headss}><p>Teacher</p></div>
+                <div className={styles.headss}><p>{"Quiz Result" + " : " + location.state.previewDetails.quizTitle}</p></div>
                 <TableContainer className={styles.container}  >
                     <Table className={styles.table} sx={{ minWidth: 1 }} aria-label="simple table" color="#F7F6F2">
 

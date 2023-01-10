@@ -59,7 +59,9 @@
     -webkit-box-align: center;
     align-items: center;
     min-height: 3.75rem;
-    background-image: linear-gradient(195deg, rgb(239, 83, 80), rgb(229, 57, 53));
+    /* background-image: linear-gradient(195deg, rgb(239, 83, 80), rgb(229, 57, 53)); */
+    background-color: #eb6540e8;
+
     color: rgb(255, 255, 255);
     padding: 1rem;
     margin-bottom: 1rem;
