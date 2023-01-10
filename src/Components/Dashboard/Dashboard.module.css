@@ -1,18 +1,27 @@
-.button{
+.button {
     width: 95%;
     display: flex;
     flex-direction: column;
 }
 
-h2{
+h2 {
+    font-family: "Courier New", Courier, monospace;
     font-size: 18px;
+    letter-spacing: 2px;
+    /* word-spacing: 2px; */
+    color: #000000;
+    font-weight: 700;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: none;
 }
 
-.joinedHeader{
+.joinedHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding:10px 30px 20px 30px;
+    padding: 10px 30px 20px 30px;
     margin: 15px 15px 0px 15px;
     overflow-wrap: break-word;
     /* background-color: rgb(255, 255, 255); */
@@ -21,7 +30,7 @@ h2{
     border-radius: 0.55rem;
 }
 
-.joinedHeader button{
+.joinedHeader button {
     /* margin: 0 0 0.7rem 0; */
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -65,17 +74,17 @@ h2{
 
 }
 
-.joinedHeader button:hover{
+.joinedHeader button:hover {
     position: relative;
     top: 2px;
 }
 
-.joinedHeader button:focus{
+.joinedHeader button:focus {
     position: relative;
     top: 4px;
 }
 
-.joinedHeader h1{
+.joinedHeader h1 {
     font-size: 1.3rem;
     line-height: 1.625;
     font-family: Roboto, Helvetica, Arial, sans-serif;
@@ -91,7 +100,8 @@ h2{
     color: rgb(52, 71, 103);
     font-weight: 700;
 }
-.joinedCourses{
+
+.joinedCourses {
     /* background-color: white; */
     padding: 40px 0px 20px 0px;
     /* justify-content:space-between; */
@@ -109,10 +119,10 @@ h2{
     display: flex;
     flex-flow: row wrap;
     /* margin-left: -24px; */
-    
+
 }
 
-.joinedList{
+.joinedList {
     color: rgba(0, 0, 0, 0.87);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     display: flex;
@@ -125,14 +135,13 @@ h2{
     background-clip: border-box;
     border: 0px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.75rem;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     overflow: visible;
     height: 100%;
     min-width: 23%;
 }
 
-.subMain
-{
+.subMain {
     padding: 1rem;
     opacity: 1;
     background: transparent;
@@ -144,7 +153,7 @@ h2{
     justify-content: center;
 }
 
-.joinedList img{
+.joinedList img {
     /* padding-top: 16px;
     padding-bottom: 16px;
     padding-right: 4px; */
@@ -160,8 +169,8 @@ h2{
     width: 240px;
     height: 170px;
 }
-.joinedList .h2
-{
+
+.joinedList .h2 {
     padding: 24px 8px 8px;
     opacity: 1;
     background: transparent;
@@ -169,14 +178,15 @@ h2{
     box-shadow: none;
     display: flex;
     justify-content: center;
-    
+
 }
-.joinedCourses div{
+
+.joinedCourses div {
     cursor: pointer;
 }
 
 
-.imgg{
+.imgg {
     margin-top: -40px;
     height: 12.5rem;
     opacity: 1;
@@ -198,8 +208,7 @@ h2{
     background-color: grey;
 }
 
-.no
-{
+.no {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -207,47 +216,53 @@ h2{
 }
 
 @media only screen and (max-width: 1468px) {
-   
-    .joinedList{
+
+    .joinedList {
         width: 48%;
-    } 
+    }
 }
+
 @media only screen and (max-width: 1049px) {
-   
-    
-    .joinedList{
+
+
+    .joinedList {
         width: 100%;
-    } 
-/* .joinedList img{
+    }
+
+    /* .joinedList img{
     height: 220px;
     width: 54%;
 } */
 }
+
 @media only screen and (max-width: 1049px) {
-   
-    
-.joinedList img{
-    height: 220px;
-    width: 300px;
-}
+
+
+    .joinedList img {
+        height: 220px;
+        width: 300px;
+    }
 }
 
 @media only screen and (max-width: 453px) {
-   
-.joinedHeader h1{
-font-size: 1rem;
-width: 144px;
-text-overflow: clip;
-}
-.joinedHeader button{
-    padding: 0.525rem 0.5rem;
-}
-.joinedHeader{
-    padding: 30px 10px;
-}
-.joinedList img{
-    height: 180px;
-    width: 260px;
-}
+
+    .joinedHeader h1 {
+        font-size: 1rem;
+        width: 144px;
+        text-overflow: clip;
+    }
+
+    .joinedHeader button {
+        padding: 0.525rem 0.5rem;
+    }
+
+    .joinedHeader {
+        padding: 30px 10px;
+    }
+
+    .joinedList img {
+        height: 180px;
+        width: 260px;
+    }
 
 }

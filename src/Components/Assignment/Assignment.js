@@ -46,9 +46,7 @@ function Assignment() {
     setOpenUplodad(true);
   }
 
-  useEffect(() => {
-    console.log(courseIdredux)
-    console.log('-------------------')
+  const fetchData = () => {
     axios.get("http://localhost:5000/api/getAssignments/" + courseIdredux + "/" + user.userInfo.user.id, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } })
       .then((res) => {
         console.log(res.data.data)
@@ -56,7 +54,46 @@ function Assignment() {
       }).catch((err) => {
         console.log(err);
       })
-  }, [openUplodad, openEdit, deleteme]);
+  }
+
+
+  const fetchData2 = (data) => {
+
+    axios.post('http://localhost:5000/api/uploadAssignment', data, { withCredentials: true })
+      .then(function (response) {
+        fetchData(data)
+        if (response.status === 200) {
+          toast.success('Assignment Added', { position: toast.POSITION.TOP_RIGHT, });
+          setOpenUplodad(false)
+        }
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error)
+        toast.error('Unable to upload', { position: toast.POSITION.TOP_RIGHT, });
+      });;
+  }
+
+  const fetchData3 = (data) => {
+
+    axios.post('http://localhost:5000/api/editAssignment', data, { withCredentials: true })
+      .then(function (response) {
+        if (response.status === 200) {
+          fetchData(data)
+          toast.success('Assignment Updated', { position: toast.POSITION.TOP_RIGHT, });
+          setOpenEdit(false)
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+        toast.error('Unable to upload', { position: toast.POSITION.TOP_RIGHT, });
+      });;
+  }
+
+
+  useEffect(() => {
+    fetchData()
+  }, []);
 
   const handleEdit = (item) => {
     setOpenEdit(true)
@@ -75,6 +112,7 @@ function Assignment() {
     axios.get("http://localhost:5000/api/deleteAssignment/" + e.id, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }
     ).then((res) => {
       if (res.status === 200) {
+        fetchData()
         toast.success('Deleted', { position: toast.POSITION.TOP_RIGHT, });
       }
     }).catch((err) => {
@@ -152,8 +190,8 @@ function Assignment() {
         />
       </div>
 
-      {openUplodad && < UploadAssignment closeUpload={setOpenUplodad} />}
-      {openEdit && <EditAssignment closeEdit={setOpenEdit} item={detail} />}
+      {openUplodad && < UploadAssignment closeUpload={setOpenUplodad} fetchData={fetchData2} />}
+      {openEdit && <EditAssignment closeEdit={setOpenEdit} item={detail} fetchData={fetchData3} />}
       {openSubmit && <SubmitAssignment closeSubmit={setOpenSubmit} item={detail} />}
       {openResult && <AssignmentResult closeResult={setOpenResult} item={detail} />}
       {openSubmitResult && <SubmitResult closeStudentResult={setOpenSubmitResult} item={detail} />}

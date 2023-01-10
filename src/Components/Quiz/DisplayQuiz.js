@@ -57,13 +57,15 @@ function DisplayQuiz() {
 
     if (location.state.data.detectMobile == 1) { }
 
-    axios.get("http://localhost:5000/api/showQuizResult/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true }).then((res) => {
-      if (res.data.length === 0) {
-        endQuizAfterTimeFinished()
-      }
-    }).catch((err) => {
-      console.log(err);
-    })
+    axios.get("http://localhost:5000/api/showQuizResult/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true })
+      .then((res) => {
+        if (res.data.length === 0) {
+          endQuizAfterTimeFinished()
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
     axios.get("http://localhost:5000/api/getAtempttedQuizQuestions/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true }).then((res) => {
       setCurrentIndex((state) => state + res?.data?.length)
@@ -333,12 +335,12 @@ function DisplayQuiz() {
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const transcript = event.results[i][0].transcript;
         if (event.results[i].isFinal) {
-          let localTranscript=null;
+          let localTranscript = null;
           setTranscripts((prevTranscripts) => {
             let newArr = [...prevTranscripts, transcript];
             newArr = newArr.join(',');
             newArr = newArr.replace(',', ' ');
-            localTranscript=newArr;
+            localTranscript = newArr;
             return [newArr];
           });
           const blocksFromHTML = convertFromHTML(localTranscript)
