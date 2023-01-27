@@ -125,7 +125,7 @@ function Setting() {
                             <div className={styles.ImageContainer}>
                                 <img src={imageURL === '' ? courseInfo[0]?.imageUrl : `${imageURL}`} />
                                 <div className={styles.chooseImg}>
-                                    <button className={styles.choose} onClick={imageHandler}><label for="files" class="btn">Change</label></button>
+                                    <button className="button" onClick={imageHandler}><label for="files" class="btn">Change</label></button>
                                     <input onChange={imageHandler} id="files" style={{ visibility: "hidden" }} type="file" accept="image/png, image/gif, image/jpeg" />
                                 </div>
                             </div>
@@ -137,18 +137,22 @@ function Setting() {
                         <div style={{ display: 'flex' }} className={styles.imageDetails}>
                             <TextField disabled id="outlined-basic" value={courseInfo[0]?.courseKey} variant="outlined" size="small" className={styles.inputMui} required />
                             <div title='Change Course Key' onClick={changeKey}>
-                                <KeyIcon style={{ height: '20px', marginTop: '10px', marginLeft: '10px' }} />
+                                <span className={styles.aaas} >
+
+                                    <KeyIcon style={{ height: '20px', marginTop: '10px', marginLeft: '10px' }} />
+                                </span>
 
                             </div>
                         </div>
                         <div className={styles.imageDetails}>
                             <TextareaAutosize
+                                className={styles.bb}
                                 aria-label="empty textarea"
                                 placeholder="Empty"
                                 minRows={8}
                                 value={courseDescription}
                                 onChange={(e) => setCourseDescription(e.target.value)}
-                                style={{ width: '80%', minWidth: '200px', marginBottom: '30px' }}
+                                style={{ width: '80%', minWidth: '200px' }}
                             />
 
                         </div>
@@ -161,7 +165,7 @@ function Setting() {
                     <div className={styles.list} onClick={() => setConfirmDelete(true)}>
                         {/* <DeleteIcon style={{ height:'20px' }} /> */}
                         {/* <p> Delete this course</p> */}
-                        <Button sx={{ backgroundColor: 'transparent' }} variant="raised">Delete Course</Button>
+                        <Button sx={{ backgroundColor: 'red', color: 'white' }} variant="raised">Delete Course</Button>
 
                     </div>
                     {/* <hr className={styles.hr2}></hr> */}
@@ -175,7 +179,7 @@ function Setting() {
                     {/* <button  className={styles.save} >
             Update Course Detials
             </button> */}
-                    <Button variant="contained" onClick={handleSave}>Update Course Detials</Button>
+                    <Button variant="contained" className='button' onClick={handleSave}>Update Course Detials</Button>
                 </div>
             </div>
 
@@ -185,4 +189,4 @@ function Setting() {
     )
 }
 
-export default Setting
+export default Setting

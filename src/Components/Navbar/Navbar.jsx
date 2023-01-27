@@ -15,6 +15,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useScroll } from 'framer-motion';
 
+
 const Navbar2 = (props) => {
 
   const breadcrumbs = useBreadcrumbs();
@@ -112,8 +113,6 @@ const Navbar2 = (props) => {
     // setSidebar(state => state = false);
   }
 
-  // console.log(typeof(courseIdredux));
-
   if ((typeof (courseIdredux) === "number") && newLocationName !== "/courses") {
     dispatch(getCourseIdOnClickactions.getCourseIdOnClick({}))
   }
@@ -152,6 +151,8 @@ const Navbar2 = (props) => {
     })
   }
 
+  console.log(breadcrumbs)
+
   return (
     <div className="Main">
       <div className='relative z-[100]'>
@@ -174,7 +175,7 @@ const Navbar2 = (props) => {
             <li className="nav-text" title='Courses'>
               <Link onClick={() => setTop(false)} className={newLocationName === "/courses" && sidebar === false ? "flexstartborder" : sidebar === true && newLocationName === "/courses" ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses'}>
                 <i class="bi bi-book"></i>
-                {<span>Courses</span>}
+                {<span>Course</span>}
               </Link>
             </li>
 
@@ -249,11 +250,20 @@ const Navbar2 = (props) => {
         <div className='navbarMain'>
           <div className={scrollCounter > 0 ? 'navbar' : 'navbar2'}>
             <div className="helll">
-              {breadcrumbs.map(({ breadcrumb, index }) =>
-                <div key={index} >
-                  {breadcrumb === 'Home' && <p>ok</p>}
-                  <span>{breadcrumb} / &nbsp;</span>
-                </div>)}
+              {breadcrumbs.map(({ breadcrumb },index) => {
+                console.log(breadcrumbs)
+                if(index === 0){
+                  return
+                }
+                return (
+                  <div key={index} >
+                    {breadcrumb === 'Home' && <p>ok</p>}
+                    <Link className='hover:text-blue-400' to={breadcrumb.key}>
+                      <span>{breadcrumb}  &nbsp;</span>
+                    </Link>
+                    {breadcrumbs.length !== index + 1 && <span>/ &nbsp;</span>}
+                  </div>)
+              })}
             </div>
             <div style={{ display: "flex", gap: '5px', alignItems: 'center', justifyContent: 'center' }}>
               <div className="circularportrait">

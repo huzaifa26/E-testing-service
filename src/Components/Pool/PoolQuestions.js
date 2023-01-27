@@ -130,7 +130,7 @@ function PoolQuestions() {
     <div className={styles.Main}>
       <div className={styles.Main2}>
 
-        <div className={styles.left}>
+        <div className={`pt-[20px] ${styles.left}`}>
           <h1 className={styles.abc}>{location.state.item.categoryName}</h1>
           {(poolQuestion.length === 0 && !add) && <p style={{ paddingTop: '22px', paddingLeft: '10px' }}>No questions yet in this pool category</p>}
           {poolQuestion.map((item, index) => {
@@ -140,10 +140,10 @@ function PoolQuestions() {
               <div className={styles.questions}>
                 <div className={styles.head}>
                   <div>Points : {item.points}  </div>
-                  <div>Sec : {item.time}</div>
+                  <div>Time: {item.time}s</div>
                 </div>
                 <div className={styles.body}>
-                  <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div className='w-[70%] xsm:w-[100%] sm:w-[100%] md:w-[100%]' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
                     {(item.questionImage !== null) &&
                       <div>
@@ -151,12 +151,16 @@ function PoolQuestions() {
                       </div>}
 
                     {item.questionType === 'Formula' ? <div style={{ display: "flex", justifyContent: 'flex-start' }}><MathComponent tex={item.question} /></div>
-                      : <b>{item.question}</b>}
+                      : 
+                      <div className='flex'>
+                        <pre>{index + 1}. </pre>
+                        <b>{item.question}</b>
+                      </div>}
                   </div>
 
                   <div className={styles.footer1}>
-                    <button className={styles.edit} onClick={(e) => handleEdit(item)}>Edit</button>
-                    <button className={styles.button0} onClick={(e) => { deleteQuestionHanler(item.id) }} >Delete</button>
+                    <button style={{ background: "#2A84EB", textTransform: "initial" }} className={`${styles.edit} button`} onClick={(e) => handleEdit(item)}>Edit</button>
+                    <button style={{ background: "#E53472", textTransform: "initial" }} className={`${styles.button0} button`} onClick={(e) => { deleteQuestionHanler(item.id) }} >Delete</button>
                   </div>
                 </div>
               </div>
@@ -166,9 +170,9 @@ function PoolQuestions() {
         </div>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.addButton} onClick={handleAdd}>
+          <button className={`flex button`} onClick={handleAdd}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16" > <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" /> </svg>
-            Add a Question
+            Add Question
           </button>
         </div>
       </div>

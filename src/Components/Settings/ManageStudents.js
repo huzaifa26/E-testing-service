@@ -132,9 +132,7 @@ function ManageStudents() {
                   <TableCell component="th" className={styles.ind}>{item.blocked === 0 ? "Not Blocked" : "Blocked"}</TableCell>
                   {/* {user.userInfo.user.id !== courseClickUserId &&  <TableCell  component="th">Status</TableCell> } */}
                   <TableCell component="th" align='center' >
-                    <div className={styles.buttonHolder}>
-
-
+                    <div className={` ${styles.buttonHolder}`}>
                       {item.blocked === 1 && <button className={styles.unblock} onClick={() => handleUnblock(item)} >Unblock</button>}
                       {item.blocked === 0 && <button className={styles.block} onClick={() => handleBlock(item)}>Block</button>}
                       <button className={styles.delete} onClick={() => handleDelete(item)}>Remove</button>

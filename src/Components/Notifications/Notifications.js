@@ -16,20 +16,6 @@ const Notification = () => {
   const [notifications, setNotifications] = useState([])
   const [cookie, setCookie] = useCookies();
 
-
-  // useEffect(()=>{
-  //   axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
-  //     if (res.status === "200"){
-  //       console.log(res);
-  //     }
-  //   }).catch((err)=>{
-  //     console.log(err);
-  //     if(err.response.status === 401){
-  //       navigate("/")
-  //     }
-  //   })
-  // },[])
-
   const handleRemove = (item) => {
     let data = {
       id: item.id

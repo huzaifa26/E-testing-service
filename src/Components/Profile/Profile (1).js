@@ -15,19 +15,6 @@ const Profile = () => {
     const [cookie] = useCookies();
     const navigate = useNavigate();
 
-    // useEffect(()=>{
-    //     axios.get("http://localhost:5000/api/isAuthorized",{withCredentials:true}).then((res)=>{
-    //       if (res.status === "200"){
-    //         console.log(res);
-    //       }
-    //     }).catch((err)=>{
-    //       console.log(err);
-    //       if(err.response.status === 401){
-    //         navigate("/")
-    //       }
-    //     })
-    //   },[])
-
     const formRef = useRef();
     const user = useSelector((state) => state.user.userInfo);
 
@@ -91,7 +78,7 @@ const Profile = () => {
             fullName: formRef.current.name.value,
             phoneNumber: formRef.current.phone.value,
             userAddress: formRef.current.address.value,
-            userImg: imageURL || null
+            userImg: imageURL || user.user.userImg
         }
         console.log(updatedUser);
 
@@ -137,15 +124,21 @@ const Profile = () => {
         imgSrc = imageURL;
     }
 
-
-    console.log(user.user.userImg);
-
     return (
         <div className={styles.main}>
-            <div className={styles.leftTop}>
-
+            <div className={`xsm:w-[100%] sm:w-[100%] md:w-[100%] lg:w-[70%] xl:w-[70%] 2xl:w-[70%] m-[10px]`}>
                 <div className={styles.h1}>
                     <h1>Profile</h1>
+                </div>
+
+                <div className={'rounded-[16px] w-[100%] xsm:flex sm:flex md:flex hidden bg-white flex-col items-center m-[10px] ml-0 p-[20px] right relative pt-[59px]'}>
+                    <div className={styles.circularportrait}>
+                        <img style={!imgSrc ? { padding: "30px" } : { padding: 0 }} src={imgSrc || "./user-solid.svg"} />
+                    </div>
+                    <label className='!mt-[15px] button text-center' htmlFor="files">
+                        Upload Image
+                    </label>
+                    <input onChange={fileHandler} id="files" style={{ visibility: "hidden" }} type="file" accept="image/png, image/gif, image/jpeg" />
                 </div>
 
                 <form ref={formRef} onSubmit={editUserFormSubmitHanlder} className={styles.left}>
@@ -175,7 +168,7 @@ const Profile = () => {
                 </form>
             </div>
 
-            <div className={'rounded-[16px] w-[30%] bg-white flex flex-col items-center m-[10px] ml-0 p-[20px] right relative pt-[59px]'}>
+            <div className={'rounded-[16px] w-[30%] bg-white xsm:hidden sm:hidden md:hidden  flex flex-col items-center m-[10px] ml-0 p-[20px] right relative pt-[59px]'}>
                 <div className={styles.circularportrait}>
                     <img style={!imgSrc ? { padding: "30px" } : { padding: 0 }} src={imgSrc || "./user-solid.svg"} />
                 </div>

@@ -314,8 +314,8 @@ function EditQuiz() {
               </Stack>
 
               <div className={styles.Options}>
-                <input type="number" id="quantity" className={styles.input} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
-                <p>seconds per question</p>
+                <input type="number" id="quantity" style={{width:"70px", marginTop:"8px"}} className={styles.input} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
+                <p>Time per question (Seconds)</p>
               </div>
 
               <div className={styles.Options1}>
@@ -323,28 +323,6 @@ function EditQuiz() {
                 <label for="checkbox-1">
                   Do not allow Students to copy question text
                 </label>
-              </div>
-
-              <div className={styles.Options1}>
-                <input type="checkbox" name="checkbox-1" id="checkbox-1" defaultChecked={questionShuffle === 0 ? false : true} onChange={handleQuestionShuffle} />
-                <label for="checkbox-1">Shuffle Questions</label>
-              </div>
-
-              <div className={styles.Options1}>
-                <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleAnswerShuffle} />
-                <label for="checkbox-1">Shuffle Answers</label>
-              </div>
-
-              <div className={styles.Options1}>
-                <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleSeeAnswer} />
-                <label for="checkbox-1">
-                  Let Students See Correct Answer
-                </label>
-              </div>
-
-              <div className={styles.Options1}>
-                <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleDetectMobile} />
-                <label for="checkbox-1">Detect Mobile</label>
               </div>
             </TabPanel>
 
