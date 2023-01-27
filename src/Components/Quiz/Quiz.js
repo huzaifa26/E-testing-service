@@ -484,8 +484,8 @@ function Quiz(props) {
                 </Stack>
 
                 <div className={styles.Options3}>
-                  <input type="number" id="quantity" className={styles.input1} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
-                  <p>seconds per question</p>
+                  <input style={{width:"70px", marginTop:"8px"}} type="number" id="quantity" className={styles.input1} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
+                  <p>Time per question (Seconds)</p>
                 </div>
 
                 <div className={styles.Options1}>
@@ -493,21 +493,6 @@ function Quiz(props) {
                   <label for="checkbox-1">
                     Do not allow Students to copy question text
                   </label>
-                </div>
-
-                <div className={styles.Options1}>
-                  <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleQuestionShuffle} />
-                  <label for="checkbox-1">Shuffle Questions</label>
-                </div>
-
-                <div className={styles.Options1}>
-                  <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleAnswerShuffle} />
-                  <label for="checkbox-1">Shuffle Answers</label>
-                </div>
-
-                <div style={{ marginBottom: '20px' }} className={styles.Options1}>
-                  <input type="checkbox" name="checkbox-1" id="checkbox-1" onChange={handleDetectMobile} />
-                  <label for="checkbox-1">Detect Mobile</label>
                 </div>
               </TabPanel>
 

@@ -119,9 +119,9 @@
 
 .edit {
   cursor: pointer;
-  background-color: #2A84EB;
+  background-color: #2A84EB !important;
   align-self: center;
-  border: 1px solid #2A84EB;
+  border: 1px solid #2A84EB !important;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;

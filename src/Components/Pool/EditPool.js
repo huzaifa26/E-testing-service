@@ -7,7 +7,7 @@ import { Storage } from '../../Utils/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
-
+import { toast } from 'react-toastify';
 
 function EditPool({ close, editDetail, editData }) {
   const [cookie] = useCookies();
@@ -149,7 +149,9 @@ function EditPool({ close, editDetail, editData }) {
 
   const removeFields = (index, event) => {
     if (inputFields.length < 3) {
-      alert('Minimim 2 possible answers are allowed');
+      toast.dismiss();
+      toast.error('Minimim 2 possible answers are allowed');
+      return
     } else {
       let data = [...inputFields];
       data.splice(index, 1);
@@ -286,11 +288,11 @@ function EditPool({ close, editDetail, editData }) {
 
             <div className={styles.second}>
               <div className={styles.Options}>
-                <p>sec:</p>
+                <p>Time:</p>
                 <input
                   type="number"
                   id="quantity"
-                  className={styles.input}
+                  className={`!w-[70px] ${styles.input}`}
                   name="quantity"
                   defaultValue={newtime}
                   onChange={(e) => {
@@ -301,11 +303,11 @@ function EditPool({ close, editDetail, editData }) {
                 ></input>
               </div>
               <div className={styles.Options}>
-                <p>pts:</p>
+                <p>Points:</p>
                 <input
                   type="number"
                   id="quantity"
-                  className={styles.input}
+                  className={`!w-[70px] ${styles.input}`}
                   name="quantity"
                   defaultValue={pts}
                   onChange={(e) => {
@@ -423,9 +425,9 @@ function EditPool({ close, editDetail, editData }) {
                       </div>
                     );
                   })}
-                  <div className={styles.paragraphContain}>
+                  <div className={`flex justify-end ${styles.paragraphContain}`}>
                     {inputFields.length <= 4 &&
-                      <p className={styles.p2} onClick={addFields}>
+                      <p style={{ background: "#2A84EB", border: "1px solid #2A84EB" }} className={`flex items-center bg-[#] button !text-white !w-[240px] !text-[12px]`} onClick={addFields}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -444,15 +446,16 @@ function EditPool({ close, editDetail, editData }) {
                     }
                   </div>
                   <div className={styles.footer}></div>
-                  <div style={{ width: '95%', gap: '10px' }}>
+                  <div className='flex' style={{ width: '95%', gap: '5px' }}>
                     <button
-                      className={styles.cancel3}
                       onClick={() => close()}
+                      style={{ background: "white", color: "black", boxShadow: "0px 0px 0px #000",border:"2px solid black" }}
+                      className={`bg-white button`}
                     >
                       Cancel
                     </button>
                     <button
-                      className={styles.save3}
+                      className={`button`}
                       onClick={handleMcq}
                     >
                       Update

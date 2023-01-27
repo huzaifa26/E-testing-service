@@ -127,7 +127,9 @@ function Auth() {
             email: Yup.string()
                 .required('Valid email required')
                 .email('Valid email required'),
-            password: Yup.string().required('Password is required'),
+            password: Yup.string().required('Please Enter your password').matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
+                "Must Contain 6 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"),
             confirmpassword: Yup.string().required('Password is required').oneOf(
                 [Yup.ref('password'), null],
                 'Passwords must match'

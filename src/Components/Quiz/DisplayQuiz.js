@@ -176,34 +176,6 @@ function DisplayQuiz() {
       }).catch((err) => {
         console.log(err)
       })
-
-      // else {
-
-      //   console.log(currentQuestion.points);
-      //   let data2 = {
-      //     sentence1: currentQuestion.correctOption,
-      //     sentence2: editorState.getCurrentContent().getPlainText(),
-      //   }
-      //   function getMarks(score, maxMarks) {
-      //     return score * maxMarks;
-      //   }
-      //   axios.post("http://127.0.0.1:8000/question-grading/", data2)
-      //     .then((res) => {
-      //       console.log(res.data.grade)
-      //       const abc = getMarks(res.data.score, currentQuestion.points)
-      //       data.obtainedMarks = abc
-      //       let url = "http://localhost:5000/api/atempttedQuizQuestions/";
-      //       axios.post(url, data, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
-      //         console.log('success');
-      //         console.log(res)
-      //       }).catch((err) => {
-      //         console.log(err)
-      //       })
-
-      //     })
-      //     .catch(e => console.log(e))
-
-
       if (quizLengthRef.current === 0) {
         console.log('inside haha');
         setTimeout(function () {
@@ -218,8 +190,6 @@ function DisplayQuiz() {
           })
         }, 1000);
       }
-
-
     }
 
     if (questions?.length > 0) {
@@ -232,10 +202,6 @@ function DisplayQuiz() {
       setCurrentIndex((totalLength - questions.length) + 1)
       setEditorState(EditorState.createEmpty())
     }
-
-    // else {
-    // navigate("/courses/result",{state:{userId:user.userInfo.user.id,quizId:location.state.data.id,afterQuiz:true}})
-    // }
   }
 
   //FOR TIMER
@@ -318,11 +284,6 @@ function DisplayQuiz() {
     setSelected(e.options)
   }
 
-  // const [isListening, setIsListening] = useState(false);
-  // const [note, setNote] = useState(null);
-  // const [savedNotes, setSavedNotes] = useState([]);
-  // const transcriptRef = useRef(null);
-
   const [transcripts, setTranscripts] = useState([]);
   const [isListening, setIsListening] = useState(false);
 
@@ -370,64 +331,6 @@ function DisplayQuiz() {
   const stopListening = () => {
     speechRecognition.stop();
   };
-
-
-  // useEffect(() => {
-  //   handleListen();
-  // }, [isListening]);
-
-  // const handleListen = () => {
-  //   if (isListening) {
-  //     mic.start();
-  //     mic.onend = () => {
-  //       mic.start();
-  //     };
-  //   }
-  //   else {
-  //     mic.stop();
-  //     mic.onend = (event) => {
-  //       console.log(event)
-  //       handleSaveNote()
-  //     };
-  //   }
-  //   mic.onstart = () => {
-  //     console.log("Mics on");
-  //   };
-
-  //   mic.onresult = (event) => {
-  //     const transcript = Array.from(event.results)
-  //       .map((result) => result[0])
-  //       .map((result) => result.transcript)
-  //       .join("");
-  //     setNote((prev) => {
-  //       console.log(prev + " " + transcript);
-  //       return transcript
-  //     });
-
-  //     const blocksFromHTML = convertFromHTML(transcript)
-  //     const contentState = ContentState.createFromBlockArray(blocksFromHTML)
-  //     setEditorState(EditorState.createWithContent(contentState));
-
-  //     mic.onerror = (event) => {
-  //       console.log(event.error);
-  //     };
-  //   };
-  // };
-
-  // const handleSaveNote = () => {
-  //   setIsListening(false)
-  //   setSavedNotes((savedNotes) => {
-  //     let arr = [...savedNotes, note]
-  //     console.log(arr)
-  //     arr = arr.join()
-  //     arr = arr.replace(",", '');
-  //     console.log(arr)
-  //     return arr
-  //   });
-
-  //   console.log([savedNotes, note]);
-
-  // };
 
   return (
     <>

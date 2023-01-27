@@ -365,7 +365,8 @@ height: 1em
 {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: end;
+    padding-right: 23px;
 }
 .paragraphContain p
 {
