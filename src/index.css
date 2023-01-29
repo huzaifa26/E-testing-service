@@ -162,13 +162,6 @@ input {
   background: #555;
 }
 
-input::-webkit-contacts-auto-fill-button {
-  visibility: hidden;
-  display: none !important;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-}
 
 .rdw-editor-main {
   padding: 0 10px !important;

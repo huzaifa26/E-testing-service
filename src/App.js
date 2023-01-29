@@ -1,77 +1,93 @@
 import { Routes, Route } from 'react-router-dom';
-
-import Login from './Components/Auth/Login';
-import Signup from './Components/Auth/Signup';
-import VerifyEmail from './Components/Auth/VerifyEmail';
-import Dashboard from './Components/Dashboard/Dashboard';
-import Navbar from './Components/Navbar/Navbar';
-import Courses from './Components/Courses/Courses';
-// import Pools from './Components/Pools/Pools';
-import Notification from './Components/Notifications/Notifications';
-import EmailForgotPassword from './Components/Auth/EmailForgotPassword';
-import ForgotPassword from './Components/Auth/ForgotPassword';
-import Profile from './Components/Profile/Profile (1)';
+import React from "react";
+import { Suspense } from 'react';
+import { ColorRing } from 'react-loader-spinner'
 import Auth from './Layout/Auth';
-import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
-import Content from './Components/Content/Content';
-import Quiz from './Components/Quiz/Quiz';
-import Assignment from './Components/Assignment/Assignment';
-import EditQuiz from './Components/Quiz/EditQuiz';
-import PoolMain from './Components/Pool/PoolMain';
-import PoolQuestions from './Components/Pool/PoolQuestions';
-import Setting from './Components/Settings/Setting';
-import ManageStudents from './Components/Settings/ManageStudents';
-import CreateCourse from './Components/Dashboard/CreateCourse';
-import Result from './Components/Quiz/Result';
-import Preview from './Components/Quiz/Preview';
-import DisplayQuiz from './Components/Quiz/DisplayQuiz';
-import Layout from './Layout/Layout';
-import Unauthorized from './Layout/Unauthorized';
-import Missing from './Layout/Missing';
-import Auth2 from './Components/Auth/Auth'
-import QuizResult from './Components/Quiz/QuizResult';
-import QuizAnswers from './Components/Quiz/QuizAnswers';
-import QuizLog from './Components/Quiz/QuizLog';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+const Login = React.lazy(() => import('./Components/Auth/Login'))
+const Signup = React.lazy(() => import('./Components/Auth/Signup'))
+const VerifyEmail = React.lazy(() => import('./Components/Auth/VerifyEmail'))
+const Dashboard = React.lazy(() => import('./Components/Dashboard/Dashboard'))
+const Navbar = React.lazy(() => import('./Components/Navbar/Navbar'))
+const Courses = React.lazy(() => import('./Components/Courses/Courses'))
+const Notification = React.lazy(() => import('./Components/Notifications/Notifications'))
+const EmailForgotPassword = React.lazy(() => import('./Components/Auth/EmailForgotPassword'))
+const ForgotPassword = React.lazy(() => import('./Components/Auth/ForgotPassword'))
+const Profile = React.lazy(() => import('./Components/Profile/Profile (1)'))
+const Content = React.lazy(() => import('./Components/Content/Content'))
+const Quiz = React.lazy(() => import('./Components/Quiz/Quiz'))
+const Assignment = React.lazy(() => import('./Components/Assignment/Assignment'))
+const EditQuiz = React.lazy(() => import('./Components/Quiz/EditQuiz'))
+const PoolMain = React.lazy(() => import('./Components/Pool/PoolMain'))
+const PoolQuestions = React.lazy(() => import('./Components/Pool/PoolQuestions'))
+const Setting = React.lazy(() => import('./Components/Settings/Setting'))
+const ManageStudents = React.lazy(() => import('./Components/Settings/ManageStudents'))
+const CreateCourse = React.lazy(() => import('./Components/Dashboard/CreateCourse'))
+const Result = React.lazy(() => import('./Components/Quiz/Result'))
+const Preview = React.lazy(() => import('./Components/Quiz/Preview'))
+const DisplayQuiz = React.lazy(() => import('./Components/Quiz/DisplayQuiz'))
+const Layout = React.lazy(() => import('./Layout/Layout'))
+const Unauthorized = React.lazy(() => import('./Layout/Unauthorized'))
+const Missing = React.lazy(() => import('./Layout/Missing'))
+const Auth2 = React.lazy(() => import('./Components/Auth/Auth'))
+const QuizResult = React.lazy(() => import('./Components/Quiz/QuizResult'))
+const QuizAnswers = React.lazy(() => import('./Components/Quiz/QuizAnswers'))
+const QuizLog = React.lazy(() => import('./Components/Quiz/QuizLog'))
+
 
 
 function App() {
-  let uid = uuidv4();
+
+  const Loader =
+    <div style={{position:"absolute",left:"50%",top:"50%", transform:"translate(-50%,-50%)"}} className=''>
+      <ColorRing
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="blocks-loading"
+        wrapperStyle={{}}
+        wrapperClass="blocks-wrapper"
+        colors={['#494949','#494949', '#494949', '#494949', '#494949']}
+      />
+    </div>
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Layout />} >
+        <Route path="/" element={<Suspense fallback={Loader}><Layout /></Suspense>} >
 
           {/* Public routes */}
-          <Route path="/" element={<Auth2 />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/emailVerification/:id" element={<VerifyEmail />} />
-          <Route path="/forgotPassword" element={<EmailForgotPassword />} />
-          <Route path="/forgotPasswordChange/:id" element={<ForgotPassword />} />
+          <Route path="/" element={<Suspense fallback={Loader}><Auth2 /></Suspense>} />
+          <Route path="/signup" element={<Suspense fallback={Loader}><Signup /></Suspense>} />
+          <Route path="/emailVerification/:id" element={<Suspense fallback={Loader}><VerifyEmail /></Suspense>} />
+          <Route path="/forgotPassword" element={<Suspense fallback={Loader}><EmailForgotPassword /></Suspense>} />
+          <Route path="/forgotPasswordChange/:id" element={<Suspense fallback={Loader}><ForgotPassword /></Suspense>} />
 
           {/* Protected routes */}
-          <Route path='/' element={<Auth />} >
-            <Route path="/dashboard" element={<Navbar><Dashboard /></Navbar>} />
-            <Route path="/dashboard/createCourse" element={<Navbar><CreateCourse /></Navbar>} />
-            <Route path="/courses" element={<Navbar><Courses /></Navbar>} />
-            <Route path="/courses/pools" element={<Navbar><PoolMain /></Navbar>} />
-            <Route path="/courses/poolQuestions" element={<Navbar><PoolQuestions /></Navbar>} />
-            <Route path="/courses/content" element={<Navbar><Content /></Navbar>} />
-            <Route path="/courses/quiz" element={<Navbar><Quiz /></Navbar>} />
-            <Route path="/courses/quiz/result" element={<Navbar><QuizResult /></Navbar>} />
-            <Route path="/courses/quiz/result/log" element={<Navbar><QuizLog /></Navbar>} />
-            <Route path="/courses/quiz/result/answers" element={<Navbar><QuizAnswers /></Navbar>} />
-            <Route path="/courses/displayQuiz" element={<Navbar><DisplayQuiz /></Navbar>} />
-            <Route path="/courses/preview" element={<Navbar><Preview /></Navbar>} />
-            <Route path="/courses/manangeStudents" element={<Navbar><ManageStudents /></Navbar>} />
-            <Route path="/courses/setting" element={<Navbar><Setting /></Navbar>} />
-            <Route path="/notification" element={<Navbar><Notification /></Navbar>} />
-            <Route path="/profile" element={<Navbar><Profile /></Navbar>} />
-            <Route path="/courses/assignment" element={<Navbar><Assignment /></Navbar>} />
-            <Route path="/courses/assignment/submitResult" element={<Navbar><Assignment /></Navbar>} />
-            <Route path="/courses/result" element={<Navbar><Result /></Navbar>} />
-            <Route path="/courses/editQuiz" element={<Navbar><EditQuiz /></Navbar>} />
+          <Route path='/' element={<Suspense fallback={Loader}><Auth /></Suspense>} >
+            <Route path="/dashboard" element={<Navbar><Suspense fallback={Loader}><Dashboard /></Suspense></Navbar>} />
+            <Route path="/dashboard/createCourse" element={<Navbar><Suspense fallback={Loader}><CreateCourse /></Suspense></Navbar>} />
+            <Route path="/courses" element={<Navbar><Suspense fallback={Loader}><Courses /></Suspense></Navbar>} />
+            <Route path="/courses/pools" element={<Navbar><Suspense fallback={Loader}><PoolMain /></Suspense></Navbar>} />
+            <Route path="/courses/poolQuestions" element={<Navbar><Suspense fallback={Loader}><PoolQuestions /></Suspense></Navbar>} />
+            <Route path="/courses/content" element={<Navbar><Suspense fallback={Loader}><Content /></Suspense></Navbar>} />
+            <Route path="/courses/quiz" element={<Navbar><Suspense fallback={Loader}><Quiz /></Suspense></Navbar>} />
+            <Route path="/courses/quiz/result" element={<Navbar><Suspense fallback={Loader}><QuizResult /></Suspense></Navbar>} />
+            <Route path="/courses/quiz/result/log" element={<Navbar><Suspense fallback={Loader}><QuizLog /></Suspense></Navbar>} />
+            <Route path="/courses/quiz/result/answers" element={<Navbar><Suspense fallback={Loader}><QuizAnswers /></Suspense></Navbar>} />
+            <Route path="/courses/displayQuiz" element={<Navbar><Suspense fallback={Loader}><DisplayQuiz /></Suspense></Navbar>} />
+            <Route path="/courses/preview" element={<Navbar><Suspense fallback={Loader}><Preview /></Suspense></Navbar>} />
+            <Route path="/courses/manangeStudents" element={<Navbar><Suspense fallback={Loader}><ManageStudents /></Suspense></Navbar>} />
+            <Route path="/courses/setting" element={<Navbar><Suspense fallback={Loader}><Setting /></Suspense></Navbar>} />
+            <Route path="/notification" element={<Navbar><Suspense fallback={Loader}><Notification /></Suspense></Navbar>} />
+            <Route path="/profile" element={<Navbar><Suspense fallback={Loader}><Profile /></Suspense></Navbar>} />
+            <Route path="/courses/assignment" element={<Navbar><Suspense fallback={Loader}><Assignment /></Suspense></Navbar>} />
+            <Route path="/courses/assignment/submitResult" element={<Navbar><Suspense fallback={Loader}><Assignment /></Suspense></Navbar>} />
+            <Route path="/courses/result" element={<Navbar><Suspense fallback={Loader}><Result /></Suspense></Navbar>} />
+            <Route path="/courses/editQuiz" element={<Navbar><Suspense fallback={Loader}><EditQuiz /></Suspense></Navbar>} />
           </Route>
 
           {/* Catch all */}

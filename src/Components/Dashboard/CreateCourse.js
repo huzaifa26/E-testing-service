@@ -125,7 +125,7 @@ const CreateCourse = (props) => {
                   <img className="rounded-[10px] max-h-[200px]" src={imageURL ? imageURL : "/book-open-solid.svg"}></img>
                 </div>
                 <div className="flex justify-center" style={{ marginTop: '10px' }}>
-                  <label for="files" class="button">Change Image</label>
+                  <label for="files" className="button">Change Image</label>
                   <input accept=".png,.jpg,.jpeg" onChange={fileHandler} id="files" style={{ display: "none" }} type="file" />
                 </div>
               </div>

@@ -174,7 +174,7 @@ const Navbar2 = (props) => {
 
             <li className="nav-text" title='Courses'>
               <Link onClick={() => setTop(false)} className={newLocationName === "/courses" && sidebar === false ? "flexstartborder" : sidebar === true && newLocationName === "/courses" ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses'}>
-                <i class="bi bi-book"></i>
+                <i className="bi bi-book"></i>
                 {<span>Course</span>}
               </Link>
             </li>
@@ -185,14 +185,14 @@ const Navbar2 = (props) => {
 
                 <li className="nav-text" title='Content'>
                   <NavLink onClick={() => setTop(false)} className={location.pathname === "/content" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/courses/content" ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses/content'}>
-                    <i class="bi bi-card-heading"></i>
+                    <i className="bi bi-card-heading"></i>
                     {<span>Content</span>}
                   </NavLink>
                 </li>
 
                 <li className="nav-text" title='Quizzes'>
                   <NavLink onClick={() => setTop(false)} className={(location.pathname === "/courses/editQuiz" || location.pathname === '/courses/preview' || location.state === "/courses/displayQuiz" || location.state === "/courses/result" || location.pathname === '/courses/quiz/result' || location.pathname === '/courses/quiz/result/log' || location.pathname === '/courses/quiz/result/answers') && sidebar === false ? "flexstartborder" : sidebar === true && (location.pathname === "/courses/quiz" || location.pathname === '/courses/editQuiz' || location.pathname === '/courses/quiz/result' || location.pathname === '/courses/quiz/result/log' || location.pathname === '/courses/quiz/result/answers') ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses/quiz'}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video3" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-video3" viewBox="0 0 16 16">
                       <path d="M14 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-6 5.7c0 .8.8.8.8.8h6.4s.8 0 .8-.8-.8-3.2-4-3.2-4 2.4-4 3.2Z" />
                       <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h5.243c.122-.326.295-.668.526-1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v7.81c.353.23.656.496.91.783.059-.187.09-.386.09-.593V4a2 2 0 0 0-2-2H2Z" />
                     </svg>
@@ -203,14 +203,14 @@ const Navbar2 = (props) => {
                 {user.userInfo.user.id == courseClickUserId &&
                   <li className="nav-text" title='Pools'>
                     <NavLink onClick={() => setTop(false)} className={(location.pathname === "/pools" || location.pathname === '/courses/poolQuestions') && sidebar === false ? "flexstartborder" : sidebar === true && (location.pathname === "/courses/pools" || location.pathname === '/courses/poolQuestions') ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses/pools'}>
-                      <i class="bi bi-journal-text"></i>
+                      <i className="bi bi-journal-text"></i>
                       {<span>Pools</span>}
                     </NavLink>
                   </li>}
 
                 <li className="nav-text" title='Assignment'>
                   <NavLink onClick={() => setTop(false)} className={location.pathname === "/pools" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/courses/assignment" ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses/assignment'}>
-                    <i class="bi bi-pencil-square"></i>
+                    <i className="bi bi-pencil-square"></i>
                     {<span >Assignment</span>}
                   </NavLink>
                 </li>
@@ -218,7 +218,7 @@ const Navbar2 = (props) => {
                 {user.userInfo.user.id === courseClickUserId &&
                   <li className="nav-text" title='Setting'>
                     <NavLink onClick={() => setTop(false)} className={(location.pathname === "/pools" || location.pathname === "/courses/manangeStudents") && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/courses/setting" ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/courses/setting'}>
-                      <i class="bi bi-gear"></i>
+                      <i className="bi bi-gear"></i>
                       {<span>Settings</span>}
                     </NavLink>
                   </li>}
@@ -226,20 +226,20 @@ const Navbar2 = (props) => {
 
             <li className="nav-text" title='Notification'>
               <Link onClick={handleNotification} className={location.pathname === "/notification" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/notification" ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/notification'}>
-                <i class="bi bi-exclamation-circle"></i>
+                <i className="bi bi-exclamation-circle"></i>
                 {<span>Notifications</span>}
                 {length > 0 && <div className='number'>{length}</div>}
               </Link>
             </li>
             <li className="nav-text" title='Profile'>
               <Link onClick={() => setTop(false)} className={location.pathname === "/profile" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/profile" ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/profile'}>
-                <i class="bi bi-person"></i>
+                <i className="bi bi-person"></i>
                 {<span>Profile</span>}
               </Link>
             </li>
             <li className="nav-text" title='Logout'>
               <Link onClick={logout} className={location.pathname === "/" && sidebar === false ? "flexstartborder" : sidebar === true && location.pathname === "/" ? "flexcenterborder" : sidebar === true ? "flexstart" : "flexcenter"} to={'/'}>
-                <i class="bi bi-box-arrow-left"></i>
+                <i className="bi bi-box-arrow-left"></i>
                 {<span>Logout</span>}
               </Link>
             </li>
@@ -269,7 +269,7 @@ const Navbar2 = (props) => {
               <div className="circularportrait">
                 <img style={!user?.userInfo?.user?.userImg ? { padding: "10px" } : { padding: 0 }} src={user?.userInfo?.user?.userImg || "/user-solid.svg"} />
               </div>
-              <div title='Logout'>
+              <div className='cursor-pointer' title='Logout'>
                 <LogoutIcon className="anc4" onClick={logout} />
               </div>
               <MenuIcon className='anc1 cursor-pointer' onClick={showSidebar} />

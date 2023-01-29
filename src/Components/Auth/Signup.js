@@ -163,27 +163,27 @@ function Signup() {
     //     </form>
     //   </div>
     // </div>
-    <div class='bg-[#F0F2F5] h-screen w-screen flex justify-center items-center'>
-      <div class="bg-white px-6 py-3 rounded-[10px] min-w-[300px] shadow-lg w-[25.216vw]">
-        <div class="flex flex-col items-center justify-center mt-[1.271vh] mb-4">
-          <h2 class="text-[clamp(32px,1.978vw,81px)] font-[900]">Sign Up</h2>
+    <div className='bg-[#F0F2F5] h-screen w-screen flex justify-center items-center'>
+      <div className="bg-white px-6 py-3 rounded-[10px] min-w-[300px] shadow-lg w-[25.216vw]">
+        <div className="flex flex-col items-center justify-center mt-[1.271vh] mb-4">
+          <h2 className="text-[clamp(32px,1.978vw,81px)] font-[900]">Sign Up</h2>
         </div>
         <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit() }}>
-          <div class="flex flex-col my-4">
-            <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Email</label>
-            <input class="emailIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="email" id="email" placeholder="Please type your email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email}/>
+          <div className="flex flex-col my-4">
+            <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Email</label>
+            <input className="emailIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="email" id="email" placeholder="Please type your email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email}/>
             {formik.touched.email && formik.errors.email ? (<p className='text-[12px] text-[#999999]'>{formik.errors.email}</p>) : null}
           </div>
 
-          <div class="flex flex-col my-4">
-            <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Name</label>
-            <input class="userIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="text" id="username" placeholder="Please type your name" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.username}/>
+          <div className="flex flex-col my-4">
+            <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Name</label>
+            <input className="userIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="text" id="username" placeholder="Please type your name" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.username}/>
             {formik.touched.username && formik.errors.username ? (<p className='text-[12px] text-[#999999]'>{formik.errors.username}</p>) : null}
           </div>
 
-          <div class="flex flex-col my-4 relative">
-            <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Password</label>
-            <input class="passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type={showPassword===false?"password":"text"} id="password" placeholder="Please type your password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password}/>
+          <div className="flex flex-col my-4 relative">
+            <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Password</label>
+            <input className="passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type={showPassword===false?"password":"text"} id="password" placeholder="Please type your password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password}/>
             {showPassword === false &&
             <div onClick={()=>{setShowPassword(true)}} className='w-[20px] cursor-pointer absolute right-[3%] top-[60%]'>
               <img src='./eye-solid.svg'/>
@@ -197,9 +197,9 @@ function Signup() {
             {formik.touched.password && formik.errors.password ? (<p className='text-[12px] text-[#999999]'>{formik.errors.password}</p>) : null}
           </div>
 
-          <div class="flex flex-col my-4 relative">
-            <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Confirm Password</label>
-            <input class="passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" id="confirmpassword" type={showPassword1===false?"password":"text"} placeholder="Please confirm your password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.confirmpassword} required/>
+          <div className="flex flex-col my-4 relative">
+            <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Confirm Password</label>
+            <input className="passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" id="confirmpassword" type={showPassword1===false?"password":"text"} placeholder="Please confirm your password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.confirmpassword} required/>
             {showPassword1 === false &&
             <div onClick={()=>{setShowPassword1(true)}} className='w-[20px] cursor-pointer absolute right-[3%] top-[60%]'>
               <img src='./eye-solid.svg'/>
@@ -213,8 +213,8 @@ function Signup() {
             {formik.touched.confirmpassword && formik.errors.confirmpassword ? (<p className='text-[12px] text-[#999999]'>{formik.errors.confirmpassword}</p>) : null}
           </div>
 
-          <div class="flex flex-col items-center justify-center my-3">
-            <button style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} class="button !mt-[2.051vh] !mb-[1.221vh] !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
+          <div className="flex flex-col items-center justify-center my-3">
+            <button style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} className="button !mt-[2.051vh] !mb-[1.221vh] !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
               Signup
             </button>
             <p className='text-[14px] font-[400] '>Already have account? <Link className='font-[900] cursor-pointer hover:text-blue-400' to="/">Login</Link></p>
