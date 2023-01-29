@@ -93,7 +93,7 @@ function ImportPool({close,getQuestion}) {
         <div className={styles.modalContainer}>
             <div className={styles.header}>
             <p>Find Questions</p>
-            <i class="bi bi-x-circle" onClick={() => close(false)}></i>
+            <i className="bi bi-x-circle" onClick={() => close(false)}></i>
             </div>
             <hr></hr>
 

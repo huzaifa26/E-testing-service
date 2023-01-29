@@ -94,7 +94,7 @@ function EmailForgotPassword() {
             ) : null}
           </div>
           <div className={styles.footer}>
-            <button type='submit' style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} class="button h-[4.3518518518519vh] min-w-[150px] min-h-[30px] !mt-[2.051vh] !mb-[1.221vh] rounded-full !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
+            <button type='submit' style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} className="button h-[4.3518518518519vh] min-w-[150px] min-h-[30px] !mt-[2.051vh] !mb-[1.221vh] rounded-full !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
               Send
             </button>
 

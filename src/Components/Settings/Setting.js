@@ -125,7 +125,7 @@ function Setting() {
                             <div className={styles.ImageContainer}>
                                 <img src={imageURL === '' ? courseInfo[0]?.imageUrl : `${imageURL}`} />
                                 <div className={styles.chooseImg}>
-                                    <button className="button" onClick={imageHandler}><label for="files" class="btn">Change</label></button>
+                                    <button className="button" onClick={imageHandler}><label for="files" className="btn">Change</label></button>
                                     <input onChange={imageHandler} id="files" style={{ visibility: "hidden" }} type="file" accept="image/png, image/gif, image/jpeg" />
                                 </div>
                             </div>

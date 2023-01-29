@@ -173,67 +173,67 @@ function Auth() {
 
     return (
         // <div className='body'>
-        <div class={change ? "container2 sign-up-mode" : "container2"}>
-            <div class="forms">
-                <div class="signin-signup">
-                    <form autoComplete="off" onSubmit={loginSubmitHandler} class="form sign-in-form" ref={loginData}>
-                        <div class="bg-white px-6 py-3 rounded-[10px] min-w-[300px] shadow-lg w-[21.216vw]">
-                            <div class="flex flex-col items-center justify-center mt-[1.271vh] mb-4">
-                                <h2 class="text-[clamp(32px,1.978vw,81px)] font-[900]">Login</h2>
+        <div className={change ? "container2 sign-up-mode" : "container2"}>
+            <div className="forms">
+                <div className="signin-signup">
+                    <form autoComplete="off" onSubmit={loginSubmitHandler} className="form sign-in-form" ref={loginData}>
+                        <div className="bg-white px-6 py-3 rounded-[10px] min-w-[300px] shadow-lg w-[21.216vw]">
+                            <div className="flex flex-col items-center justify-center mt-[1.271vh] mb-4">
+                                <h2 className="text-[clamp(32px,1.978vw,81px)] font-[900]">Login</h2>
                             </div>
                             {/* <!-- username --> */}
-                            <div class="flex flex-col my-2">
-                                <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Email</label>
-                                <input autoComplete="off" role="presentation" required name="email" class="emailIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="text" placeholder="Type your email" />
+                            <div className="flex flex-col my-2">
+                                <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Email</label>
+                                <input autoComplete="off" role="presentation" required name="email" className="emailIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="text" placeholder="Type your email" />
                             </div>
-                            <div class="flex flex-col mt-10 relative">
-                                <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Password</label>
-                                <input autoComplete="new-password" required name="password" class="passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type={showPassword === false ? "password" : "text"} placeholder="Type your password" />
+                            <div className="flex flex-col mt-10 relative">
+                                <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Password</label>
+                                <input autoComplete="new-password" required name="password" className="passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type={showPassword0 === false ? "password" : "text"} placeholder="Type your password" />
                                 {showPassword0 === false &&
-                                    <div onClick={() => { setShowPassword(true) }} className='w-[20px] cursor-pointer absolute right-[3%] top-[60%]'>
+                                    <div onClick={() => { setShowPassword0(true) }} className='w-[20px] cursor-pointer absolute right-[3%] top-[60%]'>
                                         <img src='./eye-solid.svg' />
                                     </div>
                                 }
                                 {showPassword0 === true &&
-                                    <div onClick={() => { setShowPassword(false) }} className='w-[22px] cursor-pointer absolute right-[3%] top-[60%]'>
+                                    <div onClick={() => { setShowPassword0(false) }} className='w-[22px] cursor-pointer absolute right-[3%] top-[60%]'>
                                         <img src='./eye-slash-solid.svg' />
                                     </div>
                                 }
                             </div>
-                            <div class="flex flex-col items-center justify-center my-3">
-                                <div class="flex w-full items-center justify-end text-xs text-gray-500">
+                            <div className="flex flex-col items-center justify-center my-3">
+                                <div className="flex w-full items-center justify-end text-xs text-gray-500">
                                     <p onClick={() => { navigate('/forgotPassword'); }} className="text-[clamp(12px,0.659vw,27px)] text-[#000] font-semibold cursor-pointer hover:text-blue-400">Forgot password?</p>
                                 </div>
-                                <button type='submit' style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} class="button h-[4.3518518518519vh] min-w-[150px] min-h-[30px] !mt-[2.051vh] !mb-[1.221vh] rounded-full !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
+                                <button type='submit' style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} className="button h-[4.3518518518519vh] min-w-[150px] min-h-[30px] !mt-[2.051vh] !mb-[1.221vh] rounded-full !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
                                     Login
                                 </button>
-                                <button type="button" onClick={handleSignup} style={{ background: "white", color: "white", boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} class="button !mb-[4.443vh] min-w-[150px] min-h-[30px] !my-1 !py-1 !text-[clamp(14px,0.801vw,32.82px)] !bg-white !border-2 !border-[#303035] !text-[#303035] !font-bold !uppercase">
+                                <button type="button" onClick={handleSignup} style={{ background: "white", color: "white", boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} className="button !mb-[4.443vh] min-w-[150px] min-h-[30px] !my-1 !py-1 !text-[clamp(14px,0.801vw,32.82px)] !bg-white !border-2 !border-[#303035] !text-[#303035] !font-bold !uppercase">
                                     Signup
                                 </button>
                             </div>
                         </div>
                     </form>
 
-                    <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); console.log('s'); formik.handleSubmit() }} class="form sign-up-form">
-                        <div class="bg-white px-6 py-3 rounded-[10px] min-w-[300px] shadow-lg w-[25.216vw]">
-                            <div class="flex flex-col items-center justify-center mt-[1.271vh] mb-4">
-                                <h2 class="text-[clamp(32px,1.978vw,81px)] font-[900]">Sign Up</h2>
+                    <form autoComplete="off" onSubmit={(e) => { e.preventDefault(); console.log('s'); formik.handleSubmit() }} className="form sign-up-form">
+                        <div className="bg-white px-6 py-3 rounded-[10px] min-w-[300px] shadow-lg w-[25.216vw]">
+                            <div className="flex flex-col items-center justify-center mt-[1.271vh] mb-4">
+                                <h2 className="text-[clamp(32px,1.978vw,81px)] font-[900]">Sign Up</h2>
                             </div>
-                            <div class="flex flex-col my-4">
-                                <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Email</label>
-                                <input autoComplete="off" class="emailIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="email" id="email" placeholder="Please type your email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
+                            <div className="flex flex-col my-4">
+                                <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Email</label>
+                                <input autoComplete="off" className="emailIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="email" id="email" placeholder="Please type your email" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
                                 {formik.touched.email && formik.errors.email ? (<p className='text-[12px] text-[#FF1E00]'>{formik.errors.email}</p>) : null}
                             </div>
 
-                            <div class="flex flex-col my-4">
-                                <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Name</label>
-                                <input autoComplete="off" class="userIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="text" id="username" placeholder="Please type your name" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.username} />
+                            <div className="flex flex-col my-4">
+                                <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000] ">Name</label>
+                                <input autoComplete="off" className="userIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type="text" id="username" placeholder="Please type your name" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.username} />
                                 {formik.touched.username && formik.errors.username ? (<p className='text-[12px] text-[#FF1E00]'>{formik.errors.username}</p>) : null}
                             </div>
 
-                            <div class="flex flex-col my-4 relative">
-                                <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Password</label>
-                                <input autoComplete="off" class="passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type={showPassword === false ? "password" : "text"} id="password" placeholder="Please type your password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} />
+                            <div className="flex flex-col my-4 relative">
+                                <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Password</label>
+                                <input autoComplete="off" className="passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" type={showPassword === false ? "password" : "text"} id="password" placeholder="Please type your password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.password} />
                                 {showPassword === false &&
                                     <div onClick={() => { setShowPassword(true) }} className='w-[20px] cursor-pointer absolute right-[3%] top-[60%]'>
                                         <img src='./eye-solid.svg' />
@@ -247,9 +247,9 @@ function Auth() {
                                 {formik.touched.password && formik.errors.password ? (<p className='text-[12px] text-[#FF1E00]'>{formik.errors.password}</p>) : null}
                             </div>
 
-                            <div class="flex flex-col my-4 relative">
-                                <label class="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Confirm Password</label>
-                                <input autoComplete="off" class="fill passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" id="confirmpassword" type={showPassword1 === false ? "password" : "text"} placeholder="Please confirm your password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.confirmpassword} />
+                            <div className="flex flex-col my-4 relative">
+                                <label className="text-[clamp(14px,0.801vw,32.82px)] font-bold text-[#000000]">Confirm Password</label>
+                                <input autoComplete="off" className="fill passwordIcon text-[clamp(14px,0.586vw,24px)] border-b-[0.23148148148148vh] rounded px-3 py-1 mt-2 h-[40px]" id="confirmpassword" type={showPassword1 === false ? "password" : "text"} placeholder="Please confirm your password" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.confirmpassword} />
                                 {showPassword1 === false &&
                                     <div onClick={() => { setShowPassword1(true) }} className='w-[20px] cursor-pointer absolute right-[3%] top-[60%]'>
                                         <img src='./eye-solid.svg' />
@@ -263,8 +263,8 @@ function Auth() {
                                 {formik.touched.confirmpassword && formik.errors.confirmpassword ? (<p className='text-[12px] text-[#FF1E00]'>{formik.errors.confirmpassword}</p>) : null}
                             </div>
 
-                            <div class="flex flex-col items-center justify-center my-3">
-                                <button type='submit' style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} class="button !mt-[2.051vh] !mb-[1.221vh] !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
+                            <div className="flex flex-col items-center justify-center my-3">
+                                <button type='submit' style={{ boxShadow: "0px 0px 0px rgba(0,0,0,0)" }} className="button !mt-[2.051vh] !mb-[1.221vh] !py-1 !text-[clamp(14px,0.801vw,32.82px)] bg-[#81c2ff] !text-white !uppercase !font-bold">
                                     Signup
                                 </button>
                                 <p className='text-[14px] font-[400] '>Already have account? <span className='font-[900] cursor-pointer hover:text-blue-400' onClick={() => setChange(false)}>Login</span></p>
@@ -274,17 +274,17 @@ function Auth() {
                 </div>
             </div>
 
-            <div class="panels-container">
-                <div class="panel left-panel">
-                    <div class="content">
+            <div className="panels-container">
+                <div className="panel left-panel">
+                    <div className="content">
 
                     </div>
-                    <img src={logo} class="image" alt="girl phone" />
+                    <img src={logo} className="image" alt="girl phone" />
                 </div>
-                <div class="panel right-panel">
-                    <div class="content">
+                <div className="panel right-panel">
+                    <div className="content">
                     </div>
-                    <img src={logo} class="image" alt="girl sofa" />
+                    <img src={logo} className="image" alt="girl sofa" />
                 </div>
             </div>
         </div>
