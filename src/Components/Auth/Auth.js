@@ -101,7 +101,7 @@ function Auth() {
         console.log("IN MAILSERVICE FUNCTION");
         data.link = 'http://localhost:3000/emailVerification/' + data.id;
         emailjs
-            .send('service_vimsp8b', 'template_n2tq68o', data, '_skPtTuhpdi0bie5x')
+            .send('service_ctpq9uj', 'template_hlh17gl', data, 'PCrkZDdTgRVPTxMHf')
             .then(
                 (result) => {
                     console.log(result.text);
