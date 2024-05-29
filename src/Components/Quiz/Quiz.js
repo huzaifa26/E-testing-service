@@ -118,22 +118,16 @@ function Quiz(props) {
     }
 
 
-    let assignmentStartTime = new Date(startTime)
-    assignmentStartTime = assignmentStartTime.toLocaleString()
-    let newassignmentStartTime = moment(assignmentStartTime)
 
-    let assignmentStartTime2 = new Date(endTime)
-    assignmentStartTime2 = assignmentStartTime2.toLocaleString()
-    let newassignmentStartTime2 = moment(assignmentStartTime2)
+    let assignmentStartTime = new Date(startTime).getTime();
 
-    console.log(newassignmentStartTime);
-    console.log(newassignmentStartTime2);
-    if (!newassignmentStartTime.isBefore(newassignmentStartTime2)) {
+    let assignmentStartTime2 = new Date(endTime).getTime()
+    console.log('newassignmentStartTime', assignmentStartTime);
+    console.log('newassignmentStartTime2', assignmentStartTime2);
+    if (assignmentStartTime > assignmentStartTime2 ) {
       alert('endTime is before startTime')
       return
     }
-
-
 
     // let endTime = endTime
     // let today = new Date();
@@ -484,7 +478,7 @@ function Quiz(props) {
                 </Stack>
 
                 <div className={styles.Options3}>
-                  <input style={{width:"70px", marginTop:"8px"}} type="number" id="quantity" className={styles.input1} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
+                  <input style={{ width: "70px", marginTop: "8px" }} type="number" id="quantity" className={styles.input1} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
                   <p>Time per question (Seconds)</p>
                 </div>
 

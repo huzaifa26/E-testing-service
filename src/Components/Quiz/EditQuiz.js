@@ -100,15 +100,12 @@ function EditQuiz() {
     }
 
 
-    let assignmentStartTime = new Date(startTime)
-    assignmentStartTime = assignmentStartTime.toLocaleString()
-    let newassignmentStartTime = moment(assignmentStartTime)
+    let assignmentStartTime = new Date(startTime).getTime();
 
-    let assignmentStartTime2 = new Date(endTime)
-    assignmentStartTime2 = assignmentStartTime2.toLocaleString()
-    let newassignmentStartTime2 = moment(assignmentStartTime2)
-
-    if (!newassignmentStartTime.isBefore(newassignmentStartTime2)) {
+    let assignmentStartTime2 = new Date(endTime).getTime()
+    console.log('newassignmentStartTime', assignmentStartTime);
+    console.log('newassignmentStartTime2', assignmentStartTime2);
+    if (assignmentStartTime > assignmentStartTime2 ) {
       alert('endTime is before startTime')
       return
     }
