@@ -8,7 +8,6 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { ContentState, convertFromHTML, EditorState } from 'draft-js';
 import { MathComponent } from 'mathjax-react';
 import { toast } from 'react-toastify';
-import moment from "moment";
 import axios from 'axios';
 import { IconButton, Tooltip } from '@mui/material';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
@@ -225,15 +224,11 @@ function DisplayQuiz() {
   // FOR TIME CHECK IF QUIZ IS FINISHED
   const endQuizAfterTimeFinished = () => {
     let endTime = location.state.data.endTime
-    let today = new Date();
-    today = today.toLocaleString()
+    let today = new Date().getTime(); // Get current time in milliseconds
+    let quizFinishTime = new Date(endTime).getTime(); // Convert endTime to time in milliseconds
 
-    let QuizFinishTime = new Date(endTime)
-    QuizFinishTime = QuizFinishTime.toLocaleString()
 
-    let newQuizFinishTime = moment(QuizFinishTime)
-
-    if (newQuizFinishTime.isBefore(today) === true) {
+    if (quizFinishTime < today) {
       axios.post('http://localhost:5000/api/addQuizResult', { userId: user.userInfo.user.id, quizId: location.state.data.id }, { withCredentials: true }, { headers: { Authorization: `Bearer ${cookie.token}` } }).then((res) => {
         axios.get("http://localhost:5000/api/showQuizResult/" + user.userInfo.user.id + "/" + location.state.data.id, { withCredentials: true }).then((res) => {
           if (res.data.length > 0) {

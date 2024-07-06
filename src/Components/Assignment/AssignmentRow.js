@@ -9,7 +9,6 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Table
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Stack from '@mui/material/Stack';
-import moment from "moment";
 
 export default function AssignmentRow(props) {
     const user = useSelector(state => state.user);
@@ -25,39 +24,17 @@ export default function AssignmentRow(props) {
 
 
     const checkTime = (startTime) => {
-        let today = new Date();
-        today = today.toLocaleString()
+        const today = new Date().getTime();
+        const assignmentStartTime = new Date(startTime).getTime()
 
-        let assignmentStartTime = new Date(startTime)
-        assignmentStartTime = assignmentStartTime.toLocaleString()
-
-        let newassignmentStartTime = moment(assignmentStartTime)
-
-
-        if (newassignmentStartTime.isBefore(today)) {
-            return true
-        }
-        else {
-            return false
-        }
+        return assignmentStartTime < today;
     }
 
-    const checkTime2 = (EndTime) => {
-        let today = new Date();
-        today = today.toLocaleString()
+    const checkTime2 = (endTime) => {
+        const today = new Date().getTime();
+        const assignmentEndTime = new Date(endTime).getTime();
 
-        let assignmentEndTime = new Date(EndTime)
-        assignmentEndTime = assignmentEndTime.toLocaleString()
-
-        let newassignmentEndTime = moment(assignmentEndTime)
-
-
-        if (newassignmentEndTime.isBefore(today)) {
-            return true
-        }
-        else {
-            return false
-        }
+        return assignmentEndTime < today;
     }
 
     useEffect(() => {

@@ -67,7 +67,7 @@ function Result(props) {
             </div>
           </div> : null
         }
-        {(location?.state !== null && result.length > 0 && location?.state?.afterQuiz === false) ?
+        {(location?.state !== null && result?.length > 0 && location?.state?.afterQuiz === false) ?
           <div className={styles.holder}>
             <div className={styles.heading}>QUIZ RESULT</div>
             <hr></hr>

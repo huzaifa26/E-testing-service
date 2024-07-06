@@ -70,40 +70,27 @@ function QuizTable(props) {
     let today = new Date();
     today = today.toLocaleString()
 
-    let QuizStartTime = new Date(props.startTime)
-    QuizStartTime = QuizStartTime.toLocaleString()
+    let QuizStartTime = new Date(props.startTime).getTime()
+    let QuizFinishTime = new Date(props.endTime).getTime();
 
-    let QuizFinishTime = new Date(props.endTime)
-    QuizFinishTime = QuizFinishTime.toLocaleString()
+    let currentTime = new Date().getTime()
 
-    let newQuizStartTime = moment(QuizStartTime)
-    let newQuizFinishTime = moment(QuizFinishTime)
-
-    if (newQuizStartTime.isBefore(today)) {
+    if (QuizStartTime < currentTime) {
       setShowQuiz(true)
     }
-    if (newQuizFinishTime.isBefore(today)) {
+    if (QuizFinishTime <= currentTime) {
       setShowQuiz(false)
       setQuizFinished(true)
     }
   }, [counter])
 
   const checkEndTme = (endTime) => {
-    let today = new Date();
-    today = today.toLocaleString()
+    const today = new Date().getTime(); // Get current time in milliseconds
+    const assignmentStartTime = new Date(endTime).getTime(); // Convert endTime to time in milliseconds
 
-    let assignmentStartTime = new Date(endTime)
-    assignmentStartTime = assignmentStartTime.toLocaleString()
-
-    let newassignmentStartTime = moment(assignmentStartTime)
-
-    if (newassignmentStartTime.isBefore(today)) {
-      return true
-    }
-    else {
-      return false
-    }
+    return assignmentStartTime < today;
   }
+
 
   {
     if (props.student === false)

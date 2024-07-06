@@ -70,19 +70,13 @@ function Quiz(props) {
   const saveQuiz = () => {
 
     const checkEndTme = (endTime) => {
-      let today = new Date();
-      today = today.toLocaleString()
+      let today = new Date().getTime();
+      let assignmentEndTime = new Date(endTime).getTime();
 
-      let assignmentStartTime = new Date(endTime)
-      assignmentStartTime = assignmentStartTime.toLocaleString()
-
-      let newassignmentStartTime = moment(assignmentStartTime)
-
-      if (newassignmentStartTime.isBefore(today)) {
-        return true
-      }
-      else {
-        return false
+      if (assignmentEndTime < today) {
+        return true;
+      } else {
+        return false;
       }
     }
 
@@ -122,9 +116,8 @@ function Quiz(props) {
     let assignmentStartTime = new Date(startTime).getTime();
 
     let assignmentStartTime2 = new Date(endTime).getTime()
-    console.log('newassignmentStartTime', assignmentStartTime);
-    console.log('newassignmentStartTime2', assignmentStartTime2);
-    if (assignmentStartTime > assignmentStartTime2 ) {
+
+    if (assignmentStartTime > assignmentStartTime2) {
       alert('endTime is before startTime')
       return
     }

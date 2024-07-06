@@ -53,19 +53,13 @@ function EditQuiz() {
 
   const saveQuiz = () => {
     const checkEndTme = (endTime) => {
-      let today = new Date();
-      today = today.toLocaleString()
+      let today = new Date().getTime();
+      let assignmentEndTime = new Date(endTime).getTime();
 
-      let assignmentStartTime = new Date(endTime)
-      assignmentStartTime = assignmentStartTime.toLocaleString()
-
-      let newassignmentStartTime = moment(assignmentStartTime)
-
-      if (newassignmentStartTime.isBefore(today)) {
-        return true
-      }
-      else {
-        return false
+      if (assignmentEndTime < today) {
+        return true;
+      } else {
+        return false;
       }
     }
 
@@ -105,7 +99,7 @@ function EditQuiz() {
     let assignmentStartTime2 = new Date(endTime).getTime()
     console.log('newassignmentStartTime', assignmentStartTime);
     console.log('newassignmentStartTime2', assignmentStartTime2);
-    if (assignmentStartTime > assignmentStartTime2 ) {
+    if (assignmentStartTime > assignmentStartTime2) {
       alert('endTime is before startTime')
       return
     }
@@ -311,7 +305,7 @@ function EditQuiz() {
               </Stack>
 
               <div className={styles.Options}>
-                <input type="number" id="quantity" style={{width:"70px", marginTop:"8px"}} className={styles.input} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
+                <input type="number" id="quantity" style={{ width: "70px", marginTop: "8px" }} className={styles.input} name="quantity" defaultValue={time} onChange={(e) => { setTime(e.target.value); }} min="1" max="100" ></input>
                 <p>Time per question (Seconds)</p>
               </div>
 
